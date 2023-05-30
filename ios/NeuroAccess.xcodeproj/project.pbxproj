@@ -12,8 +12,14 @@
 		13B07FBC1A68108700A75B9A /* AppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.mm */; };
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
+		1FFDF4803B13416385D1BFB3 /* SpaceGrotesk-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 7F9CA88A62EA4751B7C38861 /* SpaceGrotesk-Light.ttf */; };
+		20E69BF5DB9F4BC1A8ADEE88 /* SpaceGrotesk-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 9E66B7B4FB3F4B08B3021CE7 /* SpaceGrotesk-Bold.ttf */; };
+		30348689C91941F3975CFE7D /* NHaasGroteskTXPro-Rg.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 436DC99297394C798B0329B0 /* NHaasGroteskTXPro-Rg.ttf */; };
+		62E7022278624D4E9BD398A5 /* SpaceGrotesk-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 95FB082F2BF94A93AC41CBE3 /* SpaceGrotesk-Regular.ttf */; };
 		7699B88040F8A987B510C191 /* libPods-NeuroAccess-NeuroAccessTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 19F6CBCC0A4E27FBF8BF4A61 /* libPods-NeuroAccess-NeuroAccessTests.a */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
+		96B0FDEC383D4088A26F8291 /* SpaceGrotesk-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1E61D46B7A864463BBF85806 /* SpaceGrotesk-SemiBold.ttf */; };
+		EFB9135A8F26435C9E87C859 /* SpaceGrotesk-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 7543DA5A8AB7477C86B94C8C /* SpaceGrotesk-Medium.ttf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -37,12 +43,18 @@
 		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = NeuroAccess/Info.plist; sourceTree = "<group>"; };
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = NeuroAccess/main.m; sourceTree = "<group>"; };
 		19F6CBCC0A4E27FBF8BF4A61 /* libPods-NeuroAccess-NeuroAccessTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-NeuroAccess-NeuroAccessTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		1E61D46B7A864463BBF85806 /* SpaceGrotesk-SemiBold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "SpaceGrotesk-SemiBold.ttf"; path = "../src/assets/fonts/SpaceGrotesk-SemiBold.ttf"; sourceTree = "<group>"; };
 		3B4392A12AC88292D35C810B /* Pods-NeuroAccess.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NeuroAccess.debug.xcconfig"; path = "Target Support Files/Pods-NeuroAccess/Pods-NeuroAccess.debug.xcconfig"; sourceTree = "<group>"; };
+		436DC99297394C798B0329B0 /* NHaasGroteskTXPro-Rg.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "NHaasGroteskTXPro-Rg.ttf"; path = "../src/assets/fonts/NHaasGroteskTXPro-Rg.ttf"; sourceTree = "<group>"; };
 		5709B34CF0A7D63546082F79 /* Pods-NeuroAccess.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NeuroAccess.release.xcconfig"; path = "Target Support Files/Pods-NeuroAccess/Pods-NeuroAccess.release.xcconfig"; sourceTree = "<group>"; };
 		5B7EB9410499542E8C5724F5 /* Pods-NeuroAccess-NeuroAccessTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NeuroAccess-NeuroAccessTests.debug.xcconfig"; path = "Target Support Files/Pods-NeuroAccess-NeuroAccessTests/Pods-NeuroAccess-NeuroAccessTests.debug.xcconfig"; sourceTree = "<group>"; };
 		5DCACB8F33CDC322A6C60F78 /* libPods-NeuroAccess.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-NeuroAccess.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		7543DA5A8AB7477C86B94C8C /* SpaceGrotesk-Medium.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "SpaceGrotesk-Medium.ttf"; path = "../src/assets/fonts/SpaceGrotesk-Medium.ttf"; sourceTree = "<group>"; };
+		7F9CA88A62EA4751B7C38861 /* SpaceGrotesk-Light.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "SpaceGrotesk-Light.ttf"; path = "../src/assets/fonts/SpaceGrotesk-Light.ttf"; sourceTree = "<group>"; };
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = NeuroAccess/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		89C6BE57DB24E9ADA2F236DE /* Pods-NeuroAccess-NeuroAccessTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NeuroAccess-NeuroAccessTests.release.xcconfig"; path = "Target Support Files/Pods-NeuroAccess-NeuroAccessTests/Pods-NeuroAccess-NeuroAccessTests.release.xcconfig"; sourceTree = "<group>"; };
+		95FB082F2BF94A93AC41CBE3 /* SpaceGrotesk-Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "SpaceGrotesk-Regular.ttf"; path = "../src/assets/fonts/SpaceGrotesk-Regular.ttf"; sourceTree = "<group>"; };
+		9E66B7B4FB3F4B08B3021CE7 /* SpaceGrotesk-Bold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "SpaceGrotesk-Bold.ttf"; path = "../src/assets/fonts/SpaceGrotesk-Bold.ttf"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
@@ -122,6 +134,7 @@
 				83CBBA001A601CBA00E9B192 /* Products */,
 				2D16E6871FA4F8E400B85C8A /* Frameworks */,
 				BBD78D7AC51CEA395F1C20DB /* Pods */,
+				CD27FB509ACA42BE89E5E8E0 /* Resources */,
 			);
 			indentWidth = 2;
 			sourceTree = "<group>";
@@ -146,6 +159,20 @@
 				89C6BE57DB24E9ADA2F236DE /* Pods-NeuroAccess-NeuroAccessTests.release.xcconfig */,
 			);
 			path = Pods;
+			sourceTree = "<group>";
+		};
+		CD27FB509ACA42BE89E5E8E0 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				436DC99297394C798B0329B0 /* NHaasGroteskTXPro-Rg.ttf */,
+				9E66B7B4FB3F4B08B3021CE7 /* SpaceGrotesk-Bold.ttf */,
+				7F9CA88A62EA4751B7C38861 /* SpaceGrotesk-Light.ttf */,
+				7543DA5A8AB7477C86B94C8C /* SpaceGrotesk-Medium.ttf */,
+				95FB082F2BF94A93AC41CBE3 /* SpaceGrotesk-Regular.ttf */,
+				1E61D46B7A864463BBF85806 /* SpaceGrotesk-SemiBold.ttf */,
+			);
+			name = Resources;
+			path = "";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -244,6 +271,12 @@
 			files = (
 				81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
+				30348689C91941F3975CFE7D /* NHaasGroteskTXPro-Rg.ttf in Resources */,
+				20E69BF5DB9F4BC1A8ADEE88 /* SpaceGrotesk-Bold.ttf in Resources */,
+				1FFDF4803B13416385D1BFB3 /* SpaceGrotesk-Light.ttf in Resources */,
+				EFB9135A8F26435C9E87C859 /* SpaceGrotesk-Medium.ttf in Resources */,
+				62E7022278624D4E9BD398A5 /* SpaceGrotesk-Regular.ttf in Resources */,
+				96B0FDEC383D4088A26F8291 /* SpaceGrotesk-SemiBold.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
