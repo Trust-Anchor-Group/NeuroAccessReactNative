@@ -1,11 +1,11 @@
 import React from 'react';
 import {createStackNavigator} from '@react-navigation/stack';
-import Home from '@screens/Home/Home';
-import ChooseAccountType from '@screens/Registration/ChooseAccountType';
-import EmailOTPVerify from '@screens/Registration/EmailOTPVerify';
-import EnterEmail from '@screens/Registration/EnterEmail';
-import EnterMobileNumber from '@screens/Registration/EnterMobileNumber';
-import MobileNumberOTPVerify from '@screens/Registration/MobileNumberOTPVerify';
+import Home from '@screens/home/Home';
+import ChooseAccountType from '@src/screens/registration/ChooseAccountType';
+import EmailOTPVerify from '@src/screens/registration/EmailOTPVerify';
+import EnterEmail from '@src/screens/registration/EnterEmail';
+import EnterMobileNumber from '@src/screens/registration/EnterMobileNumber';
+import MobileNumberOTPVerify from '@src/screens/registration/MobileNumberOTPVerify';
 
 const Stack = createStackNavigator();
 
