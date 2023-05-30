@@ -2,7 +2,7 @@ import { Button, StyleSheet, Text, View } from 'react-native'
 import React from 'react'
 import { StackScreenProps } from '@react-navigation/stack'
 
-const MobileNumberOTPVerify = ({ navigation }:StackScreenProps<{Profile: any}>) => {
+export const MobileNumberOTPVerify = ({ navigation }:StackScreenProps<{Profile: any}>) => {
   return (
     <View>
       <Text>MobileNumberOTPVerify</Text>
@@ -10,7 +10,5 @@ const MobileNumberOTPVerify = ({ navigation }:StackScreenProps<{Profile: any}>) 
     </View>
   )
 }
-
-export default MobileNumberOTPVerify
 
 const styles = StyleSheet.create({})
