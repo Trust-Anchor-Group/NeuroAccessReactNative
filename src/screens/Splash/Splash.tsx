@@ -1,10 +1,11 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { View } from 'react-native';
 import { Logo } from '@assets/svg/Logo';
 import { colors } from '@theme/colors';
 import { splashStyle } from '@styles/splashStyle';
 import { BackgroundLayerC } from '@components/BackGroundLayerC';
-export const Splash = () => {
+
+export const Splash = () => {  
   return (
     <BackgroundLayerC style={splashStyle.bgContainer}>
       <View style={splashStyle.logoContainer}>
