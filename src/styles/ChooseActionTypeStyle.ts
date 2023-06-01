@@ -1,6 +1,6 @@
 import { colors } from '@src/theme/colors';
 import { StyleSheet } from 'react-native';
-const itemHeight = 44;
+const itemHeight = 58;
 const itemHorizontalMargin = 5;
 
 export const ChooseAccountTypeStyle = StyleSheet.create({
@@ -8,7 +8,7 @@ export const ChooseAccountTypeStyle = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     backgroundColor: '#efefef',
-    height: 50,
+    height: itemHeight,
     zIndex: 1,
   },
   buttonText: {
@@ -41,7 +41,8 @@ export const ChooseAccountTypeStyle = StyleSheet.create({
     paddingHorizontal: 10,
     paddingVertical: 10,
     borderWidth: 1,
-    marginHorizontal: 16,
+    borderColor: colors.light.chooseActionItemBorderColor,
+    marginHorizontal: 24,
     height: itemHeight,
     borderRadius: 4,
     marginVertical: 5,
