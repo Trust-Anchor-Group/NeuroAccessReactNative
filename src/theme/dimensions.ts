@@ -9,3 +9,8 @@ export const logoSize={
   logoWidth: horizontalScale(233),
   logoHeight: verticalScale(110),
 }
+
+export const informationLogoSize={
+  logoWidth: horizontalScale(20),
+  logoHeight: verticalScale(20),
+}

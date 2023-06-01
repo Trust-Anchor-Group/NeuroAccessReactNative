@@ -1,14 +1,23 @@
-import { Button, StyleSheet, Text, View } from 'react-native'
-import React from 'react'
+import { StyleSheet, View } from 'react-native';
+import React, { useState } from 'react';
 import { StackScreenProps } from '@react-navigation/stack';
+import { ChooseNeuroAccessAppContext } from '@src/components/ChooseNeuroAccessAppContext';
+import { ContextType, chooseActionTypeData } from '@src/services/Data';
 
-export const ChooseAccountType = ({ navigation }:StackScreenProps<{Profile: any}>) => {
+export const ChooseAccountType = ({
+  navigation,
+}: StackScreenProps<{ Profile: any }>) => {
+  const [selected, setSelected] = useState<ContextType>();
+
   return (
     <View>
-      <Text>ChooseAccoutType</Text>
-      <Button title='Next' onPress={() => navigation.navigate('EnterEmail')}/>
+      <ChooseNeuroAccessAppContext
+        label="Select Item"
+        data={chooseActionTypeData}
+        onSelect={setSelected}
+      />
     </View>
-  )
-}
+  );
+};
 
-const styles = StyleSheet.create({})
+const styles = StyleSheet.create({});
