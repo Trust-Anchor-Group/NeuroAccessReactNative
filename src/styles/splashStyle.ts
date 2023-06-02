@@ -1,6 +1,6 @@
 import { StyleSheet } from "react-native";
 
-export const splashStyle = StyleSheet.create({
+export const SplashStyle = StyleSheet.create({
   logoContainer:{
     position:'absolute',
     height: '100%',
@@ -10,5 +10,8 @@ export const splashStyle = StyleSheet.create({
   },
   bgContainer:{
     flex:.75,
+   },
+   logoPosition:{
+    justifyContent:'center',
    }
 })

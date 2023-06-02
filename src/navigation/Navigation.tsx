@@ -23,7 +23,8 @@ export const AuthStack = () => {
         name="EnterEmail"
         component={EnterEmail}
         options={{
-          headerTitle: 'Enter Email',
+          //headerTitle: 'Enter Email',
+          headerShown: false
         }}
       />
       <Stack.Screen

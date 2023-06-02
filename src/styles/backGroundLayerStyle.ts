@@ -1,15 +1,20 @@
-import { StyleSheet } from "react-native";
-import { colors } from "@theme/colors";
+import { StyleSheet } from 'react-native';
+import { Colors } from '@src/theme/Colors';
 
-export const backGroundLayerStyle = StyleSheet.create({
-  parentContainer:{
+export const BackGroundLayerStyle = StyleSheet.create({
+  parentContainer: {
     height: '100%',
     width: '100%',
   },
-  container:{
-    flex:1,
-    justifyContent:'center',
-    alignItems:'center',
-    backgroundColor: colors.light.background,
-  }
-})
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: Colors.light.background,
+  },
+  logoContainer: {
+    position: 'absolute',
+    alignSelf: 'center',
+    marginTop: '33%',
+  },
+});

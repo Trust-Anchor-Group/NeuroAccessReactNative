@@ -1,6 +1,6 @@
 import React from 'react';
 import { Svg, Path } from 'react-native-svg';
-import { logoSize } from '@theme/dimensions';
+import { logoSize } from '@src/theme/Dimensions';
 
 interface LayerColor {
   textColor?: string;
