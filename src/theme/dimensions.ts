@@ -12,7 +12,18 @@ export const headerSize = {
   wRightIcon: horizontalScale(21),
   Height: verticalScale(50),
   pTop: moderateScale(4),
+  languageTextMTop:moderateScale(5),
   fontSize: moderateScale(12),
+};
+
+export const authLabelsSize = {
+  large: moderateScale(30),
+  medium: moderateScale(18),
+  label: moderateScale(14),
+  normal: moderateScale(18),
+  small: moderateScale(13),
+  xSmall: moderateScale(12),
+  marginTop:moderateScale(10),
 };
 
 export const logoSize = {
@@ -30,4 +41,8 @@ export const inputIconSize = {
 export const informationLogoSize={
   logoWidth: horizontalScale(20),
   logoHeight: verticalScale(20),
+}
+
+export const chooseAccountItemHeight={
+   height:verticalScale(50)
 }

@@ -1,43 +1,47 @@
-import React from 'react';
-import { Text, TouchableOpacity, View } from 'react-native';
+import React, { FC } from 'react';
+import { TouchableOpacity, View } from 'react-native';
 import { HeaderLayerStyle } from '@src/styles/HeaderLayerStyle';
 import { LanguageIcon } from '@src/assets/svg/LanguageIcon';
 import { BackIcon } from '@src/assets/svg/BackIcon';
-import { headerSize } from '@src/theme/Dimensions';
 import { TextLabel } from './TextLabel';
 
-export const HeaderLayer = () => {
+interface Props {
+  hideBackAction?: boolean;
+  onBackAction?: () => void;
+  onLanguageAction: () => void;
+}
+export const HeaderLayer: FC<Props> = ({
+  hideBackAction,
+  onBackAction,
+  onLanguageAction,
+}) => {
   return (
     <View style={HeaderLayerStyle.container}>
-      <TouchableOpacity
-        style={{
-          alignItems: 'center',
-          flex: 0.15,
-          height: headerSize.Height,
-          paddingTop: headerSize.pTop,
-        }}
-        onPress={() => {
-          console.log('click on back');
-        }}
-      >
-        <BackIcon />
-      </TouchableOpacity>
+      {hideBackAction ? (
+        <View
+          style={HeaderLayerStyle.emptyContainer}
+        />
+      ) : (
+        <TouchableOpacity
+          style={HeaderLayerStyle.backContainer}
+          onPress={() => {
+            onBackAction();
+          }}
+        >
+          <BackIcon />
+        </TouchableOpacity>
+      )}
 
-      <View style={{ flex: 0.65 }}></View>
+      <View style={HeaderLayerStyle.middleContainer}></View>
 
       <TouchableOpacity
-        style={{
-          justifyContent: 'center',
-          alignItems: 'center',
-          flex: 0.2,
-          height: headerSize.Height,
-        }}
+        style={HeaderLayerStyle.languageContainer}
         onPress={() => {
-          console.log('click on language');
+          onLanguageAction();
         }}
       >
         <LanguageIcon />
-        <TextLabel variant="xSmall" style={{ marginTop: 5 }}>
+        <TextLabel variant="xSmall" style={HeaderLayerStyle.textMarginTop}>
           English
         </TextLabel>
       </TouchableOpacity>

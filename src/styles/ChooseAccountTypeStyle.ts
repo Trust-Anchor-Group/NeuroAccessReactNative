@@ -1,12 +1,11 @@
 import { StyleSheet } from 'react-native';
 
-export const EnterEmailStyle = StyleSheet.create({
+export const ChooseAccountTypeStyle = StyleSheet.create({
   container: {
     position: 'absolute',
     bottom: 0,
     height: '100%',
     width: '100%',
-    flexDirection: 'column',
   },
   containerSpace: {
     alignItems: 'center',
@@ -14,17 +13,18 @@ export const EnterEmailStyle = StyleSheet.create({
   },
   containerLogo: {
     alignItems: 'center',
-    height: '25%',
+    height: '18%',
   },
   containerInput: {
     height: '58%',
     width: '90%',
     alignSelf: 'center',
   },
-  button: {
-    position: 'absolute',
+  buttonContainer:{
+    height: '12%',
     bottom: 0,
-    width: '100%',
-    height: 38,
+    alignSelf: 'center',
+    position: 'absolute',
+    width: '90%',
   },
 });

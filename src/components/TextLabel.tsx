@@ -1,6 +1,6 @@
 import React, { ReactNode } from 'react';
 import { Text, StyleSheet, TextStyle } from 'react-native';
-import { headerSize } from '@src/theme/Dimensions';
+import { headerSize, authLabelsSize } from '@src/theme/Dimensions';
 interface CustomTextProps {
   children: ReactNode;
   variant?: 'header' | 'label' | 'inputLabel' | 'errorLabel' | 'xSmall';
@@ -35,22 +35,22 @@ export const TextLabel: React.FC<CustomTextProps> = ({
 const styles = StyleSheet.create({
   header: {
     fontFamily: 'SpaceGrotesk-Bold',
-    fontSize: 32,
+    fontSize: authLabelsSize.large,
     color: '#181F25',
   },
   label: {
-    fontFamily: 'NHaasGroteskTXPro-Rg',
-    fontSize: 18,
+    fontFamily: 'Neue Haas Grotesk Text Pro',
+    fontSize: authLabelsSize.medium,
     color: '#181F25',
   },
   inputLabel: {
     fontFamily: 'SpaceGrotesk-Bold',
-    fontSize: 14,
+    fontSize: authLabelsSize.label,
     color: '#181F25',
   },
   errorLabel: {
-    fontFamily: 'NHaasGroteskTXPro-Rg',
-    fontSize: 12,
+    fontFamily: 'Neue Haas Grotesk Text Pro',
+    fontSize: authLabelsSize.xSmall,
     color: '#F2495C',
   },
   xSmall: {

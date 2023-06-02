@@ -6,8 +6,8 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import { ChooseAccountTypeStyle as styles } from '@src/styles/ChooseActionTypeStyle';
-import { colors } from '@src/theme/colors';
+import { ChooseActionTypeStyle as styles } from '@src/styles/ChooseActionTypeStyle';
+import { Colors } from '@src/theme/Colors';
 import { InformationIcon } from '@src/assets/svg/InformationIcon';
 import { ContextType } from '@src/services/Data';
 
@@ -31,23 +31,23 @@ export const ChooseNeuroAccessAppContext: FC<Props> = ({
 
   const getItemBackgroundColor = (index: number) => {
     return index === selected?.value
-      ? colors.light.chooseActionItemSelecectedBackground
-      : colors.light.chooseActionItemBackground;
+      ? Colors.light.chooseActionItemSelecectedBackground
+      : Colors.light.chooseActionItemBackground;
   };
   const getItemTextColor = (index: number) => {
     if (selected === undefined) {
-      return colors.light.chooseActionItemSelecectedBackground;
+      return Colors.light.chooseActionItemSelecectedBackground;
     } else {
       return index === selected?.value
-        ? colors.light.informationLogoSelectedColor
-        : colors.light.informationLogoColor;
+        ? Colors.light.informationLogoSelectedColor
+        : Colors.light.informationLogoColor;
     }
   };
 
   const getInformationLogoColor = (index: number) => {
     return index === selected?.value
-      ? colors.light.informationLogoSelectedColor
-      : colors.light.informationLogoColor;
+      ? Colors.light.informationLogoSelectedColor
+      : Colors.light.informationLogoColor;
   };
 
   const renderItem: ListRenderItem<ContextType> = ({ item, index }) => (

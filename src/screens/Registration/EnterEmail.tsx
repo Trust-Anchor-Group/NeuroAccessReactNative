@@ -16,6 +16,8 @@ import { Logo } from '@src/assets/svg/Logo';
 import { Colors } from '@src/theme/Colors';
 import { EmailIcon } from '@src/assets/svg/EmailIcon';
 import { isValidEmail } from '@src/utils/Validation';
+import { ActionButton } from '@src/components/ActionButton';
+import { ShowLabelsForAuth } from '@src/components/ShowLabelsForAuth';
 
 export const EnterEmail = ({
   navigation,
@@ -29,6 +31,14 @@ export const EnterEmail = ({
     if (isFormValid) {
       navigation.navigate('EmailOTPVerify');
     }
+  };
+
+  const onBackClick = () => {
+    navigation.goBack();
+  };
+
+  const onLanguageClick = () => {
+    // console.log('in email language click')
   };
 
   return (
@@ -45,13 +55,11 @@ export const EnterEmail = ({
           />
         </View>
         <View style={EnterEmailStyle.containerInput}>
-          <TextLabel variant="header">Let's get started</TextLabel>
-          <TextLabel style={EnterEmailStyle.textMargin} variant="label">
-            To get verified, you need to enter your email
-          </TextLabel>
-          <TextLabel style={EnterEmailStyle.textMargin} variant="inputLabel">
-            Enter email
-          </TextLabel>
+          <ShowLabelsForAuth
+            largeText="Let's get started"
+            smallText="To get verified, you need to enter your email"
+            inputLabel="Enter email"
+          />
           <InputBox
             leftIcon={EmailIcon}
             keyboardType="email-address"
@@ -72,19 +80,22 @@ export const EnterEmail = ({
               return isValidEmail(value);
             }}
           />
+
           <View style={EnterEmailStyle.button}>
-            <Button
-              color="#841584"
-              title="Next"
+            <ActionButton
+              title="Send Code"
               onPress={() => {
                 Keyboard.dismiss();
                 handleSubmit();
               }}
-            ></Button>
+            />
           </View>
         </View>
       </KeyboardAvoidingView>
-      <HeaderLayer />
+      <HeaderLayer
+        onBackAction={onBackClick}
+        onLanguageAction={onLanguageClick}
+      />
     </PlaneBackGround>
   );
 };

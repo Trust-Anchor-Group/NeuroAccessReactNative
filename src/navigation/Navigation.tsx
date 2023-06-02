@@ -6,8 +6,7 @@ import Home from '@src/screens/home/Home';
 import { EnterEmail } from '@src/screens/registration/EnterEmail';
 import { EnterMobileNumber } from '@src/screens/registration/EnterMobileNumber';
 import { MobileNumberOTPVerify } from '@src/screens/registration/MobileNumberOTPVerify';
-import { Splash } from '@src/screens/Splash/Splash';
-
+import { Splash } from '@src/screens/splash/Splash';
 const Stack = createStackNavigator();
 
 export const AuthStack = () => {
@@ -17,14 +16,13 @@ export const AuthStack = () => {
         name="ChooseAccoutType"
         component={ChooseAccountType}
         options={{
-          headerTitle: 'Choose Account Type',
+          headerShown: false
         }}
       />
       <Stack.Screen
         name="EnterEmail"
         component={EnterEmail}
         options={{
-          //headerTitle: 'Enter Email',
           headerShown: false
         }}
       />
