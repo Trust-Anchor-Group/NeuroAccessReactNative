@@ -26,3 +26,8 @@ export const inputIconSize = {
   iconWidth: horizontalScale(20),
   iconHeight: verticalScale(16),
 };
+
+export const informationLogoSize={
+  logoWidth: horizontalScale(20),
+  logoHeight: verticalScale(20),
+}
