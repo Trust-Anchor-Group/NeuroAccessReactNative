@@ -1,9 +1,22 @@
-export const colors = {
+export const Colors = {
   light: {
     background: '#F5F6F7',
     backgroundLayer: 'rgba(255, 255, 255, 0.7)',
     logoPrimary: '#181F25',
     logoSecondary: '#3E776D',
+
+    inputDefault:'rgba(24, 31, 37, 0.5)',
+    inputActive:'',
+
+    primaryText:'181F25',
+    secondaryText:'',
+    errorText:'#F2495C',
+    inputFocus:'#3E776D',
+    inputBackground:'#F5F6F7',
+    inputBorder:'rgba(24, 31, 37, 0.5)',
+
+
+    errorColor:'#F2495C',
     chooseActionItemBackground: '#F5F6F7',
     chooseActionItemSelecectedBackground: '#181F25',
     chooseActionItemBorderColor: 'rgba(24, 31, 37, 0.5)',
