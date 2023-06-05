@@ -1,17 +1,10 @@
 import React, { useState, useRef } from 'react';
-import {
-  Button,
-  View,
-  KeyboardAvoidingView,
-  Platform,
-  Keyboard,
-} from 'react-native';
+import { View, KeyboardAvoidingView, Platform, Keyboard } from 'react-native';
 import { StackScreenProps } from '@react-navigation/stack';
-import { PlaneBackGround } from '@src/components/PlaneBackGround';
+import { NeuroAccessBackground } from '@src/components/NeuroAccessBackground';
 import { EnterEmailStyle } from '@src/styles/EnterEmailStyle';
-import { TextLabel } from '@src/components/TextLabel';
 import InputBox, { TextInputRef } from '@src/components/InputBox';
-import { HeaderLayer } from '@src/components/HeaderLayer';
+import { NavigationHeader } from '@src/components/NavigationHeader';
 import { Logo } from '@src/assets/svg/Logo';
 import { Colors } from '@src/theme/Colors';
 import { EmailIcon } from '@src/assets/svg/EmailIcon';
@@ -23,7 +16,6 @@ export const EnterEmail = ({
   navigation,
 }: StackScreenProps<{ Profile: any }>) => {
   const emailInputRef = useRef<TextInputRef>(null);
-  const ageInputRef = useRef<TextInputRef>(null);
   const [email, setEmail] = useState('');
 
   const handleSubmit = () => {
@@ -37,12 +29,10 @@ export const EnterEmail = ({
     navigation.goBack();
   };
 
-  const onLanguageClick = () => {
-    // console.log('in email language click')
-  };
+  const onLanguageClick = () => {};
 
   return (
-    <PlaneBackGround>
+    <NeuroAccessBackground>
       <KeyboardAvoidingView
         behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
         style={EnterEmailStyle.container}
@@ -69,7 +59,7 @@ export const EnterEmail = ({
               setEmail(val);
             }}
             actionType="done"
-            onFocusColor="#3E776D"
+            onFocusColor={Colors.light.inputFocus}
             placeholder="your.email@email.com"
             autoFocus={false}
             autoCapitalize="none"
@@ -92,10 +82,10 @@ export const EnterEmail = ({
           </View>
         </View>
       </KeyboardAvoidingView>
-      <HeaderLayer
+      <NavigationHeader
         onBackAction={onBackClick}
         onLanguageAction={onLanguageClick}
       />
-    </PlaneBackGround>
+    </NeuroAccessBackground>
   );
 };

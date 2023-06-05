@@ -1,29 +1,30 @@
 import React, { FC } from 'react';
 import { TouchableOpacity, View } from 'react-native';
-import { HeaderLayerStyle } from '@src/styles/HeaderLayerStyle';
+import { NavigationHeaderStyle } from '@src/components/styles/NavigationHeaderStyle';
 import { LanguageIcon } from '@src/assets/svg/LanguageIcon';
 import { BackIcon } from '@src/assets/svg/BackIcon';
 import { TextLabel } from './TextLabel';
+import { TextLabelVariants } from '@src/utils/enums/TextLabelVariants';
 
 interface Props {
   hideBackAction?: boolean;
   onBackAction?: () => void;
   onLanguageAction: () => void;
 }
-export const HeaderLayer: FC<Props> = ({
+export const NavigationHeader: FC<Props> = ({
   hideBackAction,
   onBackAction,
   onLanguageAction,
 }) => {
   return (
-    <View style={HeaderLayerStyle.container}>
+    <View style={NavigationHeaderStyle.container}>
       {hideBackAction ? (
         <View
-          style={HeaderLayerStyle.emptyContainer}
+          style={NavigationHeaderStyle.emptyContainer}
         />
       ) : (
         <TouchableOpacity
-          style={HeaderLayerStyle.backContainer}
+          style={NavigationHeaderStyle.backContainer}
           onPress={() => {
             onBackAction();
           }}
@@ -32,16 +33,16 @@ export const HeaderLayer: FC<Props> = ({
         </TouchableOpacity>
       )}
 
-      <View style={HeaderLayerStyle.middleContainer}></View>
+      <View style={NavigationHeaderStyle.middleContainer}></View>
 
       <TouchableOpacity
-        style={HeaderLayerStyle.languageContainer}
+        style={NavigationHeaderStyle.languageContainer}
         onPress={() => {
           onLanguageAction();
         }}
       >
         <LanguageIcon />
-        <TextLabel variant="xSmall" style={HeaderLayerStyle.textMarginTop}>
+        <TextLabel variant={TextLabelVariants.XSMALL} style={NavigationHeaderStyle.textMarginTop}>
           English
         </TextLabel>
       </TouchableOpacity>

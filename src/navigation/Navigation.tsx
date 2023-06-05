@@ -6,7 +6,6 @@ import Home from '@src/screens/home/Home';
 import { EnterEmail } from '@src/screens/registration/EnterEmail';
 import { EnterMobileNumber } from '@src/screens/registration/EnterMobileNumber';
 import { MobileNumberOTPVerify } from '@src/screens/registration/MobileNumberOTPVerify';
-import { Splash } from '@src/screens/splash/Splash';
 const Stack = createStackNavigator();
 
 export const AuthStack = () => {

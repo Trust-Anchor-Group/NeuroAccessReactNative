@@ -4,12 +4,13 @@ import {
   TextInput,
   Image,
   ImageSourcePropType,
-  StyleSheet,
   TextInputProps,
 } from 'react-native';
 import { InfoIcon } from '@src/assets/svg/InfoIcon';
 import { TextLabel } from './TextLabel';
-import { inputIconSize } from '@src/theme/Dimensions';
+import { InputBoxStyle } from './styles/InputBoxStyle';
+import { TextLabelVariants } from '@src/utils/enums/TextLabelVariants';
+
 interface InputBoxProps extends TextInputProps {
   leftIcon: any;
   rightIcon?: ImageSourcePropType;
@@ -94,22 +95,22 @@ const InputBox: React.ForwardRefRenderFunction<TextInputRef, InputBoxProps> = (
     <View>
       <View
         style={[
-          styles.container,
-          isFocused ? styles.containerFocused : undefined,
-          error ? styles.errorOcurred : undefined,
+          InputBoxStyle.container,
+          isFocused ? InputBoxStyle.containerFocused : undefined,
+          error ? InputBoxStyle.errorOcurred : undefined,
         ]}
       >
         {leftIcon && (
-          <View style={styles.leftIcon}>
+          <View style={InputBoxStyle.leftIcon}>
             <LeftIcon iconColor={error ? '#F2495C' : leftIconColor.current} />
           </View>
         )}
         <TextInput
           ref={inputRef}
           style={[
-            styles.input,
-            isFocused && styles.inputFocused,
-            error && styles.inputError,
+            InputBoxStyle.input,
+            isFocused && InputBoxStyle.inputFocused,
+            error && InputBoxStyle.inputError,
           ]}
           value={value}
           onChangeText={onChangeText}
@@ -121,68 +122,18 @@ const InputBox: React.ForwardRefRenderFunction<TextInputRef, InputBoxProps> = (
           returnKeyType={actionType === 'next' ? 'next' : 'done'}
           {...rest}
         />
-        {rightIcon && <Image source={rightIcon} style={styles.rightIcon} />}
+        {rightIcon && <Image source={rightIcon} style={InputBoxStyle.rightIcon} />}
       </View>
       {error && (
-        <View style={styles.errorContainer}>
+        <View style={InputBoxStyle.errorContainer}>
           <InfoIcon />
-          <TextLabel variant="errorLabel">{error}</TextLabel>
+          <TextLabel variant={TextLabelVariants.ERRORLABEL}>{error}</TextLabel>
         </View>
       )}
     </View>
   );
 };
 
-const styles = StyleSheet.create({
-  container: {
-    marginTop: 5,
-    flexDirection: 'row',
-    alignItems: 'center',
-    borderWidth: 1,
-    borderColor: 'rgba(24, 31, 37, 0.5)',
-    backgroundColor: '#F5F6F7',
-    borderRadius: 4,
-    paddingHorizontal: 12,
-    paddingVertical: 8,
-  },
-  containerFocused: {
-    borderColor: '#3E776D',
-  },
-  errorOcurred: {
-    borderColor: '#F2495C',
-  },
-  input: {
-    flex: 1,
-    height: inputIconSize[40],
-    color: 'black',
-    fontSize: 16,
-  },
-  leftIcon: {
-    marginRight: 8,
-  },
-  leftIconFocused: {
-    color: 'blue',
-  },
-  leftIconBlurred: {
-    color: 'gray',
-  },
-  rightIcon: {
-    width: 20,
-    height: 20,
-    marginLeft: 8,
-  },
-  inputFocused: {
-    borderColor: 'blue',
-  },
-  inputError: {
-    borderColor: '#F2495C',
-    color: '#F2495C',
-  },
-  errorContainer: {
-    marginTop: 2,
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-});
+
 
 export default forwardRef(InputBox);

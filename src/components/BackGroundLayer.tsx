@@ -1,6 +1,6 @@
 import React, { ReactNode } from 'react';
 import { View, ViewStyle } from 'react-native';
-import { BackGroundLayerStyle } from '@src/styles/BackGroundLayerStyle';
+import { BackGroundLayerStyle } from '@src/components/styles/BackGroundLayerStyle';
 import { BackgroundLayerIcon } from '@src/assets/svg/BackgroundLayerIcon';
 import { Colors } from '@src/theme/Colors';
 import { Logo } from '@src/assets/svg/Logo';

@@ -1,9 +1,10 @@
 import React, { ReactNode } from 'react';
-import { Text, StyleSheet, TextStyle } from 'react-native';
-import { headerSize, authLabelsSize } from '@src/theme/Dimensions';
+import { Text, TextStyle } from 'react-native';
+import { TextLabelStyle } from '@src/components/styles/TextLabelStyle';
+import { TextLabelVariants } from '@src/utils/enums/TextLabelVariants';
 interface CustomTextProps {
   children: ReactNode;
-  variant?: 'header' | 'label' | 'inputLabel' | 'errorLabel' | 'xSmall';
+  variant?: TextLabelVariants;
   style?: TextStyle;
 }
 
@@ -14,16 +15,16 @@ export const TextLabel: React.FC<CustomTextProps> = ({
 }) => {
   const getVariantStyle = (): TextStyle | undefined => {
     switch (variant) {
-      case 'header':
-        return styles.header;
-      case 'label':
-        return styles.label;
-      case 'inputLabel':
-        return styles.inputLabel;
-      case 'errorLabel':
-        return styles.errorLabel;
-      case 'xSmall':
-        return styles.xSmall;
+      case TextLabelVariants.HEADER:
+        return TextLabelStyle.header;
+      case TextLabelVariants.LABEL:
+        return TextLabelStyle.label;
+      case TextLabelVariants.INPUTLABEL:
+        return TextLabelStyle.inputLabel;
+      case TextLabelVariants.ERRORLABEL:
+        return TextLabelStyle.errorLabel;
+      case TextLabelVariants.XSMALL:
+        return TextLabelStyle.xSmall;
       default:
         return undefined;
     }
@@ -31,31 +32,3 @@ export const TextLabel: React.FC<CustomTextProps> = ({
 
   return <Text style={[getVariantStyle(), style]}>{children}</Text>;
 };
-
-const styles = StyleSheet.create({
-  header: {
-    fontFamily: 'SpaceGrotesk-Bold',
-    fontSize: authLabelsSize.large,
-    color: '#181F25',
-  },
-  label: {
-    fontFamily: 'Neue Haas Grotesk Text Pro',
-    fontSize: authLabelsSize.medium,
-    color: '#181F25',
-  },
-  inputLabel: {
-    fontFamily: 'SpaceGrotesk-Bold',
-    fontSize: authLabelsSize.label,
-    color: '#181F25',
-  },
-  errorLabel: {
-    fontFamily: 'Neue Haas Grotesk Text Pro',
-    fontSize: authLabelsSize.xSmall,
-    color: '#F2495C',
-  },
-  xSmall: {
-    fontFamily: 'SpaceGrotesk-Medium',
-    fontSize: headerSize.fontSize,
-    color: '#181F25',
-  },
-});

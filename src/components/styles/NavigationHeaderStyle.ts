@@ -1,7 +1,7 @@
 import { StyleSheet } from 'react-native';
 import { headerSize, backgroundLayerSize } from '@src/theme/Dimensions';
 
-export const HeaderLayerStyle = StyleSheet.create({
+export const NavigationHeaderStyle = StyleSheet.create({
   container: {
     position: 'absolute',
     marginTop: backgroundLayerSize.lMarginTop,

@@ -1,12 +1,12 @@
-import { StyleSheet, View } from 'react-native';
+import { View } from 'react-native';
 import React, { useState } from 'react';
 import { StackScreenProps } from '@react-navigation/stack';
 import { ChooseNeuroAccessAppContext } from '@src/components/ChooseNeuroAccessAppContext';
 import { ContextType, chooseActionTypeData } from '@src/services/Data';
 import { ActionButton } from '@src/components/ActionButton';
-import { PlaneBackGround } from '@src/components/PlaneBackGround';
+import { NeuroAccessBackground } from '@src/components/NeuroAccessBackground';
 import { ChooseAccountTypeStyle } from '@src/styles/ChooseAccountTypeStyle';
-import { HeaderLayer } from '@src/components/HeaderLayer';
+import { NavigationHeader } from '@src/components/NavigationHeader';
 import { Colors } from '@src/theme/Colors';
 import { Logo } from '@src/assets/svg/Logo';
 import { ShowLabelsForAuth } from '@src/components/ShowLabelsForAuth';
@@ -17,11 +17,10 @@ export const ChooseAccountType = ({
   const [selected, setSelected] = useState<ContextType>();
 
   const onLanguageClick = () => {
-    // console.log('in email language click')
   };
 
   return (
-    <PlaneBackGround>
+    <NeuroAccessBackground>
       <View style={ChooseAccountTypeStyle.container}>
         <View style={ChooseAccountTypeStyle.containerSpace} />
         <View style={ChooseAccountTypeStyle.containerLogo}>
@@ -53,7 +52,7 @@ export const ChooseAccountType = ({
             />
           </View>
       </View>
-      <HeaderLayer hideBackAction={true} onLanguageAction={onLanguageClick} />
-    </PlaneBackGround>
+      <NavigationHeader hideBackAction={true} onLanguageAction={onLanguageClick} />
+    </NeuroAccessBackground>
   );
 };

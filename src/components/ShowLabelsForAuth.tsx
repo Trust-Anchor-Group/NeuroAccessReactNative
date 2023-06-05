@@ -1,7 +1,8 @@
 import React, { FC } from "react";
 import { View } from "react-native";
 import { TextLabel } from "./TextLabel";
-import { ShowLabelsForAuthStyle } from "@src/styles/ShowLabelsForAuthStyle";
+import { ShowLabelsForAuthStyle } from "@src/components/styles/ShowLabelsForAuthStyle";
+import { TextLabelVariants } from "@src/utils/enums/TextLabelVariants";
 
 interface Props{
   largeText:string;
@@ -11,11 +12,11 @@ interface Props{
 export const ShowLabelsForAuth:FC<Props> = ({largeText,smallText,inputLabel})=>{
 
   return(<View>
-            <TextLabel variant="header">{largeText}</TextLabel>
-          <TextLabel style={ShowLabelsForAuthStyle.textMargin} variant="label">
+            <TextLabel variant={TextLabelVariants.HEADER}>{largeText}</TextLabel>
+          <TextLabel style={ShowLabelsForAuthStyle.textMargin} variant={TextLabelVariants.LABEL}>
             {smallText}
           </TextLabel>
-          <TextLabel style={ShowLabelsForAuthStyle.textMargin} variant="inputLabel">
+          <TextLabel style={ShowLabelsForAuthStyle.textMargin} variant={TextLabelVariants.INPUTLABEL}>
             {inputLabel}
           </TextLabel>
   </View>)
