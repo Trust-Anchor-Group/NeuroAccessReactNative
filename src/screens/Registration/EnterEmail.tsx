@@ -11,10 +11,12 @@ import { EmailIcon } from '@src/assets/svg/EmailIcon';
 import { isValidEmail } from '@src/utils/Validation';
 import { ActionButton } from '@src/components/ActionButton';
 import { ShowLabelsForAuth } from '@src/components/ShowLabelsForAuth';
+import { useTranslation } from 'react-i18next';
 
 export const EnterEmail = ({
   navigation,
 }: StackScreenProps<{ Profile: any }>) => {
+  const { t } = useTranslation();
   const emailInputRef = useRef<TextInputRef>(null);
   const [email, setEmail] = useState('');
 
@@ -29,7 +31,9 @@ export const EnterEmail = ({
     navigation.goBack();
   };
 
-  const onLanguageClick = () => {};
+  const onLanguageClick = () => {
+    navigation.navigate('Settings');
+  };
 
   return (
     <NeuroAccessBackground>
@@ -46,9 +50,9 @@ export const EnterEmail = ({
         </View>
         <View style={EnterEmailStyle.containerInput}>
           <ShowLabelsForAuth
-            largeText="Let's get started"
-            smallText="To get verified, you need to enter your email"
-            inputLabel="Enter email"
+            largeText={t('heading.getStarted')}
+            smallText={t('heading.verifyEmail')}
+            inputLabel={t('enterEmailScreen.label')}
           />
           <InputBox
             leftIcon={EmailIcon}
@@ -60,7 +64,7 @@ export const EnterEmail = ({
             }}
             actionType="done"
             onFocusColor={Colors.light.inputFocus}
-            placeholder="your.email@email.com"
+            placeholder={t('enterEmailScreen.placeHolder')}
             autoFocus={false}
             autoCapitalize="none"
             onAction={() => {
@@ -73,7 +77,7 @@ export const EnterEmail = ({
 
           <View style={EnterEmailStyle.button}>
             <ActionButton
-              title="Send Code"
+              title={t('buttonLabel.sendCode')}
               onPress={() => {
                 Keyboard.dismiss();
                 handleSubmit();

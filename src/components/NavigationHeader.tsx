@@ -5,6 +5,7 @@ import { LanguageIcon } from '@src/assets/svg/LanguageIcon';
 import { BackIcon } from '@src/assets/svg/BackIcon';
 import { TextLabel } from './TextLabel';
 import { TextLabelVariants } from '@src/utils/enums/TextLabelVariants';
+import { useTranslation } from 'react-i18next';
 
 interface Props {
   hideBackAction?: boolean;
@@ -16,6 +17,9 @@ export const NavigationHeader: FC<Props> = ({
   onBackAction,
   onLanguageAction,
 }) => {
+  const { t } = useTranslation();
+  
+
   return (
     <View style={NavigationHeaderStyle.container}>
       {hideBackAction ? (
@@ -43,7 +47,7 @@ export const NavigationHeader: FC<Props> = ({
       >
         <LanguageIcon />
         <TextLabel variant={TextLabelVariants.XSMALL} style={NavigationHeaderStyle.textMarginTop}>
-          English
+          {t('language')}
         </TextLabel>
       </TouchableOpacity>
     </View>
