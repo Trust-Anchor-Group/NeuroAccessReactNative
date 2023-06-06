@@ -20,5 +20,8 @@ export default {
   enterEmailScreen:{
     label:'Enter email',
     placeHolder:'your.email@email.com'
+  },
+  settingScreen:{
+    selectLanguage:' Select Language '
   }
 };

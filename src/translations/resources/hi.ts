@@ -20,5 +20,8 @@ export default {
   enterEmailScreen:{
     label:'ईमेल दर्ज करें',
     placeHolder:'your.email@email.com'
+  },
+  settingScreen:{
+    selectLanguage:' भाषा चुने '
   }
 };

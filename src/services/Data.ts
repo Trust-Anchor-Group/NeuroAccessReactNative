@@ -8,3 +8,9 @@ export const chooseActionTypeData : ContextType[] = [
   { label: 'choosePurposeScreen.experimental', value: 2 },
   { label: 'choosePurposeScreen.educational', value: 3 },
 ];
+
+
+export const LANGS = [
+  {lngCode: 'en', label: 'English'},
+  {lngCode: 'hi', label: 'हिन्दी'},
+];
