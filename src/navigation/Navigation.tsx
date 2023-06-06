@@ -6,6 +6,7 @@ import Home from '@src/screens/home/Home';
 import { EnterEmail } from '@src/screens/registration/EnterEmail';
 import { EnterMobileNumber } from '@src/screens/registration/EnterMobileNumber';
 import { MobileNumberOTPVerify } from '@src/screens/registration/MobileNumberOTPVerify';
+import { Settings } from '@src/screens/settings/Settings';
 const Stack = createStackNavigator();
 
 export const AuthStack = () => {
@@ -46,6 +47,16 @@ export const AuthStack = () => {
           headerTitle: 'Mobile Number OTP Verification',
         }}
       />
+
+<Stack.Screen
+        name="Settings"
+        component={Settings}
+        options={{
+          headerTitle: 'Settings',
+        }}
+      />
+
+
     </Stack.Navigator>
   );
 };

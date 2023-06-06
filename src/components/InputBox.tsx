@@ -6,10 +6,11 @@ import {
   ImageSourcePropType,
   TextInputProps,
 } from 'react-native';
-import { InfoIcon } from '@src/assets/svg/InfoIcon';
+import { InformationIcon } from '@src/assets/svg/InformationIcon';
 import { TextLabel } from './TextLabel';
 import { InputBoxStyle } from './styles/InputBoxStyle';
 import { TextLabelVariants } from '@src/utils/enums/TextLabelVariants';
+import { Colors } from '@src/theme/Colors';
 
 interface InputBoxProps extends TextInputProps {
   leftIcon: any;
@@ -102,7 +103,7 @@ const InputBox: React.ForwardRefRenderFunction<TextInputRef, InputBoxProps> = (
       >
         {leftIcon && (
           <View style={InputBoxStyle.leftIcon}>
-            <LeftIcon iconColor={error ? '#F2495C' : leftIconColor.current} />
+            <LeftIcon iconColor={error ? Colors.light.errorText : leftIconColor.current} />
           </View>
         )}
         <TextInput
@@ -126,7 +127,7 @@ const InputBox: React.ForwardRefRenderFunction<TextInputRef, InputBoxProps> = (
       </View>
       {error && (
         <View style={InputBoxStyle.errorContainer}>
-          <InfoIcon />
+          <InformationIcon textColor={Colors.light.errorText}/>
           <TextLabel variant={TextLabelVariants.ERRORLABEL}>{error}</TextLabel>
         </View>
       )}

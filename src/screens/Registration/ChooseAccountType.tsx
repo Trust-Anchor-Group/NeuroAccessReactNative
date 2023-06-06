@@ -10,13 +10,17 @@ import { NavigationHeader } from '@src/components/NavigationHeader';
 import { Colors } from '@src/theme/Colors';
 import { Logo } from '@src/assets/svg/Logo';
 import { ShowLabelsForAuth } from '@src/components/ShowLabelsForAuth';
+import { useTranslation } from 'react-i18next';
 
 export const ChooseAccountType = ({
   navigation,
 }: StackScreenProps<{ Profile: any }>) => {
+  const { t } = useTranslation();
+
   const [selected, setSelected] = useState<ContextType>();
 
   const onLanguageClick = () => {
+    navigation.navigate('Settings');
   };
 
   return (
@@ -31,9 +35,9 @@ export const ChooseAccountType = ({
         </View>
         <View style={ChooseAccountTypeStyle.containerInput}>
           <ShowLabelsForAuth
-            largeText="Welcome to Neuro-Access"
-            smallText="Choose In what context you intend to use the Neuro-Access"
-            inputLabel="Choose access purpose"
+            largeText={t('heading.welcome')}
+            smallText={t('heading.chooseIntend')}
+            inputLabel={t('choosePurposeScreen.label')}
           />
 
           <ChooseNeuroAccessAppContext
@@ -43,16 +47,17 @@ export const ChooseAccountType = ({
           />
         </View>
 
-        <View
-            style={ChooseAccountTypeStyle.buttonContainer}
-          >
-            <ActionButton
-              title="Continue"
-              onPress={() => navigation.navigate('EnterEmail')}
-            />
-          </View>
+        <View style={ChooseAccountTypeStyle.buttonContainer}>
+          <ActionButton
+            title={t('buttonLabel.continue')}
+            onPress={() => navigation.navigate('EnterEmail')}
+          />
+        </View>
       </View>
-      <NavigationHeader hideBackAction={true} onLanguageAction={onLanguageClick} />
+      <NavigationHeader
+        hideBackAction={true}
+        onLanguageAction={onLanguageClick}
+      />
     </NeuroAccessBackground>
   );
 };

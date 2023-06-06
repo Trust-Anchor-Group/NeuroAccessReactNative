@@ -10,6 +10,8 @@ import { ChooseActionTypeStyle as styles } from '@src/styles/ChooseActionTypeSty
 import { Colors } from '@src/theme/Colors';
 import { InformationIcon } from '@src/assets/svg/InformationIcon';
 import { ContextType } from '@src/services/Data';
+import { useTranslation } from 'react-i18next';
+
 
 interface Props {
   label: string;
@@ -22,6 +24,7 @@ export const ChooseNeuroAccessAppContext: FC<Props> = ({
   data,
   onSelect,
 }) => {
+  const { t } = useTranslation();
   const [selected, setSelected] = useState<ContextType>();
 
   const onItemPress = (item: ContextType): void => {
@@ -61,7 +64,7 @@ export const ChooseNeuroAccessAppContext: FC<Props> = ({
       onPress={() => onItemPress(item)}
     >
       <Text style={{ color: getItemTextColor(index), flex: 1 }}>
-        {item.label}
+        {t(item.label)}
       </Text>
       <View style={styles.informationLogoContainer}>
         <InformationIcon textColor={getInformationLogoColor(index)} />

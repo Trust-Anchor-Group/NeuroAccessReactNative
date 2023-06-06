@@ -1,11 +1,10 @@
-
 export interface ContextType {
   label: string,
   value: number
 }
 export const chooseActionTypeData : ContextType[] = [
-  { label: 'Personal use', value: 0 },
-  { label: 'Work', value: 1 },
-  { label: 'Experimental', value: 2 },
-  { label: 'Educational', value: 3 },
+  { label: 'choosePurposeScreen.personalUse', value: 0 },
+  { label: 'choosePurposeScreen.work', value: 1 },
+  { label: 'choosePurposeScreen.experimental', value: 2 },
+  { label: 'choosePurposeScreen.educational', value: 3 },
 ];
