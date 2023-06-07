@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React, { FC, useContext } from 'react';
 import { TouchableOpacity, View } from 'react-native';
 import { NavigationHeaderStyle } from '@src/components/styles/NavigationHeaderStyle';
 import { LanguageIcon } from '@src/assets/svg/LanguageIcon';
@@ -6,10 +6,11 @@ import { BackIcon } from '@src/assets/svg/BackIcon';
 import { TextLabel } from './TextLabel';
 import { TextLabelVariants } from '@src/utils/enums/TextLabelVariants';
 import { useTranslation } from 'react-i18next';
+import { ThemeContext } from '@src/theme/provider/ThemeContext';
 
 interface Props {
   hideBackAction?: boolean;
-  onBackAction?: () => void;
+  onBackAction: () => void;
   onLanguageAction: () => void;
 }
 export const NavigationHeader: FC<Props> = ({
@@ -18,7 +19,7 @@ export const NavigationHeader: FC<Props> = ({
   onLanguageAction,
 }) => {
   const { t } = useTranslation();
-  
+  const {themeColors} = useContext(ThemeContext);
 
   return (
     <View style={NavigationHeaderStyle.container}>
@@ -33,7 +34,7 @@ export const NavigationHeader: FC<Props> = ({
             onBackAction();
           }}
         >
-          <BackIcon />
+          <BackIcon iconColor={themeColors.icons.back}/>
         </TouchableOpacity>
       )}
 
@@ -45,7 +46,7 @@ export const NavigationHeader: FC<Props> = ({
           onLanguageAction();
         }}
       >
-        <LanguageIcon />
+        <LanguageIcon iconColor={themeColors.icons.language}/>
         <TextLabel variant={TextLabelVariants.XSMALL} style={NavigationHeaderStyle.textMarginTop}>
           {t('language')}
         </TextLabel>

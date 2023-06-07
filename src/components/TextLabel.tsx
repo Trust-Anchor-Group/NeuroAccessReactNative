@@ -1,7 +1,8 @@
-import React, { ReactNode } from 'react';
+import React, { ReactNode, useContext } from 'react';
 import { Text, TextStyle } from 'react-native';
 import { TextLabelStyle } from '@src/components/styles/TextLabelStyle';
 import { TextLabelVariants } from '@src/utils/enums/TextLabelVariants';
+import { ThemeContext } from '@src/theme/provider/ThemeContext';
 interface CustomTextProps {
   children: ReactNode;
   variant?: TextLabelVariants;
@@ -13,18 +14,21 @@ export const TextLabel: React.FC<CustomTextProps> = ({
   variant,
   style,
 }) => {
+const {themeColors} = useContext(ThemeContext);
+const styles = TextLabelStyle(themeColors)
+
   const getVariantStyle = (): TextStyle | undefined => {
     switch (variant) {
       case TextLabelVariants.HEADER:
-        return TextLabelStyle.header;
+        return styles.header;
       case TextLabelVariants.LABEL:
-        return TextLabelStyle.label;
+        return styles.label;
       case TextLabelVariants.INPUTLABEL:
-        return TextLabelStyle.inputLabel;
+        return styles.inputLabel;
       case TextLabelVariants.ERRORLABEL:
-        return TextLabelStyle.errorLabel;
+        return styles.errorLabel;
       case TextLabelVariants.XSMALL:
-        return TextLabelStyle.xSmall;
+        return styles.xSmall;
       default:
         return undefined;
     }

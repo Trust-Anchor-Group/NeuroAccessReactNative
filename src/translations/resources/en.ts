@@ -22,6 +22,7 @@ export default {
     placeHolder:'your.email@email.com'
   },
   settingScreen:{
-    selectLanguage:' Select Language '
+    selectLanguage:' Select Language ',
+    changeTheme:'Change Theme'
   }
 };

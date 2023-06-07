@@ -1,6 +1,9 @@
 import { horizontalScale, verticalScale, moderateScale } from './Metrics';
+
+
 export const backgroundLayerSize = {
-  lMarginTop: verticalScale(60),
+  marginTopAndroid: verticalScale(30),
+  marginTopIos: verticalScale(60),
   layerWidth: horizontalScale(431),
   layerHeight: verticalScale(919),
 };
@@ -33,7 +36,7 @@ export const logoSize = {
 
 export const inputIconSize = {
   1: horizontalScale(20),
-  40: verticalScale(30),
+  40: verticalScale(40),
   iconWidth: horizontalScale(20),
   iconHeight: verticalScale(16),
 };
@@ -42,8 +45,8 @@ export const inputBoxSize = {
   marginTop: moderateScale(5),
   borderWidth: moderateScale(1),
   borderRadius: moderateScale(4),
-  paddingHorizontal: moderateScale(12),
-  paddingVertical: moderateScale(8),
+  paddingHorizontal: moderateScale(8),
+  paddingVertical: moderateScale(2),
   fontSize: moderateScale(16),
   leftIcon:{
     marginRight: moderateScale(8),
@@ -64,5 +67,21 @@ export const informationLogoSize = {
 };
 
 export const chooseAccountItemHeight = {
-  height: verticalScale(50),
+  height: verticalScale(45),
+  paddingHorizontal: moderateScale(10),
+  paddingVertical: moderateScale(5),
+  borderWidth: moderateScale(1),
+  marginHorizontal: moderateScale(0),
+  borderRadius: moderateScale(4),
+  marginVertical: moderateScale(5),
+  itemHorizontalMargin:moderateScale(5),
+  icon:{
+    marginRight: moderateScale(10)
+  }
+};
+
+export const button = {
+  height: verticalScale(40),
+  borderRadius: moderateScale(4),
+  fontSize: moderateScale(14),
 };

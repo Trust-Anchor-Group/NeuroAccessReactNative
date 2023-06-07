@@ -1,20 +1,20 @@
-import { Colors } from "@src/theme/Colors";
 import { StyleSheet } from "react-native";
+import { button } from "@src/theme/Dimensions";
 
-export const GlobalStyle = StyleSheet.create({
+export const GlobalStyle=(themeColors:any) => StyleSheet.create({
   appButtonContainer: {
-    height: 50,
-    backgroundColor: Colors.light.actionButtonBgColor,
-    borderRadius: 4,
+    height: button.height,
+    backgroundColor: themeColors.button.bg,
+    borderRadius: button.borderRadius,
     justifyContent: 'center',
     alignItems: 'center',
   },
   appButtonText: {
-    fontSize: 18,
+    fontSize: button.fontSize,
     fontFamily: 'Neue Haas Grotesk Text Pro',
     fontStyle: 'normal',
     letterSpacing: 0.1,
-    color: Colors.light.actionButtonTitleColor,
+    color: themeColors.button.text,
     fontWeight: '700',
     alignSelf: 'center',
   },

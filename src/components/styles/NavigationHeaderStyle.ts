@@ -1,10 +1,10 @@
-import { StyleSheet } from 'react-native';
+import { StyleSheet,Platform } from 'react-native';
 import { headerSize, backgroundLayerSize } from '@src/theme/Dimensions';
 
 export const NavigationHeaderStyle = StyleSheet.create({
   container: {
     position: 'absolute',
-    marginTop: backgroundLayerSize.lMarginTop,
+    marginTop: Platform.OS==='ios'?backgroundLayerSize.marginTopIos:backgroundLayerSize.marginTopAndroid,
     flex: 1,
     flexDirection: 'row',
     alignItems: 'flex-end',

@@ -1,10 +1,9 @@
-import { Colors } from '@src/theme/Colors';
 import { StyleSheet } from 'react-native';
 import { chooseAccountItemHeight } from '@src/theme/Dimensions';
 const itemHeight = chooseAccountItemHeight.height;
-const itemHorizontalMargin = 5;
+const itemHorizontalMargin = chooseAccountItemHeight.itemHorizontalMargin;
 
-export const ChooseActionTypeStyle = StyleSheet.create({
+export const ChooseActionTypeStyle=(themeColors:any) => StyleSheet.create({
   button: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -17,7 +16,7 @@ export const ChooseActionTypeStyle = StyleSheet.create({
     textAlign: 'center',
   },
   icon: {
-    marginRight: 10,
+    marginRight: chooseAccountItemHeight.icon.marginRight,
   },
   informationLogoContainer: { 
     right: 0, 
@@ -38,17 +37,14 @@ export const ChooseActionTypeStyle = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     flexDirection: 'row',
-    backgroundColor: Colors.light.chooseActionItemBackground,
-    paddingHorizontal: 10,
-    paddingVertical: 10,
-    borderWidth: 1,
-    borderColor: Colors.light.chooseActionItemBorderColor,
-    marginHorizontal: 0,
+    backgroundColor: themeColors.choosePurpose.itemDefaultBg,
+    paddingHorizontal: chooseAccountItemHeight.paddingHorizontal,
+    paddingVertical: chooseAccountItemHeight.paddingVertical,
+    borderWidth: chooseAccountItemHeight.borderWidth,
+    borderColor: themeColors.choosePurpose.itemBorder,
+    marginHorizontal: chooseAccountItemHeight.marginHorizontal,
     height: itemHeight,
-    borderRadius: 4,
-    marginVertical: 5,
-  },
-  text: {
-    color: '#F5F6F7',
-  },
+    borderRadius: chooseAccountItemHeight.borderRadius,
+    marginVertical: chooseAccountItemHeight.marginVertical,
+  }
 });

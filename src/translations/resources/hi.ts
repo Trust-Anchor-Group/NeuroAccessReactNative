@@ -22,6 +22,7 @@ export default {
     placeHolder:'your.email@email.com'
   },
   settingScreen:{
-    selectLanguage:' भाषा चुने '
+    selectLanguage:' भाषा चुने ',
+    changeTheme : 'विषय को परिवर्तित करें'
   }
 };
