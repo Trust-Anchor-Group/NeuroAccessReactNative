@@ -1,6 +1,6 @@
 import { StyleSheet } from 'react-native';
 
-export const EnterEmailStyle = StyleSheet.create({
+export const EnterEmailStyle =(themeColors:any)=> StyleSheet.create({
   container: {
     position: 'absolute',
     bottom: 0,
@@ -17,14 +17,13 @@ export const EnterEmailStyle = StyleSheet.create({
     height: '25%',
   },
   containerInput: {
-    height: '58%',
+    height: '56%',
     width: '90%',
     alignSelf: 'center',
   },
   button: {
     position: 'absolute',
     bottom: 0,
-    width: '100%',
-    height: 38,
+    width: '100%'
   },
 });

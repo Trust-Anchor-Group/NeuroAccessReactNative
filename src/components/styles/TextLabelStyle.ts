@@ -1,31 +1,30 @@
 import { StyleSheet } from "react-native";
 import { headerSize, authLabelsSize } from '@src/theme/Dimensions';
-import { Colors } from "@src/theme/Colors";
 
-export const TextLabelStyle = StyleSheet.create({
+export const TextLabelStyle= (themeColors:any) => StyleSheet.create({
   header: {
     fontFamily: 'SpaceGrotesk-Bold',
     fontSize: authLabelsSize.large,
-    color: Colors.light.primaryText,
+    color: themeColors.text.primary,
   },
   label: {
     fontFamily: 'Neue Haas Grotesk Text Pro',
     fontSize: authLabelsSize.medium,
-    color: Colors.light.primaryText,
+    color: themeColors.text.primary,
   },
   inputLabel: {
     fontFamily: 'SpaceGrotesk-Bold',
     fontSize: authLabelsSize.label,
-    color: Colors.light.primaryText,
+    color: themeColors.text.primary,
   },
   errorLabel: {
     fontFamily: 'Neue Haas Grotesk Text Pro',
     fontSize: authLabelsSize.xSmall,
-    color: Colors.light.errorText,
+    color: themeColors.text.error,
   },
   xSmall: {
     fontFamily: 'SpaceGrotesk-Medium',
     fontSize: headerSize.fontSize,
-    color: Colors.light.primaryText,
+    color: themeColors.text.primary,
   },
 });

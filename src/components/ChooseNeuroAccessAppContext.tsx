@@ -1,17 +1,17 @@
-import React, { FC, useState } from 'react';
+import React, { FC, useState, useContext } from 'react';
 import {
   FlatList,
   ListRenderItem,
-  Text,
   TouchableOpacity,
   View,
 } from 'react-native';
-import { ChooseActionTypeStyle as styles } from '@src/styles/ChooseActionTypeStyle';
-import { Colors } from '@src/theme/Colors';
+import { ChooseActionTypeStyle } from '@src/styles/ChooseActionTypeStyle';
 import { InformationIcon } from '@src/assets/svg/InformationIcon';
 import { ContextType } from '@src/services/Data';
 import { useTranslation } from 'react-i18next';
-
+import { ThemeContext } from '@src/theme/provider/ThemeContext';
+import { TextLabel } from './TextLabel';
+import { TextLabelVariants } from '@src/utils/enums/TextLabelVariants';
 
 interface Props {
   label: string;
@@ -25,6 +25,8 @@ export const ChooseNeuroAccessAppContext: FC<Props> = ({
   onSelect,
 }) => {
   const { t } = useTranslation();
+  const {themeColors} = useContext(ThemeContext);
+  const styles = ChooseActionTypeStyle(themeColors)
   const [selected, setSelected] = useState<ContextType>();
 
   const onItemPress = (item: ContextType): void => {
@@ -34,23 +36,23 @@ export const ChooseNeuroAccessAppContext: FC<Props> = ({
 
   const getItemBackgroundColor = (index: number) => {
     return index === selected?.value
-      ? Colors.light.chooseActionItemSelecectedBackground
-      : Colors.light.chooseActionItemBackground;
+      ? themeColors.choosePurpose.itemSelectedBg
+      : themeColors.choosePurpose.itemDefaultBg;
   };
   const getItemTextColor = (index: number) => {
     if (selected === undefined) {
-      return Colors.light.chooseActionItemSelecectedBackground;
+      return themeColors.choosePurpose.itemSelectedBg;
     } else {
       return index === selected?.value
-        ? Colors.light.informationLogoSelectedColor
-        : Colors.light.informationLogoColor;
+        ? themeColors.choosePurpose.infoSelected
+        : themeColors.choosePurpose.infoDefault;
     }
   };
 
   const getInformationLogoColor = (index: number) => {
     return index === selected?.value
-      ? Colors.light.informationLogoSelectedColor
-      : Colors.light.informationLogoColor;
+      ? themeColors.choosePurpose.infoSelected
+      : themeColors.choosePurpose.infoDefault;
   };
 
   const renderItem: ListRenderItem<ContextType> = ({ item, index }) => (
@@ -63,9 +65,9 @@ export const ChooseNeuroAccessAppContext: FC<Props> = ({
       ]}
       onPress={() => onItemPress(item)}
     >
-      <Text style={{ color: getItemTextColor(index), flex: 1 }}>
+      <TextLabel variant={TextLabelVariants.INPUTLABEL} style={{ color: getItemTextColor(index), flex: 1 }}>
         {t(item.label)}
-      </Text>
+      </TextLabel>
       <View style={styles.informationLogoContainer}>
         <InformationIcon textColor={getInformationLogoColor(index)} />
       </View>

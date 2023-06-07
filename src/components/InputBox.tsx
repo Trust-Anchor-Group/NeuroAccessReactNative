@@ -1,4 +1,9 @@
-import React, { useState, forwardRef, useImperativeHandle } from 'react';
+import React, {
+  useState,
+  forwardRef,
+  useImperativeHandle,
+  useContext,
+} from 'react';
 import {
   View,
   TextInput,
@@ -10,7 +15,7 @@ import { InformationIcon } from '@src/assets/svg/InformationIcon';
 import { TextLabel } from './TextLabel';
 import { InputBoxStyle } from './styles/InputBoxStyle';
 import { TextLabelVariants } from '@src/utils/enums/TextLabelVariants';
-import { Colors } from '@src/theme/Colors';
+import { ThemeContext } from '@src/theme/provider/ThemeContext';
 
 interface InputBoxProps extends TextInputProps {
   leftIcon: any;
@@ -47,10 +52,15 @@ const InputBox: React.ForwardRefRenderFunction<TextInputRef, InputBoxProps> = (
   },
   ref
 ) => {
+  const { themeColors } = useContext(ThemeContext);
+  const styles = InputBoxStyle(themeColors);
+  const iconColor = themeColors.inputBox.leftIconDefault;
   const inputRef = React.createRef<TextInput>();
   const [isFocused, setIsFocused] = useState(false);
   const [error, setError] = useState<string | undefined>(undefined);
-  const leftIconColor = React.useRef<string>('#181F25');
+  const leftIconColor = React.useRef<string>(
+    themeColors.inputBox.leftIconDefault
+  );
   const LeftIcon = leftIcon;
 
   useImperativeHandle(ref, () => ({
@@ -68,7 +78,7 @@ const InputBox: React.ForwardRefRenderFunction<TextInputRef, InputBoxProps> = (
   }));
 
   const handleFocus = () => {
-    leftIconColor.current = '#3E776D';
+    leftIconColor.current = themeColors.inputBox.leftIconActive;
     setIsFocused(true);
     setError(undefined);
   };
@@ -96,26 +106,31 @@ const InputBox: React.ForwardRefRenderFunction<TextInputRef, InputBoxProps> = (
     <View>
       <View
         style={[
-          InputBoxStyle.container,
-          isFocused ? InputBoxStyle.containerFocused : undefined,
-          error ? InputBoxStyle.errorOcurred : undefined,
+          styles.container,
+          isFocused ? styles.containerFocused : undefined,
+          error ? styles.errorOcurred : undefined,
         ]}
       >
         {leftIcon && (
-          <View style={InputBoxStyle.leftIcon}>
-            <LeftIcon iconColor={error ? Colors.light.errorText : leftIconColor.current} />
+          <View style={styles.leftIcon}>
+            <LeftIcon
+              iconColor={
+                error ? themeColors.inputBox.error : leftIconColor.current
+              }
+            />
           </View>
         )}
         <TextInput
           ref={inputRef}
           style={[
-            InputBoxStyle.input,
-            isFocused && InputBoxStyle.inputFocused,
-            error && InputBoxStyle.inputError,
+            styles.input,
+            isFocused && styles.inputFocused,
+            error && styles.inputError,
           ]}
           value={value}
           onChangeText={onChangeText}
           placeholder={placeholder}
+          placeholderTextColor={themeColors.inputBox.inactiveText}
           keyboardType={keyboardType}
           onFocus={handleFocus}
           onBlur={handleBlur}
@@ -123,18 +138,16 @@ const InputBox: React.ForwardRefRenderFunction<TextInputRef, InputBoxProps> = (
           returnKeyType={actionType === 'next' ? 'next' : 'done'}
           {...rest}
         />
-        {rightIcon && <Image source={rightIcon} style={InputBoxStyle.rightIcon} />}
+        {rightIcon && <Image source={rightIcon} style={styles.rightIcon} />}
       </View>
       {error && (
-        <View style={InputBoxStyle.errorContainer}>
-          <InformationIcon textColor={Colors.light.errorText}/>
+        <View style={styles.errorContainer}>
+          <InformationIcon textColor={themeColors.inputBox.error} />
           <TextLabel variant={TextLabelVariants.ERRORLABEL}>{error}</TextLabel>
         </View>
       )}
     </View>
   );
 };
-
-
 
 export default forwardRef(InputBox);

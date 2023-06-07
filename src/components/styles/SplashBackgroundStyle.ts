@@ -1,7 +1,6 @@
 import { StyleSheet } from 'react-native';
-import { Colors } from '@src/theme/Colors';
 
-export const BackGroundLayerStyle = StyleSheet.create({
+export const SplashBackgroundStyle= (themeColors:any)=> StyleSheet.create({
   parentContainer: {
     height: '100%',
     width: '100%',
@@ -10,7 +9,7 @@ export const BackGroundLayerStyle = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: Colors.light.background,
+    backgroundColor: themeColors.background,
   },
   logoContainer: {
     position: 'absolute',

@@ -1,5 +1,5 @@
 import { View } from 'react-native';
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { StackScreenProps } from '@react-navigation/stack';
 import { ChooseNeuroAccessAppContext } from '@src/components/ChooseNeuroAccessAppContext';
 import { ContextType, chooseActionTypeData } from '@src/services/Data';
@@ -7,18 +7,19 @@ import { ActionButton } from '@src/components/ActionButton';
 import { NeuroAccessBackground } from '@src/components/NeuroAccessBackground';
 import { ChooseAccountTypeStyle } from '@src/styles/ChooseAccountTypeStyle';
 import { NavigationHeader } from '@src/components/NavigationHeader';
-import { Colors } from '@src/theme/Colors';
 import { Logo } from '@src/assets/svg/Logo';
 import { ShowLabelsForAuth } from '@src/components/ShowLabelsForAuth';
 import { useTranslation } from 'react-i18next';
+import { ThemeContext } from '@src/theme/provider/ThemeContext';
 
 export const ChooseAccountType = ({
   navigation,
 }: StackScreenProps<{ Profile: any }>) => {
   const { t } = useTranslation();
-
+  const { themeColors } = useContext(ThemeContext);
   const [selected, setSelected] = useState<ContextType>();
 
+  const onBackAction = () => {};
   const onLanguageClick = () => {
     navigation.navigate('Settings');
   };
@@ -29,8 +30,8 @@ export const ChooseAccountType = ({
         <View style={ChooseAccountTypeStyle.containerSpace} />
         <View style={ChooseAccountTypeStyle.containerLogo}>
           <Logo
-            textColor={Colors.light.logoPrimary}
-            logoColor={Colors.light.logoSecondary}
+            textColor={themeColors.logoPrimary}
+            logoColor={themeColors.logoSecondary}
           />
         </View>
         <View style={ChooseAccountTypeStyle.containerInput}>
@@ -56,6 +57,7 @@ export const ChooseAccountType = ({
       </View>
       <NavigationHeader
         hideBackAction={true}
+        onBackAction={onBackAction}
         onLanguageAction={onLanguageClick}
       />
     </NeuroAccessBackground>
