@@ -16,6 +16,7 @@ import { TextLabel } from './TextLabel';
 import { InputBoxStyle } from './styles/InputBoxStyle';
 import { TextLabelVariants } from '@src/utils/enums/TextLabelVariants';
 import { ThemeContext } from '@src/theme/provider/ThemeContext';
+import { ShowError } from './ShowError';
 
 interface InputBoxProps extends TextInputProps {
   leftIcon: any;
@@ -140,11 +141,11 @@ const InputBox: React.ForwardRefRenderFunction<TextInputRef, InputBoxProps> = (
         />
         {rightIcon && <Image source={rightIcon} style={styles.rightIcon} />}
       </View>
-      {error && (
-        <View style={styles.errorContainer}>
-          <InformationIcon textColor={themeColors.inputBox.error} />
-          <TextLabel variant={TextLabelVariants.ERRORLABEL}>{error}</TextLabel>
-        </View>
+      {error && (<ShowError errorMessage={error}/>
+        // <View style={styles.errorContainer}>
+        //   <InformationIcon textColor={themeColors.inputBox.error} />
+        //   <TextLabel variant={TextLabelVariants.ERRORLABEL}>{error}</TextLabel>
+        // </View>
       )}
     </View>
   );

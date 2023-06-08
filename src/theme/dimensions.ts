@@ -57,7 +57,8 @@ export const inputBoxSize = {
     marginLeft: moderateScale(8),
   },
   error: {
-    marginTop: moderateScale(2),
+    marginTop: moderateScale(15),
+    marginRight: horizontalScale(85),
   },
 };
 
