@@ -1,5 +1,5 @@
 import React, { useState, useRef, useContext } from 'react';
-import { View, KeyboardAvoidingView, Platform, Keyboard } from 'react-native';
+import { View, KeyboardAvoidingView, Platform, Keyboard, ActivityIndicator } from 'react-native';
 import { StackScreenProps } from '@react-navigation/stack';
 import { NeuroAccessBackground } from '@src/components/NeuroAccessBackground';
 import { EnterEmailStyle } from '@src/styles/EnterEmailStyle';
@@ -12,19 +12,28 @@ import { ActionButton } from '@src/components/ActionButton';
 import { ShowLabelsForAuth } from '@src/components/ShowLabelsForAuth';
 import { useTranslation } from 'react-i18next';
 import { ThemeContext } from '@src/theme/provider/ThemeContext';
+import { AgentAPI } from '@src/services/API/Agent';
 
 export const EnterEmail = ({
   navigation,
 }: StackScreenProps<{ Profile: any }>) => {
   const { t } = useTranslation();
   const { themeColors } = useContext(ThemeContext);
- const style = EnterEmailStyle(themeColors)
+  const style = EnterEmailStyle(themeColors);
   const emailInputRef = useRef<TextInputRef>(null);
   const [email, setEmail] = useState('');
-  
-  const handleSubmit = () => {
+  const [isLoading, setLoading] = useState(false);
+
+  const handleSubmit = async () => {
     const isFormValid = emailInputRef.current?.validate();
     if (isFormValid) {
+      setLoading(true);
+      const createData = await AgentAPI.Account.Create(
+        email,
+        email,
+        email
+      );
+      setLoading(false);
       navigation.navigate('EmailOTPVerify');
     }
   };
@@ -78,6 +87,7 @@ export const EnterEmail = ({
           />
 
           <View style={style.button}>
+            <ActivityIndicator animating={isLoading} />    
             <ActionButton
               title={t('buttonLabel.sendCode')}
               onPress={() => {
