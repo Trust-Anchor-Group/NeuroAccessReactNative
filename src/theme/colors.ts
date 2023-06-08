@@ -33,26 +33,6 @@ export const Colors = {
       infoDefault: 'rgba(24, 31, 37, 0.5)',
       infoSelected: '#F5F6F7',
     },
-
-    inputDefault:'rgba(24, 31, 37, 0.5)',
-    inputActive:'',
-
-    primaryText:'#181F25',
-    secondaryText:'',
-    errorText:'#F2495C',
-    inputFocus:'#3E776D',
-    inputBackground:'#F5F6F7',
-    inputBorder:'rgba(24, 31, 37, 0.5)',
-
-
-    errorColor:'#F2495C',
-    chooseActionItemBackground: '#F5F6F7',
-    chooseActionItemSelecectedBackground: '#181F25',
-    chooseActionItemBorderColor: 'rgba(24, 31, 37, 0.5)',
-    informationLogoColor: 'rgba(24, 31, 37, 0.5)',
-    informationLogoSelectedColor: '#F5F6F7',
-    actionButtonBgColor: '#3E776D',
-    actionButtonTitleColor: '#F5F6F7',
   },
   dark: {
     background: '#161617',
