@@ -1,5 +1,5 @@
-import { View } from 'react-native';
-import React, { useContext, useState } from 'react';
+import { ActivityIndicator, View } from 'react-native';
+import React, { useContext, useEffect, useState } from 'react';
 import { StackScreenProps } from '@react-navigation/stack';
 import { ChooseNeuroAccessAppContext } from '@src/components/ChooseNeuroAccessAppContext';
 import { ContextType, chooseActionTypeData } from '@src/services/Data';
@@ -20,6 +20,7 @@ export const ChooseAccountType = ({
   const [selected, setSelected] = useState<ContextType>();
 
   const onBackAction = () => {};
+
   const onLanguageClick = () => {
     navigation.navigate('Settings');
   };
@@ -51,7 +52,9 @@ export const ChooseAccountType = ({
         <View style={ChooseAccountTypeStyle.buttonContainer}>
           <ActionButton
             title={t('buttonLabel.continue')}
-            onPress={() => navigation.navigate('EnterEmail')}
+            onPress={async () => {
+              navigation.navigate('EnterEmail')
+            }}
           />
         </View>
       </View>
@@ -60,6 +63,6 @@ export const ChooseAccountType = ({
         onBackAction={onBackAction}
         onLanguageAction={onLanguageClick}
       />
-    </NeuroAccessBackground>
+      </NeuroAccessBackground>
   );
 };

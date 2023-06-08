@@ -1,8 +1,8 @@
-import { Button, StyleSheet, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import React, { useEffect, useState } from 'react';
-import { ApplicationStack, AuthStack, app } from './Navigation';
+import { AuthStack } from './Navigation';
 import { useLogin } from '../context/LoginProvider';
-import { Splash } from '@src/screens/splash/Splash';
+import { Splash } from '@src/screens/Splash/Splash';
 
 export default function StartupScreen() {
   const { isLoggedIn } = useLogin();
