@@ -54,7 +54,6 @@ export const AgentAPI = {
         var Token = await AgentAPI.Account.GetSessionString('AgentAPI.Token');
         if (Token) xhttp.setRequestHeader('Authorization', 'Bearer ' + Token);
 
-				console.log('xhttp === > ', Token)
         xhttp.send(JSON.stringify(RequestPayload));
       });
 
@@ -195,7 +194,6 @@ export const AgentAPI = {
         .replace(/\f/g, '&#12;');
     },
     Sign: async function (Key: any, Data: any) {
-      console.log('signature ---> ', Base64.stringify(hmacSHA256(Data, Key)));
       return Base64.stringify(hmacSHA256(Data, Key));
     },
     GetSessionString: async function (Name: string) {
@@ -360,7 +358,6 @@ export const AgentAPI = {
       };
       const Response = await AgentAPI.IO.Request('/Agent/Account/Login', raw);
 
-      console.log('final resonse == ', Response.jwt);
       this.SetSessionString('AgentAPI.UserName', UserName);
       this.SaveSessionToken(Response.jwt, Seconds, Math.round(Seconds / 2));
 

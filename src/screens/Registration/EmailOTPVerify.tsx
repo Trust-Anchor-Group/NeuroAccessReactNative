@@ -20,8 +20,6 @@ export const EmailOTPVerify = ({
             '926200'
           );
           setLoading(false);
-          console.log('createData ===> ', createData);
-
           navigation.navigate('EnterMobileNumber');
         }}
       />

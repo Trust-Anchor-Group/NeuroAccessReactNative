@@ -34,7 +34,6 @@ export const EnterEmail = ({
         email
       );
       setLoading(false);
-      console.log('createData ===> ', createData);
       navigation.navigate('EmailOTPVerify');
     }
   };
