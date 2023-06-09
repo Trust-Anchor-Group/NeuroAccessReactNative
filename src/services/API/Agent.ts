@@ -6,24 +6,15 @@ import {
 import { TextEncoder } from 'text-decoding';
 import hmacSHA256 from 'crypto-js/hmac-sha256';
 import Base64 from 'crypto-js/enc-base64';
+import Config from "react-native-config";
 
-const host = 'lab.tagroot.io';
-const ApiKey =
-  '704bb45a06d04b71b4712815192acbd18af0955e4e723ea5898f01d59d5e5df5';
-const Secret =
-  '5b2719107561ddcf1afc5e9c9b276e3dcf18d081de0004052f5bc0df326d5f5c';
+const baseURL = Config.AGENT_API_URL;
+const host = Config.Host;
+const ApiKey = Config.ApiKey;
+const Secret = Config.Secret;
 const Seconds = 3500;
-//sessiontimeout
-//60seconds
 
-const baseURL = 'https://lab.tagroot.io';
-
-const requestOptions = (headers: Headers, raw: string) => ({
-  method: 'POST',
-  headers: headers,
-  body: raw,
-  redirect: 'follow',
-});
+console.log(Config)
 
 export const AgentAPI = {
   IO: {
