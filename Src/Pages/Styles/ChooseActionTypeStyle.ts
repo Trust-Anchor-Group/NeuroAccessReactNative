@@ -1,5 +1,5 @@
 import { StyleSheet } from 'react-native';
-import { chooseAccountItemHeight } from 'Theme/Dimensions';
+import { chooseAccountItemHeight } from '@Theme/Dimensions';
 const itemHeight = chooseAccountItemHeight.height;
 const itemHorizontalMargin = chooseAccountItemHeight.itemHorizontalMargin;
 

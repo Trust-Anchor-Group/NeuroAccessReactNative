@@ -1,5 +1,5 @@
 import { StyleSheet } from "react-native";
-import { button } from "Theme/Dimensions";
+import { button } from "@Theme/Dimensions";
 
 export const GlobalStyle=(themeColors:any) => StyleSheet.create({
   appButtonContainer: {
