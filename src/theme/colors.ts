@@ -33,6 +33,30 @@ export const Colors = {
       infoDefault: 'rgba(24, 31, 37, 0.5)',
       infoSelected: '#F5F6F7',
     },
+    otpInput: {
+      placeholderTextColor: 'rgba(24, 31, 37, 0.5)',
+      backgroundColor: '#F5F6F7',
+      borderColor: 'rgba(24, 31, 37, 0.5)',
+      color: '#181F25',
+      activeInput: {
+        borderColor: '#181F25',
+      },
+      enteredInput: {
+        borderColor: '#181F25',
+      },
+      errorText: {
+        color: '#FF7585',
+        borderColor: '#FF7585',
+      },
+    },
+    otpVerification: {
+      resendButton: {
+        borderColor: '#181F25',
+        backgroundColor: '#F5F6F7',
+        textColor: '#181F25',
+      },
+      sendTextColor: '#F5F6F7',
+    },
   },
   dark: {
     background: '#161617',
@@ -67,6 +91,30 @@ export const Colors = {
       itemBorder: 'rgba(255, 255, 255, 0.3)',
       infoDefault: 'rgba(255, 255, 255, 0.3)',
       infoSelected: '#161617',
+    },
+    otpInput: {
+      placeholderTextColor: 'rgba(255, 255, 255, 0.3)',
+      backgroundColor: '#3E3E40',
+      borderColor: '#3E3E40',
+      color: 'rgba(255, 255, 255, 0.9)',
+      activeInput: {
+        borderColor: '#3E3E40',
+      },
+      enteredInput: {
+        borderColor: '#3E3E40',
+      },
+      errorText: {
+        color: '#FF7585',
+        borderColor: '#FF7585',
+      },
+    },
+    otpVerification: {
+      resendButton: {
+        borderColor: 'rgba(255, 255, 255, 0.9)',
+        backgroundColor: '#161617',
+        textColor: 'rgba(255, 255, 255, 0.9)',
+      },
+      sendTextColor: '#161617',
     },
   },
 };

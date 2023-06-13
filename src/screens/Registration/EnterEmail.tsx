@@ -1,5 +1,11 @@
 import React, { useState, useRef, useContext } from 'react';
-import { View, KeyboardAvoidingView, Platform, Keyboard, ActivityIndicator } from 'react-native';
+import {
+  View,
+  KeyboardAvoidingView,
+  Platform,
+  Keyboard,
+  ActivityIndicator,
+} from 'react-native';
 import { StackScreenProps } from '@react-navigation/stack';
 import { NeuroAccessBackground } from '@src/components/NeuroAccessBackground';
 import { EnterEmailStyle } from '@src/styles/EnterEmailStyle';
@@ -28,11 +34,7 @@ export const EnterEmail = ({
     const isFormValid = emailInputRef.current?.validate();
     if (isFormValid) {
       setLoading(true);
-      const createData = await AgentAPI.Account.Create(
-        email,
-        email,
-        email
-      );
+      const createData = await AgentAPI.Account.Create(email, email, email);
       setLoading(false);
       navigation.navigate('EmailOTPVerify');
     }
@@ -87,7 +89,7 @@ export const EnterEmail = ({
           />
 
           <View style={style.button}>
-            <ActivityIndicator animating={isLoading} />    
+            <ActivityIndicator animating={isLoading} />
             <ActionButton
               title={t('buttonLabel.sendCode')}
               onPress={() => {

@@ -1,30 +1,29 @@
-import React, { useState, useRef, useEffect } from 'react';
-import { View, TextInput, StyleSheet, Button } from 'react-native';
+import { TextInput, View } from 'react-native';
+import React, { useEffect, useRef, useState, useContext } from 'react';
+import { ThemeContext } from '@src/theme/provider/ThemeContext';
+import { OtpInputStyle } from './styles/OtpInputStyle';
 
-interface OTPInputProps {
+interface OTPInputFieldsProps {
   onOTPChange: (otp: string) => void;
   otpValue: string;
   isError: boolean;
-  isMisMatch: boolean;
+  handleSubmit: () => void;
 }
 
-export const OtpInput:React.FC<OTPInputProps> = ({onOTPChange, isError, otpValue, isMisMatch}) => {
-  // const [otp, setOTP] = useState<string[]>(Array(6).fill(''));
+export const OtpInput: React.FC<OTPInputFieldsProps> = ({
+  onOTPChange,
+  otpValue,
+  isError,
+  handleSubmit,
+}) => {
+  const { themeColors } = useContext(ThemeContext);
+  const styles = OtpInputStyle(themeColors);
+  const [otp, setOTP] = useState<string[]>(Array(6).fill(''));
+  const [activeIndex, setActiveIndex] = useState<number>(0);
+  const prevInputIndex = useRef<number>(-1);
+  const refs = useRef<TextInput[]>([]);
 
-  // const handleOTPChange = (index: number, value: string) => {
-  //   if (value.match(/^\d*$/)) {
-  //     const newOTP = [...otp];
-  //     newOTP[index] = value;
-  //     setOTP(newOTP);
-  //     onOTPChange(newOTP.join(''));
-  //   }
-  // };
-   const [otp, setOTP] = useState<string[]>(Array(6).fill(''));
-   const [isValid, setIsValid] = useState<boolean[]>(Array(6).fill(true));
-   const otpInputRefs = useRef<TextInput[]>([]);
-
-
-   useEffect(() => {
+  useEffect(() => {
     if (otpValue.length === 6) {
       setOTP(otpValue.split(''));
     }
@@ -36,112 +35,81 @@ export const OtpInput:React.FC<OTPInputProps> = ({onOTPChange, isError, otpValue
       newOTP[index] = value;
       setOTP(newOTP);
       onOTPChange(newOTP.join(''));
-      setIsValid((prevValidity) => {
-        const newValidity = [...prevValidity];
-        newValidity[index] = true;
-        return newValidity;
+      setActiveIndex(index < 5 ? index + 1 : 5);
+      prevInputIndex.current = index < 5 ? index + 1 : 5;
+    }
+  };
+
+  const handleBackPress = (index: number) => {
+    if (otp[index]) {
+      const newOTP = [...otp];
+      newOTP[index] = '';
+      setOTP(newOTP);
+      onOTPChange(newOTP.join(''));
+      setActiveIndex(index);
+      prevInputIndex.current = index;
+    } else if (index > 0) {
+      const newOTP = [...otp];
+      newOTP[index - 1] = '';
+      setOTP(newOTP);
+      onOTPChange(newOTP.join(''));
+      setActiveIndex(index - 1);
+      prevInputIndex.current = index - 1;
+    }
+  };
+
+  const handleKeyPress = (event: any, index: number) => {
+    if (event.nativeEvent.key === 'Backspace') {
+      handleBackPress(index);
+    }
+  };
+
+  useEffect(() => {
+    return () => {
+      refs.current.forEach((ref, index) => {
+        if (ref) {
+          ref.setNativeProps({ onKeyPress: undefined });
+        }
       });
-      if (index < otp.length - 1 && value === '') {
-        otpInputRefs.current[index - 1].focus();
-      }
-      if (value !== '') {
-        otpInputRefs.current[index + 1]?.focus();
-      }
+    };
+  }, []);
+
+  useEffect(() => {
+    if (activeIndex >= 0 && activeIndex < refs.current.length) {
+      refs.current[activeIndex]?.focus();
     }
-  };
+  }, [activeIndex, handleBackPress]);
 
-  const handleOTPKeyPress = (index: number, key: string) => {
-    if (key === 'Backspace' && otp[index] === '' && index > 0) {
-      otpInputRefs.current[index - 1].focus();
+  useEffect(() => {
+    if (otpValue.length === 6) {
+      handleSubmit();
     }
-  };
-
-  // const handleSubmit = () => {
-  //   const isOTPValid = otp.every((digit) => digit !== '');
-  //   setIsValid(
-  //     otp.map((digit, index) => digit !== '' || isValid[index])
-  //   );
-  //   if (isOTPValid) {
-  //     console.log('Valid OTP:', otp.join(''));
-  //   } else {
-  //     console.log('Please enter a valid OTP.');
-  //   }
-  // };
-
-  // const handleSubmit = () => {
-  //   const isOTPValid = otp.every((digit) => digit !== '');
-  //   setIsValid(
-  //     otp.map((digit, index) => digit !== '' || isValid[index])
-  //   );
-  //   if (isOTPValid) {
-  //     onSubmit(otp.join(''));
-  //   } else {
-  //     console.log('Please enter a valid OTP.');
-  //   }
-  // };
+  }, [otpValue, handleSubmit]);
 
   return (
-    // <View style={styles.container}>
-    //   {Array.from({ length: 6 }, (_, index) => (
-    //     <TextInput
-    //       key={index}
-    //       style={styles.input}
-    //       value={otp[index]}
-    //       onChangeText={(value) => handleOTPChange(index, value)}
-    //       keyboardType="numeric"
-    //       maxLength={1}
-    //     />
-    //   ))}
-    // </View>
     <View style={styles.container}>
-      {Array.from({ length: 6 }, (_, index) => (
-        <TextInput
-          key={index}
-          // style={[
-          //   styles.input,
-          //   !isValid[index] && styles.invalidInput,
-          // ]}
-          // style={[
-          //   styles.input,
-          //   isError && otp[index] === '' && styles.invalidInput,
-          // ]}
-          style={[
-            styles.input,
-            isError && otp[index] === '' && styles.invalidInput, isMisMatch && styles.invalidInput
-          ]}
-          value={otp[index]}
-          onChangeText={(value) => handleOTPChange(index, value)}
-          onKeyPress={({ nativeEvent: { key } }) =>
-            handleOTPKeyPress(index, key)
-          }
-          keyboardType="numeric"
-          maxLength={1}
-          ref={(ref) => (otpInputRefs.current[index] = ref)}
-        />
-      ))}
-      {/* <Button onPress={handleSubmit}>Submit</Button> */}
+      {Array.from({ length: 6 }, (_, index) => {
+        return (
+          <TextInput
+            key={index}
+            ref={(ref) => (refs.current[index] = ref)}
+            style={[
+              styles.input,
+              activeIndex === index ? styles.activeInput : null,
+              otp[index] ? styles.enteredInput : null,
+              isError ? styles.errorText : null,
+            ]}
+            value={otp[index]}
+            onChangeText={(value) => handleOTPChange(index, value)}
+            keyboardType="numeric"
+            maxLength={1}
+            onFocus={() => setActiveIndex(index)}
+            onKeyPress={(event) => handleKeyPress(event, index)}
+            placeholder="0"
+            placeholderTextColor={themeColors.otpInput.placeholderTextColor}
+          />
+        );
+      })}
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  input: {
-    borderWidth: 1,
-    borderColor: 'gray',
-    borderRadius: 4,
-    padding: 8,
-    marginHorizontal: 4,
-    width: 40,
-    textAlign: 'center',
-    fontSize: 20,
-  },
-  invalidInput: {
-    borderColor: 'red',
-    color: 'red',
-  },
-});

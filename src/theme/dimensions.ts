@@ -1,6 +1,5 @@
 import { horizontalScale, verticalScale, moderateScale } from './Metrics';
 
-
 export const backgroundLayerSize = {
   marginTopAndroid: verticalScale(30),
   marginTopIos: verticalScale(60),
@@ -48,7 +47,7 @@ export const inputBoxSize = {
   paddingHorizontal: moderateScale(8),
   paddingVertical: moderateScale(2),
   fontSize: moderateScale(16),
-  leftIcon:{
+  leftIcon: {
     marginRight: moderateScale(8),
   },
   rightIcon: {
@@ -57,8 +56,8 @@ export const inputBoxSize = {
     marginLeft: moderateScale(8),
   },
   error: {
-    marginTop: moderateScale(15),
-    marginRight: horizontalScale(85),
+    marginTop: moderateScale(5),
+    marginRight: horizontalScale(5),
   },
 };
 
@@ -75,14 +74,30 @@ export const chooseAccountItemHeight = {
   marginHorizontal: moderateScale(0),
   borderRadius: moderateScale(4),
   marginVertical: moderateScale(5),
-  itemHorizontalMargin:moderateScale(5),
-  icon:{
-    marginRight: moderateScale(10)
-  }
+  itemHorizontalMargin: moderateScale(5),
+  icon: {
+    marginRight: moderateScale(10),
+  },
 };
 
 export const button = {
   height: verticalScale(40),
   borderRadius: moderateScale(4),
   fontSize: moderateScale(14),
+};
+
+export const otpInput = {
+  marginTop: moderateScale(10),
+  borderWidth: moderateScale(2),
+  padding: moderateScale(8),
+  marginHorizontal: moderateScale(4),
+  borderRadius: moderateScale(4),
+  width: horizontalScale(40),
+  height: verticalScale(54),
+  fontSize: moderateScale(24),
+};
+
+export const otpVerification = {
+  borderWidth: moderateScale(1),
+  borderRadius: moderateScale(4),
 };

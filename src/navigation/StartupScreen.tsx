@@ -2,7 +2,7 @@ import { StyleSheet, View } from 'react-native';
 import React, { useEffect, useState } from 'react';
 import { AuthStack } from './Navigation';
 import { useLogin } from '../context/LoginProvider';
-import { Splash } from '@src/screens/Splash/Splash';
+import { Splash } from '@src/screens/splash/Splash';
 
 export default function StartupScreen() {
   const { isLoggedIn } = useLogin();
@@ -15,7 +15,7 @@ export default function StartupScreen() {
   }, [appLoading]);
 
   if (appLoading) {
-    return <Splash />
+    return <Splash />;
   }
   return (
     <View style={styles.container}>

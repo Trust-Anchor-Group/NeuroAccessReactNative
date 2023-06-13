@@ -1,8 +1,8 @@
 import React from 'react';
-import {createStackNavigator} from '@react-navigation/stack';
+import { createStackNavigator } from '@react-navigation/stack';
 import Home from '@src/screens/home/Home';
- import { ChooseAccountType } from '@src/screens/registration/ChooseAccountType';
- import { EmailOTPVerify } from '@src/screens/registration/EmailOTPVerify';
+import { ChooseAccountType } from '@src/screens/registration/ChooseAccountType';
+import { EmailOTPVerify } from '@src/screens/registration/EmailOTPVerify';
 import { EnterEmail } from '@src/screens/registration/EnterEmail';
 import { EnterMobileNumber } from '@src/screens/registration/EnterMobileNumber';
 import { MobileNumberOTPVerify } from '@src/screens/registration/MobileNumberOTPVerify';
@@ -16,21 +16,21 @@ export const AuthStack = () => {
         name="ChooseAccoutType"
         component={ChooseAccountType}
         options={{
-          headerShown: false
+          headerShown: false,
         }}
       />
       <Stack.Screen
         name="EnterEmail"
         component={EnterEmail}
         options={{
-          headerShown: false
+          headerShown: false,
         }}
       />
       <Stack.Screen
         name="EmailOTPVerify"
         component={EmailOTPVerify}
         options={{
-          headerTitle: 'Email OTP Verification',
+          headerShown: false,
         }}
       />
       <Stack.Screen
@@ -48,15 +48,13 @@ export const AuthStack = () => {
         }}
       />
 
-<Stack.Screen
+      <Stack.Screen
         name="Settings"
         component={Settings}
         options={{
           headerTitle: 'Settings',
         }}
       />
-
-
     </Stack.Navigator>
   );
 };

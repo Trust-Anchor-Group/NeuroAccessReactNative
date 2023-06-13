@@ -1,14 +1,8 @@
-import {
-  Button,
-  Text,
-  View,
-  KeyboardAvoidingView,
-  Platform,
-} from 'react-native';
+import { View, KeyboardAvoidingView, Platform } from 'react-native';
 import React, { useState, useContext } from 'react';
 import { StackScreenProps } from '@react-navigation/stack';
 import { OtpInput } from '@src/components/OtpInput';
-import { EnterOTPVerifyStyle as style } from '@src/styles/EnterOTPVerifyStyle';
+import { EnterOTPVerifyStyle } from '@src/styles/EnterOTPVerifyStyle';
 import { ShowError } from '@src/components/ShowError';
 import { NeuroAccessBackground } from '@src/components/NeuroAccessBackground';
 import { Logo } from '@src/assets/svg/Logo';
@@ -16,44 +10,38 @@ import { ShowLabelsForAuth } from '@src/components/ShowLabelsForAuth';
 import { NavigationHeader } from '@src/components/NavigationHeader';
 import { useTranslation } from 'react-i18next';
 import { ThemeContext } from '@src/theme/provider/ThemeContext';
+import { ActionButton } from '@src/components/ActionButton';
 
 export const EmailOTPVerify = ({
   navigation,
 }: StackScreenProps<{ Profile: any }>) => {
   const { t } = useTranslation();
   const { themeColors } = useContext(ThemeContext);
-  const [isLoading, setLoading] = useState(false);
-  const [otpValue, setOTPValue] = useState('');
-  const [isOTPValid, setIsOTPValid] = useState(true);
-  const [isMisMatch, setIsMisMatch] = useState(false);
+  const style = EnterOTPVerifyStyle(themeColors);
 
-  const handleSubmitOTP = (otp: string) => {
-    if (isOTPValid) {
-      //console.log('Submitting OTP:', otpValue);
-      if (otpValue === '222222') {
-        console.log('Submitting OTP:', otpValue);
-      } else {
-        console.log('Submitting OTP:', otpValue);
-        setIsMisMatch(true);
-      }
-      // Call your submit action or perform any necessary logic here
-    } else {
-      setIsOTPValid(false);
-      console.log('Please enter a valid OTP.');
-    }
-  };
+  const [otpValue, setOTPValue] = useState('');
+  const [isError, setIsError] = useState(false);
+  const errorMessage = React.useRef('');
 
   const handleOTPChange = (otp: string) => {
-    // Perform any necessary logic when OTP changes
-    // You can validate the OTP here if needed
-    setIsMisMatch(false);
+    setIsError(false);
     setOTPValue(otp);
-    setIsOTPValid(otp.length === 6);
-    console.log('OTP changed:', otp);
   };
 
-  const handleButtonClick = () => {
-    const otp = handleSubmitOTP(otpValue); // get the OTP value from OTPInputFields component
+  const handleSubmit = () => {
+    if (otpValue === '') {
+      setIsError(true);
+      errorMessage.current = t('enterOTPVerifyScreen.emptyFields');
+    } else if (otpValue.length < 6) {
+      setIsError(true);
+      errorMessage.current = t('enterOTPVerifyScreen.emptyFields');
+    } else if (otpValue === '123456') {
+      setIsError(false);
+      navigation.navigate('EnterMobileNumber');
+    } else {
+      setIsError(true);
+      errorMessage.current = t('enterOTPVerifyScreen.wrongCode');
+    }
   };
 
   const onBackClick = () => {
@@ -87,10 +75,26 @@ export const EmailOTPVerify = ({
           <OtpInput
             onOTPChange={handleOTPChange}
             otpValue={otpValue}
-            isError={!isOTPValid}
-            isMisMatch={isMisMatch}
+            isError={isError}
+            handleSubmit={handleSubmit}
           />
-          {<ShowError errorMessage="Please enter Otp" />}
+          {isError && <ShowError errorMessage={errorMessage.current} />}
+
+          <View style={style.bottom}>
+            <ActionButton
+              buttonStyle={style.resendButton}
+              title={t('buttonLabel.resend')}
+              textStyle={style.resendText}
+              onPress={handleSubmit}
+            />
+
+            <ActionButton
+              buttonStyle={style.sendButton}
+              title={t('buttonLabel.verify')}
+              textStyle={style.sendText}
+              onPress={handleSubmit}
+            />
+          </View>
         </View>
       </KeyboardAvoidingView>
       <NavigationHeader
@@ -98,38 +102,5 @@ export const EmailOTPVerify = ({
         onLanguageAction={onLanguageClick}
       />
     </NeuroAccessBackground>
-  );
-
-  return (
-    <View>
-      <Text>EmailOTPVerify</Text>
-      <OtpInput
-        onOTPChange={handleOTPChange}
-        otpValue={otpValue}
-        isError={!isOTPValid}
-        isMisMatch={isMisMatch}
-      />
-      {<ShowError errorMessage="Please enter Otp" />}
-      {/* <Button
-        title="Next"
-        onPress={async () => {
-          setLoading(true);
-          const createData = await AgentAPI.Account.VerifyEMail(
-            'pramodsphinx@gmail.com',
-            '926200'
-          );
-          setLoading(false);
-          navigation.navigate('EnterMobileNumber');
-        }}
-      /> */}
-
-      <Button
-        title="Next"
-        onPress={() => {
-          handleButtonClick();
-          // navigation.navigate('EnterMobileNumber')
-        }}
-      />
-    </View>
   );
 };

@@ -5,8 +5,8 @@ import { TextLabelVariants } from '@src/utils/enums/TextLabelVariants';
 import { ThemeContext } from '@src/theme/provider/ThemeContext';
 interface CustomTextProps {
   children: ReactNode;
-  variant?: TextLabelVariants;
-  style?: TextStyle;
+  variant: TextLabelVariants;
+  style: TextStyle;
 }
 
 export const TextLabel: React.FC<CustomTextProps> = ({
