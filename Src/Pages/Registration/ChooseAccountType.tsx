@@ -1,7 +1,7 @@
 import { ActivityIndicator, View } from 'react-native';
 import React, { useContext, useEffect, useState } from 'react';
 import { StackScreenProps } from '@react-navigation/stack';
-import { ContextType, chooseActionTypeData } from 'Services/Data';
+import { ContextType, chooseActionTypeData } from '@Services/Data';
 import {
   ChooseNeuroAccessAppContext,
   ShowLabelsForAuth,
