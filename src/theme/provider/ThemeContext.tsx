@@ -1,5 +1,5 @@
 import React, { createContext, useState } from 'react';
-import { Colors } from '@src/theme/Colors';
+import { Colors } from '../Colors';
 
 export type ThemeType = 'light' | 'dark' | 'mobile';
 
