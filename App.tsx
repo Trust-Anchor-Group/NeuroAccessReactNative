@@ -1,11 +1,10 @@
 import React from 'react';
-import StartupScreen from './src/navigation/StartupScreen';
+import {StartupScreen, LoginProvider} from '@Services/Navigation';
 import { NavigationContainer } from '@react-navigation/native';
-import LoginProvider from './src/context/LoginProvider';
 import { PersistGate } from 'redux-persist/integration/react';
 import { Provider } from 'react-redux';
-import { Store, persistor } from '@src/services/Redux/Store';
-import './src/translations'
+import { Store, persistor } from '@Services/Redux/Store';
+import '@Translations';
 
 function App(): JSX.Element {
   return (

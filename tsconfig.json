@@ -12,14 +12,16 @@
     "noEmit": true,
     "strict": true,
     "target": "esnext",
-    "baseUrl": ".",
+    "baseUrl": "./Src",
     "paths": {
-      "@src/*": ["src/*"],
-      "@assets/*": ["./src/assets/*"],
-      "@theme/*": ["./src/theme/*"],
-      "@styles/*": ["./src/styles/*"],
-      "@components/*": ["./src/components/*"],
-      "@screens/*": ["./src/screens/*"],
+      "@Assets/*": ["Assets/*"],
+      "@Controls/*": ["Controls/*"],
+      "@Extensions/*": ["Extensions/*"],
+      "@Helpers/*": ["Helpers/*"],
+      "@Pages/*": ["Pages/*"],
+      "@Services/*": ["Services/*"],
+      "@Theme/*": ["Theme/*"],
+      "@Translations/*": ["Translations/*"],
     }
   },
   "exclude": [

@@ -1,9 +1,9 @@
 import i18n, { changeLanguage, ModuleType } from 'i18next';
 import { initReactI18next } from 'react-i18next';
-import * as resources from './resources';
+import * as resources from './Resources';
 
-import en from './resources/en';
-import hi from './resources/hi';
+import en from './Resources/en';
+import hi from './Resources/hi';
 
 const LANGUAGES = {
   en,
