@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {StyleSheet, View, Modal, ActivityIndicator} from 'react-native';
 
-const Loader = props => {
+export const Loader = props => {
   const {loading, ...attributes} = props;
 
   return (
@@ -39,5 +39,3 @@ const styles = StyleSheet.create({
     justifyContent: 'space-around',
   },
 });
-
-export default Loader;

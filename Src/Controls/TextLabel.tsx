@@ -1,7 +1,7 @@
 import React, { ReactNode, useContext } from 'react';
 import { Text, TextStyle } from 'react-native';
-import { TextLabelStyle } from '@Controls/Styles/TextLabelStyle';
-import { TextLabelVariants } from 'Helpers/Enums/TextLabelVariants';
+import { TextLabelStyle } from '@Controls/Styles';
+import { TextLabelVariants } from 'Helpers/Enums';
 import { ThemeContext } from '@Theme/Provider/ThemeContext';
 interface CustomTextProps {
   children: ReactNode;

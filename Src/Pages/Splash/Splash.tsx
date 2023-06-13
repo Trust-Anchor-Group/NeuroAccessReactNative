@@ -1,7 +1,7 @@
 import React from 'react';
 import { View } from 'react-native';
-import { SplashStyle } from '@Pages/Styles/SplashStyle';
-import { SplashBackground } from '@Controls/SplashBackground';
+import { SplashStyle } from '@Pages/Styles';
+import { SplashBackground } from '@Controls/index';
 export const Splash = () => {
   return (
     <SplashBackground

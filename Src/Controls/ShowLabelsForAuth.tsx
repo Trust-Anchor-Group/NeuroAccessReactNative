@@ -1,8 +1,8 @@
 import React, { FC, useContext } from "react";
 import { View } from "react-native";
 import { TextLabel } from "./TextLabel";
-import { ShowLabelsForAuthStyle } from "@Controls/Styles/ShowLabelsForAuthStyle";
-import { TextLabelVariants } from "Helpers/Enums/TextLabelVariants";
+import { ShowLabelsForAuthStyle } from "@Controls/Styles";
+import { TextLabelVariants } from "Helpers/Enums";
 import { ThemeContext } from "@Theme/Provider/ThemeContext";
 interface Props{
   largeText:string;

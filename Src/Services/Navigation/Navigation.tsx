@@ -1,12 +1,14 @@
 import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
-import Home from '@Pages/Home/Home';
-import { ChooseAccountType } from '@Pages/Registration/ChooseAccountType';
-import { EmailOTPVerify } from '@Pages/Registration/EmailOTPVerify';
-import { EnterEmail } from '@Pages/Registration/EnterEmail';
-import { EnterMobileNumber } from '@Pages/Registration/EnterMobileNumber';
-import { MobileNumberOTPVerify } from '@Pages/Registration/MobileNumberOTPVerify';
-import { Settings } from '@Pages/Settings/Settings';
+import {Home} from '@Pages/Home';
+import {
+  ChooseAccountType,
+  EmailOTPVerify,
+  EnterEmail,
+  EnterMobileNumber,
+  MobileNumberOTPVerify,
+} from '@Pages/Registration';
+import { Settings } from '@Pages/Settings';
 const Stack = createStackNavigator();
 
 export const AuthStack = () => {

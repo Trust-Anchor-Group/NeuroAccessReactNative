@@ -4,7 +4,7 @@ import { AuthStack } from './Navigation';
 import { useLogin } from './LoginProvider';
 import { Splash } from '@Pages/Splash';
 
-export default function StartupScreen() {
+export function StartupScreen() {
   const { isLoggedIn } = useLogin();
   const [appLoading, setAppLoading] = useState(true);
 

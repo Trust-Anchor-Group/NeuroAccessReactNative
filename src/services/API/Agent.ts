@@ -2,7 +2,7 @@ import {
   storeUserSession,
   retrieveUserSession,
   removeUserSession,
-} from '../Storage/Storage';
+} from '../Storage';
 import { TextEncoder } from 'text-decoding';
 import hmacSHA256 from 'crypto-js/hmac-sha256';
 import Base64 from 'crypto-js/enc-base64';

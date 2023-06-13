@@ -7,9 +7,9 @@ import {
 } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import { ChooseActionTypeStyle } from '@Pages/Styles/ChooseActionTypeStyle';
-import { InformationIcon } from '@Assets/Svgs/InformationIcon';
-import { ContextType } from '@Services/Data/Data';
-import { TextLabelVariants } from 'Helpers/Enums/TextLabelVariants';
+import { InformationIcon } from '@Assets/Svgs';
+import { ContextType } from '@Services/Data';
+import { TextLabelVariants } from 'Helpers/Enums';
 import { ThemeContext } from '@Theme/Provider/ThemeContext';
 
 import { TextLabel } from './TextLabel';

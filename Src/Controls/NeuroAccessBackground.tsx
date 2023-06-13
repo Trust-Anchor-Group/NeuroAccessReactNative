@@ -1,7 +1,7 @@
 import React, { ReactNode, useContext } from 'react';
 import { View, SafeAreaView, NativeModules } from 'react-native';
-import { NeuroAccessBackgroundStyle } from '@Controls/Styles/NeuroAccessBackgroundStyle';
-import { BackgroundLayerIcon } from '@Assets/Svgs/BackgroundLayerIcon';
+import { NeuroAccessBackgroundStyle } from '@Controls/Styles';
+import { BackgroundLayerIcon } from '@Assets/Svgs';
 import { ThemeContext } from '@Theme/Provider/ThemeContext';
 import { NeuroStatusBar } from './NeuroStatusBar';
 interface BackgroundProps {

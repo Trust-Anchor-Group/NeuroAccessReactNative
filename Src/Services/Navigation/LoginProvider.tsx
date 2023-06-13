@@ -1,15 +1,14 @@
-import React, {createContext, useContext, useEffect, useState} from 'react';
-import {ActivityIndicator, StyleSheet, Text, View} from 'react-native';
-import Loader from '@Controls/Loader';
+import React, { createContext, useContext, useEffect, useState } from 'react';
+import { StyleSheet, Text, View } from 'react-native';
+import { Loader } from '@Controls/index';
 
 const LoginContext = createContext();
 
-const LoginProvider = ({children}) => {
+export const LoginProvider = ({ children }) => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [appLoading, setAppLoading] = useState(false);
   const [profile, setProfile] = useState({});
-  useEffect(() => {
-  }, [isLoggedIn, appLoading]);
+  useEffect(() => {}, [isLoggedIn, appLoading]);
   return (
     <>
       {appLoading ? (
@@ -19,7 +18,8 @@ const LoginProvider = ({children}) => {
         </View>
       ) : (
         <LoginContext.Provider
-          value={{isLoggedIn, setIsLoggedIn, profile, setProfile}}>
+          value={{ isLoggedIn, setIsLoggedIn, profile, setProfile }}
+        >
           {children}
         </LoginContext.Provider>
       )}
@@ -28,8 +28,6 @@ const LoginProvider = ({children}) => {
 };
 
 export const useLogin = () => useContext(LoginContext);
-
-export default LoginProvider;
 
 const styles = StyleSheet.create({
   splashScreen: {

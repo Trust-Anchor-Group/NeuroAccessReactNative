@@ -1,14 +1,16 @@
 import { ActivityIndicator, View } from 'react-native';
 import React, { useContext, useEffect, useState } from 'react';
 import { StackScreenProps } from '@react-navigation/stack';
-import { ContextType, chooseActionTypeData } from 'Services/Data/Data';
-import { ChooseNeuroAccessAppContext } from '@Controls/ChooseNeuroAccessAppContext';
-import { ActionButton } from '@Controls/ActionButton';
-import { NavigationHeader } from '@Controls/NavigationHeader';
-import { NeuroAccessBackground } from '@Controls/NeuroAccessBackground';
-import { ShowLabelsForAuth } from '@Controls/ShowLabelsForAuth';
-import { ChooseAccountTypeStyle } from '@Pages/Styles/ChooseAccountTypeStyle';
-import { Logo } from '@Assets/Svgs/Logo';
+import { ContextType, chooseActionTypeData } from 'Services/Data';
+import {
+  ChooseNeuroAccessAppContext,
+  ShowLabelsForAuth,
+  ActionButton,
+  NavigationHeader,
+  NeuroAccessBackground,
+} from '@Controls/index';
+import { ChooseAccountTypeStyle } from '@Pages/Styles';
+import { Logo } from '@Assets/Svgs';
 import { useTranslation } from 'react-i18next';
 import { ThemeContext } from '@Theme/Provider/ThemeContext';
 
@@ -53,7 +55,7 @@ export const ChooseAccountType = ({
           <ActionButton
             title={t('buttonLabel.continue')}
             onPress={async () => {
-              navigation.navigate('EnterEmail')
+              navigation.navigate('EnterEmail');
             }}
           />
         </View>
@@ -63,6 +65,6 @@ export const ChooseAccountType = ({
         onBackAction={onBackAction}
         onLanguageAction={onLanguageClick}
       />
-      </NeuroAccessBackground>
+    </NeuroAccessBackground>
   );
 };

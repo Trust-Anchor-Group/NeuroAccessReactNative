@@ -1,6 +1,6 @@
 import { FC, useContext } from 'react';
 import { TouchableOpacity, Text } from 'react-native';
-import { GlobalStyle } from '@Pages/Styles/GlobalStyle';
+import { GlobalStyle } from '@Pages/Styles';
 import { ThemeContext } from '@Theme/Provider/ThemeContext';
 interface Props {
   title: string;

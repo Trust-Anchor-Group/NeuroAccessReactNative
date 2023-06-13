@@ -1,11 +1,11 @@
 import React, { useContext } from 'react';
 import { Text, View, TouchableOpacity, Button } from 'react-native';
 import { useTranslation } from 'react-i18next';
-import { SettingStyle } from '@Pages/Styles/SettingStyle';
-import { LANGS } from '@Services/Data/Data';
+import { SettingStyle } from '@Pages/Styles';
+import { LANGS } from '@Services/Data';
 import { ThemeContext } from '@Theme/Provider/ThemeContext';
 import { Colors } from '@Theme/Colors';
-import { ThemeVariants } from '@Helpers/Enums/ThemeVariants';
+import { ThemeVariants } from '@Helpers/Enums';
 
 export const Settings = () => {
   const { t, i18n } = useTranslation();

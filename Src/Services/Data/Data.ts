@@ -1,16 +1,14 @@
 export interface ContextType {
-  label: string,
-  value: number
+  label: string;
+  value: number;
 }
-export const chooseActionTypeData : ContextType[] = [
+export const chooseActionTypeData: ContextType[] = [
   { label: 'choosePurposeScreen.personalUse', value: 0 },
   { label: 'choosePurposeScreen.work', value: 1 },
   { label: 'choosePurposeScreen.experimental', value: 2 },
   { label: 'choosePurposeScreen.educational', value: 3 },
 ];
-
-
 export const LANGS = [
-  {lngCode: 'en', label: 'English'},
-  {lngCode: 'hi', label: 'हिन्दी'},
+  { lngCode: 'en', label: 'English' },
+  { lngCode: 'hi', label: 'हिन्दी' },
 ];

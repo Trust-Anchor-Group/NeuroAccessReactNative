@@ -1,8 +1,7 @@
 import React, { ReactNode, useContext } from 'react';
 import { View, ViewStyle } from 'react-native';
-import { SplashBackgroundStyle } from '@Controls/Styles/SplashBackgroundStyle';
-import { BackgroundLayerIcon } from '@Assets/Svgs/BackgroundLayerIcon';
-import { Logo } from '@Assets/Svgs/Logo';
+import { SplashBackgroundStyle } from '@Controls/Styles';
+import { BackgroundLayerIcon, Logo } from '@Assets/Svgs';
 import { ThemeContext } from '@Theme/Provider/ThemeContext';
 interface BackgroundProps {
   children: ReactNode;

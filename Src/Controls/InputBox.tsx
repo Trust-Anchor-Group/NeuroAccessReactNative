@@ -11,10 +11,10 @@ import {
   ImageSourcePropType,
   TextInputProps,
 } from 'react-native';
-import { InformationIcon } from '@Assets/Svgs/InformationIcon';
+import { InformationIcon } from '@Assets/Svgs';
 import { TextLabel } from './TextLabel';
 import { InputBoxStyle } from './Styles/InputBoxStyle';
-import { TextLabelVariants } from 'Helpers/Enums/TextLabelVariants';
+import { TextLabelVariants } from 'Helpers/Enums';
 import { ThemeContext } from '@Theme/Provider/ThemeContext';
 
 interface InputBoxProps extends TextInputProps {
