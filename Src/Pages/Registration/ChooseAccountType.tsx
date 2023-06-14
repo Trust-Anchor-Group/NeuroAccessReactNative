@@ -19,6 +19,7 @@ export const ChooseAccountType = ({
 }: StackScreenProps<{ Profile: any }>) => {
   const { t } = useTranslation();
   const { themeColors } = useContext(ThemeContext);
+  const style = ChooseAccountTypeStyle(themeColors);
   const [selected, setSelected] = useState<ContextType>();
 
   const onBackAction = () => {};
@@ -29,15 +30,15 @@ export const ChooseAccountType = ({
 
   return (
     <NeuroAccessBackground>
-      <View style={ChooseAccountTypeStyle.container}>
-        <View style={ChooseAccountTypeStyle.containerSpace} />
-        <View style={ChooseAccountTypeStyle.containerLogo}>
+      <View style={style.container}>
+        <View style={style.containerSpace} />
+        <View style={style.containerLogo}>
           <Logo
             textColor={themeColors.logoPrimary}
             logoColor={themeColors.logoSecondary}
           />
         </View>
-        <View style={ChooseAccountTypeStyle.containerInput}>
+        <View style={style.containerInput}>
           <ShowLabelsForAuth
             largeText={t('heading.welcome')}
             smallText={t('heading.chooseIntend')}
@@ -51,8 +52,9 @@ export const ChooseAccountType = ({
           />
         </View>
 
-        <View style={ChooseAccountTypeStyle.buttonContainer}>
+        <View style={style.buttonContainer}>
           <ActionButton
+            textStyle={style.sendText}
             title={t('buttonLabel.continue')}
             onPress={async () => {
               navigation.navigate('EnterEmail');

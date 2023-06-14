@@ -90,6 +90,7 @@ export const EnterEmail = ({
           <View style={style.button}>
             <ActivityIndicator animating={isLoading} />
             <ActionButton
+              textStyle={style.sendText}
               title={t('buttonLabel.sendCode')}
               onPress={() => {
                 Keyboard.dismiss();
