@@ -15,7 +15,7 @@ export function StartupScreen() {
   }, [appLoading]);
 
   if (appLoading) {
-    return <Splash />
+    return <Splash />;
   }
   return (
     <View style={styles.container}>
