@@ -33,6 +33,8 @@ export const EnterEmail = ({
         email
       );
       setLoading(false);
+      console.log('Response ===> ', createData)
+
       navigation.navigate('EmailOTPVerify');
     }
   };
