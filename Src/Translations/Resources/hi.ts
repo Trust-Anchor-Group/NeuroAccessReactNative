@@ -24,5 +24,9 @@ export default {
   settingScreen:{
     selectLanguage:' भाषा चुने ',
     changeTheme : 'विषय को परिवर्तित करें'
+  },
+  internetSatus: {
+    connected: 'इंटरनेट से जुड़ा',
+    disconnected: 'इंटरनेट कनेक्ट नहीं है!'
   }
 };
