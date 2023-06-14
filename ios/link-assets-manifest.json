@@ -2,27 +2,27 @@
   "migIndex": 1,
   "data": [
     {
-      "path": "src/assets/fonts/NHaasGroteskTXPro-Rg.ttf",
+      "path": "Src/Assets/Fonts/NHaasGroteskTXPro-Rg.ttf",
       "sha1": "c63a886eb5dcd7669a87bd554c6fa6e9b5ff3e0b"
     },
     {
-      "path": "src/assets/fonts/SpaceGrotesk-Bold.ttf",
+      "path": "Src/Assets/Fonts/SpaceGrotesk-Bold.ttf",
       "sha1": "410f23a3144a2e934fa11f4dd9303778d95789f1"
     },
     {
-      "path": "src/assets/fonts/SpaceGrotesk-Light.ttf",
+      "path": "Src/Assets/Fonts/SpaceGrotesk-Light.ttf",
       "sha1": "d44a2ba81448094573329c7744b9e83aace378b2"
     },
     {
-      "path": "src/assets/fonts/SpaceGrotesk-Medium.ttf",
+      "path": "Src/Assets/Fonts/SpaceGrotesk-Medium.ttf",
       "sha1": "19101223999c9dff78863092dc423fc1d83b2aa7"
     },
     {
-      "path": "src/assets/fonts/SpaceGrotesk-Regular.ttf",
+      "path": "Src/Assets/Fonts/SpaceGrotesk-Regular.ttf",
       "sha1": "e5d97cd08fef08cb3583f7f77417b210153e8b4a"
     },
     {
-      "path": "src/assets/fonts/SpaceGrotesk-SemiBold.ttf",
+      "path": "Src/Assets/Fonts/SpaceGrotesk-SemiBold.ttf",
       "sha1": "ba82bf4e3ea45c4bf06a948c325b396db0fd0793"
     }
   ]

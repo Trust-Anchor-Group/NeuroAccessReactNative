@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		00E356F31AD99517003FC87E /* NeuroAccessTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* NeuroAccessTests.m */; };
-		0C80B921A6F3F58F76C31292 /* libPods-NeuroAccess.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5DCACB8F33CDC322A6C60F78 /* libPods-NeuroAccess.a */; };
 		0F2B27CC91DA4418B5551C7F /* NHaasGroteskTXPro-Rg.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 5811FBF28A95463F8574C80E /* NHaasGroteskTXPro-Rg.ttf */; };
 		13B07FBC1A68108700A75B9A /* AppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.mm */; };
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
@@ -16,9 +15,10 @@
 		1FFDF4803B13416385D1BFB3 /* SpaceGrotesk-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 7F9CA88A62EA4751B7C38861 /* SpaceGrotesk-Light.ttf */; };
 		20E69BF5DB9F4BC1A8ADEE88 /* SpaceGrotesk-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 9E66B7B4FB3F4B08B3021CE7 /* SpaceGrotesk-Bold.ttf */; };
 		62E7022278624D4E9BD398A5 /* SpaceGrotesk-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 95FB082F2BF94A93AC41CBE3 /* SpaceGrotesk-Regular.ttf */; };
-		7699B88040F8A987B510C191 /* libPods-NeuroAccess-NeuroAccessTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 19F6CBCC0A4E27FBF8BF4A61 /* libPods-NeuroAccess-NeuroAccessTests.a */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
 		96B0FDEC383D4088A26F8291 /* SpaceGrotesk-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1E61D46B7A864463BBF85806 /* SpaceGrotesk-SemiBold.ttf */; };
+		9931B9F990FAF97E77EA2856 /* libPods-NeuroAccess.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C2EEED967D005F28BA99B633 /* libPods-NeuroAccess.a */; };
+		A2045ABAF3A39CFBE038106F /* libPods-NeuroAccess-NeuroAccessTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = F1743761C0FDD350F80044F9 /* libPods-NeuroAccess-NeuroAccessTests.a */; };
 		EFB9135A8F26435C9E87C859 /* SpaceGrotesk-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 7543DA5A8AB7477C86B94C8C /* SpaceGrotesk-Medium.ttf */; };
 /* End PBXBuildFile section */
 
@@ -36,26 +36,26 @@
 		00E356EE1AD99517003FC87E /* NeuroAccessTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = NeuroAccessTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		00E356F11AD99517003FC87E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		00E356F21AD99517003FC87E /* NeuroAccessTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = NeuroAccessTests.m; sourceTree = "<group>"; };
+		08218DEAA1DDC8B9868332A4 /* Pods-NeuroAccess.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NeuroAccess.debug.xcconfig"; path = "Target Support Files/Pods-NeuroAccess/Pods-NeuroAccess.debug.xcconfig"; sourceTree = "<group>"; };
 		13B07F961A680F5B00A75B9A /* NeuroAccess.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NeuroAccess.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		13B07FAF1A68108700A75B9A /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = NeuroAccess/AppDelegate.h; sourceTree = "<group>"; };
 		13B07FB01A68108700A75B9A /* AppDelegate.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = AppDelegate.mm; path = NeuroAccess/AppDelegate.mm; sourceTree = "<group>"; };
 		13B07FB51A68108700A75B9A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = NeuroAccess/Images.xcassets; sourceTree = "<group>"; };
 		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = NeuroAccess/Info.plist; sourceTree = "<group>"; };
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = NeuroAccess/main.m; sourceTree = "<group>"; };
-		19F6CBCC0A4E27FBF8BF4A61 /* libPods-NeuroAccess-NeuroAccessTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-NeuroAccess-NeuroAccessTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		1E61D46B7A864463BBF85806 /* SpaceGrotesk-SemiBold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "SpaceGrotesk-SemiBold.ttf"; path = "../src/assets/fonts/SpaceGrotesk-SemiBold.ttf"; sourceTree = "<group>"; };
-		3B4392A12AC88292D35C810B /* Pods-NeuroAccess.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NeuroAccess.debug.xcconfig"; path = "Target Support Files/Pods-NeuroAccess/Pods-NeuroAccess.debug.xcconfig"; sourceTree = "<group>"; };
-		5709B34CF0A7D63546082F79 /* Pods-NeuroAccess.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NeuroAccess.release.xcconfig"; path = "Target Support Files/Pods-NeuroAccess/Pods-NeuroAccess.release.xcconfig"; sourceTree = "<group>"; };
-		5811FBF28A95463F8574C80E /* NHaasGroteskTXPro-Rg.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "NHaasGroteskTXPro-Rg.ttf"; path = "../src/assets/fonts/NHaasGroteskTXPro-Rg.ttf"; sourceTree = "<group>"; };
-		5B7EB9410499542E8C5724F5 /* Pods-NeuroAccess-NeuroAccessTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NeuroAccess-NeuroAccessTests.debug.xcconfig"; path = "Target Support Files/Pods-NeuroAccess-NeuroAccessTests/Pods-NeuroAccess-NeuroAccessTests.debug.xcconfig"; sourceTree = "<group>"; };
-		5DCACB8F33CDC322A6C60F78 /* libPods-NeuroAccess.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-NeuroAccess.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		7543DA5A8AB7477C86B94C8C /* SpaceGrotesk-Medium.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "SpaceGrotesk-Medium.ttf"; path = "../src/assets/fonts/SpaceGrotesk-Medium.ttf"; sourceTree = "<group>"; };
-		7F9CA88A62EA4751B7C38861 /* SpaceGrotesk-Light.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "SpaceGrotesk-Light.ttf"; path = "../src/assets/fonts/SpaceGrotesk-Light.ttf"; sourceTree = "<group>"; };
+		1E61D46B7A864463BBF85806 /* SpaceGrotesk-SemiBold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "SpaceGrotesk-SemiBold.ttf"; path = "../Src/Assets/Fonts/SpaceGrotesk-SemiBold.ttf"; sourceTree = "<group>"; };
+		4D3FC4771A295B6CAC71267E /* Pods-NeuroAccess-NeuroAccessTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NeuroAccess-NeuroAccessTests.debug.xcconfig"; path = "Target Support Files/Pods-NeuroAccess-NeuroAccessTests/Pods-NeuroAccess-NeuroAccessTests.debug.xcconfig"; sourceTree = "<group>"; };
+		5811FBF28A95463F8574C80E /* NHaasGroteskTXPro-Rg.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "NHaasGroteskTXPro-Rg.ttf"; path = "../Src/Assets/Fonts/NHaasGroteskTXPro-Rg.ttf"; sourceTree = "<group>"; };
+		7543DA5A8AB7477C86B94C8C /* SpaceGrotesk-Medium.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "SpaceGrotesk-Medium.ttf"; path = "../Src/Assets/Fonts/SpaceGrotesk-Medium.ttf"; sourceTree = "<group>"; };
+		7F9CA88A62EA4751B7C38861 /* SpaceGrotesk-Light.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "SpaceGrotesk-Light.ttf"; path = "../Src/Assets/Fonts/SpaceGrotesk-Light.ttf"; sourceTree = "<group>"; };
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = NeuroAccess/LaunchScreen.storyboard; sourceTree = "<group>"; };
-		89C6BE57DB24E9ADA2F236DE /* Pods-NeuroAccess-NeuroAccessTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NeuroAccess-NeuroAccessTests.release.xcconfig"; path = "Target Support Files/Pods-NeuroAccess-NeuroAccessTests/Pods-NeuroAccess-NeuroAccessTests.release.xcconfig"; sourceTree = "<group>"; };
-		95FB082F2BF94A93AC41CBE3 /* SpaceGrotesk-Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "SpaceGrotesk-Regular.ttf"; path = "../src/assets/fonts/SpaceGrotesk-Regular.ttf"; sourceTree = "<group>"; };
-		9E66B7B4FB3F4B08B3021CE7 /* SpaceGrotesk-Bold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "SpaceGrotesk-Bold.ttf"; path = "../src/assets/fonts/SpaceGrotesk-Bold.ttf"; sourceTree = "<group>"; };
+		8E1F991150493DB7DF869764 /* Pods-NeuroAccess.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NeuroAccess.release.xcconfig"; path = "Target Support Files/Pods-NeuroAccess/Pods-NeuroAccess.release.xcconfig"; sourceTree = "<group>"; };
+		95FB082F2BF94A93AC41CBE3 /* SpaceGrotesk-Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "SpaceGrotesk-Regular.ttf"; path = "../Src/Assets/Fonts/SpaceGrotesk-Regular.ttf"; sourceTree = "<group>"; };
+		9E66B7B4FB3F4B08B3021CE7 /* SpaceGrotesk-Bold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "SpaceGrotesk-Bold.ttf"; path = "../Src/Assets/Fonts/SpaceGrotesk-Bold.ttf"; sourceTree = "<group>"; };
+		C2EEED967D005F28BA99B633 /* libPods-NeuroAccess.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-NeuroAccess.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		EA5DC00B158034AC88CBC314 /* Pods-NeuroAccess-NeuroAccessTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-NeuroAccess-NeuroAccessTests.release.xcconfig"; path = "Target Support Files/Pods-NeuroAccess-NeuroAccessTests/Pods-NeuroAccess-NeuroAccessTests.release.xcconfig"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
+		F1743761C0FDD350F80044F9 /* libPods-NeuroAccess-NeuroAccessTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-NeuroAccess-NeuroAccessTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -63,7 +63,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7699B88040F8A987B510C191 /* libPods-NeuroAccess-NeuroAccessTests.a in Frameworks */,
+				A2045ABAF3A39CFBE038106F /* libPods-NeuroAccess-NeuroAccessTests.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -71,7 +71,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0C80B921A6F3F58F76C31292 /* libPods-NeuroAccess.a in Frameworks */,
+				9931B9F990FAF97E77EA2856 /* libPods-NeuroAccess.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -112,8 +112,8 @@
 			isa = PBXGroup;
 			children = (
 				ED297162215061F000B7C4FE /* JavaScriptCore.framework */,
-				5DCACB8F33CDC322A6C60F78 /* libPods-NeuroAccess.a */,
-				19F6CBCC0A4E27FBF8BF4A61 /* libPods-NeuroAccess-NeuroAccessTests.a */,
+				C2EEED967D005F28BA99B633 /* libPods-NeuroAccess.a */,
+				F1743761C0FDD350F80044F9 /* libPods-NeuroAccess-NeuroAccessTests.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -153,10 +153,10 @@
 		BBD78D7AC51CEA395F1C20DB /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				3B4392A12AC88292D35C810B /* Pods-NeuroAccess.debug.xcconfig */,
-				5709B34CF0A7D63546082F79 /* Pods-NeuroAccess.release.xcconfig */,
-				5B7EB9410499542E8C5724F5 /* Pods-NeuroAccess-NeuroAccessTests.debug.xcconfig */,
-				89C6BE57DB24E9ADA2F236DE /* Pods-NeuroAccess-NeuroAccessTests.release.xcconfig */,
+				08218DEAA1DDC8B9868332A4 /* Pods-NeuroAccess.debug.xcconfig */,
+				8E1F991150493DB7DF869764 /* Pods-NeuroAccess.release.xcconfig */,
+				4D3FC4771A295B6CAC71267E /* Pods-NeuroAccess-NeuroAccessTests.debug.xcconfig */,
+				EA5DC00B158034AC88CBC314 /* Pods-NeuroAccess-NeuroAccessTests.release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -181,12 +181,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 00E357021AD99517003FC87E /* Build configuration list for PBXNativeTarget "NeuroAccessTests" */;
 			buildPhases = (
-				A55EABD7B0C7F3A422A6CC61 /* [CP] Check Pods Manifest.lock */,
+				A5C49DE9D5D77530070325DA /* [CP] Check Pods Manifest.lock */,
 				00E356EA1AD99517003FC87E /* Sources */,
 				00E356EB1AD99517003FC87E /* Frameworks */,
 				00E356EC1AD99517003FC87E /* Resources */,
-				C59DA0FBD6956966B86A3779 /* [CP] Embed Pods Frameworks */,
-				F6A41C54EA430FDDC6A6ED99 /* [CP] Copy Pods Resources */,
+				BC475E9D87B3596CF4CDAA65 /* [CP] Embed Pods Frameworks */,
+				C1B1FA182BB711705D1227E4 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -202,14 +202,14 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 13B07F931A680F5B00A75B9A /* Build configuration list for PBXNativeTarget "NeuroAccess" */;
 			buildPhases = (
-				C38B50BA6285516D6DCD4F65 /* [CP] Check Pods Manifest.lock */,
+				6902EE933411855C6AFB6CE8 /* [CP] Check Pods Manifest.lock */,
 				FD10A7F022414F080027D42C /* Start Packager */,
 				13B07F871A680F5B00A75B9A /* Sources */,
 				13B07F8C1A680F5B00A75B9A /* Frameworks */,
 				13B07F8E1A680F5B00A75B9A /* Resources */,
 				00DD1BFF1BD5951E006B06BC /* Bundle React Native code and images */,
-				00EEFC60759A1932668264C0 /* [CP] Embed Pods Frameworks */,
-				E235C05ADACE081382539298 /* [CP] Copy Pods Resources */,
+				05C963D76B276987B14B7CE0 /* [CP] Embed Pods Frameworks */,
+				EA555C85782A606278590A22 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -298,7 +298,7 @@
 			shellPath = /bin/sh;
 			shellScript = "set -e\n\nWITH_ENVIRONMENT=\"../node_modules/react-native/scripts/xcode/with-environment.sh\"\nREACT_NATIVE_XCODE=\"../node_modules/react-native/scripts/react-native-xcode.sh\"\n\n/bin/sh -c \"$WITH_ENVIRONMENT $REACT_NATIVE_XCODE\"\n";
 		};
-		00EEFC60759A1932668264C0 /* [CP] Embed Pods Frameworks */ = {
+		05C963D76B276987B14B7CE0 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -315,29 +315,7 @@
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-NeuroAccess/Pods-NeuroAccess-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		A55EABD7B0C7F3A422A6CC61 /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-NeuroAccess-NeuroAccessTests-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		C38B50BA6285516D6DCD4F65 /* [CP] Check Pods Manifest.lock */ = {
+		6902EE933411855C6AFB6CE8 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -359,7 +337,29 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		C59DA0FBD6956966B86A3779 /* [CP] Embed Pods Frameworks */ = {
+		A5C49DE9D5D77530070325DA /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-NeuroAccess-NeuroAccessTests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		BC475E9D87B3596CF4CDAA65 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -376,24 +376,7 @@
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-NeuroAccess-NeuroAccessTests/Pods-NeuroAccess-NeuroAccessTests-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		E235C05ADACE081382539298 /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-NeuroAccess/Pods-NeuroAccess-resources-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Copy Pods Resources";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-NeuroAccess/Pods-NeuroAccess-resources-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-NeuroAccess/Pods-NeuroAccess-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		F6A41C54EA430FDDC6A6ED99 /* [CP] Copy Pods Resources */ = {
+		C1B1FA182BB711705D1227E4 /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -408,6 +391,23 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-NeuroAccess-NeuroAccessTests/Pods-NeuroAccess-NeuroAccessTests-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		EA555C85782A606278590A22 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-NeuroAccess/Pods-NeuroAccess-resources-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-NeuroAccess/Pods-NeuroAccess-resources-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-NeuroAccess/Pods-NeuroAccess-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		FD10A7F022414F080027D42C /* Start Packager */ = {
@@ -462,7 +462,7 @@
 /* Begin XCBuildConfiguration section */
 		00E356F61AD99517003FC87E /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 5B7EB9410499542E8C5724F5 /* Pods-NeuroAccess-NeuroAccessTests.debug.xcconfig */;
+			baseConfigurationReference = 4D3FC4771A295B6CAC71267E /* Pods-NeuroAccess-NeuroAccessTests.debug.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -489,7 +489,7 @@
 		};
 		00E356F71AD99517003FC87E /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 89C6BE57DB24E9ADA2F236DE /* Pods-NeuroAccess-NeuroAccessTests.release.xcconfig */;
+			baseConfigurationReference = EA5DC00B158034AC88CBC314 /* Pods-NeuroAccess-NeuroAccessTests.release.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				COPY_PHASE_STRIP = NO;
@@ -513,7 +513,7 @@
 		};
 		13B07F941A680F5B00A75B9A /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 3B4392A12AC88292D35C810B /* Pods-NeuroAccess.debug.xcconfig */;
+			baseConfigurationReference = 08218DEAA1DDC8B9868332A4 /* Pods-NeuroAccess.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
@@ -540,7 +540,7 @@
 		};
 		13B07F951A680F5B00A75B9A /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 5709B34CF0A7D63546082F79 /* Pods-NeuroAccess.release.xcconfig */;
+			baseConfigurationReference = 8E1F991150493DB7DF869764 /* Pods-NeuroAccess.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
