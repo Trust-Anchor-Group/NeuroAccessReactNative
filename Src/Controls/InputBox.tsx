@@ -11,10 +11,8 @@ import {
   ImageSourcePropType,
   TextInputProps,
 } from 'react-native';
-import { InformationIcon } from '@Assets/Svgs';
-import { TextLabel } from './TextLabel';
+import { ShowError } from './ShowError';
 import { InputBoxStyle } from './Styles/InputBoxStyle';
-import { TextLabelVariants } from 'Helpers/Enums';
 import { ThemeContext } from '@Theme/Provider/ThemeContext';
 
 interface InputBoxProps extends TextInputProps {
@@ -140,12 +138,7 @@ const InputBox: React.ForwardRefRenderFunction<TextInputRef, InputBoxProps> = (
         />
         {rightIcon && <Image source={rightIcon} style={styles.rightIcon} />}
       </View>
-      {error && (
-        <View style={styles.errorContainer}>
-          <InformationIcon textColor={themeColors.inputBox.error} />
-          <TextLabel variant={TextLabelVariants.ERRORLABEL}>{error}</TextLabel>
-        </View>
-      )}
+      {error && (<ShowError errorMessage={error}/>)}
     </View>
   );
 };
