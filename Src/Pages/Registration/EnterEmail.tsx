@@ -1,5 +1,11 @@
 import React, { useState, useRef, useContext } from 'react';
-import { View, KeyboardAvoidingView, Platform, Keyboard, ActivityIndicator } from 'react-native';
+import {
+  View,
+  KeyboardAvoidingView,
+  Platform,
+  Keyboard,
+  ActivityIndicator,
+} from 'react-native';
 import { StackScreenProps } from '@react-navigation/stack';
 import { NeuroAccessBackground } from '@Controls/NeuroAccessBackground';
 import { NavigationHeader } from '@Controls/NavigationHeader';
@@ -88,8 +94,9 @@ export const EnterEmail = ({
           />
 
           <View style={style.button}>
-            <ActivityIndicator animating={isLoading} />    
+            <ActivityIndicator animating={isLoading} />
             <ActionButton
+              textStyle={style.sendText}
               title={t('buttonLabel.sendCode')}
               onPress={() => {
                 Keyboard.dismiss();

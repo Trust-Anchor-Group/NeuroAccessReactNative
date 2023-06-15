@@ -32,7 +32,7 @@ export const AuthStack = () => {
         name="EmailOTPVerify"
         component={EmailOTPVerify}
         options={{
-          headerTitle: 'Email OTP Verification',
+          headerShown: false,
         }}
       />
       <Stack.Screen
