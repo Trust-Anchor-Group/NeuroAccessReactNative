@@ -1,4 +1,4 @@
-import { ActivityIndicator, View } from 'react-native';
+import { ActivityIndicator, View, TextStyle } from 'react-native';
 import React, { useContext, useEffect, useState } from 'react';
 import { StackScreenProps } from '@react-navigation/stack';
 import { ContextType, chooseActionTypeData } from '@Services/Data';
@@ -13,6 +13,7 @@ import { ChooseAccountTypeStyle } from '@Pages/Styles';
 import { Logo } from '@Assets/Svgs';
 import { useTranslation } from 'react-i18next';
 import { ThemeContext } from '@Theme/Provider/ThemeContext';
+import { Colors } from '@Theme/Colors';
 
 export const ChooseAccountType = ({
   navigation,
@@ -54,7 +55,8 @@ export const ChooseAccountType = ({
 
         <View style={style.buttonContainer}>
           <ActionButton
-            textStyle={style.sendText}
+            textStyle={[style.sendText, !selected && {color: themeColors.button.disableText}]}
+            buttonStyle={!selected && {backgroundColor: themeColors.button.disableBg}}
             title={t('buttonLabel.continue')}
             onPress={async () => {
               navigation.navigate('EnterEmail');
