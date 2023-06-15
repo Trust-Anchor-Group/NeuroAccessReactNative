@@ -1,10 +1,5 @@
 import React, { FC, useState, useContext } from 'react';
-import {
-  FlatList,
-  ListRenderItem,
-  TouchableOpacity,
-  View,
-} from 'react-native';
+import { FlatList, ListRenderItem, TouchableOpacity, View } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import { ChooseActionTypeStyle } from '@Pages/Styles/ChooseActionTypeStyle';
 import { InformationIcon } from '@Assets/Svgs';
@@ -17,7 +12,7 @@ import { TextLabel } from './TextLabel';
 interface Props {
   label: string;
   data: Array<ContextType>;
-  onSelect: (item: ContextType) => void;
+  onSelect: (item?: ContextType) => void;
 }
 
 export const ChooseNeuroAccessAppContext: FC<Props> = ({
@@ -26,13 +21,18 @@ export const ChooseNeuroAccessAppContext: FC<Props> = ({
   onSelect,
 }) => {
   const { t } = useTranslation();
-  const {themeColors} = useContext(ThemeContext);
-  const styles = ChooseActionTypeStyle(themeColors)
+  const { themeColors } = useContext(ThemeContext);
+  const styles = ChooseActionTypeStyle(themeColors);
   const [selected, setSelected] = useState<ContextType>();
 
   const onItemPress = (item: ContextType): void => {
-    setSelected(item);
-    onSelect(item);
+    if (item !== selected) {
+      setSelected(item);
+      onSelect(item);
+    } else {
+      setSelected(undefined);
+      onSelect();
+    }
   };
 
   const getItemBackgroundColor = (index: number) => {
@@ -66,7 +66,10 @@ export const ChooseNeuroAccessAppContext: FC<Props> = ({
       ]}
       onPress={() => onItemPress(item)}
     >
-      <TextLabel variant={TextLabelVariants.INPUTLABEL} style={{ color: getItemTextColor(index), flex: 1 }}>
+      <TextLabel
+        variant={TextLabelVariants.INPUTLABEL}
+        style={{ color: getItemTextColor(index), flex: 1 }}
+      >
         {t(item.label)}
       </TextLabel>
       <View style={styles.informationLogoContainer}>

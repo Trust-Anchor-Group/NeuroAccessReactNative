@@ -24,7 +24,9 @@ export const Colors = {
     },
     button: {
       text: '#F5F6F7',
+      disableText: 'rgba(24, 31, 37, 0.5)',
       bg: '#3E776D',
+      disableBg: '#DEE0E2'
     },
     choosePurpose: {
       itemDefaultBg: '#F5F6F7',
@@ -83,7 +85,9 @@ export const Colors = {
     },
     button: {
       text: '#161617',
+      disableText: 'rgba(24, 31, 37, 0.5)',
       bg: '#50998C',
+      disableBackground: '#252526'
     },
     choosePurpose: {
       itemDefaultBg: '#3E3E40',
