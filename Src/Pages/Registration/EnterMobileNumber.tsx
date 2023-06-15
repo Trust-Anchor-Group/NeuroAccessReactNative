@@ -1,8 +1,14 @@
-import React,{ useState, useRef, useContext, useEffect } from 'react'
-import { View, KeyboardAvoidingView, Platform, Keyboard, ActivityIndicator } from 'react-native';
-import { Button, Text } from 'react-native'
+import React, { useState, useRef, useContext, useEffect } from 'react';
+import {
+  View,
+  KeyboardAvoidingView,
+  Platform,
+  Keyboard,
+  ActivityIndicator,
+} from 'react-native';
+import { Button, Text } from 'react-native';
 import { EnterMobileNumberStyle } from '@Pages/Styles';
-import { StackScreenProps } from '@react-navigation/stack'
+import { StackScreenProps } from '@react-navigation/stack';
 import { NeuroAccessBackground } from '@Controls/NeuroAccessBackground';
 import { Logo } from '@Assets/Svgs';
 import { NavigationHeader } from '@Controls/NavigationHeader';
@@ -13,17 +19,18 @@ import { ThemeContext } from '@Theme/Provider/ThemeContext';
 import { AgentAPI, APIType } from '@Services/API/Agent';
 import { MobileInputView } from '@Controls/MobileInputView';
 
-export const EnterMobileNumber = ({ navigation }:StackScreenProps<{Profile: any}>) => {
-
-  interface CountryCodeData{
-    RemoteEndPoint:string;
-    CountryCode:string;
-    PhoneCode:string;
+export const EnterMobileNumber = ({
+  navigation,
+}: StackScreenProps<{ Profile: any }>) => {
+  interface CountryCodeData {
+    RemoteEndPoint: string;
+    CountryCode: string;
+    PhoneCode: string;
   }
   const { t } = useTranslation();
   const { themeColors } = useContext(ThemeContext);
   const styles = EnterMobileNumberStyle(themeColors);
-  const [countryCode,setCountryCode] = useState<CountryCodeData>();
+  const [countryCode, setCountryCode] = useState<CountryCodeData>();
   const countryISOCode = countryCode?.CountryCode;
   const phoneCode = countryCode?.PhoneCode;
   const [inputValue, setInputValue] = useState('');
@@ -45,32 +52,33 @@ export const EnterMobileNumber = ({ navigation }:StackScreenProps<{Profile: any}
       try {
         const createData = await AgentAPI.ID.CountryCode(APIType.ID_APP);
         setCountryCode(createData);
-        console.log('response data', JSON.stringify(createData));
-      } catch (error) {
-      }
+      } catch (error) {}
     };
     callCountryCode();
   }, []);
-  
-  const handleSubmit = async ()=>{
-    console.log('clicked ', inputValue);
+
+  const handleSubmit = async () => {
     try {
-      const request={
-        Nr:phoneCode+inputValue 
+      const request = {
+        Nr: phoneCode + inputValue,
+      };
+      const response = await AgentAPI.ID.sendVerificationMessage(
+        request,
+        APIType.ID_APP
+      );
+      if (response.Status) {
+        navigation.navigate('EmailOTPVerify');
       }
-      const response = await AgentAPI.ID.sendVerificationMessage(request,APIType.ID_APP);
-      console.log('response data', JSON.stringify(response));
-    } catch (error) {
-    }
-  }
+    } catch (error) {}
+  };
 
   return (
     <NeuroAccessBackground>
-    <KeyboardAvoidingView
-      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-      style={styles.container}
-    >
-     <View style={styles.containerSpace} />
+      <KeyboardAvoidingView
+        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+        style={styles.container}
+      >
+        <View style={styles.containerSpace} />
         <View style={styles.containerLogo}>
           <Logo
             textColor={themeColors.logoPrimary}
@@ -83,16 +91,15 @@ export const EnterMobileNumber = ({ navigation }:StackScreenProps<{Profile: any}
             smallText={t('enterMobileScreen.message')}
             inputLabel={t('enterMobileScreen.label')}
           />
-         
-         <MobileInputView
-          label1={countryISOCode}
-          label2={phoneCode}
-          value={inputValue}
-          onChangeText={handleInputChange}
-         />
+
+          <MobileInputView
+            label1={countryISOCode}
+            label2={phoneCode}
+            value={inputValue}
+            onChangeText={handleInputChange}
+          />
 
           <View style={styles.button}>
-            {/* <ActivityIndicator animating={isLoading} />     */}
             <ActionButton
               title={t('buttonLabel.sendCode')}
               onPress={() => {
@@ -108,5 +115,5 @@ export const EnterMobileNumber = ({ navigation }:StackScreenProps<{Profile: any}
         onLanguageAction={onLanguageClick}
       />
     </NeuroAccessBackground>
-  )
-}
+  );
+};

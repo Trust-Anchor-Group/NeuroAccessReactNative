@@ -6,7 +6,7 @@ import {
 import { TextEncoder } from 'text-decoding';
 import hmacSHA256 from 'crypto-js/hmac-sha256';
 import Base64 from 'crypto-js/enc-base64';
-import Config from "react-native-config";
+import Config from 'react-native-config';
 
 const AGENT_URL = Config.AGENT_API_URL;
 const ID_URL = Config.ID_API_URL;
@@ -15,11 +15,11 @@ const ApiKey = Config.ApiKey;
 const Secret = Config.Secret;
 const Seconds = 3500;
 
-console.log(Config)
+console.log(Config);
 
-export enum APIType{
-ID_APP='ID',
-AGENT_APP='Agent',
+export enum APIType {
+  ID_APP = 'ID',
+  AGENT_APP = 'Agent',
 }
 
 export const AgentAPI = {
@@ -28,7 +28,7 @@ export const AgentAPI = {
       Resource: string,
       RequestPayload: any,
       Internal?: any,
-      ApiType?:APIType,
+      ApiType?: APIType
     ) {
       const Request = new Promise(async (SetResult, SetException) => {
         let xhttp = new XMLHttpRequest();
@@ -46,7 +46,7 @@ export const AgentAPI = {
 
         if (!Internal) this.BeforeRequest(RequestPayload);
 
-        const BASE_URL = ApiType===APIType.ID_APP?ID_URL:AGENT_URL;
+        const BASE_URL = ApiType === APIType.ID_APP ? ID_URL : AGENT_URL;
         xhttp.open('POST', BASE_URL + Resource);
         xhttp.setRequestHeader('Content-Type', 'application/json');
         xhttp.setRequestHeader('Accept', 'application/json');
@@ -73,13 +73,23 @@ export const AgentAPI = {
       console.log(new Date().toString() + ': ' + Message);
     },
   },
-  ID:{
-    CountryCode: async function (appType:APIType) {
-      const Response = await AgentAPI.IO.Request('/ID/CountryCode.ws', {},{},appType);
+  ID: {
+    CountryCode: async function (appType: APIType) {
+      const Response = await AgentAPI.IO.Request(
+        '/ID/CountryCode.ws',
+        {},
+        {},
+        appType
+      );
       return Response;
     },
-    sendVerificationMessage:async function (request:any,appType:APIType) {
-      const Response = await AgentAPI.IO.Request('/ID/SendVerificationMessage.ws', request,{},appType);
+    sendVerificationMessage: async function (request: any, appType: APIType) {
+      const Response = await AgentAPI.IO.Request(
+        '/ID/SendVerificationMessage.ws',
+        request,
+        {},
+        appType
+      );
       return Response;
     },
   },
@@ -330,7 +340,7 @@ export const AgentAPI = {
         seconds: Seconds,
       });
 
-			this.SetSessionString('AgentAPI.UserName', UserName);
+      this.SetSessionString('AgentAPI.UserName', UserName);
       this.SaveSessionToken(Response.jwt, Seconds, Math.round(Seconds / 2));
 
       return Response;

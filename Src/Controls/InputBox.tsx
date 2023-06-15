@@ -138,7 +138,7 @@ const InputBox: React.ForwardRefRenderFunction<TextInputRef, InputBoxProps> = (
         />
         {rightIcon && <Image source={rightIcon} style={styles.rightIcon} />}
       </View>
-      {error && (<ShowError errorMessage={error}/>)}
+      {error && <ShowError errorMessage={error} />}
     </View>
   );
 };

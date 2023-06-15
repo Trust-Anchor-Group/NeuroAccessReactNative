@@ -30,19 +30,13 @@ export const EnterEmail = ({
   const [isLoading, setLoading] = useState(false);
 
   const handleSubmit = async () => {
-    // const isFormValid = emailInputRef.current?.validate();
-    // if (isFormValid) {
-    //   setLoading(true);
-    //   const createData = await AgentAPI.Account.Create(
-    //     email,
-    //     email,
-    //     email
-    //   );
-    //   setLoading(false);
-      //navigation.navigate('EmailOTPVerify');
+    const isFormValid = emailInputRef.current?.validate();
+    if (isFormValid) {
+      setLoading(true);
+      const createData = await AgentAPI.Account.Create(email, email, email);
+      setLoading(false);
       navigation.navigate('EnterMobileNumber');
-      
-   // }
+    }
   };
 
   const onBackClick = () => {
