@@ -8,3 +8,5 @@ export { NeuroStatusBar } from "./NeuroStatusBar";
 export { ShowLabelsForAuth } from "./ShowLabelsForAuth";
 export { SplashBackground } from "./SplashBackground";
 export { TextLabel } from "./TextLabel";
+export {MobileInputView} from './MobileInputView';
+ 

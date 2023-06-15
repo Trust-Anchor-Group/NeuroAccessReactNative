@@ -21,6 +21,10 @@ export default {
     label:'ईमेल दर्ज करें',
     placeHolder:'your.email@email.com'
   },
+  enterMobileScreen:{
+    message:'To get verified, you need to enter your phone number',
+    label:'Enter phone number'
+  },
   settingScreen:{
     selectLanguage:' भाषा चुने ',
     changeTheme : 'विषय को परिवर्तित करें'

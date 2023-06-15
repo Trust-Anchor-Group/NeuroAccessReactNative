@@ -39,7 +39,7 @@ export const AuthStack = () => {
         name="EnterMobileNumber"
         component={EnterMobileNumber}
         options={{
-          headerTitle: 'Enter Mobile Number',
+          headerShown: false,
         }}
       />
       <Stack.Screen

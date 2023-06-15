@@ -2,15 +2,15 @@ import React, { useState, useRef, useContext } from 'react';
 import { View, KeyboardAvoidingView, Platform, Keyboard, ActivityIndicator } from 'react-native';
 import { StackScreenProps } from '@react-navigation/stack';
 import { NeuroAccessBackground } from '@Controls/NeuroAccessBackground';
-import InputBox, { TextInputRef } from '@Controls/InputBox';
 import { NavigationHeader } from '@Controls/NavigationHeader';
 import { ActionButton } from '@Controls/ActionButton';
 import { ShowLabelsForAuth } from '@Controls/ShowLabelsForAuth';
+import { useTranslation } from 'react-i18next';
+import { ThemeContext } from '@Theme/Provider/ThemeContext';
+import InputBox, { TextInputRef } from '@Controls/InputBox';
 import { Logo, EmailIcon } from '@Assets/Svgs';
 import { EnterEmailStyle } from '@Pages/Styles';
 import { isValidEmail } from '@Helpers/index';
-import { useTranslation } from 'react-i18next';
-import { ThemeContext } from '@Theme/Provider/ThemeContext';
 import { AgentAPI } from '@Services/API/Agent';
 
 export const EnterEmail = ({
@@ -24,17 +24,19 @@ export const EnterEmail = ({
   const [isLoading, setLoading] = useState(false);
 
   const handleSubmit = async () => {
-    const isFormValid = emailInputRef.current?.validate();
-    if (isFormValid) {
-      setLoading(true);
-      const createData = await AgentAPI.Account.Create(
-        email,
-        email,
-        email
-      );
-      setLoading(false);
-      navigation.navigate('EmailOTPVerify');
-    }
+    // const isFormValid = emailInputRef.current?.validate();
+    // if (isFormValid) {
+    //   setLoading(true);
+    //   const createData = await AgentAPI.Account.Create(
+    //     email,
+    //     email,
+    //     email
+    //   );
+    //   setLoading(false);
+      //navigation.navigate('EmailOTPVerify');
+      navigation.navigate('EnterMobileNumber');
+      
+   // }
   };
 
   const onBackClick = () => {

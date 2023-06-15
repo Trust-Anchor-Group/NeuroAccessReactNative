@@ -21,6 +21,10 @@ export default {
     label:'Enter email',
     placeHolder:'your.email@email.com'
   },
+  enterMobileScreen:{
+    message:'To get verified, you need to enter your phone number',
+    label:'Enter phone number'
+  },
   settingScreen:{
     selectLanguage:' Select Language ',
     changeTheme:'Change Theme'
