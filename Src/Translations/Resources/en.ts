@@ -31,8 +31,12 @@ export default {
     emptyFields: 'Please enter the verification code',
     wrongCode: 'Something want wrong, please double check your code',
   },
-  settingScreen: {
-    selectLanguage: ' Select Language ',
-    changeTheme: 'Change Theme',
+  settingScreen:{
+    selectLanguage:' Select Language ',
+    changeTheme:'Change Theme'
   },
+  internetSatus: {
+    connected: 'Internet Connected',
+    disconnected: 'Internet Not Connected!'
+  }
 };

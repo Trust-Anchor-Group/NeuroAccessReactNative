@@ -35,6 +35,8 @@ export const EnterEmail = ({
       setLoading(true);
       const createData = await AgentAPI.Account.Create(email, email, email);
       setLoading(false);
+      console.log('Response ===> ', createData)
+
       navigation.navigate('EmailOTPVerify');
     }
   };

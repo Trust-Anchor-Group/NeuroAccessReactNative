@@ -32,8 +32,12 @@ export default {
     emptyFields: 'Please enter the verification code',
     wrongCode: 'Something want wrong, please double check your code',
   },
-  settingScreen: {
-    selectLanguage: ' भाषा चुने ',
-    changeTheme: 'विषय को परिवर्तित करें',
+  settingScreen:{
+    selectLanguage:' भाषा चुने ',
+    changeTheme : 'विषय को परिवर्तित करें'
   },
+  internetSatus: {
+    connected: 'इंटरनेट से जुड़ा',
+    disconnected: 'इंटरनेट कनेक्ट नहीं है!'
+  }
 };
