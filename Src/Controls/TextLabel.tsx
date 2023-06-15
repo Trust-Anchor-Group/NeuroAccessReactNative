@@ -6,7 +6,7 @@ import { ThemeContext } from '@Theme/Provider/ThemeContext';
 interface CustomTextProps {
   children: ReactNode;
   variant: TextLabelVariants;
-  style: TextStyle;
+  style?: TextStyle;
 }
 
 export const TextLabel: React.FC<CustomTextProps> = ({
@@ -14,8 +14,8 @@ export const TextLabel: React.FC<CustomTextProps> = ({
   variant,
   style,
 }) => {
-const {themeColors} = useContext(ThemeContext);
-const styles = TextLabelStyle(themeColors)
+  const { themeColors } = useContext(ThemeContext);
+  const styles = TextLabelStyle(themeColors);
 
   const getVariantStyle = (): TextStyle | undefined => {
     switch (variant) {
@@ -29,6 +29,8 @@ const styles = TextLabelStyle(themeColors)
         return styles.errorLabel;
       case TextLabelVariants.XSMALL:
         return styles.xSmall;
+      case TextLabelVariants.DESCRIPTION:
+        return styles.description;
       default:
         return undefined;
     }

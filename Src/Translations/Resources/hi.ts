@@ -10,8 +10,9 @@ export default {
   buttonLabel: {
     continue: 'जारी रखना',
     sendCode: 'कोड भेजो',
-    resend: 'Resend',
-    verify: 'Verify',
+    resend: 'पुन: भेजें',
+    verify: 'सत्यापित करें',
+    close: 'बंद करें',
   },
   choosePurposeScreen: {
     label: 'पहुंच का उद्देश्य चुनें',
@@ -39,5 +40,23 @@ export default {
   internetSatus: {
     connected: 'इंटरनेट से जुड़ा',
     disconnected: 'इंटरनेट कनेक्ट नहीं है!'
+  },
+  accessPurposeInformation: {
+    personalUse: `यह विकल्प आपको काम या व्यक्तिगत उपयोग के लिए न्यूरो-एक्सेस का उपयोग करने की अनुमति देता है।
+
+    इस विकल्प का चयन करके, आप न्यूरो-एक्सेस का उपयोग करके कार्यस्थल पर अपनी डिजिटल पहचान को प्रमाणित कर सकेंगे। इससे आपके लिए सुरक्षित सिस्टम और संवेदनशील जानकारी तक पहुंचना आसान हो जाएगा
+              `,
+    work: `This option allows you to use Neuro-Access for work or personal use.
+
+    By selecting this option, you'll be able to authenticate your digital identity at work using Neuro-Access. This will make it easier for you to access secure systems and sensitive information.
+              `,
+    experimental: `This option allows you to use Neuro-Access for work or personal use.
+
+    By selecting this option, you'll be able to authenticate your digital identity at work using Neuro-Access. This will make it easier for you to access secure systems and sensitive information.
+              `,
+    educational: `This option allows you to use Neuro-Access for work or personal use.
+
+    By selecting this option, you'll be able to authenticate your digital identity at work using Neuro-Access. This will make it easier for you to access secure systems and sensitive information.
+              `          
   }
 };

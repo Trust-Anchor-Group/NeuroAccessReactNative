@@ -15,8 +15,13 @@ export const headerSize = {
   Height: verticalScale(50),
   pTop: moderateScale(4),
   languageTextMTop: moderateScale(5),
-  fontSize: moderateScale(12),
+  fontSize: moderateScale(14),
 };
+
+export const textFontSize = {
+  title: moderateScale(32),
+  description: moderateScale(16), 
+}
 
 export const authLabelsSize = {
   large: moderateScale(30),

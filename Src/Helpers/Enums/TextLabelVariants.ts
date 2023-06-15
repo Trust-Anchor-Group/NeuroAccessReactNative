@@ -4,4 +4,5 @@ export enum TextLabelVariants {
   INPUTLABEL = 'inputLabel',
   ERRORLABEL = 'errorLabel',
   XSMALL = 'xSmall',
+  DESCRIPTION= 'desctiption',
 }

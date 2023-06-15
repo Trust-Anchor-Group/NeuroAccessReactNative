@@ -10,15 +10,15 @@ import { ThemeContext } from '@Theme/Provider/ThemeContext';
 import { TextLabel } from './TextLabel';
 
 interface Props {
-  label: string;
   data: Array<ContextType>;
   onSelect: (item?: ContextType) => void;
+  toggleOverlay?: () => void;
 }
 
 export const ChooseNeuroAccessAppContext: FC<Props> = ({
-  label,
   data,
   onSelect,
+  toggleOverlay
 }) => {
   const { t } = useTranslation();
   const { themeColors } = useContext(ThemeContext);
@@ -72,9 +72,9 @@ export const ChooseNeuroAccessAppContext: FC<Props> = ({
       >
         {t(item.label)}
       </TextLabel>
-      <View style={styles.informationLogoContainer}>
+      <TouchableOpacity onPress={toggleOverlay} style={styles.informationLogoContainer}>
         <InformationIcon textColor={getInformationLogoColor(index)} />
-      </View>
+      </TouchableOpacity>
     </TouchableOpacity>
   );
 

@@ -13,7 +13,7 @@ import { ChooseAccountTypeStyle } from '@Pages/Styles';
 import { Logo } from '@Assets/Svgs';
 import { useTranslation } from 'react-i18next';
 import { ThemeContext } from '@Theme/Provider/ThemeContext';
-import { Colors } from '@Theme/Colors';
+import { InformationOverlay } from '@Controls/InformationOverlay';
 
 export const ChooseAccountType = ({
   navigation,
@@ -22,6 +22,11 @@ export const ChooseAccountType = ({
   const { themeColors } = useContext(ThemeContext);
   const style = ChooseAccountTypeStyle(themeColors);
   const [selected, setSelected] = useState<ContextType>();
+  const [showOverlay, setShowOverlay] = React.useState(false);
+
+  const toggleOverlay = () => {
+    setShowOverlay(!showOverlay);
+  };
 
   const onBackAction = () => {};
 
@@ -47,16 +52,21 @@ export const ChooseAccountType = ({
           />
 
           <ChooseNeuroAccessAppContext
-            label="Select Item"
             data={chooseActionTypeData}
             onSelect={setSelected}
+            toggleOverlay={toggleOverlay}
           />
         </View>
 
         <View style={style.buttonContainer}>
           <ActionButton
-            textStyle={[style.sendText, !selected && {color: themeColors.button.disableText}]}
-            buttonStyle={!selected && {backgroundColor: themeColors.button.disableBg}}
+            textStyle={[
+              style.sendText,
+              !selected && { color: themeColors.button.disableText },
+            ]}
+            buttonStyle={
+              !selected && { backgroundColor: themeColors.button.disableBg }
+            }
             title={t('buttonLabel.continue')}
             onPress={async () => {
               navigation.navigate('EnterEmail');
@@ -69,6 +79,13 @@ export const ChooseAccountType = ({
         onBackAction={onBackAction}
         onLanguageAction={onLanguageClick}
       />
+      {showOverlay && (
+        <InformationOverlay
+          toggleOverlay={toggleOverlay}
+          title="For work"
+          description={`${t('accessPurposeInformation.personalUse')}`}
+        />
+      )}
     </NeuroAccessBackground>
   );
 };
