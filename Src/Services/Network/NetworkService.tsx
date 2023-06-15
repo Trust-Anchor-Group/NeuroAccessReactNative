@@ -2,11 +2,11 @@ import { View } from 'react-native';
 import React from 'react';
 import NetInfo from '@react-native-community/netinfo';
 import { useTranslation } from 'react-i18next';
-import { TextLabel } from './TextLabel';
+import { TextLabel } from '@Controls/TextLabel';
 import { TextLabelVariants } from '@Helpers/Enums';
-import { InternetContainerViewStyles } from './Styles';
+import { InternetContainerViewStyles } from './NetworkServiceStyle';
 
-export function InternetStatus() {
+export function NetworkService() {
   const { t } = useTranslation();
   const [isInternetReachable, setIsInternetReachable] = React.useState(true);
 

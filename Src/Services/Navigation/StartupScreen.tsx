@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { AuthStack } from './Navigation';
 import { useLogin } from './LoginProvider';
 import { Splash } from '@Pages/Splash';
-import {InternetStatus} from '@Controls/InternetStatus';
+import {NetworkService} from '@Services/Network/NetworkService';
 
 export function StartupScreen() {
   const { isLoggedIn } = useLogin();
@@ -21,7 +21,7 @@ export function StartupScreen() {
   }
   return (
     <View style={styles.container}>
-      <InternetStatus />
+      <NetworkService />
       {isLoggedIn ? <AuthStack /> : <AuthStack />}
     </View>
   );

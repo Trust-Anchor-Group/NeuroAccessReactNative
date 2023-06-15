@@ -8,4 +8,4 @@ export { NeuroStatusBar } from './NeuroStatusBar';
 export { ShowLabelsForAuth } from './ShowLabelsForAuth';
 export { SplashBackground } from './SplashBackground';
 export { TextLabel } from './TextLabel';
-export { InternetStatus } from '@Controls/InternetStatus';
+export { NetworkService as InternetStatus } from '@Services/Network/NetworkService';
