@@ -73,8 +73,7 @@ export const ChooseAccountType = ({
             }
             title={t('buttonLabel.continue')}
             onPress={async () => {
-              //  navigation.navigate('EnterEmail');
-              navigation.navigate('EmailOTPVerify');
+                navigation.navigate('EnterEmail');
             }}
           />
         </View>
