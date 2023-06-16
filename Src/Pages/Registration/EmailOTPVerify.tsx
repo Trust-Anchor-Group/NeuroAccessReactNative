@@ -21,7 +21,7 @@ export const EmailOTPVerify = ({
   navigation,
 }: StackScreenProps<{ Profile: any }>) => {
   const route = useRoute();
-  //const { data } = route?.params;
+  const { data } = route?.params;
   const { t } = useTranslation();
   const { themeColors } = useContext(ThemeContext);
 
@@ -57,7 +57,7 @@ export const EmailOTPVerify = ({
       APIType.ID_APP
     );
     if (response.Status) {
-      navigation.navigate('EnterMobileNumber');
+      navigation.navigate('CreateAccount');
     }
   };
   const onBackClick = () => {
@@ -90,7 +90,7 @@ export const EmailOTPVerify = ({
             style={EnterOTPVerifyStyle(themeColors).textLabel}
             variant={TextLabelVariants.LABEL}
           >
-            {t('enterOTPVerifyScreen.message') + ' ' + 'data'}
+            {t('enterOTPVerifyScreen.message') + ' ' + data}
           </TextLabel>
         </View>
         <View style={styles(themeColors).inputContainer}>

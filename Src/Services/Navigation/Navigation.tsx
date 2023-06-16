@@ -7,6 +7,7 @@ import {
   EnterEmail,
   EnterMobileNumber,
   MobileNumberOTPVerify,
+  CreateAccount,
 } from '@Pages/Registration';
 import { Settings } from '@Pages/Settings';
 const Stack = createStackNavigator();
@@ -47,6 +48,13 @@ export const AuthStack = () => {
         component={MobileNumberOTPVerify}
         options={{
           headerTitle: 'Mobile Number OTP Verification',
+        }}
+      />
+      <Stack.Screen
+        name="CreateAccount"
+        component={CreateAccount}
+        options={{
+          headerTitle: 'CreateAccount',
         }}
       />
 
