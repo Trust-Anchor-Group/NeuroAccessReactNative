@@ -4,7 +4,6 @@ import { otpInput } from '@Theme/Dimensions';
 export const OtpInputStyle = (themeColors: any) =>
   StyleSheet.create({
     container: {
-      marginTop: otpInput.marginTop,
       flexDirection: 'row',
       justifyContent: 'space-between',
       alignItems: 'center',

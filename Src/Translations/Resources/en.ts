@@ -31,12 +31,16 @@ export default {
     emptyFields: 'Please enter the verification code',
     wrongCode: 'Something want wrong, please double check your code',
   },
-  settingScreen:{
-    selectLanguage:' Select Language ',
-    changeTheme:'Change Theme'
+  enterMobileScreen: {
+    message: 'To get verified, you need to enter your phone number',
+    label: 'Enter phone number',
+  },
+  settingScreen: {
+    selectLanguage: ' Select Language ',
+    changeTheme: 'Change Theme',
   },
   internetSatus: {
     connected: 'Internet Connected',
-    disconnected: 'Internet Not Connected!'
-  }
+    disconnected: 'Internet Not Connected!',
+  },
 };

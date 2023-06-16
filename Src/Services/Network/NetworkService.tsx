@@ -3,7 +3,7 @@ import React from 'react';
 import NetInfo from '@react-native-community/netinfo';
 import { useTranslation } from 'react-i18next';
 import { TextLabel } from '@Controls/TextLabel';
-import { TextLabelVariants } from '@Helpers/Enums';
+import { TextLabelVariants } from '@Controls/TextLabel';
 import { InternetContainerViewStyles } from './NetworkServiceStyle';
 
 export function NetworkService() {

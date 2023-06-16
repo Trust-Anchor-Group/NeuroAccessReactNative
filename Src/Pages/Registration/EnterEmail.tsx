@@ -7,24 +7,27 @@ import {
   ActivityIndicator,
 } from 'react-native';
 import { StackScreenProps } from '@react-navigation/stack';
-import { NeuroAccessBackground } from '@Controls/NeuroAccessBackground';
-import InputBox, { TextInputRef } from '@Controls/InputBox';
-import { NavigationHeader } from '@Controls/NavigationHeader';
-import { ActionButton } from '@Controls/ActionButton';
-import { ShowLabelsForAuth } from '@Controls/ShowLabelsForAuth';
-import { Logo, EmailIcon } from '@Assets/Svgs';
-import { EnterEmailStyle } from '@Pages/Styles';
-import { isValidEmail } from '@Helpers/index';
+import {
+  NeuroAccessBackground,
+  NavigationHeader,
+  TextLabel,
+  TextLabelVariants,
+  ActionButton,
+} from '@Controls/index';
 import { useTranslation } from 'react-i18next';
 import { ThemeContext } from '@Theme/Provider/ThemeContext';
+import InputBox, { TextInputRef } from '@Controls/InputBox';
+import { Logo, EmailIcon } from '@Assets/Svgs';
+import {} from '@Pages/Styles';
+import { isValidEmail } from '@Helpers/index';
 import { AgentAPI } from '@Services/API/Agent';
+import { GlobalStyle as styles, EnterEmailStyle } from '@Pages/Styles';
 
 export const EnterEmail = ({
   navigation,
 }: StackScreenProps<{ Profile: any }>) => {
   const { t } = useTranslation();
   const { themeColors } = useContext(ThemeContext);
-  const style = EnterEmailStyle(themeColors);
   const emailInputRef = useRef<TextInputRef>(null);
   const [email, setEmail] = useState('');
   const [isLoading, setLoading] = useState(false);
@@ -35,9 +38,7 @@ export const EnterEmail = ({
       setLoading(true);
       const createData = await AgentAPI.Account.Create(email, email, email);
       setLoading(false);
-      console.log('Response ===> ', createData)
-
-      navigation.navigate('EmailOTPVerify');
+      navigation.navigate('EnterMobileNumber');
     }
   };
 
@@ -53,21 +54,32 @@ export const EnterEmail = ({
     <NeuroAccessBackground>
       <KeyboardAvoidingView
         behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-        style={style.container}
+        style={styles(themeColors).container}
       >
-        <View style={style.containerSpace} />
-        <View style={style.containerLogo}>
+        <View style={styles(themeColors).spaceContainer} />
+        <View style={styles(themeColors).logoContainer}>
           <Logo
             textColor={themeColors.logoPrimary}
             logoColor={themeColors.logoSecondary}
           />
         </View>
-        <View style={style.containerInput}>
-          <ShowLabelsForAuth
-            largeText={t('heading.getStarted')}
-            smallText={t('heading.verifyEmail')}
-            inputLabel={t('enterEmailScreen.label')}
-          />
+
+        <View style={styles(themeColors).informationContainer}>
+          <TextLabel variant={TextLabelVariants.HEADER}>
+            {t('heading.getStarted')}
+          </TextLabel>
+          <TextLabel
+            style={EnterEmailStyle(themeColors).textLabel}
+            variant={TextLabelVariants.LABEL}
+          >
+            {t('heading.verifyEmail')}
+          </TextLabel>
+        </View>
+
+        <View style={styles(themeColors).inputContainer}>
+          <TextLabel variant={TextLabelVariants.INPUTLABEL}>
+            {t('enterEmailScreen.label')}
+          </TextLabel>
           <InputBox
             leftIcon={EmailIcon}
             keyboardType="email-address"
@@ -88,18 +100,18 @@ export const EnterEmail = ({
               return isValidEmail(value);
             }}
           />
+        </View>
 
-          <View style={style.button}>
-            <ActivityIndicator animating={isLoading} />
-            <ActionButton
-              textStyle={style.sendText}
-              title={t('buttonLabel.sendCode')}
-              onPress={() => {
-                Keyboard.dismiss();
-                handleSubmit();
-              }}
-            />
-          </View>
+        <View style={styles(themeColors).buttonContainer}>
+          <ActivityIndicator animating={isLoading} />
+          <ActionButton
+            textStyle={EnterEmailStyle(themeColors).sendText}
+            title={t('buttonLabel.sendCode')}
+            onPress={() => {
+              Keyboard.dismiss();
+              handleSubmit();
+            }}
+          />
         </View>
       </KeyboardAvoidingView>
       <NavigationHeader
