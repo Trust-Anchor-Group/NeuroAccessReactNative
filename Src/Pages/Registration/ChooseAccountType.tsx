@@ -60,6 +60,7 @@ export const ChooseAccountType = ({
 
         <View style={style.buttonContainer}>
           <ActionButton
+            disabled={!selected}
             textStyle={[
               style.sendText,
               !selected && { color: themeColors.button.disableText },
@@ -69,7 +70,7 @@ export const ChooseAccountType = ({
             }
             title={t('buttonLabel.continue')}
             onPress={async () => {
-              navigation.navigate('EnterEmail');
+              selected && navigation.navigate('EnterEmail');
             }}
           />
         </View>
