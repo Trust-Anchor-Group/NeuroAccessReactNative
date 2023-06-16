@@ -23,8 +23,8 @@ export const MobileInputView: React.FC<CustomInputBoxProps> = ({
           style={styles.input}
           value={value}
           onChangeText={onChangeText}
-          placeholder='xxxxxxxxxx'
-          placeholderTextColor='#181F2580'
+          placeholder="xxxxxxxxxx"
+          placeholderTextColor="#181F2580"
         />
       </View>
     </View>

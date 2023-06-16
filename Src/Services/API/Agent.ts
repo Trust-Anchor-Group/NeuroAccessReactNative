@@ -83,10 +83,19 @@ export const AgentAPI = {
       );
       return Response;
     },
-    sendVerificationMessage: async function (request: any, appType: APIType) {
+    sendVerificationMessage: async function (nr: string, appType: APIType) {
       const Response = await AgentAPI.IO.Request(
         '/ID/SendVerificationMessage.ws',
-        request,
+        { Nr: nr },
+        {},
+        appType
+      );
+      return Response;
+    },
+    verifyNumber: async function (nr: string, code: string, appType: APIType) {
+      const Response = await AgentAPI.IO.Request(
+        '/ID/VerifyNumber.ws',
+        { Nr: nr, Code: parseInt(code), Test: true },
         {},
         appType
       );

@@ -1,11 +1,11 @@
-import { StyleSheet, Dimensions } from "react-native";
-const {width} = Dimensions.get('window');
+import { StyleSheet, Dimensions } from 'react-native';
+const { width } = Dimensions.get('window');
 
 export const SettingStyle = StyleSheet.create({
   container: {
     padding: 10,
-    justifyContent:'center',
-    alignSelf:'center',
+    justifyContent: 'center',
+    alignSelf: 'center',
     backgroundColor: 'rgb(231, 232, 235)',
     width: width * 0.95,
   },

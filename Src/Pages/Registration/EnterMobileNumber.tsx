@@ -1,23 +1,19 @@
-import React, { useState, useRef, useContext, useEffect } from 'react';
-import {
-  View,
-  KeyboardAvoidingView,
-  Platform,
-  Keyboard,
-  ActivityIndicator,
-} from 'react-native';
-import { Button, Text } from 'react-native';
-import { EnterMobileNumberStyle } from '@Pages/Styles';
+import React, { useState, useContext, useEffect } from 'react';
+import { View, KeyboardAvoidingView, Platform, Keyboard } from 'react-native';
+import { GlobalStyle as styles, EnterMobileNumberStyle } from '@Pages/Styles';
 import { StackScreenProps } from '@react-navigation/stack';
-import { NeuroAccessBackground } from '@Controls/NeuroAccessBackground';
 import { Logo } from '@Assets/Svgs';
-import { NavigationHeader } from '@Controls/NavigationHeader';
-import { ActionButton } from '@Controls/ActionButton';
-import { ShowLabelsForAuth } from '@Controls/ShowLabelsForAuth';
+import {
+  NeuroAccessBackground,
+  NavigationHeader,
+  ActionButton,
+  TextLabelVariants,
+  MobileInputView,
+  TextLabel,
+} from '@Controls/index';
 import { useTranslation } from 'react-i18next';
 import { ThemeContext } from '@Theme/Provider/ThemeContext';
 import { AgentAPI, APIType } from '@Services/API/Agent';
-import { MobileInputView } from '@Controls/MobileInputView';
 
 export const EnterMobileNumber = ({
   navigation,
@@ -29,7 +25,6 @@ export const EnterMobileNumber = ({
   }
   const { t } = useTranslation();
   const { themeColors } = useContext(ThemeContext);
-  const styles = EnterMobileNumberStyle(themeColors);
   const [countryCode, setCountryCode] = useState<CountryCodeData>();
   const countryISOCode = countryCode?.CountryCode;
   const phoneCode = countryCode?.PhoneCode;
@@ -59,15 +54,13 @@ export const EnterMobileNumber = ({
 
   const handleSubmit = async () => {
     try {
-      const request = {
-        Nr: phoneCode + inputValue,
-      };
+      const mobileNumber = phoneCode + inputValue;
       const response = await AgentAPI.ID.sendVerificationMessage(
-        request,
+        mobileNumber,
         APIType.ID_APP
       );
       if (response.Status) {
-        navigation.navigate('EmailOTPVerify');
+        navigation.navigate('EmailOTPVerify', { data: mobileNumber });
       }
     } catch (error) {}
   };
@@ -76,38 +69,46 @@ export const EnterMobileNumber = ({
     <NeuroAccessBackground>
       <KeyboardAvoidingView
         behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-        style={styles.container}
+        style={styles(themeColors).container}
       >
-        <View style={styles.containerSpace} />
-        <View style={styles.containerLogo}>
+        <View style={styles(themeColors).spaceContainer} />
+        <View style={styles(themeColors).logoContainer}>
           <Logo
             textColor={themeColors.logoPrimary}
             logoColor={themeColors.logoSecondary}
           />
         </View>
-        <View style={styles.containerInput}>
-          <ShowLabelsForAuth
-            largeText={t('heading.getStarted')}
-            smallText={t('enterMobileScreen.message')}
-            inputLabel={t('enterMobileScreen.label')}
-          />
-
+        <View style={styles(themeColors).informationContainer}>
+          <TextLabel variant={TextLabelVariants.HEADER}>
+            {t('heading.getStarted')}
+          </TextLabel>
+          <TextLabel
+            style={EnterMobileNumberStyle(themeColors).textLabel}
+            variant={TextLabelVariants.LABEL}
+          >
+            {t('enterMobileScreen.message')}
+          </TextLabel>
+        </View>
+        <View style={styles(themeColors).inputContainer}>
+          <TextLabel variant={TextLabelVariants.INPUTLABEL}>
+            {t('enterMobileScreen.label')}
+          </TextLabel>
           <MobileInputView
             label1={countryISOCode}
             label2={phoneCode}
             value={inputValue}
             onChangeText={handleInputChange}
           />
-
-          <View style={styles.button}>
-            <ActionButton
-              title={t('buttonLabel.sendCode')}
-              onPress={() => {
-                Keyboard.dismiss();
-                handleSubmit();
-              }}
-            />
-          </View>
+        </View>
+        <View style={styles(themeColors).buttonContainer}>
+          <ActionButton
+            textStyle={EnterMobileNumberStyle(themeColors).sendText}
+            title={t('buttonLabel.sendCode')}
+            onPress={() => {
+              Keyboard.dismiss();
+              handleSubmit();
+            }}
+          />
         </View>
       </KeyboardAvoidingView>
       <NavigationHeader

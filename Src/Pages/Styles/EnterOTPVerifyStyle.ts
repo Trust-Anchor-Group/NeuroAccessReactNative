@@ -1,39 +1,20 @@
 import { StyleSheet } from 'react-native';
-import { otpVerification } from '@Theme/Dimensions';
+import { moderateScale } from '@Theme/Metrics';
 export const EnterOTPVerifyStyle = (themeColors: any) =>
   StyleSheet.create({
-    container: {
-      position: 'absolute',
-      bottom: 0,
-      height: '100%',
-      width: '100%',
-      flexDirection: 'column',
-    },
-    containerSpace: {
-      alignItems: 'center',
-      height: '12%',
-    },
-    containerLogo: {
-      alignItems: 'center',
-      height: '25%',
-    },
-    containerInput: {
-      height: '56%',
-      width: '90%',
-      alignSelf: 'center',
+    textLabel: { marginTop: moderateScale(23) },
+    label:{
+      marginBottom: moderateScale(5)
     },
     bottom: {
-      width: '100%',
       flexDirection: 'row',
-      position: 'absolute',
-      bottom: 0,
       justifyContent: 'space-between',
     },
     resendButton: {
       width: '48%',
-      borderWidth: otpVerification.borderWidth,
+      borderWidth: moderateScale(1),
       borderColor: themeColors.otpVerification.resendButton.borderColor,
-      borderRadius: otpVerification.borderRadius,
+      borderRadius: moderateScale(4),
       backgroundColor: themeColors.otpVerification.resendButton.backgroundColor,
     },
     resendText: { color: themeColors.otpVerification.resendButton.textColor },

@@ -1,29 +1,8 @@
 import { StyleSheet } from 'react-native';
+import { moderateScale } from '@Theme/Metrics';
 
-export const EnterMobileNumberStyle =(themeColors:any)=> StyleSheet.create({
-  container: {
-    position: 'absolute',
-    bottom: 0,
-    height: '100%',
-    width: '100%',
-    flexDirection: 'column',
-  },
-  containerSpace: {
-    alignItems: 'center',
-    height: '12%',
-  },
-  containerLogo: {
-    alignItems: 'center',
-    height: '25%',
-  },
-  containerInput: {
-    height: '56%',
-    width: '90%',
-    alignSelf: 'center',
-  },
-  button: {
-    position: 'absolute',
-    bottom: 0,
-    width: '100%'
-  },
-});
+export const EnterMobileNumberStyle = (themeColors: any) =>
+  StyleSheet.create({
+    sendText: { color: themeColors.otpVerification.sendTextColor },
+    textLabel: { marginTop: moderateScale(13) },
+  });

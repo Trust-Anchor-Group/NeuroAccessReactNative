@@ -1,24 +1,29 @@
 import { View, KeyboardAvoidingView, Platform } from 'react-native';
 import React, { useState, useContext } from 'react';
 import { StackScreenProps } from '@react-navigation/stack';
-import { OtpInput } from '@Controls/OtpInput';
-import { EnterOTPVerifyStyle } from '@Pages/Styles/EnterOTPVerifyStyle';
-import { ShowError } from '@Controls/ShowError';
-import { NeuroAccessBackground } from '@Controls/NeuroAccessBackground';
+import {
+  NeuroAccessBackground,
+  OtpInput,
+  ShowError,
+  NavigationHeader,
+  ActionButton,
+  TextLabel,
+  TextLabelVariants,
+} from '@Controls/index';
+import { GlobalStyle as styles, EnterOTPVerifyStyle } from '@Pages/Styles';
 import { Logo } from '@Assets/Svgs';
-import { ShowLabelsForAuth } from '@Controls/ShowLabelsForAuth';
-import { NavigationHeader } from '@Controls/NavigationHeader';
 import { useTranslation } from 'react-i18next';
 import { ThemeContext } from '@Theme/Provider';
-import { ActionButton } from '@Controls/ActionButton';
-import { AgentAPI } from '@Services/API/Agent';
+import { AgentAPI, APIType } from '@Services/API/Agent';
+import { useRoute } from '@react-navigation/native';
 
 export const EmailOTPVerify = ({
   navigation,
 }: StackScreenProps<{ Profile: any }>) => {
+  const route = useRoute();
+  //const { data } = route?.params;
   const { t } = useTranslation();
   const { themeColors } = useContext(ThemeContext);
-  const style = EnterOTPVerifyStyle(themeColors);
 
   const [otpValue, setOTPValue] = useState('');
   const [isError, setIsError] = useState(false);
@@ -36,15 +41,25 @@ export const EmailOTPVerify = ({
     } else if (otpValue.length < 6) {
       setIsError(true);
       errorMessage.current = t('enterOTPVerifyScreen.emptyFields');
-    } else if (otpValue === '123456') {
+    } else if (otpValue.length === 6) {
       setIsError(false);
-      navigation.navigate('EnterMobileNumber');
+      callVerificationCode();
     } else {
       setIsError(true);
       errorMessage.current = t('enterOTPVerifyScreen.wrongCode');
     }
   };
 
+  const callVerificationCode = async () => {
+    const response = await AgentAPI.ID.verifyNumber(
+      data,
+      otpValue,
+      APIType.ID_APP
+    );
+    if (response.Status) {
+      navigation.navigate('EnterMobileNumber');
+    }
+  };
   const onBackClick = () => {
     navigation.goBack();
   };
@@ -57,22 +72,34 @@ export const EmailOTPVerify = ({
     <NeuroAccessBackground>
       <KeyboardAvoidingView
         behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-        style={style.container}
+        style={styles(themeColors).container}
       >
-        <View style={style.containerSpace} />
-        <View style={style.containerLogo}>
+        <View style={styles(themeColors).spaceContainer} />
+        <View style={styles(themeColors).logoContainer}>
           <Logo
             textColor={themeColors.logoPrimary}
             logoColor={themeColors.logoSecondary}
           />
         </View>
-        <View style={style.containerInput}>
-          <ShowLabelsForAuth
-            largeText={t('enterOTPVerifyScreen.header')}
-            smallText={t('enterOTPVerifyScreen.message')}
-            inputLabel={t('enterOTPVerifyScreen.label')}
-          />
 
+        <View style={styles(themeColors).informationContainer}>
+          <TextLabel variant={TextLabelVariants.HEADER}>
+            {t('enterOTPVerifyScreen.header')}
+          </TextLabel>
+          <TextLabel
+            style={EnterOTPVerifyStyle(themeColors).textLabel}
+            variant={TextLabelVariants.LABEL}
+          >
+            {t('enterOTPVerifyScreen.message') + ' ' + 'data'}
+          </TextLabel>
+        </View>
+        <View style={styles(themeColors).inputContainer}>
+          <TextLabel
+            style={EnterOTPVerifyStyle(themeColors).label}
+            variant={TextLabelVariants.INPUTLABEL}
+          >
+            {t('enterOTPVerifyScreen.label')}
+          </TextLabel>
           <OtpInput
             onOTPChange={handleOTPChange}
             otpValue={otpValue}
@@ -80,19 +107,20 @@ export const EmailOTPVerify = ({
             handleSubmit={handleSubmit}
           />
           {isError && <ShowError errorMessage={errorMessage.current} />}
-
-          <View style={style.bottom}>
+        </View>
+        <View style={styles(themeColors).buttonContainer}>
+          <View style={EnterOTPVerifyStyle(themeColors).bottom}>
             <ActionButton
-              buttonStyle={style.resendButton}
+              buttonStyle={EnterOTPVerifyStyle(themeColors).resendButton}
               title={t('buttonLabel.resend')}
-              textStyle={style.resendText}
+              textStyle={EnterOTPVerifyStyle(themeColors).resendText}
               onPress={handleSubmit}
             />
 
             <ActionButton
-              buttonStyle={style.sendButton}
+              buttonStyle={EnterOTPVerifyStyle(themeColors).sendButton}
               title={t('buttonLabel.verify')}
-              textStyle={style.sendText}
+              textStyle={EnterOTPVerifyStyle(themeColors).sendText}
               onPress={handleSubmit}
             />
           </View>

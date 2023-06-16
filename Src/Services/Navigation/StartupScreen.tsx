@@ -3,13 +3,12 @@ import React, { useEffect, useState } from 'react';
 import { AuthStack } from './Navigation';
 import { useLogin } from './LoginProvider';
 import { Splash } from '@Pages/Splash';
-import {NetworkService} from '@Services/Network/NetworkService';
+import { NetworkService } from '@Services/Network/NetworkService';
 
 export function StartupScreen() {
   const { isLoggedIn } = useLogin();
   const [appLoading, setAppLoading] = useState(true);
 
-  
   useEffect(() => {
     setTimeout(() => {
       setAppLoading(false);
