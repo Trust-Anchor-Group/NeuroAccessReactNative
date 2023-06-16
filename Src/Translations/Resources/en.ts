@@ -32,13 +32,17 @@ export default {
     emptyFields: 'Please enter the verification code',
     wrongCode: 'Something want wrong, please double check your code',
   },
-  settingScreen:{
-    selectLanguage:' Select Language ',
-    changeTheme:'Change Theme'
+  enterMobileScreen: {
+    message: 'To get verified, you need to enter your phone number',
+    label: 'Enter phone number',
+  },
+  settingScreen: {
+    selectLanguage: ' Select Language ',
+    changeTheme: 'Change Theme',
   },
   internetSatus: {
     connected: 'Internet Connected',
-    disconnected: 'Internet Not Connected!'
+    disconnected: 'Internet Not Connected!',
   },
   accessPurposeInformation: {
     personalUse: `This option allows you to use Neuro-Access for work or personal use.
@@ -56,6 +60,6 @@ By selecting this option, you'll be able to authenticate your digital identity a
     educational: `This option allows you to use Neuro-Access for work or personal use.
 
 By selecting this option, you'll be able to authenticate your digital identity at work using Neuro-Access. This will make it easier for you to access secure systems and sensitive information.
-              `          
-  }
+              `,
+  },
 };

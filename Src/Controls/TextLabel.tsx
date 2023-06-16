@@ -1,11 +1,19 @@
 import React, { ReactNode, useContext } from 'react';
 import { Text, TextStyle, TextProps } from 'react-native';
 import { TextLabelStyle } from '@Controls/Styles';
-import { TextLabelVariants } from 'Helpers/Enums';
 import { ThemeContext } from '@Theme/Provider/ThemeContext';
 interface CustomTextProps extends TextProps {
   children: ReactNode;
   variant: TextLabelVariants;
+}
+
+export enum TextLabelVariants {
+  HEADER = 'header',
+  LABEL = 'label',
+  INPUTLABEL = 'inputLabel',
+  ERRORLABEL = 'errorLabel',
+  XSMALL = 'xSmall',
+  DESCRIPTION= 'description'
 }
 
 export const TextLabel: React.FC<CustomTextProps> = ({

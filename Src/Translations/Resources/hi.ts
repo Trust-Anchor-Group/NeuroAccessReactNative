@@ -33,9 +33,13 @@ export default {
     emptyFields: 'Please enter the verification code',
     wrongCode: 'Something want wrong, please double check your code',
   },
-  settingScreen:{
-    selectLanguage:' भाषा चुने ',
-    changeTheme : 'विषय को परिवर्तित करें'
+  enterMobileScreen: {
+    message: 'To get verified, you need to enter your phone number',
+    label: 'Enter phone number',
+  },
+  settingScreen: {
+    selectLanguage: ' भाषा चुने ',
+    changeTheme: 'विषय को परिवर्तित करें',
   },
   internetSatus: {
     connected: 'इंटरनेट से जुड़ा',

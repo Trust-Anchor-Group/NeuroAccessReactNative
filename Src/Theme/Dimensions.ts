@@ -92,7 +92,6 @@ export const button = {
 };
 
 export const otpInput = {
-  marginTop: moderateScale(10),
   borderWidth: moderateScale(2),
   padding: moderateScale(8),
   marginHorizontal: moderateScale(4),
@@ -100,9 +99,4 @@ export const otpInput = {
   width: horizontalScale(40),
   height: verticalScale(54),
   fontSize: moderateScale(24),
-};
-
-export const otpVerification = {
-  borderWidth: moderateScale(1),
-  borderRadius: moderateScale(4),
 };

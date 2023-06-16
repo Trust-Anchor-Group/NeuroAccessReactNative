@@ -7,7 +7,7 @@ import {
   TouchableOpacityProps,
 } from 'react-native';
 import { TextLabel } from './TextLabel';
-import { TextLabelVariants } from '@Helpers/Enums';
+import { TextLabelVariants } from './TextLabel';
 import { GlobalStyle } from '@Pages/Styles';
 import { ThemeContext } from '@Theme/Provider/ThemeContext';
 interface Props extends TouchableOpacityProps {

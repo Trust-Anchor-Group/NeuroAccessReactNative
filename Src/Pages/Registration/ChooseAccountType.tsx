@@ -1,14 +1,16 @@
-import { ActivityIndicator, View, TextStyle } from 'react-native';
-import React, { useContext, useEffect, useState } from 'react';
+import { View } from 'react-native';
+import React, { useContext, useState } from 'react';
 import { StackScreenProps } from '@react-navigation/stack';
 import { ContextType, chooseActionTypeData } from '@Services/Data';
 import {
   ChooseNeuroAccessAppContext,
-  ShowLabelsForAuth,
   ActionButton,
   NavigationHeader,
   NeuroAccessBackground,
+  TextLabel,
+  TextLabelVariants,
 } from '@Controls/index';
+import { GlobalStyle as styles } from '@Pages/Styles';
 import { ChooseAccountTypeStyle } from '@Pages/Styles';
 import { Logo } from '@Assets/Svgs';
 import { useTranslation } from 'react-i18next';
@@ -20,7 +22,6 @@ export const ChooseAccountType = ({
 }: StackScreenProps<{ Profile: any }>) => {
   const { t } = useTranslation();
   const { themeColors } = useContext(ThemeContext);
-  const style = ChooseAccountTypeStyle(themeColors);
   const [selected, setSelected] = useState<ContextType>();
   const [showOverlay, setShowOverlay] = React.useState(false);
 
@@ -36,20 +37,29 @@ export const ChooseAccountType = ({
 
   return (
     <NeuroAccessBackground>
-      <View style={style.container}>
-        <View style={style.containerSpace} />
-        <View style={style.containerLogo}>
+      <View style={styles(themeColors).container}>
+        <View style={styles(themeColors).spaceContainer} />
+        <View style={styles(themeColors).logoContainer}>
           <Logo
             textColor={themeColors.logoPrimary}
             logoColor={themeColors.logoSecondary}
           />
         </View>
-        <View style={style.containerInput}>
-          <ShowLabelsForAuth
-            largeText={t('heading.welcome')}
-            smallText={t('heading.chooseIntend')}
-            inputLabel={t('choosePurposeScreen.label')}
-          />
+        <View style={styles(themeColors).informationContainer}>
+          <TextLabel variant={TextLabelVariants.HEADER}>
+            {t('heading.welcome')}
+          </TextLabel>
+          <TextLabel variant={TextLabelVariants.LABEL}>
+            {t('heading.chooseIntend')}
+          </TextLabel>
+        </View>
+        <View style={styles(themeColors).inputContainer}>
+          <TextLabel
+            style={ChooseAccountTypeStyle(themeColors).textLabel}
+            variant={TextLabelVariants.INPUTLABEL}
+          >
+            {t('choosePurposeScreen.label')}
+          </TextLabel>
 
           <ChooseNeuroAccessAppContext
             data={chooseActionTypeData}
@@ -58,11 +68,11 @@ export const ChooseAccountType = ({
           />
         </View>
 
-        <View style={style.buttonContainer}>
+        <View style={styles(themeColors).buttonContainer}>
           <ActionButton
             disabled={!selected}
             textStyle={[
-              style.sendText,
+              ChooseAccountTypeStyle(themeColors).sendText,
               !selected && { color: themeColors.button.disableText },
             ]}
             buttonStyle={
