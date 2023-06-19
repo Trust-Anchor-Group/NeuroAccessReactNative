@@ -7,8 +7,7 @@ import { ChooseAccountTypeStyle } from '@Pages/Styles';
 import { InformationOverlayStyle } from './Styles';
 import { ActionButton } from './ActionButton';
 import { TextLabel } from './TextLabel';
-import { TextLabelVariants } from '@Helpers/Enums';
-
+import { TextLabelVariants } from './TextLabel';
 interface Props {
   title: string;
   description: string;
