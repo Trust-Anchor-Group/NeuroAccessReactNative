@@ -1,6 +1,6 @@
 import { View } from 'react-native';
 import React from 'react';
-import NetInfo from '@react-native-community/netinfo';
+import NetInfo, { NetInfoSubscription } from '@react-native-community/netinfo';
 import { useTranslation } from 'react-i18next';
 import { TextLabel } from '@Controls/TextLabel';
 import { TextLabelVariants } from '@Controls/TextLabel';
@@ -9,14 +9,17 @@ import { InternetContainerViewStyles } from './NetworkServiceStyle';
 export function NetworkService() {
   const { t } = useTranslation();
   const [isInternetReachable, setIsInternetReachable] = React.useState(true);
-
+  let unsubscribe: NetInfoSubscription | undefined = undefined;
   React.useEffect(() => {
-    const unsubscribe = NetInfo.addEventListener((state) => {
-      setIsInternetReachable(state.isInternetReachable ?? false);
-    });
+    setTimeout(() => {
+      unsubscribe = NetInfo.addEventListener((state) => {
+        console.log(state.isInternetReachable);
+        setIsInternetReachable(state.isInternetReachable ?? false);
+      });
+    }, 100);
 
     return () => {
-      unsubscribe();
+      if (unsubscribe) unsubscribe();
     };
   });
   return (
