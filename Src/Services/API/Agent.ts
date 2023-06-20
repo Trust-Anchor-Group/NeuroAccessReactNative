@@ -253,6 +253,7 @@ export const AgentAPI = {
     RestartActiveSession: function () {
       const Token = this.GetSessionString('AgentAPI.Token');
       const Seconds = this.GetSessionInt('AgentAPI.Seconds');
+      console.log('RestartActiveSession == ', Token, Seconds)
 
       if (Token && Seconds) {
         AgentAPI.IO.Log('Checking last session.');
@@ -260,6 +261,7 @@ export const AgentAPI = {
       } else AgentAPI.IO.Log('No session found.');
     },
     CheckSessionToken: function (Token: any, Seconds: number, NewToken: any) {
+      console.log('check session == ', Token, Seconds, NewToken)
       const OldTimer = this.GetSessionInt('AgentAPI.RefreshTimer');
       const Elapses = this.GetSessionInt('AgentAPI.RefreshTimerElapses');
       const Expires = this.GetSessionInt('AgentAPI.RefreshTimerExpires');
@@ -299,14 +301,14 @@ export const AgentAPI = {
       const OldTimer = this.GetSessionInt('AgentAPI.RefreshTimer');
       if (OldTimer) {
         AgentAPI.IO.Log('Stopping previous session timer.');
-        // window.clearTimeout(OldTimer);
+        clearTimeout(OldTimer);
       }
 
       const Now = Math.round(Date.now() / 1000);
 
       this.SetSessionString('AgentAPI.Token', Token);
       this.SetSessionInt('AgentAPI.Seconds', Seconds);
-      // this.SetSessionInt("AgentAPI.RefreshTimer", window.setTimeout(this.RefreshToken, 1000 * Next));
+      this.SetSessionInt("AgentAPI.RefreshTimer", setTimeout(this.RefreshToken, 1000 * Next));
       this.SetSessionInt('AgentAPI.RefreshTimerElapses', Now + Next);
       this.SetSessionInt('AgentAPI.RefreshTimerExpires', Now + Seconds);
 

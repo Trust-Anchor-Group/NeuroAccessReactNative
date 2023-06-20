@@ -11,11 +11,9 @@ export function NetworkService() {
   const [isInternetReachable, setIsInternetReachable] = React.useState(true);
   let unsubscribe: NetInfoSubscription | undefined = undefined;
   React.useEffect(() => {
-    setTimeout(() => {
-      unsubscribe = NetInfo.addEventListener((state) => {
-        setIsInternetReachable(state.isInternetReachable ?? false);
-      });
-    }, 100);
+    unsubscribe = NetInfo.addEventListener((state) => {
+      setIsInternetReachable(state.isInternetReachable ?? true);
+    });
 
     return () => {
       if (unsubscribe) unsubscribe();
