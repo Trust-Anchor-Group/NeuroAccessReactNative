@@ -15,6 +15,7 @@ import { ChooseAccountTypeStyle } from '@Pages/Styles';
 import { Logo } from '@Assets/Svgs';
 import { useTranslation } from 'react-i18next';
 import { ThemeContext } from '@Theme/Provider/ThemeContext';
+import { InformationOverlay } from '@Controls/InformationOverlay';
 
 export const ChooseAccountType = ({
   navigation,
@@ -22,6 +23,11 @@ export const ChooseAccountType = ({
   const { t } = useTranslation();
   const { themeColors } = useContext(ThemeContext);
   const [selected, setSelected] = useState<ContextType>();
+  const [showOverlay, setShowOverlay] = React.useState(false);
+
+  const toggleOverlay = () => {
+    setShowOverlay(!showOverlay);
+  };
 
   const onBackAction = () => {};
 
@@ -56,14 +62,15 @@ export const ChooseAccountType = ({
           </TextLabel>
 
           <ChooseNeuroAccessAppContext
-            label="Select Item"
             data={chooseActionTypeData}
             onSelect={setSelected}
+            toggleOverlay={toggleOverlay}
           />
         </View>
 
         <View style={styles(themeColors).buttonContainer}>
           <ActionButton
+            disabled={!selected}
             textStyle={[
               ChooseAccountTypeStyle(themeColors).sendText,
               !selected && { color: themeColors.button.disableText },
@@ -74,7 +81,8 @@ export const ChooseAccountType = ({
             title={t('buttonLabel.continue')}
             onPress={async () => {
                // navigation.navigate('EnterEmail');
-                navigation.navigate('EnterMobileNumber');
+               selected && navigation.navigate('EnterMobileNumber');
+            //  selected && navigation.navigate('EnterEmail');
             }}
           />
         </View>
@@ -84,6 +92,13 @@ export const ChooseAccountType = ({
         onBackAction={onBackAction}
         onLanguageAction={onLanguageClick}
       />
+      {showOverlay && (
+        <InformationOverlay
+          toggleOverlay={toggleOverlay}
+          title={`${t('accessPurposeInformation.personalUse.title')}`}
+          description={`${t('accessPurposeInformation.personalUse.description')}`}
+        />
+      )}
     </NeuroAccessBackground>
   );
 };

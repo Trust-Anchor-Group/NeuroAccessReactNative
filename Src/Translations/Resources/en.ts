@@ -11,6 +11,7 @@ export default {
     sendCode: 'Send Code',
     resend: 'Resend Code',
     verify: 'Verify',
+    close: 'Close',
   },
   choosePurposeScreen: {
     label: 'Choose access purpose',
@@ -42,5 +43,35 @@ export default {
   internetSatus: {
     connected: 'Internet Connected',
     disconnected: 'Internet Not Connected!',
+  },
+  accessPurposeInformation: {
+    personalUse: {
+      title: 'For work',
+      description: `This option allows you to use Neuro-Access for work or personal use.
+
+By selecting this option, you'll be able to authenticate your digital identity at work using Neuro-Access. This will make it easier for you to access secure systems and sensitive information.
+              `,
+    },
+    work: {
+      title: 'For work',
+      description: `This option allows you to use Neuro-Access for work or personal use.
+
+By selecting this option, you'll be able to authenticate your digital identity at work using Neuro-Access. This will make it easier for you to access secure systems and sensitive information.
+              `,
+    },
+    experimental: {
+      title: 'experimental',
+      description: `This option allows you to use Neuro-Access for work or personal use.
+
+By selecting this option, you'll be able to authenticate your digital identity at work using Neuro-Access. This will make it easier for you to access secure systems and sensitive information.
+              `,
+    },
+    educational: {
+      title: 'educational',
+      description: `This option allows you to use Neuro-Access for work or personal use.
+
+By selecting this option, you'll be able to authenticate your digital identity at work using Neuro-Access. This will make it easier for you to access secure systems and sensitive information.
+              `,
+    },
   },
 };
