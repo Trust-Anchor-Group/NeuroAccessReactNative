@@ -10,7 +10,7 @@ import { TextLabel, TextLabelVariants } from '@Controls/index';
 interface Props {
   data: Array<ContextType>;
   onSelect: (item?: ContextType) => void;
-  toggleOverlay?: () => void;
+  toggleOverlay: (type: string) => void;
 }
 
 export const ChooseNeuroAccessAppContext: FC<Props> = ({
@@ -70,7 +70,7 @@ export const ChooseNeuroAccessAppContext: FC<Props> = ({
       >
         {t(item.label)}
       </TextLabel>
-      <TouchableOpacity onPress={toggleOverlay} style={styles.informationLogoContainer}>
+      <TouchableOpacity onPress={() => toggleOverlay(item.label)} style={styles.informationLogoContainer}>
         <InformationIcon textColor={getInformationLogoColor(index)} />
       </TouchableOpacity>
     </TouchableOpacity>

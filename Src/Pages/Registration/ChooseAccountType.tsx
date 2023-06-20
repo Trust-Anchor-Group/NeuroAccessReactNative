@@ -1,5 +1,5 @@
 import { View } from 'react-native';
-import React, { useContext, useState } from 'react';
+import React, { useContext, useRef, useState } from 'react';
 import { StackScreenProps } from '@react-navigation/stack';
 import { ContextType, chooseActionTypeData } from '@Services/Data';
 import {
@@ -24,8 +24,10 @@ export const ChooseAccountType = ({
   const { themeColors } = useContext(ThemeContext);
   const [selected, setSelected] = useState<ContextType>();
   const [showOverlay, setShowOverlay] = React.useState(false);
+  const overlayInfo = useRef('')
 
-  const toggleOverlay = () => {
+  const toggleOverlay = (type?: string) => {
+    overlayInfo.current = type || '';
     setShowOverlay(!showOverlay);
   };
 
@@ -64,7 +66,7 @@ export const ChooseAccountType = ({
           <ChooseNeuroAccessAppContext
             data={chooseActionTypeData}
             onSelect={setSelected}
-            toggleOverlay={toggleOverlay}
+            toggleOverlay={(type) => toggleOverlay(type)}
           />
         </View>
 
@@ -93,8 +95,8 @@ export const ChooseAccountType = ({
       {showOverlay && (
         <InformationOverlay
           toggleOverlay={toggleOverlay}
-          title={`${t('accessPurposeInformation.personalUse.title')}`}
-          description={`${t('accessPurposeInformation.personalUse.description')}`}
+          title={t(`accessPurposeInformation.${overlayInfo.current}.title`)}
+          description={t(`accessPurposeInformation.${overlayInfo.current}.description`)}
         />
       )}
     </NeuroAccessBackground>
