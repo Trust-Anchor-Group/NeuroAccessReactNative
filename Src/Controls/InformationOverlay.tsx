@@ -30,7 +30,7 @@ export const InformationOverlay: React.FC<Props> = ({
       >
         <View style={InformationOverlayStyle(themeColors).informationContainer}>
           <TextLabel
-            style={{ textAlign: 'center', marginBottom: 8 }}
+            style={InformationOverlayStyle(themeColors).title}
             variant={TextLabelVariants.HEADER}
           >
             {title}

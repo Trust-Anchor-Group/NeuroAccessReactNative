@@ -45,21 +45,33 @@ export default {
     disconnected: 'Internet Not Connected!',
   },
   accessPurposeInformation: {
-    personalUse: `This option allows you to use Neuro-Access for work or personal use.
+    personalUse: {
+      title: 'For work',
+      description: `This option allows you to use Neuro-Access for work or personal use.
 
 By selecting this option, you'll be able to authenticate your digital identity at work using Neuro-Access. This will make it easier for you to access secure systems and sensitive information.
               `,
-    work: `This option allows you to use Neuro-Access for work or personal use.
+    },
+    work: {
+      title: 'For work',
+      description: `This option allows you to use Neuro-Access for work or personal use.
 
 By selecting this option, you'll be able to authenticate your digital identity at work using Neuro-Access. This will make it easier for you to access secure systems and sensitive information.
               `,
-    experimental: `This option allows you to use Neuro-Access for work or personal use.
+    },
+    experimental: {
+      title: 'experimental',
+      description: `This option allows you to use Neuro-Access for work or personal use.
 
 By selecting this option, you'll be able to authenticate your digital identity at work using Neuro-Access. This will make it easier for you to access secure systems and sensitive information.
               `,
-    educational: `This option allows you to use Neuro-Access for work or personal use.
+    },
+    educational: {
+      title: 'educational',
+      description: `This option allows you to use Neuro-Access for work or personal use.
 
 By selecting this option, you'll be able to authenticate your digital identity at work using Neuro-Access. This will make it easier for you to access secure systems and sensitive information.
               `,
+    },
   },
 };

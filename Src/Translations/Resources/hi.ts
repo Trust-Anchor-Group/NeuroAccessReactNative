@@ -46,21 +46,33 @@ export default {
     disconnected: 'इंटरनेट कनेक्ट नहीं है!'
   },
   accessPurposeInformation: {
-    personalUse: `यह विकल्प आपको काम या व्यक्तिगत उपयोग के लिए न्यूरो-एक्सेस का उपयोग करने की अनुमति देता है।
+    personalUse: {
+      title: 'For work',
+      description: `यह विकल्प आपको काम या व्यक्तिगत उपयोग के लिए न्यूरो-एक्सेस का उपयोग करने की अनुमति देता है।
 
-    इस विकल्प का चयन करके, आप न्यूरो-एक्सेस का उपयोग करके कार्यस्थल पर अपनी डिजिटल पहचान को प्रमाणित कर सकेंगे। इससे आपके लिए सुरक्षित सिस्टम और संवेदनशील जानकारी तक पहुंचना आसान हो जाएगा
-              `,
-    work: `This option allows you to use Neuro-Access for work or personal use.
+      इस विकल्प का चयन करके, आप न्यूरो-एक्सेस का उपयोग करके कार्यस्थल पर अपनी डिजिटल पहचान को प्रमाणित कर सकेंगे। इससे आपके लिए सुरक्षित सिस्टम और संवेदनशील जानकारी तक पहुंचना आसान हो जाएगा
+                `,
+    },
+    work: {
+      title: 'For work',
+      description: `यह विकल्प आपको काम या व्यक्तिगत उपयोग के लिए न्यूरो-एक्सेस का उपयोग करने की अनुमति देता है।
 
-    By selecting this option, you'll be able to authenticate your digital identity at work using Neuro-Access. This will make it easier for you to access secure systems and sensitive information.
-              `,
-    experimental: `This option allows you to use Neuro-Access for work or personal use.
+      इस विकल्प का चयन करके, आप न्यूरो-एक्सेस का उपयोग करके कार्यस्थल पर अपनी डिजिटल पहचान को प्रमाणित कर सकेंगे। इससे आपके लिए सुरक्षित सिस्टम और संवेदनशील जानकारी तक पहुंचना आसान हो जाएगा
+                `,
+    },
+    experimental: {
+      title: 'experimental',
+      description: `यह विकल्प आपको काम या व्यक्तिगत उपयोग के लिए न्यूरो-एक्सेस का उपयोग करने की अनुमति देता है।
 
-    By selecting this option, you'll be able to authenticate your digital identity at work using Neuro-Access. This will make it easier for you to access secure systems and sensitive information.
-              `,
-    educational: `This option allows you to use Neuro-Access for work or personal use.
+      इस विकल्प का चयन करके, आप न्यूरो-एक्सेस का उपयोग करके कार्यस्थल पर अपनी डिजिटल पहचान को प्रमाणित कर सकेंगे। इससे आपके लिए सुरक्षित सिस्टम और संवेदनशील जानकारी तक पहुंचना आसान हो जाएगा
+                `,
+    },
+    educational: {
+      title: 'educational',
+      description: `यह विकल्प आपको काम या व्यक्तिगत उपयोग के लिए न्यूरो-एक्सेस का उपयोग करने की अनुमति देता है।
 
-    By selecting this option, you'll be able to authenticate your digital identity at work using Neuro-Access. This will make it easier for you to access secure systems and sensitive information.
-              `          
-  }
+      इस विकल्प का चयन करके, आप न्यूरो-एक्सेस का उपयोग करके कार्यस्थल पर अपनी डिजिटल पहचान को प्रमाणित कर सकेंगे। इससे आपके लिए सुरक्षित सिस्टम और संवेदनशील जानकारी तक पहुंचना आसान हो जाएगा
+                `,
+    },
+  },
 };

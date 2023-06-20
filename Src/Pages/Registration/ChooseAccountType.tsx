@@ -93,8 +93,8 @@ export const ChooseAccountType = ({
       {showOverlay && (
         <InformationOverlay
           toggleOverlay={toggleOverlay}
-          title="For work"
-          description={`${t('accessPurposeInformation.personalUse')}`}
+          title={`${t('accessPurposeInformation.personalUse.title')}`}
+          description={`${t('accessPurposeInformation.personalUse.description')}`}
         />
       )}
     </NeuroAccessBackground>

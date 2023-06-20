@@ -19,4 +19,8 @@ export const InformationOverlayStyle = (themeColors: any) =>
     borderRadius: moderateScale(8),
     backgroundColor: themeColors.informationView.informationBg,
   },
+  title:{ 
+    textAlign: 'center', 
+    marginBottom: moderateScale(8) 
+  }
 });
