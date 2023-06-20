@@ -13,7 +13,6 @@ export function NetworkService() {
   React.useEffect(() => {
     setTimeout(() => {
       unsubscribe = NetInfo.addEventListener((state) => {
-        console.log(state.isInternetReachable);
         setIsInternetReachable(state.isInternetReachable ?? false);
       });
     }, 100);
