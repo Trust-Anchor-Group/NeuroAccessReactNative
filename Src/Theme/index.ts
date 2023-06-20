@@ -10,4 +10,5 @@ export {
   informationLogoSize,
   chooseAccountItemHeight,
   button,
+  textFontSize
 } from './Dimensions';

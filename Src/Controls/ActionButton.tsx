@@ -4,29 +4,29 @@ import {
   ViewStyle,
   StyleProp,
   TextStyle,
+  TouchableOpacityProps,
 } from 'react-native';
 import { TextLabel } from './TextLabel';
 import { TextLabelVariants } from './TextLabel';
 import { GlobalStyle } from '@Pages/Styles';
 import { ThemeContext } from '@Theme/Provider/ThemeContext';
-interface Props {
+interface Props extends TouchableOpacityProps {
   title: string;
-  onPress: () => void;
   buttonStyle?: StyleProp<ViewStyle>;
   textStyle?: StyleProp<TextStyle>;
 }
 
 export const ActionButton: FC<Props> = ({
   title,
-  onPress,
   buttonStyle,
   textStyle,
+  ...restProps
 }) => {
   const { themeColors } = useContext(ThemeContext);
   const styles = GlobalStyle(themeColors);
   return (
     <TouchableOpacity
-      onPress={onPress}
+      {...restProps}
       style={[styles.appButtonContainer, buttonStyle]}
     >
       <TextLabel variant={TextLabelVariants.INPUTLABEL} style={textStyle}>

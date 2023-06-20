@@ -59,6 +59,11 @@ export const Colors = {
       },
       sendTextColor: '#F5F6F7',
     },
+    informationView: {
+      background: 'rgba(214, 215, 217, 0.5)',
+      blurBg: 'rgba(214, 215, 217, 0.5)',
+      informationBg: '#FCFCFC'
+    }
   },
   dark: {
     background: '#161617',
@@ -120,5 +125,10 @@ export const Colors = {
       },
       sendTextColor: '#161617',
     },
+    informationView: {
+      background: 'rgba(22, 22, 23, 0.5)',
+      blurBg: 'rgba(22, 22, 23, 0.5)',
+      informationBg: '#3E3E40'
+    }
   },
 };

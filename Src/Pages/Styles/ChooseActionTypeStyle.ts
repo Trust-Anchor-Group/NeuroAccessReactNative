@@ -1,5 +1,6 @@
 import { StyleSheet } from 'react-native';
 import { chooseAccountItemHeight } from '@Theme/Dimensions';
+import { moderateScale } from '@Theme/Metrics';
 const itemHeight = chooseAccountItemHeight.height;
 const itemHorizontalMargin = chooseAccountItemHeight.itemHorizontalMargin;
 
@@ -19,8 +20,9 @@ export const ChooseActionTypeStyle=(themeColors:any) => StyleSheet.create({
     marginRight: chooseAccountItemHeight.icon.marginRight,
   },
   informationLogoContainer: { 
-    right: 0, 
-    justifyContent: 'center' 
+    padding: moderateScale(5), 
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   container: {
     height: (itemHeight + (itemHorizontalMargin * 2)) * 4,

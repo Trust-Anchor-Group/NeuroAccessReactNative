@@ -1,5 +1,5 @@
 import { StyleSheet } from "react-native";
-import { headerSize, authLabelsSize } from 'Theme/Dimensions';
+import { headerSize, authLabelsSize, textFontSize } from 'Theme/Dimensions';
 
 export const TextLabelStyle= (themeColors:any) => StyleSheet.create({
   header: {
@@ -27,4 +27,9 @@ export const TextLabelStyle= (themeColors:any) => StyleSheet.create({
     fontSize: headerSize.fontSize,
     color: themeColors.text.primary,
   },
+  description: {
+    fontFamily: 'Neue Haas Grotesk Text Pro',
+    fontSize: textFontSize.description,
+    color: themeColors.text.primary,
+  }
 });
