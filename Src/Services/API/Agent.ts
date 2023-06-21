@@ -319,10 +319,10 @@ export const AgentAPI = {
     Create: async function (
       UserName: string,
       EMail: string,
-      Password: string
-      // ApiKey?: string,
-      // Secret?: any,
-      // Seconds?: number
+      Password: string,
+      ApiKey?: string,
+      Secret?: any,
+      Seconds?: number
     ) {
       const Nonce = AgentAPI.Account.getRandomValues(32);
       const s =
