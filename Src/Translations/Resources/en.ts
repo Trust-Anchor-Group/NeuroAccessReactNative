@@ -45,33 +45,30 @@ export default {
     disconnected: 'Internet Not Connected!',
   },
   accessPurposeInformation: {
-    personalUse: {
-      title: 'For work',
-      description: `This option allows you to use Neuro-Access for work or personal use.
+    Personal: {
+      title: 'Personal',
+      description: `Selecting personal use enables you to use the app for signing in or accessing resources as an individual. Whether managing personal accounts or accessing private information, Neuro-Access provides a convenient and secure way to handle your digital identity.
 
-By selecting this option, you'll be able to authenticate your digital identity at work using Neuro-Access. This will make it easier for you to access secure systems and sensitive information.
-              `,
+      Remember that certain operations may have associated costs depending on the service provider. For more information, please check with your service provider.`,
     },
-    work: {
-      title: 'For work',
-      description: `This option allows you to use Neuro-Access for work or personal use.
+    Work: {
+      title: 'Work',
+      description: `Choose Neuro-Access for work-related purposes, including non-profit organizations. This option allows you to use the app for work-related sign-ins and access resources as your organization's representative.
 
-By selecting this option, you'll be able to authenticate your digital identity at work using Neuro-Access. This will make it easier for you to access secure systems and sensitive information.
-              `,
+      Certain operations may have associated costs depending on the chosen service provider. For more details, please check with your service provider.
+      `,
     },
-    experimental: {
-      title: 'experimental',
-      description: `This option allows you to use Neuro-Access for work or personal use.
+    Experimental: {
+      title: 'Experimental',
+      description: `Use Neuro-Access for experimental purposes. This option enables you to explore and learn about the capabilities of the technology. Experiment with different applications and functionalities as an individual user.
 
-By selecting this option, you'll be able to authenticate your digital identity at work using Neuro-Access. This will make it easier for you to access secure systems and sensitive information.
-              `,
+      Please note that the account may have time limitations and could be removed when it's no longer in use. For more details, please check with your service provider.`,
     },
-    educational: {
-      title: 'educational',
-      description: `This option allows you to use Neuro-Access for work or personal use.
+    Educational: {
+      title: 'Educational',
+      description: `Select Neuro-Access for educational purposes. Whether you're an educator or a student, this option allows you to use the app for signing in or accessing educational resources.
 
-By selecting this option, you'll be able to authenticate your digital identity at work using Neuro-Access. This will make it easier for you to access secure systems and sensitive information.
-              `,
+      Please note that the account may have time limitations and could be removed when it's no longer in use. For further information, please consult your service provider.`,
     },
   },
 };

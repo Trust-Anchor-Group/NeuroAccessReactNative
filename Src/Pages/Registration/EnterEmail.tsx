@@ -18,26 +18,27 @@ import { useTranslation } from 'react-i18next';
 import { ThemeContext } from '@Theme/Provider/ThemeContext';
 import InputBox, { TextInputRef } from '@Controls/InputBox';
 import { Logo, EmailIcon } from '@Assets/Svgs';
-import {} from '@Pages/Styles';
 import { isValidEmail } from '@Helpers/index';
 import { AgentAPI } from '@Services/API/Agent';
 import { GlobalStyle as styles, EnterEmailStyle } from '@Pages/Styles';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchUser } from '@Services/Redux/Actions/GetUserDetails';
+import { ThunkDispatch } from '@reduxjs/toolkit';
 
 export const EnterEmail = ({
   navigation,
 }: StackScreenProps<{ Profile: any }>) => {
   const { t } = useTranslation();
+  const dispatch = useDispatch<ThunkDispatch<any, any, any>>();
+  const { user, loading, error } = useSelector((state) => state.user);
   const { themeColors } = useContext(ThemeContext);
   const emailInputRef = useRef<TextInputRef>(null);
   const [email, setEmail] = useState('');
-  const [isLoading, setLoading] = useState(false);
 
   const handleSubmit = async () => {
     const isFormValid = emailInputRef.current?.validate();
     if (isFormValid) {
-      setLoading(true);
-      const createData = await AgentAPI.Account.Create(email, email, email);
-      setLoading(false);
+      dispatch(fetchUser(email));
       navigation.navigate('EnterMobileNumber');
     }
   };
@@ -49,6 +50,10 @@ export const EnterEmail = ({
   const onLanguageClick = () => {
     navigation.navigate('Settings');
   };
+
+  if (loading) {
+    return <ActivityIndicator />;
+  }
 
   return (
     <NeuroAccessBackground>
@@ -103,7 +108,7 @@ export const EnterEmail = ({
         </View>
 
         <View style={styles(themeColors).buttonContainer}>
-          <ActivityIndicator animating={isLoading} />
+          <ActivityIndicator animating={loading} />
           <ActionButton
             textStyle={EnterEmailStyle(themeColors).sendText}
             title={t('buttonLabel.sendCode')}
