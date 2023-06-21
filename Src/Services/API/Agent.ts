@@ -15,8 +15,6 @@ const ApiKey = Config.ApiKey;
 const Secret = Config.Secret;
 const Seconds = 3500;
 
-console.log(Config);
-
 export enum APIType {
   ID_APP = 'ID',
   AGENT_APP = 'Agent',
@@ -253,7 +251,6 @@ export const AgentAPI = {
     RestartActiveSession: function () {
       const Token = this.GetSessionString('AgentAPI.Token');
       const Seconds = this.GetSessionInt('AgentAPI.Seconds');
-      console.log('RestartActiveSession == ', Token, Seconds)
 
       if (Token && Seconds) {
         AgentAPI.IO.Log('Checking last session.');
@@ -261,7 +258,6 @@ export const AgentAPI = {
       } else AgentAPI.IO.Log('No session found.');
     },
     CheckSessionToken: function (Token: any, Seconds: number, NewToken: any) {
-      console.log('check session == ', Token, Seconds, NewToken)
       const OldTimer = this.GetSessionInt('AgentAPI.RefreshTimer');
       const Elapses = this.GetSessionInt('AgentAPI.RefreshTimerElapses');
       const Expires = this.GetSessionInt('AgentAPI.RefreshTimerExpires');
