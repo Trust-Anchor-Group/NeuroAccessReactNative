@@ -23,11 +23,11 @@ export const ChooseAccountType = ({
   const { t } = useTranslation();
   const { themeColors } = useContext(ThemeContext);
   const [selected, setSelected] = useState<ContextType>();
-  const [showOverlay, setShowOverlay] = React.useState(false);
-  const overlayInfo = useRef('')
+  const [showOverlay, setShowOverlay] = useState<boolean>(false);
+  const overlayInfo = useRef<ContextType>()
 
-  const toggleOverlay = (type?: string) => {
-    overlayInfo.current = type || '';
+  const toggleOverlay = (item?: ContextType) => {
+    overlayInfo.current = item;
     setShowOverlay(!showOverlay);
   };
 
@@ -95,8 +95,8 @@ export const ChooseAccountType = ({
       {showOverlay && (
         <InformationOverlay
           toggleOverlay={toggleOverlay}
-          title={t(`accessPurposeInformation.${overlayInfo.current}.title`)}
-          description={t(`accessPurposeInformation.${overlayInfo.current}.description`)}
+          title={t(`${overlayInfo?.current?.label}`)}
+          description={t(`${overlayInfo?.current?.description}`)}
         />
       )}
     </NeuroAccessBackground>
