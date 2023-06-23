@@ -24,6 +24,7 @@ import { AgentAPI, APIType } from '@Services/API/Agent';
 import { CountryDialog } from '@Controls/CountryDialog';
 import { countryCodes } from '@Services/Data/index';
 import { isValidPhone } from '@Helpers/Validation';
+import { Loader } from '@Controls/index';
 
 export const EnterMobileNumber = ({
   navigation,
@@ -36,6 +37,7 @@ export const EnterMobileNumber = ({
   const [mobileNumber, setMobileNumber] = useState();
   const [isModalVisible, setIsModalVisible] = useState(false);
   const mobileNumberInputRef = React.useRef<TextInputRef>(null);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const openModal = () => {
     setIsModalVisible(true);
@@ -88,7 +90,7 @@ export const EnterMobileNumber = ({
 
   const handleSubmit = async () => {
     try {
-      Keyboard.dismiss();
+      setIsLoading(true);
       const isFormValid = mobileNumberInputRef.current?.validate();
       if (isFormValid) {
         const mobileN = mobileCode.current + mobileNumber;
@@ -97,6 +99,7 @@ export const EnterMobileNumber = ({
           APIType.ID_APP
         );
         if (response.Status) {
+          setIsLoading(false);
           navigation.navigate('EmailOTPVerify', { data: mobileN });
         }
       }
@@ -168,6 +171,7 @@ export const EnterMobileNumber = ({
               title={t('buttonLabel.sendCode')}
               onPress={async () => {
                 if (mobileNumber) {
+                  Keyboard.dismiss();
                   handleSubmit();
                 }
               }}
@@ -185,6 +189,7 @@ export const EnterMobileNumber = ({
           data={countryCodes}
           onItemSelected={handleItemSelected}
         />
+        <Loader loading={isLoading} />
       </NeuroAccessBackground>
     </KeyboardAvoidingView>
   );

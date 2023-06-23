@@ -36,6 +36,7 @@ export const EnterEmail = ({
   const [email, setEmail] = useState('');
 
   const handleSubmit = async () => {
+    Keyboard.dismiss();
     const isFormValid = emailInputRef.current?.validate();
     if (isFormValid) {
       dispatch(fetchUser(email));
@@ -110,11 +111,21 @@ export const EnterEmail = ({
         <View style={styles(themeColors).buttonContainer}>
           <ActivityIndicator animating={loading} />
           <ActionButton
-            textStyle={EnterEmailStyle(themeColors).sendText}
+            disabled={!email}
+            textStyle={[
+              EnterEmailStyle(themeColors).sendText,
+              !email && { color: themeColors.button.disableText },
+            ]}
+            buttonStyle={
+              !email && {
+                backgroundColor: themeColors.button.disableBg,
+              }
+            }
             title={t('buttonLabel.sendCode')}
-            onPress={() => {
-              Keyboard.dismiss();
-              handleSubmit();
+            onPress={async () => {
+              if (email) {
+                handleSubmit();
+              }
             }}
           />
         </View>

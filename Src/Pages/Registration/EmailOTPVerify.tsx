@@ -16,6 +16,7 @@ import { useTranslation } from 'react-i18next';
 import { ThemeContext } from '@Theme/Provider';
 import { AgentAPI, APIType } from '@Services/API/Agent';
 import { useRoute } from '@react-navigation/native';
+import { Loader } from '@Controls/index';
 
 export const EmailOTPVerify = ({
   navigation,
@@ -24,7 +25,7 @@ export const EmailOTPVerify = ({
   const { data } = route?.params;
   const { t } = useTranslation();
   const { themeColors } = useContext(ThemeContext);
-
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   const [otpValue, setOTPValue] = useState('');
   const [isError, setIsError] = useState(false);
   const errorMessage = React.useRef('');
@@ -51,13 +52,17 @@ export const EmailOTPVerify = ({
   };
 
   const callVerificationCode = async () => {
+    setIsLoading(true);
     const response = await AgentAPI.ID.verifyNumber(
       data,
       otpValue,
       APIType.ID_APP
     );
     if (response.Status) {
-      navigation.navigate('CreateAccount');
+      setTimeout(() => {
+        setIsLoading(false);
+        navigation.navigate('CreateAccount');
+      }, 1000);
     }
   };
   const onBackClick = () => {
@@ -130,6 +135,7 @@ export const EmailOTPVerify = ({
         onBackAction={onBackClick}
         onLanguageAction={onLanguageClick}
       />
+      <Loader loading={isLoading} />
     </NeuroAccessBackground>
   );
 };
