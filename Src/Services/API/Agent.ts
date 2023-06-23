@@ -15,8 +15,6 @@ const ApiKey = Config.ApiKey;
 const Secret = Config.Secret;
 const Seconds = 3500;
 
-console.log(Config);
-
 export enum APIType {
   ID_APP = 'ID',
   AGENT_APP = 'Agent',
@@ -299,14 +297,14 @@ export const AgentAPI = {
       const OldTimer = this.GetSessionInt('AgentAPI.RefreshTimer');
       if (OldTimer) {
         AgentAPI.IO.Log('Stopping previous session timer.');
-        // window.clearTimeout(OldTimer);
+        clearTimeout(OldTimer);
       }
 
       const Now = Math.round(Date.now() / 1000);
 
       this.SetSessionString('AgentAPI.Token', Token);
       this.SetSessionInt('AgentAPI.Seconds', Seconds);
-      // this.SetSessionInt("AgentAPI.RefreshTimer", window.setTimeout(this.RefreshToken, 1000 * Next));
+      this.SetSessionInt("AgentAPI.RefreshTimer", setTimeout(this.RefreshToken, 1000 * Next));
       this.SetSessionInt('AgentAPI.RefreshTimerElapses', Now + Next);
       this.SetSessionInt('AgentAPI.RefreshTimerExpires', Now + Seconds);
 
@@ -321,10 +319,10 @@ export const AgentAPI = {
     Create: async function (
       UserName: string,
       EMail: string,
-      Password: string
-      // ApiKey?: string,
-      // Secret?: any,
-      // Seconds?: number
+      Password: string,
+      ApiKey?: string,
+      Secret?: any,
+      Seconds?: number
     ) {
       const Nonce = AgentAPI.Account.getRandomValues(32);
       const s =

@@ -1,5 +1,5 @@
 import { View } from 'react-native';
-import React, { useContext, useState } from 'react';
+import React, { useContext, useRef, useState } from 'react';
 import { StackScreenProps } from '@react-navigation/stack';
 import { ContextType, chooseActionTypeData } from '@Services/Data';
 import {
@@ -23,9 +23,11 @@ export const ChooseAccountType = ({
   const { t } = useTranslation();
   const { themeColors } = useContext(ThemeContext);
   const [selected, setSelected] = useState<ContextType>();
-  const [showOverlay, setShowOverlay] = React.useState(false);
+  const [showOverlay, setShowOverlay] = useState<boolean>(false);
+  const overlayInfo = useRef<ContextType>()
 
-  const toggleOverlay = () => {
+  const toggleOverlay = (item?: ContextType) => {
+    overlayInfo.current = item;
     setShowOverlay(!showOverlay);
   };
 
@@ -64,7 +66,7 @@ export const ChooseAccountType = ({
           <ChooseNeuroAccessAppContext
             data={chooseActionTypeData}
             onSelect={setSelected}
-            toggleOverlay={toggleOverlay}
+            toggleOverlay={(type) => toggleOverlay(type)}
           />
         </View>
 
@@ -93,10 +95,8 @@ export const ChooseAccountType = ({
       {showOverlay && (
         <InformationOverlay
           toggleOverlay={toggleOverlay}
-          title={`${t('accessPurposeInformation.personalUse.title')}`}
-          description={`${t(
-            'accessPurposeInformation.personalUse.description'
-          )}`}
+          title={t(`${overlayInfo?.current?.label}`)}
+          description={t(`${overlayInfo?.current?.description}`)}
         />
       )}
     </NeuroAccessBackground>
