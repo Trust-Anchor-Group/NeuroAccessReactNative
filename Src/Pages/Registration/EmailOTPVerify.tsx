@@ -1,5 +1,5 @@
 import { View, KeyboardAvoidingView, Platform } from 'react-native';
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { StackScreenProps } from '@react-navigation/stack';
 import {
   NeuroAccessBackground,
@@ -59,10 +59,7 @@ export const EmailOTPVerify = ({
       APIType.ID_APP
     );
     if (response.Status) {
-      setTimeout(() => {
-        setIsLoading(false);
-        navigation.navigate('CreateAccount');
-      }, 1000);
+      navigation.navigate('CreateAccount');
     }
   };
   const onBackClick = () => {
@@ -71,6 +68,20 @@ export const EmailOTPVerify = ({
 
   const onLanguageClick = () => {
     navigation.navigate('Settings');
+  };
+
+  const callResendCode = async () => {
+    try {
+      setIsLoading(true);
+
+      const response = await AgentAPI.ID.sendVerificationMessage(
+        data,
+        APIType.ID_APP
+      );
+      if (response.Status) {
+        setIsLoading(false);
+      }
+    } catch (error) {}
   };
 
   return (
@@ -119,7 +130,7 @@ export const EmailOTPVerify = ({
               buttonStyle={EnterOTPVerifyStyle(themeColors).resendButton}
               title={t('buttonLabel.resend')}
               textStyle={EnterOTPVerifyStyle(themeColors).resendText}
-              onPress={handleSubmit}
+              onPress={callResendCode}
             />
 
             <ActionButton
