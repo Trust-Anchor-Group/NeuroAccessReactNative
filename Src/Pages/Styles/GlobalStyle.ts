@@ -4,26 +4,31 @@ import { button } from '@Theme/Dimensions';
 export const GlobalStyle = (themeColors?: any) =>
   StyleSheet.create({
     container: {
-      position: 'absolute',
-      bottom: 0,
       height: '100%',
       width: '100%',
+    },
+    scrollViewContainer: {
+      flexGrow: 1,
+      justifyContent: 'space-around',
     },
     spaceContainer: {
       alignItems: 'center',
       height: '12%',
+      justifyContent: 'space-around',
     },
     logoContainer: {
       alignItems: 'center',
       height: '18%',
+      justifyContent: 'space-around',
     },
     informationContainer: {
-      height: '14%',
+      height: '16%',
       width: '90%',
       alignSelf: 'center',
+      justifyContent: 'space-evenly',
     },
     inputContainer: {
-      height: '44%',
+      height: '42%',
       width: '90%',
       alignSelf: 'center',
     },

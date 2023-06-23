@@ -1,1 +1,1 @@
-export { isValidEmail } from './Validation';
+export { isValidEmail, isValidPhone } from './Validation';

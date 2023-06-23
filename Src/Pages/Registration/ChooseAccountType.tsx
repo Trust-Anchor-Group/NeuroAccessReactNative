@@ -80,9 +80,7 @@ export const ChooseAccountType = ({
             }
             title={t('buttonLabel.continue')}
             onPress={async () => {
-               // navigation.navigate('EnterEmail');
-               selected && navigation.navigate('EnterMobileNumber');
-            //  selected && navigation.navigate('EnterEmail');
+              selected && navigation.navigate('EnterEmail');
             }}
           />
         </View>
@@ -96,7 +94,9 @@ export const ChooseAccountType = ({
         <InformationOverlay
           toggleOverlay={toggleOverlay}
           title={`${t('accessPurposeInformation.personalUse.title')}`}
-          description={`${t('accessPurposeInformation.personalUse.description')}`}
+          description={`${t(
+            'accessPurposeInformation.personalUse.description'
+          )}`}
         />
       )}
     </NeuroAccessBackground>

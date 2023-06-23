@@ -5,6 +5,7 @@ export default {
     chooseIntend: 'Choose In what context you intend to use the Neuro-Access',
     getStarted: "Let's get started",
     verifyEmail: 'To get verified, you need to enter your email',
+    mobilePlaceHolder:'xxxxxxxxxx',
   },
   buttonLabel: {
     continue: 'Continue',
@@ -12,6 +13,7 @@ export default {
     resend: 'Resend Code',
     verify: 'Verify',
     close: 'Close',
+    search:'Search',
   },
   choosePurposeScreen: {
     label: 'Choose access purpose',
