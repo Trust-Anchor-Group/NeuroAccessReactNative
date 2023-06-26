@@ -7,7 +7,7 @@ export default {
     verifyEmail: 'To get verified, you need to enter your email',
     mobilePlaceHolder: 'xxxxxxxxxx',
   },
-  buttonLabel: {
+  buttonTitle: {
     continue: 'Continue',
     sendCode: 'Send Code',
     resend: 'Resend Code',
@@ -25,6 +25,10 @@ export default {
   enterEmailScreen: {
     label: 'Enter email',
     placeHolder: 'your.email@email.com',
+  },
+  enterUserName: {
+    label: 'Enter User Name',
+    placeHolder: 'user name',
   },
   enterOTPVerifyScreen: {
     header: 'Enter Code',

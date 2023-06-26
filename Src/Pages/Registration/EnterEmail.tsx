@@ -1,4 +1,4 @@
-import React, { useState, useRef, useContext } from 'react';
+import React, { useState, useRef, useContext, useEffect } from 'react';
 import {
   View,
   KeyboardAvoidingView,
@@ -13,6 +13,7 @@ import {
   TextLabel,
   TextLabelVariants,
   ActionButton,
+  Loader,
 } from '@Controls/index';
 import { useTranslation } from 'react-i18next';
 import { ThemeContext } from '@Theme/Provider/ThemeContext';
@@ -22,7 +23,7 @@ import { isValidEmail } from '@Helpers/index';
 import { AgentAPI } from '@Services/API/Agent';
 import { GlobalStyle as styles, EnterEmailStyle } from '@Pages/Styles';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchUser } from '@Services/Redux/Actions/GetUserDetails';
+import { UserPayload, createAccountUsingEmail, saveEmail, sendEmailVerificationMessage } from '@Services/Redux/Actions/GetUserDetails';
 import { ThunkDispatch } from '@reduxjs/toolkit';
 
 export const EnterEmail = ({
@@ -30,17 +31,19 @@ export const EnterEmail = ({
 }: StackScreenProps<{ Profile: any }>) => {
   const { t } = useTranslation();
   const dispatch = useDispatch<ThunkDispatch<any, any, any>>();
-  const { user, loading, error } = useSelector((state) => state.user);
+  const { userDetails, loading, error } = useSelector((state) => state.user);
   const { themeColors } = useContext(ThemeContext);
   const emailInputRef = useRef<TextInputRef>(null);
-  const [email, setEmail] = useState('');
+  const [email, setEmail] = useState(userDetails?.email);
 
+  useEffect(() => {}, [loading]);
   const handleSubmit = async () => {
     Keyboard.dismiss();
     const isFormValid = emailInputRef.current?.validate();
     if (isFormValid) {
-      dispatch(fetchUser(email));
-      navigation.navigate('EnterMobileNumber');
+      dispatch(sendEmailVerificationMessage(email));
+      dispatch(saveEmail(email));
+      navigation.navigate('EmailOTPVerify');
     }
   };
 
@@ -51,10 +54,6 @@ export const EnterEmail = ({
   const onLanguageClick = () => {
     navigation.navigate('Settings');
   };
-
-  if (loading) {
-    return <ActivityIndicator />;
-  }
 
   return (
     <NeuroAccessBackground>
@@ -109,7 +108,7 @@ export const EnterEmail = ({
         </View>
 
         <View style={styles(themeColors).buttonContainer}>
-          <ActivityIndicator animating={loading} />
+          <Loader loading={loading} />
           <ActionButton
             disabled={!email}
             textStyle={[
@@ -121,9 +120,10 @@ export const EnterEmail = ({
                 backgroundColor: themeColors.button.disableBg,
               }
             }
-            title={t('buttonLabel.sendCode')}
+            title={t('buttonTitle.sendCode')}
             onPress={async () => {
               if (email) {
+                Keyboard.dismiss();
                 handleSubmit();
               }
             }}

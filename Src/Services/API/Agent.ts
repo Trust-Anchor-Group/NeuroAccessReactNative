@@ -8,17 +8,10 @@ import hmacSHA256 from 'crypto-js/hmac-sha256';
 import Base64 from 'crypto-js/enc-base64';
 import Config from 'react-native-config';
 
-const AGENT_URL = Config.AGENT_API_URL;
-const ID_URL = Config.ID_API_URL;
 const host = Config.Host;
 const ApiKey = Config.ApiKey;
 const Secret = Config.Secret;
 const Seconds = 3500;
-
-export enum APIType {
-  ID_APP = 'ID',
-  AGENT_APP = 'Agent',
-}
 
 export const AgentAPI = {
   IO: {
@@ -26,7 +19,6 @@ export const AgentAPI = {
       Resource: string,
       RequestPayload: any,
       Internal?: any,
-      ApiType?: APIType
     ) {
       const Request = new Promise(async (SetResult, SetException) => {
         let xhttp = new XMLHttpRequest();
@@ -44,8 +36,7 @@ export const AgentAPI = {
 
         if (!Internal) this.BeforeRequest(RequestPayload);
 
-        const BASE_URL = ApiType === APIType.ID_APP ? ID_URL : AGENT_URL;
-        xhttp.open('POST', BASE_URL + Resource);
+        xhttp.open('POST', Config.AGENT_API_URL + Resource);
         xhttp.setRequestHeader('Content-Type', 'application/json');
         xhttp.setRequestHeader('Accept', 'application/json');
 
@@ -69,35 +60,6 @@ export const AgentAPI = {
     },
     Log: function (Message: string) {
       console.log(new Date().toString() + ': ' + Message);
-    },
-  },
-  ID: {
-    CountryCode: async function (appType: APIType) {
-      const Response = await AgentAPI.IO.Request(
-        '/ID/CountryCode.ws',
-        {},
-        {},
-        appType
-      );
-      return Response;
-    },
-    sendVerificationMessage: async function (nr: string, appType: APIType) {
-      const Response = await AgentAPI.IO.Request(
-        '/ID/SendVerificationMessage.ws',
-        { Nr: nr },
-        {},
-        appType
-      );
-      return Response;
-    },
-    verifyNumber: async function (nr: string, code: string, appType: APIType) {
-      const Response = await AgentAPI.IO.Request(
-        '/ID/VerifyNumber.ws',
-        { Nr: nr, Code: parseInt(code), Test: true },
-        {},
-        appType
-      );
-      return Response;
     },
   },
   Account: {
@@ -320,9 +282,9 @@ export const AgentAPI = {
       UserName: string,
       EMail: string,
       Password: string,
-      ApiKey?: string,
-      Secret?: any,
-      Seconds?: number
+      // ApiKey?: string,
+      // Secret?: any,
+      // Seconds?: number
     ) {
       const Nonce = AgentAPI.Account.getRandomValues(32);
       const s =

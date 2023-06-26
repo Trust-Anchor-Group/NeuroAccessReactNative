@@ -1,6 +1,8 @@
 import { View } from 'react-native';
-import React, { useContext, useRef, useState } from 'react';
+import React, { useContext, useEffect, useRef, useState } from 'react';
 import { StackScreenProps } from '@react-navigation/stack';
+import { ThunkDispatch } from '@reduxjs/toolkit';
+import { useDispatch, useSelector } from 'react-redux';
 import { ContextType, chooseActionTypeData } from '@Services/Data';
 import {
   ChooseNeuroAccessAppContext,
@@ -16,16 +18,26 @@ import { Logo } from '@Assets/Svgs';
 import { useTranslation } from 'react-i18next';
 import { ThemeContext } from '@Theme/Provider/ThemeContext';
 import { InformationOverlay } from '@Controls/InformationOverlay';
+import { selectedPupose } from '@Services/Redux/Actions/GetUserDetails';
 
 export const ChooseAccountType = ({
   navigation,
 }: StackScreenProps<{ Profile: any }>) => {
   const { t } = useTranslation();
+  const { userDetails, loading, error } = useSelector((state) => state.user);
   const { themeColors } = useContext(ThemeContext);
   const [selected, setSelected] = useState<ContextType>();
   const [showOverlay, setShowOverlay] = useState<boolean>(false);
-  const overlayInfo = useRef<ContextType>();
+  const overlayInfo = useRef<ContextType>()
+  const dispatch = useDispatch<ThunkDispatch<any, any, any>>();
 
+  useEffect(() => {
+    if (!selected && userDetails && userDetails['purpose']) {
+      overlayInfo.current = userDetails['purpose'];
+      setSelected(userDetails['purpose']);
+    }
+  }, [])
+  
   const toggleOverlay = (item?: ContextType) => {
     overlayInfo.current = item;
     setShowOverlay(!showOverlay);
@@ -66,6 +78,7 @@ export const ChooseAccountType = ({
           <ChooseNeuroAccessAppContext
             data={chooseActionTypeData}
             onSelect={setSelected}
+            preSelected={selected}
             toggleOverlay={(type) => toggleOverlay(type)}
           />
         </View>
@@ -80,10 +93,14 @@ export const ChooseAccountType = ({
             buttonStyle={
               !selected && { backgroundColor: themeColors.button.disableBg }
             }
-            title={t('buttonLabel.continue')}
+            title={t('buttonTitle.continue')}
             onPress={async () => {
-              selected && navigation.navigate('EnterEmail');
-            }}
+              if (selected)
+              {
+                dispatch(selectedPupose(selected));
+                navigation.navigate('EnterMobileNumber');
+              }
+             }}
           />
         </View>
       </View>

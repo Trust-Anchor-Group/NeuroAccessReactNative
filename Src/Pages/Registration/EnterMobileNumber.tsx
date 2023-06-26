@@ -8,6 +8,9 @@ import {
 } from 'react-native';
 import { GlobalStyle as styles, EnterMobileNumberStyle } from '@Pages/Styles';
 import { StackScreenProps } from '@react-navigation/stack';
+import { useDispatch, useSelector } from 'react-redux';
+import { createAccountUsingMobileNumber, saveNumber } from '@Services/Redux/Actions/GetUserDetails';
+import { ThunkDispatch } from '@reduxjs/toolkit';
 import { Logo } from '@Assets/Svgs';
 import {
   NeuroAccessBackground,
@@ -20,24 +23,26 @@ import MobileInputView from '@Controls/MobileInputView';
 import { TextInputRef } from '@Controls/MobileInputView';
 import { useTranslation } from 'react-i18next';
 import { ThemeContext } from '@Theme/Provider/ThemeContext';
-import { AgentAPI, APIType } from '@Services/API/Agent';
+import { AgentAPI } from '@Services/API/Agent';
 import { CountryDialog } from '@Controls/CountryDialog';
 import { countryCodes } from '@Services/Data/index';
 import { isValidPhone } from '@Helpers/Validation';
 import { Loader } from '@Controls/index';
+import { OnboardingAPI } from '@Services/API/OnboardingApi';
 
 export const EnterMobileNumber = ({
   navigation,
-}: StackScreenProps<{ Profile: any }>) => {
+}: StackScreenProps<{}>) => {
   const { t } = useTranslation();
+  const dispatch = useDispatch<ThunkDispatch<any, any, any>>();
+  const { userDetails, loading, error } = useSelector((state) => state.user);
   const { themeColors } = useContext(ThemeContext);
   const [countryFlag, setCountryFlag] = useState('');
   const countryISOCode = React.useRef('');
-  const mobileCode = React.useRef('');
-  const [mobileNumber, setMobileNumber] = useState();
+  const mobileCode = React.useRef(userDetails?.mobileNumber?.code);
+  const [mobileNumber, setMobileNumber] = useState(userDetails?.mobileNumber?.number);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const mobileNumberInputRef = React.useRef<TextInputRef>(null);
-  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const openModal = () => {
     setIsModalVisible(true);
@@ -72,7 +77,7 @@ export const EnterMobileNumber = ({
   useEffect(() => {
     const callCountryCode = async () => {
       try {
-        const createData = await AgentAPI.ID.CountryCode(APIType.ID_APP);
+        const createData = await OnboardingAPI.ID.CountryCode();
         handleSearchCountryISOCode(createData.CountryCode);
       } catch (error) {}
     };
@@ -89,19 +94,18 @@ export const EnterMobileNumber = ({
   };
 
   const handleSubmit = async () => {
-    try {
-      setIsLoading(true);
+    try {      
       const isFormValid = mobileNumberInputRef.current?.validate();
       if (isFormValid) {
-        const mobileN = mobileCode.current + mobileNumber;
-        const response = await AgentAPI.ID.sendVerificationMessage(
-          mobileN,
-          APIType.ID_APP
-        );
-        if (response.Status) {
-          setIsLoading(false);
-          navigation.navigate('EmailOTPVerify', { data: mobileN });
+        const mobileData = {
+          number: mobileNumber,
+          code: mobileCode.current
         }
+        const number = mobileCode.current + mobileNumber;
+        console.log('number = ', number)
+        await dispatch(saveNumber(mobileData));
+        await dispatch(createAccountUsingMobileNumber(number));
+        navigation.navigate('OTPVerify', {OtpType: 'Phone'});
       }
     } catch (error) {}
   };
@@ -168,7 +172,7 @@ export const EnterMobileNumber = ({
                   backgroundColor: themeColors.button.disableBg,
                 }
               }
-              title={t('buttonLabel.sendCode')}
+              title={t('buttonTitle.sendCode')}
               onPress={async () => {
                 if (mobileNumber) {
                   Keyboard.dismiss();
@@ -189,7 +193,7 @@ export const EnterMobileNumber = ({
           data={countryCodes}
           onItemSelected={handleItemSelected}
         />
-        <Loader loading={isLoading} />
+        <Loader loading={loading} />
       </NeuroAccessBackground>
     </KeyboardAvoidingView>
   );

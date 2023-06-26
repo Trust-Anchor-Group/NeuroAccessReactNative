@@ -1,4 +1,4 @@
-import React, { FC, useState, useContext } from 'react';
+import React, { FC, useState, useContext, useEffect } from 'react';
 import { FlatList, ListRenderItem, TouchableOpacity, View } from 'react-native';
 import { useTranslation } from 'react-i18next';
 import { ChooseActionTypeStyle } from '@Pages/Styles/ChooseActionTypeStyle';
@@ -9,20 +9,25 @@ import { TextLabel, TextLabelVariants } from '@Controls/index';
 
 interface Props {
   data: Array<ContextType>;
+  preSelected?: ContextType;
   onSelect: (item?: ContextType) => void;
   toggleOverlay: (item: ContextType) => void;
 }
 
 export const ChooseNeuroAccessAppContext: FC<Props> = ({
   data,
+  preSelected,
   onSelect,
-  toggleOverlay
+  toggleOverlay,
 }) => {
   const { t } = useTranslation();
   const { themeColors } = useContext(ThemeContext);
   const styles = ChooseActionTypeStyle(themeColors);
   const [selected, setSelected] = useState<ContextType>();
 
+  useEffect(() => {
+    preSelected && preSelected.value && setSelected(preSelected);
+  }, [preSelected, setSelected]);
   const onItemPress = (item: ContextType): void => {
     if (item !== selected) {
       setSelected(item);
@@ -70,7 +75,10 @@ export const ChooseNeuroAccessAppContext: FC<Props> = ({
       >
         {t(item.label)}
       </TextLabel>
-      <TouchableOpacity onPress={() => toggleOverlay(item)} style={styles.informationLogoContainer}>
+      <TouchableOpacity
+        onPress={() => toggleOverlay(item)}
+        style={styles.informationLogoContainer}
+      >
         <InformationIcon textColor={getInformationLogoColor(index)} />
       </TouchableOpacity>
     </TouchableOpacity>

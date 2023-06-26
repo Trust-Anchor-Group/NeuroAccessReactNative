@@ -69,13 +69,13 @@ export const CountryDialog: React.FC<SearchModalProps> = ({
           <View style={styles.searchBarContainer}>
             <TextInput
               style={styles.searchInput}
-              placeholder={t('buttonLabel.search')}
+              placeholder={t('buttonTitle.search')}
               value={searchText}
               onChangeText={handleSearch}
             />
 
             <TouchableOpacity style={styles.closeButton} onPress={closeModal}>
-              <Text>{t('buttonLabel.close')}</Text>
+              <Text>{t('buttonTitle.close')}</Text>
             </TouchableOpacity>
           </View>
           <FlatList

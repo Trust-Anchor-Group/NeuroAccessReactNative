@@ -5,10 +5,14 @@ import thunk from 'redux-thunk';
 import logger from 'redux-logger'
 import EncryptedStorage from 'react-native-encrypted-storage';
 import { rootReducer } from './RootReducers';
+import autoMergeLevel2 from 'redux-persist/es/stateReconciler/autoMergeLevel2';
 
 const persistConfig = {
   key: 'root',
   storage: EncryptedStorage,
+  whitelist: ['user'],
+  blackList: [],
+  stateReconciler: autoMergeLevel2,
 };
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
