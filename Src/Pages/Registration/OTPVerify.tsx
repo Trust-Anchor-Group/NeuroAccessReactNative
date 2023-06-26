@@ -71,6 +71,7 @@ export const OTPVerify = ({ navigation, route }: Props) => {
 
   const callResendCode = async () => {
     try {
+      setOTPValue('');
       setIsLoading(true);
       const response = await OnboardingAPI.ID.sendVerificationMessage(
         mobileNumber

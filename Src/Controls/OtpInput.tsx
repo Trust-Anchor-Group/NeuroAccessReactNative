@@ -18,7 +18,7 @@ export const OtpInput: React.FC<OTPInputFieldsProps> = ({
 }) => {
   const { themeColors } = useContext(ThemeContext);
   const styles = OtpInputStyle(themeColors);
-  const [otp, setOTP] = useState<string[]>(Array(6).fill(''));
+  const [otp, setOTP] = useState<string[]>(Array(6).fill(otpValue));
   const [activeIndex, setActiveIndex] = useState<number>(0);
   const prevInputIndex = useRef<number>(-1);
   const refs = useRef<TextInput[]>([]);
@@ -79,12 +79,6 @@ export const OtpInput: React.FC<OTPInputFieldsProps> = ({
       refs.current[activeIndex]?.focus();
     }
   }, [activeIndex, handleBackPress]);
-
-  useEffect(() => {
-    if (otpValue.length === 6) {
-      handleSubmit();
-    }
-  }, [otpValue, handleSubmit]);
 
   return (
     <View style={styles.container}>

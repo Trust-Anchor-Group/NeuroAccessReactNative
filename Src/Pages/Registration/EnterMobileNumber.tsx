@@ -102,10 +102,9 @@ export const EnterMobileNumber = ({
           code: mobileCode.current
         }
         const number = mobileCode.current + mobileNumber;
-        console.log('number = ', number)
-        await dispatch(saveNumber(mobileData));
         await dispatch(createAccountUsingMobileNumber(number));
-        navigation.navigate('OTPVerify', {OtpType: 'Phone'});
+        await dispatch(saveNumber(mobileData));
+        navigation.navigate('OTPVerify');
       }
     } catch (error) {}
   };

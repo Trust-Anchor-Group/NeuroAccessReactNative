@@ -1,5 +1,5 @@
 import { View, KeyboardAvoidingView, Platform } from 'react-native';
-import React, { useState, useContext, useEffect } from 'react';
+import React, { useState, useContext } from 'react';
 import { StackScreenProps } from '@react-navigation/stack';
 import { useSelector, useDispatch } from 'react-redux';
 import { ThunkDispatch } from '@reduxjs/toolkit';
@@ -19,7 +19,10 @@ import { ThemeContext } from '@Theme/Provider';
 import { AgentAPI } from '@Services/API/Agent';
 import { Loader } from '@Controls/index';
 import { OnboardingAPI } from '@Services/API/OnboardingApi';
-import { UserPayload, createAccountUsingEmail } from '@Services/Redux/Actions/GetUserDetails';
+import {
+  UserPayload,
+  createAccountUsingEmail,
+} from '@Services/Redux/Actions/GetUserDetails';
 import { AsyncThunkAction } from '@reduxjs/toolkit';
 
 type Props = StackScreenProps<{}>;
@@ -56,14 +59,18 @@ export const EmailOTPVerify = ({ navigation, route }: Props) => {
   };
 
   const callVerificationCode = async () => {
-    // setIsLoading(true);
-    let response = await OnboardingAPI.ID.verifyEMail(
-      userDetails?.email,
-      otpValue
-    );
-    // setIsLoading(false);
-    if (response?.Status) {
-      navigation.navigate('EnterUserName');
+    try {
+      setIsLoading(true);
+      let response = await OnboardingAPI.ID.verifyEMail(
+        userDetails?.email,
+        otpValue
+      );
+      setIsLoading(false);
+      if (response?.Status) {
+        navigation.navigate('CreateAccount');
+      }
+    } catch (e) {
+      setIsLoading(false);
     }
   };
   const onBackClick = () => {
@@ -76,11 +83,12 @@ export const EmailOTPVerify = ({ navigation, route }: Props) => {
 
   const callResendCode = async () => {
     try {
+      setOTPValue('');
       const userPayload: UserPayload = {
         UserName: userDetails?.userName,
         EMail: userDetails?.email,
-        Password: userDetails?.email
-      }
+        Password: userDetails?.email,
+      };
       setIsLoading(true);
       dispatch(createAccountUsingEmail(userPayload));
       setIsLoading(false);
@@ -155,7 +163,3 @@ export const EmailOTPVerify = ({ navigation, route }: Props) => {
     </NeuroAccessBackground>
   );
 };
-function dispatch(arg0: AsyncThunkAction<unknown, UserPayload, { state?: unknown; dispatch?: Dispatch<AnyAction> | undefined; extra?: unknown; rejectValue?: unknown; serializedErrorType?: unknown; pendingMeta?: unknown; fulfilledMeta?: unknown; rejectedMeta?: unknown; }>) {
-  throw new Error('Function not implemented.');
-}
-
