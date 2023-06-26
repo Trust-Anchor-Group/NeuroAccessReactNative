@@ -1,5 +1,5 @@
 import { View, KeyboardAvoidingView, Platform } from 'react-native';
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { StackScreenProps } from '@react-navigation/stack';
 import {
   NeuroAccessBackground,
@@ -16,6 +16,7 @@ import { useTranslation } from 'react-i18next';
 import { ThemeContext } from '@Theme/Provider';
 import { AgentAPI, APIType } from '@Services/API/Agent';
 import { useRoute } from '@react-navigation/native';
+import { Loader } from '@Controls/index';
 
 export const EmailOTPVerify = ({
   navigation,
@@ -24,7 +25,7 @@ export const EmailOTPVerify = ({
   const { data } = route?.params;
   const { t } = useTranslation();
   const { themeColors } = useContext(ThemeContext);
-
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   const [otpValue, setOTPValue] = useState('');
   const [isError, setIsError] = useState(false);
   const errorMessage = React.useRef('');
@@ -51,6 +52,7 @@ export const EmailOTPVerify = ({
   };
 
   const callVerificationCode = async () => {
+    setIsLoading(true);
     const response = await AgentAPI.ID.verifyNumber(
       data,
       otpValue,
@@ -66,6 +68,20 @@ export const EmailOTPVerify = ({
 
   const onLanguageClick = () => {
     navigation.navigate('Settings');
+  };
+
+  const callResendCode = async () => {
+    try {
+      setIsLoading(true);
+
+      const response = await AgentAPI.ID.sendVerificationMessage(
+        data,
+        APIType.ID_APP
+      );
+      if (response.Status) {
+        setIsLoading(false);
+      }
+    } catch (error) {}
   };
 
   return (
@@ -114,7 +130,7 @@ export const EmailOTPVerify = ({
               buttonStyle={EnterOTPVerifyStyle(themeColors).resendButton}
               title={t('buttonLabel.resend')}
               textStyle={EnterOTPVerifyStyle(themeColors).resendText}
-              onPress={handleSubmit}
+              onPress={callResendCode}
             />
 
             <ActionButton
@@ -130,6 +146,7 @@ export const EmailOTPVerify = ({
         onBackAction={onBackClick}
         onLanguageAction={onLanguageClick}
       />
+      <Loader loading={isLoading} />
     </NeuroAccessBackground>
   );
 };

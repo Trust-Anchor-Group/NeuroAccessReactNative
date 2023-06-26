@@ -4,6 +4,7 @@ export const Colors = {
     backgroundLayer: 'rgba(255, 255, 255, 0.7)',
     logoPrimary: '#181F25',
     logoSecondary: '#3E776D',
+    dropdown: 'rgba(24, 31, 37, 0.5)',
     inputBox: {
       error: '#F2495C',
       inputBackground: '#F5F6F7',
@@ -62,14 +63,20 @@ export const Colors = {
     informationView: {
       background: 'rgba(214, 215, 217, 0.5)',
       blurBg: 'rgba(214, 215, 217, 0.5)',
-      informationBg: '#FCFCFC'
-    }
+      informationBg: '#FCFCFC',
+    },
+    mobileInput: {
+      backgroundColor: 'rgba(245, 246, 247, 1)',
+      borderColor: 'rgba(24, 31, 37, 0.5)',
+      color: 'rgba(24, 31, 37, 1)',
+    },
   },
   dark: {
     background: '#161617',
     backgroundLayer: 'rgba(12, 12, 13, 0.7)',
     logoPrimary: 'rgba(255, 255, 255, 0.9)',
     logoSecondary: '#50998C',
+    dropdown: 'rgba(24, 31, 37, 0.5)',
     inputBox: {
       error: '#F2495C',
       inputBackground: '#3E3E40',
@@ -128,7 +135,12 @@ export const Colors = {
     informationView: {
       background: 'rgba(22, 22, 23, 0.5)',
       blurBg: 'rgba(22, 22, 23, 0.5)',
-      informationBg: '#3E3E40'
-    }
+      informationBg: '#3E3E40',
+    },
+    mobileInput: {
+      backgroundColor: 'rgba(245, 246, 247, 1)',
+      borderColor: 'rgba(24, 31, 37, 0.5)',
+      color: 'rgba(24, 31, 37, 1)',
+    },
   },
 };

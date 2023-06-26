@@ -30,7 +30,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#00000040',
   },
   activityIndicatorWrapper: {
-    backgroundColor: '#FF1493',
+    backgroundColor: 'rgba(245, 246, 247, 1)',
     height: 40,
     width: 40,
     borderRadius: 5,

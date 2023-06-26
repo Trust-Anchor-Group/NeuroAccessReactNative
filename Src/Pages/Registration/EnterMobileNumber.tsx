@@ -1,5 +1,11 @@
 import React, { useState, useContext, useEffect } from 'react';
-import { View, KeyboardAvoidingView, Platform, Keyboard } from 'react-native';
+import {
+  View,
+  KeyboardAvoidingView,
+  Platform,
+  Keyboard,
+  ScrollView,
+} from 'react-native';
 import { GlobalStyle as styles, EnterMobileNumberStyle } from '@Pages/Styles';
 import { StackScreenProps } from '@react-navigation/stack';
 import { Logo } from '@Assets/Svgs';
@@ -8,30 +14,51 @@ import {
   NavigationHeader,
   ActionButton,
   TextLabelVariants,
-  MobileInputView,
   TextLabel,
 } from '@Controls/index';
+import MobileInputView from '@Controls/MobileInputView';
+import { TextInputRef } from '@Controls/MobileInputView';
 import { useTranslation } from 'react-i18next';
 import { ThemeContext } from '@Theme/Provider/ThemeContext';
 import { AgentAPI, APIType } from '@Services/API/Agent';
+import { CountryDialog } from '@Controls/CountryDialog';
+import { countryCodes } from '@Services/Data/index';
+import { isValidPhone } from '@Helpers/Validation';
+import { Loader } from '@Controls/index';
 
 export const EnterMobileNumber = ({
   navigation,
 }: StackScreenProps<{ Profile: any }>) => {
-  interface CountryCodeData {
-    RemoteEndPoint: string;
-    CountryCode: string;
-    PhoneCode: string;
-  }
   const { t } = useTranslation();
   const { themeColors } = useContext(ThemeContext);
-  const [countryCode, setCountryCode] = useState<CountryCodeData>();
-  const countryISOCode = countryCode?.CountryCode;
-  const phoneCode = countryCode?.PhoneCode;
-  const [inputValue, setInputValue] = useState('');
+  const [countryFlag, setCountryFlag] = useState('');
+  const countryISOCode = React.useRef('');
+  const mobileCode = React.useRef('');
+  const [mobileNumber, setMobileNumber] = useState();
+  const [isModalVisible, setIsModalVisible] = useState(false);
+  const mobileNumberInputRef = React.useRef<TextInputRef>(null);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+
+  const openModal = () => {
+    setIsModalVisible(true);
+  };
+
+  const closeModal = () => {
+    setIsModalVisible(false);
+  };
+
+  const handleItemSelected = (selectedItem: any) => {
+    mobileCode.current = selectedItem?.dial_code;
+    countryISOCode.current = selectedItem?.code;
+    setCountryFlag(selectedItem?.flag);
+  };
 
   const handleInputChange = (text: string) => {
-    setInputValue(text);
+    setMobileNumber(text);
+  };
+
+  const handleCountryChange = () => {
+    openModal();
   };
 
   const onBackClick = () => {
@@ -46,75 +73,124 @@ export const EnterMobileNumber = ({
     const callCountryCode = async () => {
       try {
         const createData = await AgentAPI.ID.CountryCode(APIType.ID_APP);
-        setCountryCode(createData);
+        handleSearchCountryISOCode(createData.CountryCode);
       } catch (error) {}
     };
     callCountryCode();
   }, []);
 
+  const handleSearchCountryISOCode = (isoCode: string) => {
+    const filteredItems = countryCodes.filter((item) =>
+      item.code.includes(isoCode)
+    );
+    mobileCode.current = filteredItems[0]?.dial_code;
+    countryISOCode.current = filteredItems[0]?.code;
+    setCountryFlag(filteredItems[0]?.flag);
+  };
+
   const handleSubmit = async () => {
     try {
-      const mobileNumber = phoneCode + inputValue;
-      const response = await AgentAPI.ID.sendVerificationMessage(
-        mobileNumber,
-        APIType.ID_APP
-      );
-      if (response.Status) {
-        navigation.navigate('EmailOTPVerify', { data: mobileNumber });
+      setIsLoading(true);
+      const isFormValid = mobileNumberInputRef.current?.validate();
+      if (isFormValid) {
+        const mobileN = mobileCode.current + mobileNumber;
+        const response = await AgentAPI.ID.sendVerificationMessage(
+          mobileN,
+          APIType.ID_APP
+        );
+        if (response.Status) {
+          setIsLoading(false);
+          navigation.navigate('EmailOTPVerify', { data: mobileN });
+        }
       }
     } catch (error) {}
   };
 
   return (
-    <NeuroAccessBackground>
-      <KeyboardAvoidingView
-        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-        style={styles(themeColors).container}
-      >
-        <View style={styles(themeColors).spaceContainer} />
-        <View style={styles(themeColors).logoContainer}>
-          <Logo
-            textColor={themeColors.logoPrimary}
-            logoColor={themeColors.logoSecondary}
-          />
-        </View>
-        <View style={styles(themeColors).informationContainer}>
-          <TextLabel variant={TextLabelVariants.HEADER}>
-            {t('heading.getStarted')}
-          </TextLabel>
-          <TextLabel
-            style={EnterMobileNumberStyle(themeColors).textLabel}
-            variant={TextLabelVariants.LABEL}
-          >
-            {t('enterMobileScreen.message')}
-          </TextLabel>
-        </View>
-        <View style={styles(themeColors).inputContainer}>
-          <TextLabel variant={TextLabelVariants.INPUTLABEL}>
-            {t('enterMobileScreen.label')}
-          </TextLabel>
-          <MobileInputView
-            label1={countryISOCode}
-            label2={phoneCode}
-            value={inputValue}
-            onChangeText={handleInputChange}
-          />
-        </View>
-        <View style={styles(themeColors).buttonContainer}>
-          <ActionButton
-            textStyle={EnterMobileNumberStyle(themeColors).sendText}
-            title={t('buttonLabel.sendCode')}
-            onPress={() => {
-              Keyboard.dismiss();
-              handleSubmit();
-            }}
-          />
-        </View>
-      </KeyboardAvoidingView>
-      <NavigationHeader
-        onBackAction={onBackClick}
-        onLanguageAction={onLanguageClick}
-      />
-    </NeuroAccessBackground>
+    <KeyboardAvoidingView
+      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+      style={styles(themeColors).container}
+    >
+      <NeuroAccessBackground>
+        <ScrollView
+          style={styles(themeColors).container}
+          contentContainerStyle={styles(themeColors).scrollViewContainer}
+        >
+          <View style={styles(themeColors).spaceContainer} />
+          <View style={styles(themeColors).logoContainer}>
+            <Logo
+              textColor={themeColors.logoPrimary}
+              logoColor={themeColors.logoSecondary}
+            />
+          </View>
+
+          <View style={styles(themeColors).informationContainer}>
+            <TextLabel variant={TextLabelVariants.HEADER}>
+              {t('heading.getStarted')}
+            </TextLabel>
+            <TextLabel variant={TextLabelVariants.LABEL}>
+              {t('enterMobileScreen.message')}
+            </TextLabel>
+          </View>
+
+          <View style={styles(themeColors).inputContainer}>
+            <TextLabel
+              style={EnterMobileNumberStyle(themeColors).inputLabel}
+              variant={TextLabelVariants.INPUTLABEL}
+            >
+              {t('enterMobileScreen.label')}
+            </TextLabel>
+            <MobileInputView
+              ref={mobileNumberInputRef}
+              flag={countryFlag}
+              code={mobileCode.current}
+              value={mobileNumber}
+              onChangeText={handleInputChange}
+              onCountrySelect={handleCountryChange}
+              onAction={() => {
+                handleSubmit();
+              }}
+              validator={(value) => {
+                return isValidPhone(value, mobileCode.current + value);
+              }}
+            />
+          </View>
+
+          <View style={styles(themeColors).buttonContainer}>
+            <ActionButton
+              disabled={!mobileNumber}
+              textStyle={[
+                EnterMobileNumberStyle(themeColors).sendText,
+                !mobileNumber && { color: themeColors.button.disableText },
+              ]}
+              buttonStyle={
+                !mobileNumber && {
+                  backgroundColor: themeColors.button.disableBg,
+                }
+              }
+              title={t('buttonLabel.sendCode')}
+              onPress={async () => {
+                if (mobileNumber) {
+                  Keyboard.dismiss();
+                  handleSubmit();
+                }
+              }}
+            />
+          </View>
+        </ScrollView>
+
+        <NavigationHeader
+          onBackAction={onBackClick}
+          onLanguageAction={onLanguageClick}
+        />
+        <CountryDialog
+          isVisible={isModalVisible}
+          closeModal={closeModal}
+          data={countryCodes}
+          onItemSelected={handleItemSelected}
+        />
+        <Loader loading={isLoading} />
+      </NeuroAccessBackground>
+    </KeyboardAvoidingView>
   );
 };

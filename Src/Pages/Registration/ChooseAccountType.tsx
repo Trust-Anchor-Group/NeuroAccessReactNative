@@ -24,7 +24,7 @@ export const ChooseAccountType = ({
   const { themeColors } = useContext(ThemeContext);
   const [selected, setSelected] = useState<ContextType>();
   const [showOverlay, setShowOverlay] = useState<boolean>(false);
-  const overlayInfo = useRef<ContextType>()
+  const overlayInfo = useRef<ContextType>();
 
   const toggleOverlay = (item?: ContextType) => {
     overlayInfo.current = item;

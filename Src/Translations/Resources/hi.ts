@@ -6,6 +6,7 @@ export default {
       'चुनें कि आप किस संदर्भ में न्यूरो-एक्सेस का उपयोग करना चाहते हैं',
     getStarted: 'आएँ शुरू करें',
     verifyEmail: 'सत्यापित होने के लिए, आपको अपना ईमेल दर्ज करना होगा',
+    mobilePlaceHolder: 'xxxxxxxxxx',
   },
   buttonLabel: {
     continue: 'जारी रखना',
@@ -13,6 +14,7 @@ export default {
     resend: 'पुन: भेजें',
     verify: 'सत्यापित करें',
     close: 'बंद करें',
+    search: 'Search',
   },
   choosePurposeScreen: {
     label: 'पहुंच का उद्देश्य चुनें',
@@ -43,7 +45,7 @@ export default {
   },
   internetSatus: {
     connected: 'इंटरनेट से जुड़ा',
-    disconnected: 'इंटरनेट कनेक्ट नहीं है!'
+    disconnected: 'इंटरनेट कनेक्ट नहीं है!',
   },
   accessPurposeInformation: {
     Personal: {

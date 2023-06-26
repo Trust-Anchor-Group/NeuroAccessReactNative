@@ -1,51 +1,111 @@
-import React from 'react';
-import { View, TextInput, Text, StyleSheet } from 'react-native';
-
-interface CustomInputBoxProps {
-  label1: string;
-  label2: string;
+import React, {
+  useImperativeHandle,
+  useState,
+  forwardRef,
+  useContext,
+} from 'react';
+import {
+  View,
+  TextInput,
+  Text,
+  TouchableOpacity,
+  TextInputProps,
+} from 'react-native';
+import { MobileInputViewStyle as styles } from './Styles';
+import { DropDownIcon } from '@Assets/Svgs';
+import { ShowError } from './ShowError';
+import { useTranslation } from 'react-i18next';
+import { ThemeContext } from '@Theme/Provider/ThemeContext';
+interface CustomInputBoxProps extends TextInputProps {
+  flag: string;
+  code: string;
   value: string;
   onChangeText: (text: string) => void;
+  onCountrySelect: () => void;
+  onAction?: () => void;
+  validator?: (text: string) => string | undefined;
 }
 
-export const MobileInputView: React.FC<CustomInputBoxProps> = ({
-  label1,
-  label2,
-  value,
-  onChangeText,
-}) => {
+export interface TextInputRef {
+  focus: () => void;
+  blur: () => void;
+  validate: () => boolean;
+}
+const MobileInputView: React.ForwardRefRenderFunction<
+  TextInputRef,
+  CustomInputBoxProps
+> = (
+  { flag, code, value, onChangeText, onCountrySelect, onAction, validator },
+  ref
+) => {
+  const [error, setError] = useState<string | undefined>(undefined);
+  const inputRef = React.createRef<TextInput>();
+  const { t } = useTranslation();
+  const { themeColors } = useContext(ThemeContext);
+
+  useImperativeHandle(ref, () => ({
+    focus: () => {
+      inputRef.current?.focus();
+    },
+    blur: () => {
+      inputRef.current?.blur();
+    },
+    validate: () => {
+      const errorMessage = validator ? validator(value) : undefined;
+      setError(errorMessage);
+      return !errorMessage;
+    },
+  }));
+
+  const handleFocus = () => {
+    setError(undefined);
+  };
+
+  const handleBlur = () => {
+    const errorMessage = validator ? validator(value) : undefined;
+    setError(errorMessage);
+  };
+
+  const handleAction = () => {
+    if (validator) {
+      const isValid = validator(value);
+      if (isValid) {
+        onAction?.();
+      } else {
+        setError(isValid);
+      }
+    } else {
+      onAction?.();
+    }
+  };
+
   return (
-    <View style={styles.container}>
-      <View style={styles.inputContainer}>
-        <Text style={styles.label}>{label1}</Text>
-        <Text style={styles.label}>{label2}</Text>
+    <View>
+      <View style={styles(themeColors).container}>
+        <TouchableOpacity
+          style={styles(themeColors).touchableOpacity}
+          onPress={onCountrySelect}
+        >
+          <Text style={[styles(themeColors).flagLabel]}>{flag}</Text>
+          <Text style={[styles(themeColors).label]}>{code}</Text>
+          <DropDownIcon iconColor={themeColors.dropdown} />
+        </TouchableOpacity>
         <TextInput
-          style={styles.input}
+          ref={inputRef}
+          style={styles(themeColors).input}
           value={value}
           onChangeText={onChangeText}
-          placeholder="xxxxxxxxxx"
-          placeholderTextColor="#181F2580"
+          placeholder={t('heading.mobilePlaceHolder')}
+          placeholderTextColor={themeColors.dropdown}
+          keyboardType="numeric"
+          returnKeyType="done"
+          onSubmitEditing={handleAction}
+          onFocus={handleFocus}
+          onBlur={handleBlur}
         />
       </View>
+      {error && <ShowError errorMessage={error} />}
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    borderWidth: 1,
-    borderColor: '#ccc',
-    borderRadius: 5,
-    padding: 10,
-  },
-  inputContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-  label: {
-    marginRight: 10,
-  },
-  input: {
-    flex: 1,
-  },
-});
+export default forwardRef(MobileInputView);

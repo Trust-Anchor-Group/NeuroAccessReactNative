@@ -16,7 +16,7 @@ import { InputBoxStyle } from './Styles/InputBoxStyle';
 import { ThemeContext } from '@Theme/Provider/ThemeContext';
 
 interface InputBoxProps extends TextInputProps {
-  leftIcon: any;
+  leftIcon?: any;
   rightIcon?: ImageSourcePropType;
   onFocusColor?: string;
   value: string;
