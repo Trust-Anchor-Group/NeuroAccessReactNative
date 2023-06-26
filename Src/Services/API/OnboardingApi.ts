@@ -88,10 +88,18 @@ export const OnboardingAPI = {
       );
       return Response;
     },
-    sendEmailVerificationMessage: async function (mobileNumber: string) {
+    sendEmailVerificationMessage: async function (email: string) {
       const Response = await OnboardingAPI.IO.Request(
         '/ID/SendVerificationMessage.ws',
-        { EMail: mobileNumber },
+        { EMail: email },
+        {},
+      );
+      return Response;
+    },
+    verifyEMail: async function (email: string, code: string) {
+      const Response = await OnboardingAPI.IO.Request(
+        '/ID/VerifyNumber.ws',
+        { EMail: email, Code: parseInt(code), Test: true },
         {},
       );
       return Response;
