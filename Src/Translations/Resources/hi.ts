@@ -39,6 +39,10 @@ export default {
     message: 'To get verified, you need to enter your phone number',
     label: 'Enter phone number',
   },
+  enterUserNameScreen: {
+    message: 'To get verified, you need to enter your user name',
+    label: 'Enter user name',
+  },
   settingScreen: {
     selectLanguage: ' भाषा चुने ',
     changeTheme: 'विषय को परिवर्तित करें',

@@ -74,7 +74,7 @@ export const EnterUserName = ({
               {t('heading.getStarted')}
             </TextLabel>
             <TextLabel variant={TextLabelVariants.LABEL}>
-              {t('enterMobileScreen.message')}
+              {t('enterUserNameScreen.message')}
             </TextLabel>
           </View>
 
@@ -83,7 +83,7 @@ export const EnterUserName = ({
               style={EnterMobileNumberStyle(themeColors).inputLabel}
               variant={TextLabelVariants.INPUTLABEL}
             >
-              {t('enterMobileScreen.label')}
+              {t('enterUserNameScreen.label')}
             </TextLabel>
             <InputBox
               keyboardType="default"
