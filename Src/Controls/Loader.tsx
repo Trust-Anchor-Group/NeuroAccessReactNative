@@ -1,9 +1,11 @@
 import React, {Component} from 'react';
-import {StyleSheet, View, Modal, ActivityIndicator} from 'react-native';
+import {StyleSheet, View, Modal, ActivityIndicator, ModalBaseProps} from 'react-native';
 
-export const Loader = props => {
+interface Props extends ModalBaseProps {
+  loading: boolean
+}
+export const Loader = (props: Props) => {
   const {loading, ...attributes} = props;
-
   return (
     <Modal
       transparent={true}
@@ -30,7 +32,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#00000040',
   },
   activityIndicatorWrapper: {
-    backgroundColor: 'rgba(245, 246, 247, 1)',
+    backgroundColor: '#50998C',
     height: 40,
     width: 40,
     borderRadius: 5,

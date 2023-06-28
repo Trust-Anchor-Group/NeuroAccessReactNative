@@ -3,11 +3,12 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { Home } from '@Pages/Home';
 import {
   ChooseAccountType,
+  OTPVerify,
   EmailOTPVerify,
   EnterEmail,
   EnterMobileNumber,
-  MobileNumberOTPVerify,
   CreateAccount,
+  EnterUserName
 } from '@Pages/Registration';
 import { Settings } from '@Pages/Settings';
 const Stack = createStackNavigator();
@@ -30,6 +31,13 @@ export const AuthStack = () => {
         }}
       />
       <Stack.Screen
+        name="OTPVerify"
+        component={OTPVerify}
+        options={{
+          headerShown: false,
+        }}
+      />
+      <Stack.Screen
         name="EmailOTPVerify"
         component={EmailOTPVerify}
         options={{
@@ -44,10 +52,10 @@ export const AuthStack = () => {
         }}
       />
       <Stack.Screen
-        name="MobileNumberOTPVerify"
-        component={MobileNumberOTPVerify}
+        name="EnterUserName"
+        component={EnterUserName}
         options={{
-          headerTitle: 'Mobile Number OTP Verification',
+          headerShown: false,
         }}
       />
       <Stack.Screen
