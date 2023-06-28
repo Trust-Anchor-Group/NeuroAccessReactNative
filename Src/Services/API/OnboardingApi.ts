@@ -72,7 +72,6 @@ export const OnboardingAPI = {
       return Response;
     },
     sendVerificationMessage: async function (mobileNumber: string) {
-      console.log('mobileNumber === > ', mobileNumber);
       const Response = await OnboardingAPI.IO.Request(
         '/ID/SendVerificationMessage.ws',
         { Nr: mobileNumber },

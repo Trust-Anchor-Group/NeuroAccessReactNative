@@ -6,7 +6,6 @@ interface Props extends ModalBaseProps {
 }
 export const Loader = (props: Props) => {
   const {loading, ...attributes} = props;
-  console.log('loading ===> ', loading);
   return (
     <Modal
       transparent={true}
