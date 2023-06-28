@@ -66,7 +66,7 @@ export const EmailOTPVerify = ({ navigation, route }: Props) => {
         otpValue
       );
       setIsLoading(false);
-      if (response?.Status) {
+      if (response?.eMail) {
         navigation.navigate('CreateAccount');
       }
     } catch (e) {
@@ -159,7 +159,7 @@ export const EmailOTPVerify = ({ navigation, route }: Props) => {
         onBackAction={onBackClick}
         onLanguageAction={onLanguageClick}
       />
-      <Loader loading={isLoading} />
+      <Loader loading={isLoading || loading} />
     </NeuroAccessBackground>
   );
 };
