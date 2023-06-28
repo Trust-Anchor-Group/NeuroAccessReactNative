@@ -37,7 +37,7 @@ export const createAccountUsingEmail = createAsyncThunk(
       );
       return response ;
     } catch (error) {
-      throw error?.response?.data;
+      throw error
     }
   }
 );

@@ -88,22 +88,6 @@ export const OnboardingAPI = {
       );
       return Response;
     },
-    sendEmailVerificationMessage: async function (email: string) {
-      const Response = await OnboardingAPI.IO.Request(
-        '/ID/SendVerificationMessage.ws',
-        { EMail: email },
-        {},
-      );
-      return Response;
-    },
-    verifyEMail: async function (email: string, code: string) {
-      const Response = await OnboardingAPI.IO.Request(
-        '/ID/VerifyNumber.ws',
-        { EMail: email, Code: parseInt(code), Test: true },
-        {},
-      );
-      return Response;
-    },
   },
   Account: {
     Utf8: new TextEncoder('windows-1252', {

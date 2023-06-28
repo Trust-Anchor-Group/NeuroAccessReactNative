@@ -61,7 +61,7 @@ export const EmailOTPVerify = ({ navigation, route }: Props) => {
   const callVerificationCode = async () => {
     try {
       setIsLoading(true);
-      let response = await OnboardingAPI.ID.verifyEMail(
+      let response = await AgentAPI.Account.VerifyEMail(
         userDetails?.email,
         otpValue
       );

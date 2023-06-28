@@ -37,13 +37,23 @@ export const EnterEmail = ({
   const [email, setEmail] = useState(userDetails?.email);
 
   useEffect(() => {}, [loading]);
+
   const handleSubmit = async () => {
-    Keyboard.dismiss();
+    const userPayload: UserPayload = {
+      UserName: userDetails?.userName,
+      EMail: email,
+      Password: email,
+    };
     const isFormValid = emailInputRef.current?.validate();
     if (isFormValid) {
-      dispatch(sendEmailVerificationMessage(email));
-      dispatch(saveEmail(email));
-      navigation.navigate('EmailOTPVerify');
+      Keyboard.dismiss();
+      try {
+        dispatch(createAccountUsingEmail(userPayload));
+        dispatch(saveEmail(email));
+        navigation.navigate('EmailOTPVerify');  
+      } catch (error) {
+        alert(error);
+      }      
     }
   };
 
@@ -108,7 +118,6 @@ export const EnterEmail = ({
         </View>
 
         <View style={styles(themeColors).buttonContainer}>
-          <Loader loading={loading} />
           <ActionButton
             disabled={!email}
             textStyle={[
@@ -134,6 +143,7 @@ export const EnterEmail = ({
         onBackAction={onBackClick}
         onLanguageAction={onLanguageClick}
       />
+      <Loader loading={loading} />
     </NeuroAccessBackground>
   );
 };
