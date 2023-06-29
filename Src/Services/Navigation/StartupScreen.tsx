@@ -1,6 +1,6 @@
 import { StyleSheet, View } from 'react-native';
 import React, { useEffect, useState } from 'react';
-import { AuthStack } from './Navigation';
+import { AuthStack, ApplicationStack } from './Navigation';
 import { useLogin } from './LoginProvider';
 import { Splash } from '@Pages/Splash';
 import { NetworkService } from '@Services/Network/NetworkService';

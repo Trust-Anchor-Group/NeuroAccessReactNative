@@ -10,6 +10,7 @@ import {
   CreateAccount,
 } from '@Pages/Registration';
 import { Settings } from '@Pages/Settings';
+import { CurrentProvider } from '@Pages/CurrentProvider';
 const Stack = createStackNavigator();
 
 export const AuthStack = () => {
@@ -55,6 +56,14 @@ export const AuthStack = () => {
         component={CreateAccount}
         options={{
           headerTitle: 'CreateAccount',
+        }}
+      />
+
+      <Stack.Screen
+        name="CurrentProvider"
+        component={CurrentProvider}
+        options={{
+          headerShown: false,
         }}
       />
 

@@ -77,4 +77,15 @@ export default {
                 `,
     },
   },
+  currentProvider: {
+    title: 'Current Provider',
+    providerLink: 'eu.id.tagroot.io',
+    detail: 'Your service provider has been selected to',
+    continueDetail:
+      'To continue, you can create a new account on this provider or change the service provider.',
+    optionTitle: 'Choose one option',
+    createAccount: 'Create a new account on this provider',
+    changeService: 'Change service provider',
+    serviceProvider: 'What is a service provider?',
+  },
 };
