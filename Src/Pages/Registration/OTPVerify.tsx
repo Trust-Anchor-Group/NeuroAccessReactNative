@@ -1,8 +1,7 @@
 import { View, KeyboardAvoidingView, Platform } from 'react-native';
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { StackScreenProps } from '@react-navigation/stack';
-import { useSelector, useDispatch } from 'react-redux';
-import { ThunkDispatch } from '@reduxjs/toolkit';
+import { useSelector } from 'react-redux';
 import {
   NeuroAccessBackground,
   OtpInput,
@@ -19,18 +18,14 @@ import { ThemeContext } from '@Theme/Provider';
 import { AgentAPI } from '@Services/API/Agent';
 import { Loader } from '@Controls/index';
 import { OnboardingAPI } from '@Services/API/OnboardingApi';
-import {
-  UserPayload,
-  createAccountUsingEmail,
-} from '@Services/Redux/Actions/GetUserDetails';
-import { AsyncThunkAction } from '@reduxjs/toolkit';
 
 type Props = StackScreenProps<{}>;
 
-export const EmailOTPVerify = ({ navigation, route }: Props) => {
+export const OTPVerify = ({ navigation, route }: Props) => {
   const { t } = useTranslation();
-  const dispatch = useDispatch<ThunkDispatch<any, any, any>>();
   const { userDetails, loading, error } = useSelector((state) => state.user);
+  const { number, code } = userDetails?.mobileNumber;
+  const mobileNumber = code + number;
   const { themeColors } = useContext(ThemeContext);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [otpValue, setOTPValue] = useState('');
@@ -59,18 +54,11 @@ export const EmailOTPVerify = ({ navigation, route }: Props) => {
   };
 
   const callVerificationCode = async () => {
-    try {
-      setIsLoading(true);
-      let response = await AgentAPI.Account.VerifyEMail(
-        userDetails?.email,
-        otpValue
-      );
-      setIsLoading(false);
-      if (response?.eMail) {
-        navigation.navigate('CreateAccount');
-      }
-    } catch (e) {
-      setIsLoading(false);
+    // setIsLoading(true);
+    let response = await OnboardingAPI.ID.verifyNumber(mobileNumber, otpValue);
+    // setIsLoading(false);
+    if (response?.Status) {
+      navigation.navigate('EnterUserName');
     }
   };
   const onBackClick = () => {
@@ -84,17 +72,16 @@ export const EmailOTPVerify = ({ navigation, route }: Props) => {
   const callResendCode = async () => {
     try {
       setOTPValue('');
-      const userPayload: UserPayload = {
-        UserName: userDetails?.userName,
-        EMail: userDetails?.email,
-        Password: userDetails?.email,
-      };
       setIsLoading(true);
-      dispatch(createAccountUsingEmail(userPayload));
+      const response = await OnboardingAPI.ID.sendVerificationMessage(
+        mobileNumber
+      );
       setIsLoading(false);
       if (response.Status) {
       }
-    } catch (error) {}
+    } catch (error) {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -119,7 +106,7 @@ export const EmailOTPVerify = ({ navigation, route }: Props) => {
             style={EnterOTPVerifyStyle(themeColors).textLabel}
             variant={TextLabelVariants.LABEL}
           >
-            {t('enterOTPVerifyScreen.message') + ' ' + userDetails?.email}
+            {t('enterOTPVerifyScreen.message') + ' ' + mobileNumber}
           </TextLabel>
         </View>
         <View style={styles(themeColors).inputContainer}>
@@ -159,7 +146,7 @@ export const EmailOTPVerify = ({ navigation, route }: Props) => {
         onBackAction={onBackClick}
         onLanguageAction={onLanguageClick}
       />
-      <Loader loading={isLoading || loading} />
+      <Loader loading={isLoading} />
     </NeuroAccessBackground>
   );
 };

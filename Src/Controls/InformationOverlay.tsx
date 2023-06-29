@@ -39,7 +39,7 @@ export const InformationOverlay: React.FC<Props> = ({
             {description}
           </TextLabel>
           <ActionButton
-            title={t('buttonLabel.close')}
+            title={t('buttonTitle.close')}
             textStyle={ChooseAccountTypeStyle(themeColors).sendText}
             onPress={toggleOverlay}
           />

@@ -20,7 +20,7 @@ export const ShowAlertMessage: React.FC<ModalViewProps> = ({
         <View style={styles.innerView}>
           <Text style={styles.modalText}>{message}</Text>
           <TouchableOpacity style={styles.closeButton} onPress={onClose}>
-            <Text style={styles.closeButtonText}>{t('buttonLabel.close')}</Text>
+            <Text style={styles.closeButtonText}>{t('buttonTitle.close')}</Text>
           </TouchableOpacity>
         </View>
       </View>

@@ -1,6 +1,7 @@
 export { ChooseAccountType } from './ChooseAccountType';
 export { CreateAccount } from './CreateAccount';
-export { EmailOTPVerify } from './EmailOTPVerify';
+export { OTPVerify } from './OTPVerify';
 export { EnterEmail } from './EnterEmail';
+export { EmailOTPVerify } from './EmailOTPVerify';
 export { EnterMobileNumber } from './EnterMobileNumber';
-export { MobileNumberOTPVerify } from './MobileNumberOTPVerify';
+export { EnterUserName } from './EnterUserName';

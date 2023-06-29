@@ -8,7 +8,7 @@ export default {
     verifyEmail: 'सत्यापित होने के लिए, आपको अपना ईमेल दर्ज करना होगा',
     mobilePlaceHolder: 'xxxxxxxxxx',
   },
-  buttonLabel: {
+  buttonTitle: {
     continue: 'जारी रखना',
     sendCode: 'कोड भेजो',
     resend: 'पुन: भेजें',
@@ -38,6 +38,10 @@ export default {
   enterMobileScreen: {
     message: 'To get verified, you need to enter your phone number',
     label: 'Enter phone number',
+  },
+  enterUserNameScreen: {
+    message: 'To get verified, you need to enter your user name',
+    label: 'Enter user name',
   },
   settingScreen: {
     selectLanguage: ' भाषा चुने ',
