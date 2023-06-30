@@ -82,14 +82,14 @@ export default {
     },
   },
   currentProvider: {
-    title: 'Current Provider',
+    title: 'वर्तमान प्रदाता',
     providerLink: 'eu.id.tagroot.io',
-    detail: 'Your service provider has been selected to',
+    detail: 'आपके सेवा प्रदाता का चयन कर लिया गया है',
     continueDetail:
-      'To continue, you can create a new account on this provider or change the service provider.',
-    optionTitle: 'Choose one option',
-    createAccount: 'Create a new account on this provider',
-    changeService: 'Change service provider',
-    serviceProvider: 'What is a service provider?',
+      'जारी रखने के लिए, आप इस प्रदाता पर एक नया खाता बना सकते हैं या सेवा प्रदाता बदल सकते हैं।',
+    optionTitle: 'एक विकल्प चुनें',
+    createAccount: 'इस प्रदाता पर एक नया खाता बनाएँ',
+    changeService: 'सेवा प्रदाता बदलें',
+    serviceProvider: 'सेवा प्रदाता क्या है?',
   },
 };

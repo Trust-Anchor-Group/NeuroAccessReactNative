@@ -16,8 +16,8 @@ import { GlobalStyle as styles, CurrentProviderStyle } from '@Pages/Styles';
 import { CreateAccountIcon, ChangeProviderIcon } from '@Assets/Svgs';
 
 interface SelectionProp {
-  createAccount: boolean;
-  changeProvider: boolean;
+  isCreateAccountSelected: boolean;
+  isChangeProviderSelected: boolean;
 }
 export const CurrentProvider = ({
   navigation,
@@ -126,17 +126,17 @@ export const CurrentProvider = ({
 
           <View style={CurrentProviderStyle(themeColors).selectionView}>
             <TouchableOpacity
-              style={touchableView(selected?.createAccount)}
+              style={touchableView(selected?.isCreateAccountSelected)}
               onPress={() => {
-                setSelected({ createAccount: true, changeProvider: false });
+                setSelected({ isCreateAccountSelected: true, isChangeProviderSelected: false });
               }}
             >
               <CreateAccountIcon
-                iconColor={iconStyle(selected?.createAccount)}
+                iconColor={iconStyle(selected?.isCreateAccountSelected)}
               />
 
               <TextLabel
-                style={titleStyle(selected?.createAccount)}
+                style={titleStyle(selected?.isCreateAccountSelected)}
                 variant={TextLabelVariants.LABEL}
               >
                 {t('currentProvider.createAccount')}
@@ -144,17 +144,17 @@ export const CurrentProvider = ({
             </TouchableOpacity>
 
             <TouchableOpacity
-              style={touchableView(selected?.changeProvider)}
+              style={touchableView(selected?.isChangeProviderSelected)}
               onPress={() => {
-                setSelected({ createAccount: false, changeProvider: true });
+                setSelected({ isCreateAccountSelected: false, isChangeProviderSelected: true });
               }}
             >
               <ChangeProviderIcon
-                iconColor={iconStyle(selected?.changeProvider)}
+                iconColor={iconStyle(selected?.isChangeProviderSelected)}
               />
 
               <TextLabel
-                style={titleStyle(selected?.changeProvider)}
+                style={titleStyle(selected?.isChangeProviderSelected)}
                 variant={TextLabelVariants.LABEL}
               >
                 {t('currentProvider.changeService')}
@@ -187,12 +187,8 @@ export const CurrentProvider = ({
                 backgroundColor: themeColors.button.disableBg,
               }
             }
-            title={t('buttonLabel.continue')}
-            onPress={async () => {
-              if (selected) {
-                handleSubmit();
-              }
-            }}
+            title={t('buttonTitle.continue')}
+            onPress={selected && handleSubmit}
           />
         </View>
       </View>
