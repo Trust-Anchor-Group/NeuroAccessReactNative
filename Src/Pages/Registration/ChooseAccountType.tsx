@@ -98,7 +98,7 @@ export const ChooseAccountType = ({
               if (selected)
               {
                 dispatch(selectedPupose(selected));
-                navigation.navigate('EnterMobileNumber');
+                navigation.navigate('CurrentProvider');
               }
              }}
           />

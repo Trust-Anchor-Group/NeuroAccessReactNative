@@ -5,3 +5,5 @@ export { InformationIcon } from './InformationIcon';
 export { LanguageIcon } from './LanguageIcon';
 export { Logo } from './Logo';
 export { DropDownIcon } from './DropDownIcon';
+export { ChangeProviderIcon } from './ChangeProviderIcon';
+export { CreateAccountIcon } from './CreateAccountIcon';

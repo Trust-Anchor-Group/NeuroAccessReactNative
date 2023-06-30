@@ -1,6 +1,6 @@
 import { StyleSheet } from 'react-native';
 import { moderateScale } from '@Theme/Metrics';
-import { headerSize, authLabelsSize, textFontSize } from 'Theme/Dimensions';
+import { headerSize, textFontSize } from 'Theme/Dimensions';
 
 export const TextLabelStyle = (themeColors: any) =>
   StyleSheet.create({
