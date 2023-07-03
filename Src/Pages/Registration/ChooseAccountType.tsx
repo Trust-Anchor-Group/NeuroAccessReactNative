@@ -99,7 +99,7 @@ export const ChooseAccountType = ({
               if (selected)
               {
                 dispatch(selectedPupose(selected));
-                navigation.navigate('CurrentProvider');
+                navigation.navigate('EnterMobileNumber');
               }
              }}
           />
@@ -115,13 +115,6 @@ export const ChooseAccountType = ({
           toggleOverlay={toggleOverlay}
           title={t(`${overlayInfo?.current?.label}`)}
           description={t(`${overlayInfo?.current?.description}`)}
-        />
-      )}
-      {showServiceProviderInfo && (
-        <InformationOverlay
-          toggleOverlay={toggleOverlay}
-          title={t(`serviceProviderInformation.title`)}
-          description={t(`serviceProviderInformation.description`)}
         />
       )}
     </NeuroAccessBackground>

@@ -58,7 +58,7 @@ export const OTPVerify = ({ navigation, route }: Props) => {
     let response = await OnboardingAPI.ID.verifyNumber(mobileNumber, otpValue);
     // setIsLoading(false);
     if (response?.Status) {
-      navigation.navigate('EnterUserName');
+      navigation.navigate('CurrentProvider');
     }
   };
   const onBackClick = () => {

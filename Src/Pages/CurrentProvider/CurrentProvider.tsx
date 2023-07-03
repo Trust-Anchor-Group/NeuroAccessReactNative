@@ -11,9 +11,10 @@ import {
 } from '@Controls/index';
 import { useTranslation } from 'react-i18next';
 import { ThemeContext } from '@Theme/Provider/ThemeContext';
-import { Logo } from '@Assets/Svgs';
+import { Logo, CreateAccountIcon, ChangeProviderIcon } from '@Assets/Svgs';
 import { GlobalStyle as styles, CurrentProviderStyle } from '@Pages/Styles';
-import { CreateAccountIcon, ChangeProviderIcon } from '@Assets/Svgs';
+import { InformationOverlay } from '@Controls/InformationOverlay';
+import { QRCodeScanner } from '@Services/Scanner/QRCodeScanner';
 
 interface SelectionProp {
   isCreateAccountSelected: boolean;
@@ -25,6 +26,8 @@ export const CurrentProvider = ({
   const { t } = useTranslation();
   const { themeColors } = useContext(ThemeContext);
   const [selected, setSelected] = useState<SelectionProp>();
+  const [showServiceProviderInfo, setShowServiceProviderInfo] = useState<boolean>(false);
+  const [showScanner, setShowScanner] = useState<boolean>(false);
 
   const onBackClick = () => {
     navigation.goBack();
@@ -34,7 +37,22 @@ export const CurrentProvider = ({
     navigation.navigate('Settings');
   };
 
-  const handleSubmit = () => {};
+  const toggleOverlay = () => {
+    setShowServiceProviderInfo(!showServiceProviderInfo);
+  };
+
+  const toggleScannerOverlay = () => {
+    setShowScanner(!showScanner);
+  };
+
+  const handleSubmit = () => {
+    console.log(selected)
+    if (selected?.isChangeProviderSelected) {
+      toggleScannerOverlay();
+    } else if (selected?.isCreateAccountSelected) {
+      navigation.navigate('EnterUserName');
+    }
+  };
 
   const touchableView = (selectedValue: any) => {
     if (selectedValue === undefined)
@@ -165,6 +183,7 @@ export const CurrentProvider = ({
           <TouchableOpacity
             style={CurrentProviderStyle(themeColors).providerInfo}
             onPress={() => {}}
+            onPress={toggleOverlay}
           >
             <ShowError
               errorMessage={t('currentProvider.serviceProvider')}
@@ -197,6 +216,20 @@ export const CurrentProvider = ({
         onBackAction={onBackClick}
         onLanguageAction={onLanguageClick}
       />
+      {showServiceProviderInfo && (
+        <InformationOverlay
+          toggleOverlay={toggleOverlay}
+          title={t(`serviceProviderInformation.title`)}
+          description={t(`serviceProviderInformation.description`)}
+        />
+      )}
+      {showScanner && (
+        <QRCodeScanner
+          toggleOverlay={toggleScannerOverlay}
+          title={t(`serviceProviderInformation.title`)}
+          description={t(`serviceProviderInformation.description`)}
+        />
+      )}
     </NeuroAccessBackground>
   );
 };
