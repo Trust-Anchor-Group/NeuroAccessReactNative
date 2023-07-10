@@ -12,8 +12,7 @@ import {
   TextLabel,
   TextLabelVariants,
 } from '@Controls/index';
-import { GlobalStyle as styles } from '@Pages/Styles';
-import { ChooseAccountTypeStyle } from '@Pages/Styles';
+import { GlobalStyle as styles, ChooseAccountTypeStyle } from '@Pages/Styles';
 import { Logo } from '@Assets/Svgs';
 import { useTranslation } from 'react-i18next';
 import { ThemeContext } from '@Theme/Provider/ThemeContext';
@@ -28,7 +27,8 @@ export const ChooseAccountType = ({
   const { themeColors } = useContext(ThemeContext);
   const [selected, setSelected] = useState<ContextType>();
   const [showOverlay, setShowOverlay] = useState<boolean>(false);
-  const overlayInfo = useRef<ContextType>();
+  const [showServiceProviderInfo, setShowServiceProviderInfo] = useState<boolean>(false);
+  const overlayInfo = useRef<ContextType>()
   const dispatch = useDispatch<ThunkDispatch<any, any, any>>();
 
   useEffect(() => {
@@ -41,6 +41,7 @@ export const ChooseAccountType = ({
   const toggleOverlay = (item?: ContextType) => {
     overlayInfo.current = item;
     setShowOverlay(!showOverlay);
+    // setShowServiceProviderInfo(!showServiceProviderInfo);
   };
 
   const onBackAction = () => {};
@@ -113,6 +114,13 @@ export const ChooseAccountType = ({
           toggleOverlay={toggleOverlay}
           title={t(`${overlayInfo?.current?.label}`)}
           description={t(`${overlayInfo?.current?.description}`)}
+        />
+      )}
+      {showServiceProviderInfo && (
+        <InformationOverlay
+          toggleOverlay={toggleOverlay}
+          title={t(`serviceProviderInformation.title`)}
+          description={t(`serviceProviderInformation.description`)}
         />
       )}
     </NeuroAccessBackground>

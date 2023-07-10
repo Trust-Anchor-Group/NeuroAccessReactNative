@@ -1,0 +1,45 @@
+@startgantt
+saturday are closed
+sunday are closed
+
+<style>
+ganttDiagram {
+  task {
+    BackGroundColor Red
+    LineColor Green 
+    unstarted {
+      BackGroundColor Fuchsia 
+      LineColor FireBrick
+    }
+    completed {
+      BackGroundColor GreenYellow 
+      LineColor Green
+    }
+  }
+}
+</style>
+Project starts 2023-06-01
+[Current Provider screen-A] starts 2023-06-27 and ends 2023-06-29
+[Information popup functionality-P] starts 2023-06-29 and ends 2023-06-29
+[Tell Us About You Screen-A] starts 2023-06-30 and ends 2023-07-05
+[Scan invitation functionality-P] starts 2023-06-30 and ends 2023-07-07
+[Terms and conditions  screen-A] starts 2023-07-06 and ends 2023-07-07
+[Almost there functionality-A] starts 2023-07-10 and ends 2023-07-12
+[Create Account functionality-P] starts 2023-07-10 and ends 2023-07-12
+[Verify Email functionality-P] starts 2023-07-12 and ends 2023-07-13
+[Verification Code functionality-P] starts 2023-07-13 and ends 2023-07-14
+[Check Status functionality-A] starts 2023-07-13 and ends 2023-07-17
+[Create a pin code functionality-P] starts 2023-07-17 and ends 2023-07-1
+[Pending review functionality-A] starts 2023-07-18 and ends 2023-07-19
+[See account details-A] starts 2023-07-21 and ends 2023-07-25
+[Invite peer functionality-P] starts 2023-07-23 and ends 2023-07-24
+[Click Finish functionality-A] starts 2023-07-26 and ends 2023-07-27
+[Congratulations functionality-P] starts 2023-07-24 and ends 2023-07-27
+[Error and bugs-A] starts 2023-06-28 and ends 2023-08-01
+[Error and bugs-P] starts 2023-06-28 and ends 2023-08-01
+[Unit test cases using Jest-P] starts 2023-07-28 and ends 2023-08-01
+
+[Current Provider screen-A] is 80% completed
+[Information popup functionality-P completed] is 100% completed
+
+@endgantt
