@@ -128,7 +128,10 @@ export const CurrentProvider = ({
             <TouchableOpacity
               style={touchableView(selected?.isCreateAccountSelected)}
               onPress={() => {
-                setSelected({ isCreateAccountSelected: true, isChangeProviderSelected: false });
+                setSelected({
+                  isCreateAccountSelected: true,
+                  isChangeProviderSelected: false,
+                });
               }}
             >
               <CreateAccountIcon
@@ -146,7 +149,10 @@ export const CurrentProvider = ({
             <TouchableOpacity
               style={touchableView(selected?.isChangeProviderSelected)}
               onPress={() => {
-                setSelected({ isCreateAccountSelected: false, isChangeProviderSelected: true });
+                setSelected({
+                  isCreateAccountSelected: false,
+                  isChangeProviderSelected: true,
+                });
               }}
             >
               <ChangeProviderIcon

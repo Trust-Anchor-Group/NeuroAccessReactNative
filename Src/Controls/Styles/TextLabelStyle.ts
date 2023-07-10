@@ -1,6 +1,6 @@
 import { StyleSheet } from 'react-native';
 import { moderateScale } from '@Theme/Metrics';
-import { headerSize, textFontSize } from 'Theme/Dimensions';
+import { textFontSize } from 'Theme/Dimensions';
 
 export const TextLabelStyle = (themeColors: any) =>
   StyleSheet.create({
@@ -26,7 +26,7 @@ export const TextLabelStyle = (themeColors: any) =>
     },
     xSmall: {
       fontFamily: 'SpaceGrotesk-Medium',
-      fontSize: headerSize.fontSize,
+      fontSize: moderateScale(12),
       color: themeColors.text.primary,
     },
     description: {

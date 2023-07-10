@@ -28,7 +28,7 @@ export const ChooseAccountType = ({
   const { themeColors } = useContext(ThemeContext);
   const [selected, setSelected] = useState<ContextType>();
   const [showOverlay, setShowOverlay] = useState<boolean>(false);
-  const overlayInfo = useRef<ContextType>()
+  const overlayInfo = useRef<ContextType>();
   const dispatch = useDispatch<ThunkDispatch<any, any, any>>();
 
   useEffect(() => {
@@ -36,8 +36,8 @@ export const ChooseAccountType = ({
       overlayInfo.current = userDetails['purpose'];
       setSelected(userDetails['purpose']);
     }
-  }, [])
-  
+  }, []);
+
   const toggleOverlay = (item?: ContextType) => {
     overlayInfo.current = item;
     setShowOverlay(!showOverlay);
@@ -95,12 +95,11 @@ export const ChooseAccountType = ({
             }
             title={t('buttonTitle.continue')}
             onPress={async () => {
-              if (selected)
-              {
+              if (selected) {
                 dispatch(selectedPupose(selected));
                 navigation.navigate('CurrentProvider');
               }
-             }}
+            }}
           />
         </View>
       </View>
