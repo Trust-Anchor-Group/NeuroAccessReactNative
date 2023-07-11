@@ -1,7 +1,6 @@
 import { View, KeyboardAvoidingView, Platform } from 'react-native';
 import React, { useState, useContext, useEffect } from 'react';
 import { StackScreenProps } from '@react-navigation/stack';
-import { useSelector } from 'react-redux';
 import {
   NeuroAccessBackground,
   OtpInput,
@@ -18,11 +17,16 @@ import { ThemeContext } from '@Theme/Provider';
 import { AgentAPI } from '@Services/API/Agent';
 import { Loader } from '@Controls/index';
 import { OnboardingAPI } from '@Services/API/OnboardingApi';
+import { getDomainDetails, setDomainDetails } from '@Services/Redux/Actions/GetDomainDetails';
+import { useSelector, useDispatch } from 'react-redux';
+import { ThunkDispatch } from '@reduxjs/toolkit';
+import { DomainInfo } from '@Services/Redux/Reducers/DomainSlice';
 
 type Props = StackScreenProps<{}>;
 
 export const OTPVerify = ({ navigation, route }: Props) => {
   const { t } = useTranslation();
+  const dispatch = useDispatch<ThunkDispatch<any, any, any>>();
   const { userDetails, loading, error } = useSelector((state) => state.user);
   const { number, code } = userDetails?.mobileNumber;
   const mobileNumber = code + number;
@@ -54,10 +58,16 @@ export const OTPVerify = ({ navigation, route }: Props) => {
   };
 
   const callVerificationCode = async () => {
-    // setIsLoading(true);
+    setIsLoading(true);
     let response = await OnboardingAPI.ID.verifyNumber(mobileNumber, otpValue);
-    // setIsLoading(false);
+    setIsLoading(false);
     if (response?.Status) {
+      let responseObj: DomainInfo = {
+        Domain: response['Domain'],
+        Key: response['Key'],
+        Secret: response['Secret']
+      };
+      dispatch(setDomainDetails(responseObj));
       navigation.navigate('CurrentProvider');
     }
   };

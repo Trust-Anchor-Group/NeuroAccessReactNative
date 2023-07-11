@@ -111,6 +111,7 @@ export const Colors = {
       disableText: 'rgba(255, 255, 255, 0.3)',
       bg: '#50998C',
       disableBg: '#4A4A4D',
+      link: 'rgba(79, 126, 172, 1)'
     },
     choosePurpose: {
       itemDefaultBg: '#3E3E40',
