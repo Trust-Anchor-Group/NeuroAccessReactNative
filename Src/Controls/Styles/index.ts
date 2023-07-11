@@ -8,3 +8,4 @@ export { InformationOverlayStyle } from './InformationOverlayStyle';
 export { CountryDialogStyle } from './CountryDialogStyle';
 export { MobileInputViewStyle } from './MobileInputViewStyle';
 export { ShowAlertMessageStyle } from './ShowAlertMessageStyle';
+export { NeuroTextInputStyle } from './NeuroTextInputStyle';

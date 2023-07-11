@@ -62,5 +62,12 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
+
+	<key>NSCameraUsageDescription</key>
+<string>Allow access to the camera to take photos</string>
+<key>NSPhotoLibraryUsageDescription</key>
+<string>Allow access to the photo library to select photos</string>
+<key>NSPhotoLibraryAddUsageDescription</key>
+    <string>We need to access the photo library to upload the images</string>
 </dict>
 </plist>
