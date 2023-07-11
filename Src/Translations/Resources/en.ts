@@ -81,8 +81,12 @@ export default {
       Please note that the account may have time limitations and could be removed when it's no longer in use. For further information, please consult your service provider.`,
     },
   },
+  serviceProviderInformation: {
+    title: 'Service Provider',
+    description: 'A service provider is an organization that helps you connect and manage your digital identity. They offer services that allow you to access and use various online platforms and applications securely. They take care of the technical aspects, authentication, and data protection, so you can focus on enjoying the benefits of the digital world.'
+  },
   currentProvider: {
-    title: 'Current Provider',
+    title: 'Selected Provider',
     providerLink: 'eu.id.tagroot.io',
     detail: 'Your service provider has been selected to',
     continueDetail:
@@ -91,6 +95,11 @@ export default {
     createAccount: 'Create a new account on this provider',
     changeService: 'Change service provider',
     serviceProvider: 'What is a service provider?',
+    domainTitle: 'Domain:',
+  },
+  qrCodeScanner: {
+    serviceProviderBtn : 'Point the camera at the QR-code with the above symbol',
+    invitaionTitle: 'Scan invitation'
   },
   tellUsAboutYou: {
     headerTitle: 'Tell us about you',

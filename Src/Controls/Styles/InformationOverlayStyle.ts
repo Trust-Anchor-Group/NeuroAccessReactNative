@@ -22,5 +22,8 @@ export const InformationOverlayStyle = (themeColors: any) =>
   title:{ 
     textAlign: 'center', 
     marginBottom: moderateScale(8) 
+  },
+  spacer: {
+    padding: moderateScale(10),
   }
 });

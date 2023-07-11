@@ -116,13 +116,6 @@ export const ChooseAccountType = ({
           description={t(`${overlayInfo?.current?.description}`)}
         />
       )}
-      {showServiceProviderInfo && (
-        <InformationOverlay
-          toggleOverlay={toggleOverlay}
-          title={t(`serviceProviderInformation.title`)}
-          description={t(`serviceProviderInformation.description`)}
-        />
-      )}
     </NeuroAccessBackground>
   );
 };

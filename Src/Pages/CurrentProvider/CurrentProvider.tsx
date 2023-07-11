@@ -1,5 +1,5 @@
-import React, { useContext, useState } from 'react';
-import { TouchableOpacity, View } from 'react-native';
+import React, { useContext, useEffect, useState } from 'react';
+import { Dimensions, TouchableOpacity, View, ScrollView } from 'react-native';
 import { StackScreenProps } from '@react-navigation/stack';
 import {
   NeuroAccessBackground,
@@ -8,23 +8,64 @@ import {
   TextLabelVariants,
   ActionButton,
   ShowError,
+  Loader,
 } from '@Controls/index';
 import { useTranslation } from 'react-i18next';
 import { ThemeContext } from '@Theme/Provider/ThemeContext';
-import { Logo } from '@Assets/Svgs';
+import {
+  Logo,
+  CreateAccountIcon,
+  ChangeProviderIcon,
+  InformationIcon,
+} from '@Assets/Svgs';
 import { GlobalStyle as styles, CurrentProviderStyle } from '@Pages/Styles';
-import { CreateAccountIcon, ChangeProviderIcon } from '@Assets/Svgs';
+import { InformationOverlay } from '@Controls/InformationOverlay';
+import { QRCodeScanner } from '@Services/Scanner/QRCodeScanner';
+import { AgentAPI } from '@Services/API/Agent';
+import { useSelector, useDispatch } from 'react-redux';
+import { ThunkDispatch } from '@reduxjs/toolkit';
+import {
+  getDomainDetails,
+  setSelectedDomain,
+} from '@Services/Redux/Actions/GetDomainDetails';
+import { DomainInfo } from '@Services/Redux/Reducers/DomainSlice';
+import { moderateScale } from '@Theme/Metrics';
 
-interface SelectionProp {
-  isCreateAccountSelected: boolean;
-  isChangeProviderSelected: boolean;
+interface ProviderDetails {
+  domain: string;
+  useEncryption: boolean;
+  humanReadableName: string;
+  humanReadableDescription: string;
 }
 export const CurrentProvider = ({
   navigation,
 }: StackScreenProps<{ Profile: any }>) => {
   const { t } = useTranslation();
+  const dispatch = useDispatch<ThunkDispatch<any, any, any>>();
+  const {
+    defaultDomain,
+    selectedDomain,
+    loading: domainInfoLoading,
+    error: domainInfoError,
+  } = useSelector((state) => state.domain);
   const { themeColors } = useContext(ThemeContext);
-  const [selected, setSelected] = useState<SelectionProp>();
+  const currentProviderStyle = CurrentProviderStyle(themeColors)
+  const [loading, setLoading] = useState(false);
+  const [isCreateAccountSelected, setCreateAccountSelected] =
+    useState<boolean>(false);
+  const [showServiceProviderInfo, setShowServiceProviderInfo] =
+    useState<boolean>(false);
+  const [showScanner, setShowScanner] = useState<boolean>(false);
+  const [selectedProvider, setSelectedProvider] = useState<DomainInfo>();
+
+  React.useEffect(() => {
+    if (!defaultDomain?.humanReadableName) {
+      dispatch(getDomainDetails(defaultDomain.Domain));
+    }
+    if (!selectedDomain?.Domain) {
+      dispatch(setSelectedDomain(defaultDomain));
+    }
+  }, [defaultDomain]);
 
   const onBackClick = () => {
     navigation.goBack();
@@ -34,7 +75,17 @@ export const CurrentProvider = ({
     navigation.navigate('Settings');
   };
 
-  const handleSubmit = () => {};
+  const toggleOverlay = () => {
+    setShowServiceProviderInfo(!showServiceProviderInfo);
+  };
+
+  const toggleScannerOverlay = () => {
+    setShowScanner(!showScanner);
+  };
+
+  const handleSubmit = () => {
+   selectedDomain && isCreateAccountSelected && navigation.navigate('EnterUserName');
+  };
 
   const touchableView = (selectedValue: any) => {
     if (selectedValue === undefined)
@@ -76,8 +127,132 @@ export const CurrentProvider = ({
         : themeColors.currentProvider.titleUnSelected;
   };
 
+  const handleQRCodeSelection = async (domainInfo: DomainInfo) => {
+    if (domainInfo.Domain) {
+      setLoading(true);
+      const response = await AgentAPI.Account.GetDomainInfo(domainInfo.Domain);
+      setLoading(false);
+      domainInfo.humanReadableDescription =
+        response['humanReadableDescription'];
+      domainInfo.humanReadableName = response['humanReadableName'];
+      domainInfo.useEncryption = response['useEncryption'];
+      setSelectedProvider(domainInfo);
+      dispatch(setSelectedDomain(domainInfo));
+    }
+  };
+
+  const serviceProviderDetails = () => {
+    return (
+      <View style={CurrentProviderStyle(themeColors).serviceProviderDetailsContainer}>
+        <TextLabel
+          style={CurrentProviderStyle(themeColors).detailText}
+          variant={TextLabelVariants.LABEL}
+        >
+          {selectedProvider
+            ? selectedProvider && selectedProvider.humanReadableDescription
+            : defaultDomain && defaultDomain?.humanReadableDescription}
+          {'\n\n'}
+          <TextLabel
+            style={CurrentProviderStyle(themeColors).detailText}
+            variant={TextLabelVariants.LABEL}
+          >
+            {t('currentProvider.continueDetail')}
+          </TextLabel>
+        </TextLabel>
+      </View>
+    );
+  };
+
+  const userSelection = () => {
+    return (
+      <View style={[styles(themeColors).inputContainer]}>
+        <TextLabel
+          variant={TextLabelVariants.INPUTLABEL}
+        >
+          {t('currentProvider.optionTitle')}
+        </TextLabel>
+
+        <View style={CurrentProviderStyle(themeColors).selectionView}>
+          <TouchableOpacity
+            style={touchableView(isCreateAccountSelected)}
+            onPress={() => {
+              setCreateAccountSelected(!isCreateAccountSelected);
+            }}
+          >
+            <CreateAccountIcon iconColor={iconStyle(isCreateAccountSelected)} />
+
+            <TextLabel
+              style={titleStyle(isCreateAccountSelected)}
+              variant={TextLabelVariants.LABEL}
+            >
+              {t('currentProvider.createAccount')}
+            </TextLabel>
+          </TouchableOpacity>
+
+          <TouchableOpacity
+            style={touchableView(false)}
+            onPress={() => {
+              toggleScannerOverlay();
+            }}
+          >
+            <ChangeProviderIcon iconColor={iconStyle(false)} />
+
+            <TextLabel
+              style={titleStyle(false)}
+              variant={TextLabelVariants.LABEL}
+            >
+              {t('currentProvider.changeService')}
+            </TextLabel>
+          </TouchableOpacity>
+        </View>
+
+        <TouchableOpacity
+          style={CurrentProviderStyle(themeColors).providerInfo}
+          onPress={() => {}}
+          onPress={toggleOverlay}
+        >
+          <ShowError
+            errorMessage={t('currentProvider.serviceProvider')}
+            styles={CurrentProviderStyle(themeColors).infoText}
+            colorCode={themeColors.currentProvider.titleUnSelected}
+            changeColor={true}
+          />
+        </TouchableOpacity>
+      </View>
+    );
+  };
+
+  const overLayViews = () => {
+    return (
+      <>
+        {showServiceProviderInfo && (
+          <InformationOverlay
+            toggleOverlay={toggleOverlay}
+            title={t(`serviceProviderInformation.title`)}
+            description={t(`serviceProviderInformation.description`)}
+          />
+        )}
+        {showScanner && (
+          <View
+            style={currentProviderStyle.qrCodeScannerContainer}
+          >
+            <QRCodeScanner
+              toggleOverlay={toggleScannerOverlay}
+              onSelect={handleQRCodeSelection}
+            />
+          </View>
+        )}
+      </>
+    );
+  };
+
   return (
     <NeuroAccessBackground>
+      <NavigationHeader
+        hideBackAction={true}
+        onBackAction={onBackClick}
+        onLanguageAction={onLanguageClick}
+      />
       <View style={styles(themeColors).container}>
         <View style={styles(themeColors).spaceContainer} />
         <View style={styles(themeColors).logoContainer}>
@@ -94,115 +269,78 @@ export const CurrentProvider = ({
           >
             {t('currentProvider.title')}
           </TextLabel>
-          <TextLabel
-            style={CurrentProviderStyle(themeColors).linkText}
-            variant={TextLabelVariants.LABEL}
+          <View
+            style={CurrentProviderStyle(themeColors).domainDetailsContainer}
           >
-            {t('currentProvider.providerLink')}
-          </TextLabel>
-        </View>
-
-        <View style={styles(themeColors).inputContainer}>
-          <TextLabel
-            style={CurrentProviderStyle(themeColors).detailText}
-            variant={TextLabelVariants.LABEL}
-          >
-            {t('currentProvider.detail')}{' '}
             <TextLabel
+              style={CurrentProviderStyle(themeColors).linkText}
               variant={TextLabelVariants.LABEL}
-              style={CurrentProviderStyle(themeColors).linkTextDetail}
             >
-              {t('currentProvider.providerLink') + '.'}
-            </TextLabel>{' '}
-            {t('currentProvider.continueDetail')}
-          </TextLabel>
-
-          <TextLabel
-            variant={TextLabelVariants.INPUTLABEL}
-            style={{ marginTop: 18 }}
-          >
-            {t('currentProvider.optionTitle')}
-          </TextLabel>
-
-          <View style={CurrentProviderStyle(themeColors).selectionView}>
-            <TouchableOpacity
-              style={touchableView(selected?.isCreateAccountSelected)}
-              onPress={() => {
-                setSelected({
-                  isCreateAccountSelected: true,
-                  isChangeProviderSelected: false,
-                });
-              }}
-            >
-              <CreateAccountIcon
-                iconColor={iconStyle(selected?.isCreateAccountSelected)}
-              />
-
-              <TextLabel
-                style={titleStyle(selected?.isCreateAccountSelected)}
-                variant={TextLabelVariants.LABEL}
-              >
-                {t('currentProvider.createAccount')}
-              </TextLabel>
-            </TouchableOpacity>
-
-            <TouchableOpacity
-              style={touchableView(selected?.isChangeProviderSelected)}
-              onPress={() => {
-                setSelected({
-                  isCreateAccountSelected: false,
-                  isChangeProviderSelected: true,
-                });
-              }}
-            >
-              <ChangeProviderIcon
-                iconColor={iconStyle(selected?.isChangeProviderSelected)}
-              />
-
-              <TextLabel
-                style={titleStyle(selected?.isChangeProviderSelected)}
-                variant={TextLabelVariants.LABEL}
-              >
-                {t('currentProvider.changeService')}
-              </TextLabel>
-            </TouchableOpacity>
-          </View>
-
-          <TouchableOpacity
-            style={CurrentProviderStyle(themeColors).providerInfo}
-            onPress={() => {}}
-          >
-            <ShowError
-              errorMessage={t('currentProvider.serviceProvider')}
-              styles={CurrentProviderStyle(themeColors).infoText}
-              colorCode={themeColors.currentProvider.titleUnSelected}
-              changeColor={true}
+              {selectedProvider
+                ? selectedProvider && selectedProvider.humanReadableName
+                : defaultDomain && defaultDomain.humanReadableName}
+            </TextLabel>
+            <InformationIcon
+              style={CurrentProviderStyle(themeColors).infoIconMargin}
+              textColor={themeColors.currentProvider.link}
             />
-          </TouchableOpacity>
+          </View>
+          <TextLabel
+            variant={TextLabelVariants.LABEL}
+            style={CurrentProviderStyle(themeColors).headerText}
+          >
+            {'Domain:'}
+          </TextLabel>
+          <TextLabel
+            variant={TextLabelVariants.LABEL}
+            style={CurrentProviderStyle(themeColors).linkTextDetail}
+          >
+            {selectedProvider
+              ? selectedProvider && selectedProvider.Domain
+              : defaultDomain && defaultDomain.Domain}
+          </TextLabel>
         </View>
-
-        <View style={styles(themeColors).buttonContainer}>
+        <ScrollView>
+          {serviceProviderDetails()}
+          {userSelection()}
+        </ScrollView>
+        <View
+          style={[
+            styles(themeColors).buttonContainer,
+            { justifyContent: 'space-between' },
+          ]}
+        >
+          {defaultDomain?.Domain !== selectedProvider?.Domain && (
+            <ActionButton
+              textStyle={[
+                CurrentProviderStyle(themeColors).linkText,
+                { fontSize: moderateScale(14) },
+              ]}
+              buttonStyle={{ backgroundColor: themeColors.button.linkText }}
+              title={t('Undo Selection')}
+              onPress={() => setSelectedProvider(defaultDomain)}
+            />
+          )}
           <ActionButton
-            disabled={!selected}
+            disabled={!isCreateAccountSelected}
             textStyle={[
               CurrentProviderStyle(themeColors).sendText,
-              !selected && { color: themeColors.button.disableText },
+              !isCreateAccountSelected && {
+                color: themeColors.button.disableText,
+              },
             ]}
             buttonStyle={
-              !selected && {
+              !isCreateAccountSelected && {
                 backgroundColor: themeColors.button.disableBg,
               }
             }
             title={t('buttonTitle.continue')}
-            onPress={selected && handleSubmit}
+            onPress={isCreateAccountSelected && handleSubmit}
           />
         </View>
       </View>
-      <NavigationHeader
-        hideBackAction={true}
-        onBackAction={onBackClick}
-        onLanguageAction={onLanguageClick}
-      />
+      {overLayViews()}
+      <Loader loading={loading || domainInfoLoading} />
     </NeuroAccessBackground>
   );
 };

@@ -1,14 +1,18 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
+import { useSelector } from 'react-redux';
 import { Loader } from '@Controls/index';
 
 const LoginContext = createContext();
 
 export const LoginProvider = ({ children }) => {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const { userDetails, loading, error } = useSelector((state) => state.user);
+
+  const [isLoggedIn, setIsLoggedIn] = useState(userDetails?.email && userDetails?.tokenData ? true : false);
   const [appLoading, setAppLoading] = useState(false);
   const [profile, setProfile] = useState({});
-  useEffect(() => {}, [isLoggedIn, appLoading]);
+  useEffect(() => {
+  }, [isLoggedIn, appLoading]);
   return (
     <>
       {appLoading ? (

@@ -21,7 +21,7 @@ export function StartupScreen() {
   return (
     <View style={styles.container}>
       <NetworkService />
-      {isLoggedIn ? <AuthStack /> : <AuthStack />}
+      {isLoggedIn ? <ApplicationStack /> : <AuthStack />}
     </View>
   );
 }
