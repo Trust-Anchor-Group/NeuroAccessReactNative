@@ -91,6 +91,12 @@ export const Colors = {
       focusBorder: '#3E776D',
       imageBorder: '#181F25',
     },
+    scanner: {
+      cameraBtnBg: '#F4F5F7',
+      cameraButtons: '#F5F6F7',
+      providerBtn: '#396E64',
+      providerBtnError: 'rgba(242, 73, 92, 1)'
+    }
   },
   dark: {
     background: '#161617',

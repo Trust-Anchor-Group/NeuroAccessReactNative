@@ -94,13 +94,23 @@ export const QRCodeScanner: React.FC<Props> = (props: Props) => {
         >
           {t('qrCodeScanner.invitaionTitle')}
         </TextLabel>
-        <ScannerBackButton style={styles.backButton} onPress={toggleOverlay} />
+        <ScannerBackButton
+          style={styles.backButton}
+          onPress={toggleOverlay}
+          bgColor={themeColors.scanner.cameraBtnBg}
+          iconColor={themeColors.scanner.cameraButtons}
+        />
         <View style={styles.scannerActions}>
           <ServiceProvider
             style={{ margin: 5 }}
             enabled={barcodes.length > 0}
             onPress={() => handleGetQRCode()}
-            error={isError}
+            iconColor={themeColors.scanner.cameraBtnBg}
+            bgColor={
+              isError
+                ? themeColors.scanner.providerBtnError
+                : themeColors.scanner.providerBtn
+            }
           />
           <TextLabel
             style={styles.aboutQRButton}
@@ -112,9 +122,17 @@ export const QRCodeScanner: React.FC<Props> = (props: Props) => {
             <CameraSwitch
               style={styles.cameraActivityBtnSpace}
               onPress={() => setBackCamera(!isBackCamera)}
+              bgColor={themeColors.scanner.cameraBtnBg}
+              iconColor={themeColors.scanner.cameraButtons}
             />
-            <Gallery style={styles.cameraActivityBtnSpace} />
+            <Gallery
+              style={styles.cameraActivityBtnSpace}
+              bgColor={themeColors.scanner.cameraBtnBg}
+              iconColor={themeColors.scanner.cameraButtons}
+            />
             <FlashLight
+              bgColor={themeColors.scanner.cameraBtnBg}
+              iconColor={themeColors.scanner.cameraButtons}
               style={styles.cameraActivityBtnSpace}
               onPress={() => setTourchEnable(!isTourchEnable)}
             />
