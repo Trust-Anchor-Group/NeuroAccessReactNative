@@ -96,7 +96,8 @@ export const Colors = {
       cameraButtons: '#F5F6F7',
       providerBtn: '#396E64',
       providerBtnError: 'rgba(242, 73, 92, 1)',
-      blurBg: 'rgba(24, 31, 37, 0.7)'
+      blurBg: '#181F25',
+      cornerColor: '#F4F5F7'
     }
   },
   dark: {

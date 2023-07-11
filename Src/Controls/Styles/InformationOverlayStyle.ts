@@ -24,6 +24,6 @@ export const InformationOverlayStyle = (themeColors: any) =>
     marginBottom: moderateScale(8) 
   },
   spacer: {
-    padding: 10,
+    padding: moderateScale(10),
   }
 });

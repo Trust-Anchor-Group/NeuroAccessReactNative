@@ -98,7 +98,7 @@ export const ChooseAccountType = ({
             onPress={async () => {
               if (selected) {
                 dispatch(selectedPupose(selected));
-                navigation.navigate('EnterMobileNumber');
+                navigation.navigate('CurrentProvider');
               }
             }}
           />

@@ -87,7 +87,7 @@ export const QRCodeScanner: React.FC<Props> = (props: Props) => {
           frameProcessorFps={5}
           torch={isTourchEnable ? 'on' : 'off'}
         />
-        <ScannerBlurBg style={styles(themeColors).blurView} />
+        <ScannerBlurBg style={styles(themeColors).blurView} bgColor={themeColors.scanner.blurBg} scanAreaCornerBg={themeColors.scanner.cornerColor}/>
         <TextLabel
           style={styles(themeColors).scannerTitle}
           variant={TextLabelVariants.HEADER}
@@ -137,7 +137,10 @@ export const QRCodeScanner: React.FC<Props> = (props: Props) => {
               onPress={() => setTourchEnable(!isTourchEnable)}
             />
           </View>
-          <Manually />
+          <Manually
+            bgColor={themeColors.scanner.cameraBtnBg}
+            iconColor={themeColors.scanner.cameraButtons}
+          />
         </View>
       </View>
     )
