@@ -81,6 +81,16 @@ export const Colors = {
       titleSelected: 'rgba(245, 246, 247, 1)',
       titleUnSelected: 'rgba(24, 31, 37, 0.5)',
     },
+    tellUsAboutYou: {
+      error: '#F2495C',
+      background: '#F5F6F7',
+      checkBox: '#181F25',
+      color: '#181F25',
+      placeHolder: 'rgba(24, 31, 37, 0.5)',
+      defaultBorder: 'rgba(24, 31, 37, 0.5)',
+      focusBorder: '#3E776D',
+      imageBorder: '#181F25',
+    },
   },
   dark: {
     background: '#161617',
@@ -164,6 +174,16 @@ export const Colors = {
       titleColor: 'rgba(255, 255, 255, 0.9)',
       titleSelected: 'rgba(22, 22, 23, 1)',
       titleUnSelected: 'rgba(255, 255, 255, 0.3)',
+    },
+    tellUsAboutYou: {
+      error: '#FF7585',
+      background: '#3E3E40',
+      color: 'rgba(255, 255, 255, 0.9)',
+      placeHolder: 'rgba(255, 255, 255, 0.3)',
+      checkBox: 'rgba(255, 255, 255, 0.9)',
+      defaultBorder: 'rgba(255, 255, 255, 0.3)',
+      focusBorder: '#3E776D',
+      imageBorder: 'rgba(255, 255, 255, 0.9)',
     },
   },
 };

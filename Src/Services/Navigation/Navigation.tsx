@@ -8,10 +8,11 @@ import {
   EnterEmail,
   EnterMobileNumber,
   CreateAccount,
-  EnterUserName
+  EnterUserName,
 } from '@Pages/Registration';
 import { Settings } from '@Pages/Settings';
-import { CurrentProvider } from '@Pages/CurrentProvider';
+import { CurrentProvider, TellUsAboutYou } from '@Pages/index';
+
 const Stack = createStackNavigator();
 
 export const AuthStack = () => {
@@ -70,6 +71,14 @@ export const AuthStack = () => {
       <Stack.Screen
         name="CurrentProvider"
         component={CurrentProvider}
+        options={{
+          headerShown: false,
+        }}
+      />
+
+      <Stack.Screen
+        name="TellUsAboutYou"
+        component={TellUsAboutYou}
         options={{
           headerShown: false,
         }}

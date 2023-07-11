@@ -36,8 +36,8 @@ export const ChooseAccountType = ({
       overlayInfo.current = userDetails['purpose'];
       setSelected(userDetails['purpose']);
     }
-  }, [])
-  
+  }, []);
+
   const toggleOverlay = (item?: ContextType) => {
     overlayInfo.current = item;
     setShowOverlay(!showOverlay);
@@ -96,12 +96,11 @@ export const ChooseAccountType = ({
             }
             title={t('buttonTitle.continue')}
             onPress={async () => {
-              if (selected)
-              {
+              if (selected) {
                 dispatch(selectedPupose(selected));
                 navigation.navigate('EnterMobileNumber');
               }
-             }}
+            }}
           />
         </View>
       </View>
