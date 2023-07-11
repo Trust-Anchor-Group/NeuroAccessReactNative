@@ -95,7 +95,8 @@ export const Colors = {
       cameraBtnBg: '#F4F5F7',
       cameraButtons: '#F5F6F7',
       providerBtn: '#396E64',
-      providerBtnError: 'rgba(242, 73, 92, 1)'
+      providerBtnError: 'rgba(242, 73, 92, 1)',
+      blurBg: 'rgba(24, 31, 37, 0.7)'
     }
   },
   dark: {
@@ -191,5 +192,12 @@ export const Colors = {
       focusBorder: '#3E776D',
       imageBorder: 'rgba(255, 255, 255, 0.9)',
     },
+    scanner: {
+      cameraBtnBg: '#F4F5F7',
+      cameraButtons: '#F5F6F7',
+      providerBtn: '#396E64',
+      providerBtnError: 'rgba(242, 73, 92, 1)',
+      blurBg: 'rgba(24, 31, 37, 0.7)'
+    }
   },
 };

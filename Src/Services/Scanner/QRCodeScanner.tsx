@@ -79,7 +79,7 @@ export const QRCodeScanner: React.FC<Props> = (props: Props) => {
     hasPermission && (
       <View style={{ flex: 1 }}>
         <Camera
-          style={styles.camera}
+          style={styles(themeColors).camera}
           ref={camera}
           device={device}
           isActive={true}
@@ -87,20 +87,20 @@ export const QRCodeScanner: React.FC<Props> = (props: Props) => {
           frameProcessorFps={5}
           torch={isTourchEnable ? 'on' : 'off'}
         />
-        <ScannerBlurBg style={styles.blurView} />
+        <ScannerBlurBg style={styles(themeColors).blurView} />
         <TextLabel
-          style={styles.scannerTitle}
+          style={styles(themeColors).scannerTitle}
           variant={TextLabelVariants.HEADER}
         >
           {t('qrCodeScanner.invitaionTitle')}
         </TextLabel>
         <ScannerBackButton
-          style={styles.backButton}
+          style={styles(themeColors).backButton}
           onPress={toggleOverlay}
           bgColor={themeColors.scanner.cameraBtnBg}
           iconColor={themeColors.scanner.cameraButtons}
         />
-        <View style={styles.scannerActions}>
+        <View style={styles(themeColors).scannerActions}>
           <ServiceProvider
             style={{ margin: 5 }}
             enabled={barcodes.length > 0}
@@ -113,27 +113,27 @@ export const QRCodeScanner: React.FC<Props> = (props: Props) => {
             }
           />
           <TextLabel
-            style={styles.aboutQRButton}
+            style={styles(themeColors).aboutQRButton}
             variant={TextLabelVariants.DESCRIPTION}
           >
             {t('qrCodeScanner.serviceProviderBtn')}
           </TextLabel>
-          <View style={styles.cameraActivity}>
+          <View style={styles(themeColors).cameraActivity}>
             <CameraSwitch
-              style={styles.cameraActivityBtnSpace}
+              style={styles(themeColors).cameraActivityBtnSpace}
               onPress={() => setBackCamera(!isBackCamera)}
               bgColor={themeColors.scanner.cameraBtnBg}
               iconColor={themeColors.scanner.cameraButtons}
             />
             <Gallery
-              style={styles.cameraActivityBtnSpace}
+              style={styles(themeColors).cameraActivityBtnSpace}
               bgColor={themeColors.scanner.cameraBtnBg}
               iconColor={themeColors.scanner.cameraButtons}
             />
             <FlashLight
               bgColor={themeColors.scanner.cameraBtnBg}
               iconColor={themeColors.scanner.cameraButtons}
-              style={styles.cameraActivityBtnSpace}
+              style={styles(themeColors).cameraActivityBtnSpace}
               onPress={() => setTourchEnable(!isTourchEnable)}
             />
           </View>

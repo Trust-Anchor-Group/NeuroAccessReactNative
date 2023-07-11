@@ -2,8 +2,8 @@ import { horizontalScale, moderateScale, verticalScale } from "@Theme/Metrics";
 import { Dimensions, StyleSheet } from "react-native";
 
 const { width } = Dimensions.get('window');
-
-export const QRCodeScannerStyle = StyleSheet.create({
+export const QRCodeScannerStyle = (themeColors: any) =>
+  StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: 'center',
@@ -23,7 +23,7 @@ export const QRCodeScannerStyle = StyleSheet.create({
     position: 'absolute',
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: 'rgba(24, 31, 37, 0.7)',
+    backgroundColor: themeColors?.scanner?.blurBg,
   },
   blurView: {
     position: 'absolute',
