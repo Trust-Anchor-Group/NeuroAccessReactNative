@@ -65,4 +65,10 @@ export const QRCodeScannerStyle = (themeColors: any) =>
     borderColor: '#fff',
     borderRadius: 10,
   },
+  bottomSheetContainer: {
+    flex: 1,
+    backgroundColor: 'transparant',
+    margin: moderateScale(20),
+    alignContent: 'space-around',
+  }
 });

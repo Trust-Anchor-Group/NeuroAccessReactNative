@@ -23,12 +23,13 @@ export const ChooseAccountType = ({
   navigation,
 }: StackScreenProps<{ Profile: any }>) => {
   const { t } = useTranslation();
-  const { userDetails, loading, error } = useSelector((state) => state.user);
+  const { userDetails } = useSelector((state) => state.user);
   const { themeColors } = useContext(ThemeContext);
   const [selected, setSelected] = useState<ContextType>();
   const [showOverlay, setShowOverlay] = useState<boolean>(false);
-  const [showServiceProviderInfo, setShowServiceProviderInfo] = useState<boolean>(false);
-  const overlayInfo = useRef<ContextType>()
+  const [showServiceProviderInfo, setShowServiceProviderInfo] =
+    useState<boolean>(false);
+  const overlayInfo = useRef<ContextType>();
   const dispatch = useDispatch<ThunkDispatch<any, any, any>>();
 
   useEffect(() => {
@@ -98,7 +99,7 @@ export const ChooseAccountType = ({
             onPress={async () => {
               if (selected) {
                 dispatch(selectedPupose(selected));
-                navigation.navigate('CurrentProvider');
+                navigation.navigate('EnterMobileNumber');
               }
             }}
           />
