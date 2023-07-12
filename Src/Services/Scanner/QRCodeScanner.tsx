@@ -127,7 +127,7 @@ export const QRCodeScanner: React.FC<Props> = (props: Props) => {
           </TextLabel>
           <InputBox
             multiline
-            style={{ height: 60 }}
+            style={styles(themeColors).textInput}
             keyboardType="default"
             ref={userNameInputRef}
             value={obInfo}
