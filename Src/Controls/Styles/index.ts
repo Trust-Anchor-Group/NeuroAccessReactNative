@@ -9,3 +9,4 @@ export { CountryDialogStyle } from './CountryDialogStyle';
 export { MobileInputViewStyle } from './MobileInputViewStyle';
 export { ShowAlertMessageStyle } from './ShowAlertMessageStyle';
 export { NeuroTextInputStyle } from './NeuroTextInputStyle';
+export { BottomSheetStyles } from './BottomSheetStyle';

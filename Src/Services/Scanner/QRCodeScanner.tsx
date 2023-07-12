@@ -1,5 +1,5 @@
-import React, { useContext, useState } from 'react';
-import { View } from 'react-native';
+import React, { useCallback, useContext, useState } from 'react';
+import { Dimensions, Keyboard, View } from 'react-native';
 import { useCameraDevices } from 'react-native-vision-camera';
 import { Camera } from 'react-native-vision-camera';
 import { useScanBarcodes, BarcodeFormat } from 'vision-camera-code-scanner';
@@ -16,6 +16,13 @@ import { ScannerBlurBg } from '@Assets/Svgs/ScannerBlurBg';
 import { DomainInfo } from '@Services/Redux/Reducers/DomainSlice';
 import { QRCodeScannerStyle as styles } from './QRCodeScannerStyle';
 import { useTranslation } from 'react-i18next';
+import BottomSheet, { BottomSheetRefProps } from '@Controls/BottomSheet';
+import { EnterMobileNumberStyle } from '@Pages/Styles';
+import { ActionButton, InputBox } from '@Controls/index';
+import { TextInputRef } from '@Controls/InputBox';
+import Space from '@Controls/Space';
+
+const height = Dimensions.get('window').height;
 interface Props {
   toggleOverlay: () => void;
   onSelect: (qrcode: DomainInfo) => void;
@@ -23,12 +30,16 @@ interface Props {
 export const QRCodeScanner: React.FC<Props> = (props: Props) => {
   const { toggleOverlay, onSelect } = props;
   const { t } = useTranslation();
+  const ref = React.useRef<BottomSheetRefProps>(null);
   const { themeColors } = useContext(ThemeContext);
 
   const [isBackCamera, setBackCamera] = useState(true);
   const [isTourchEnable, setTourchEnable] = useState<boolean>(false);
   const [hasPermission, setHasPermission] = React.useState(false);
   const [isError, setError] = React.useState(false);
+  const [enterManually, setEnterManually] = React.useState(false);
+  const userNameInputRef = React.useRef<TextInputRef>(null);
+  const [obInfo, setObInfo] = useState('');
 
   const [frameProcessor, barcodes] = useScanBarcodes([BarcodeFormat.QR_CODE], {
     checkInverted: true,
@@ -37,6 +48,16 @@ export const QRCodeScanner: React.FC<Props> = (props: Props) => {
   const camera = React.useRef<Camera>(null);
   const devices = useCameraDevices();
   const device = isBackCamera ? devices.back : devices.front;
+
+  const openBottomSheet = useCallback(() => {
+    setObInfo('');
+    const isActive = ref?.current?.isActive();
+    if (isActive) {
+      ref?.current?.scrollTo(0);
+    } else {
+      ref?.current?.scrollTo(-((height * 2) / 3));
+    }
+  }, []);
 
   React.useEffect(() => {
     (async () => {
@@ -53,26 +74,85 @@ export const QRCodeScanner: React.FC<Props> = (props: Props) => {
     })();
   }, [barcodes]);
 
+  const getDomainDetailsFromObinfoString = (obInfo: string) => {
+    const parts = obInfo?.split(':');
+
+    if (parts?.length === 5) {
+      const domainDetails: DomainInfo = {
+        Domain: parts[1],
+        Key: parts[2],
+        Secret: parts[3],
+      };
+      return domainDetails;
+    } else {
+      return undefined;
+    }
+  };
   const handleGetQRCode = () => {
     if (barcodes) {
       const str = barcodes[1]?.content?.data?.toString();
-      const parts = str?.split(':');
-
-      if (parts?.length === 5) {
-        const domainDetails: DomainInfo = {
-          Domain: parts[1],
-          Key: parts[2],
-          Secret: parts[3],
-        };
+      const domainDetails = getDomainDetailsFromObinfoString(str);
+      if (domainDetails) {
         onSelect(domainDetails);
         toggleOverlay();
         setError(false);
-      } else if (parts?.length > 0) {
-        setError(true);
       } else {
         setError(false);
       }
     }
+  };
+
+  const handleSubmitManually = () => {
+    openBottomSheet();
+    const domainDetails = getDomainDetailsFromObinfoString(obInfo);
+    if (domainDetails) {
+      onSelect(domainDetails);
+      toggleOverlay();
+      setError(false);
+    } else {
+      alert(t('qrCodeScanner.errorQRCodeInfo'));
+    }
+  };
+
+  const EnterQRCodeManually = () => {
+    return (
+      <BottomSheet ref={ref}>
+        <View style={styles(themeColors).bottomSheetContainer}>
+          <Space />
+          <TextLabel
+            style={EnterMobileNumberStyle(themeColors).inputLabel}
+            variant={TextLabelVariants.INPUTLABEL}
+          >
+            {t('qrCodeScanner.enterObInfoManuallyTitle')}
+          </TextLabel>
+          <InputBox
+            multiline
+            style={styles(themeColors).textInput}
+            keyboardType="default"
+            ref={userNameInputRef}
+            value={obInfo}
+            onChangeText={(val) => {
+              setObInfo(val);
+            }}
+            actionType="done"
+            onFocusColor={themeColors.inputBox.inputFocus}
+            placeholder={t('qrCodeScanner.enterObInfoManuallyPlaceholder')}
+            autoFocus={false}
+            autoCapitalize="none"
+            onAction={handleSubmitManually}
+          />
+          <Space />
+          <ActionButton
+            textStyle={EnterMobileNumberStyle(themeColors).sendText}
+            title={t('buttonTitle.done')}
+            onPress={() => {
+              Keyboard.dismiss();
+              handleSubmitManually();
+            }}
+          />
+        </View>
+      </BottomSheet>
+    );
   };
   return (
     device != null &&
@@ -87,7 +167,11 @@ export const QRCodeScanner: React.FC<Props> = (props: Props) => {
           frameProcessorFps={5}
           torch={isTourchEnable ? 'on' : 'off'}
         />
-        <ScannerBlurBg style={styles(themeColors).blurView} bgColor={themeColors.scanner.blurBg} scanAreaCornerBg={themeColors.scanner.cornerColor}/>
+        <ScannerBlurBg
+          style={styles(themeColors).blurView}
+          bgColor={themeColors.scanner.blurBg}
+          scanAreaCornerBg={themeColors.scanner.cornerColor}
+        />
         <TextLabel
           style={styles(themeColors).scannerTitle}
           variant={TextLabelVariants.HEADER}
@@ -138,10 +222,12 @@ export const QRCodeScanner: React.FC<Props> = (props: Props) => {
             />
           </View>
           <Manually
+            onPress={openBottomSheet}
             bgColor={themeColors.scanner.cameraBtnBg}
             iconColor={themeColors.scanner.cameraButtons}
           />
         </View>
+        {EnterQRCodeManually()}
       </View>
     )
   );

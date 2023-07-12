@@ -14,7 +14,8 @@ export default {
     resend: 'पुन: भेजें',
     verify: 'सत्यापित करें',
     close: 'बंद करें',
-    search: 'Search',
+    search: 'खोज',    
+    done: 'पूर्ण'
   },
   choosePurposeScreen: {
     label: 'पहुंच का उद्देश्य चुनें',
@@ -98,8 +99,11 @@ export default {
     domainTitle: 'Domain:',
   },
   qrCodeScanner: {
-    serviceProviderBtn : 'उपरोक्त प्रतीक के साथ कैमरे को क्यूआर-कोड पर इंगित करें',
-    invitaionTitle: 'आमंत्रण स्कैन करें'
+    serviceProviderBtn : 'Point the camera at the QR-code with the above symbol',
+    invitaionTitle: 'Scan invitation',
+    enterObInfoManuallyTitle: 'QRCode जानकारी दर्ज करें या कॉपी पेस्ट करें',
+    enterObInfoManuallyPlaceholder: 'यहां QRCode जानकारी दर्ज करें या कॉपी पेस्ट करें',
+    errorQRCodeInfo: 'कृपया सही QRCode जानकारी दर्ज करें!',
   },
   tellUsAboutYou: {
     headerTitle: 'हमें अपने बारे में बताओ',

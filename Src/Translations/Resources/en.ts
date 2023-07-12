@@ -14,6 +14,7 @@ export default {
     verify: 'Verify',
     close: 'Close',
     search: 'Search',
+    done: 'Done'
   },
   choosePurposeScreen: {
     label: 'Choose access purpose',
@@ -99,7 +100,10 @@ export default {
   },
   qrCodeScanner: {
     serviceProviderBtn : 'Point the camera at the QR-code with the above symbol',
-    invitaionTitle: 'Scan invitation'
+    invitaionTitle: 'Scan invitation',
+    enterObInfoManuallyTitle: 'Enter QRCode Info or Copy Paste',
+    enterObInfoManuallyPlaceholder: 'Enter QRCode Info or Copy Paste here',
+    errorQRCodeInfo: 'Please enter correct QRCode Info!',
   },
   tellUsAboutYou: {
     headerTitle: 'Tell us about you',
