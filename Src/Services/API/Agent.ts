@@ -25,6 +25,7 @@ export const AgentAPI = {
         xhttp.onreadystatechange = function () {
           if (xhttp.readyState == 4) {
             let Response = xhttp.responseText;
+
             if (xhttp.status === 200) {
               Response = JSON.parse(Response);
               SetResult(Response);
@@ -47,6 +48,39 @@ export const AgentAPI = {
             'Bearer ' +
               'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJqdGkiOiJ3QkpNVGxLd0d0VVVjTXVNUmw1M3BIUFdsRGtQQUt5QlRCNFFybFZSdFVRPSIsImlzcyI6ImxhYi50YWdyb290LmlvIiwic3ViIjoiYW5rdXNobUBsYWIudGFncm9vdC5pbyIsImlhdCI6MTY4OTI0NzYxNiwiZXhwIjoxNjg5MjUxMjE2fQ.2AGdGChCoc2kDe4d9WRdPc_LnlbviKrBj-yCGOxwiyM'
           );
+
+        xhttp.send(JSON.stringify(RequestPayload));
+      });
+
+      return await Request;
+    },
+    GetRequestWithDomain: async function (
+      Domain: string,
+      Resource: string,
+      RequestPayload: any,
+      Internal?: any
+    ) {
+      const Request = new Promise(async (SetResult, SetException) => {
+        let xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function () {
+          if (xhttp.readyState == 4) {
+            let Response = xhttp.responseText;
+            if (xhttp.status === 200) {
+              Response = JSON.parse(Response);
+              SetResult(Response);
+            } else SetException(Response);
+
+            if (!Internal) AgentAPI.IO.AfterResponse(Response);
+          }
+        };
+
+        if (!Internal) this.BeforeRequest(RequestPayload);
+
+        xhttp.open('GET', 'https://' + Domain + Resource);
+        xhttp.setRequestHeader("Accept", "application/json");
+        xhttp.setRequestHeader("Accept-Language", "en");
+        xhttp.setRequestHeader("Content-Type", "text/plain");
+        
 
         xhttp.send(JSON.stringify(RequestPayload));
       });
@@ -285,6 +319,16 @@ export const AgentAPI = {
           Seconds +
           's'
       );
+    },
+    GetDomainInfo: async function (domain: string) {
+
+      const Request = {};
+      const Response = await AgentAPI.IO.GetRequestWithDomain(
+        domain,
+        '/Agent/Account/DomainInfo',
+        Request
+      );
+      return Response;
     },
     Create: async function (
       UserName: string,

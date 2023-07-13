@@ -20,26 +20,40 @@ ganttDiagram {
 </style>
 Project starts 2023-06-01
 [Current Provider screen-A] starts 2023-06-27 and ends 2023-06-29
-[Information popup functionality-P] starts 2023-06-29 and ends 2023-06-29
-[Tell Us About You Screen-A] starts 2023-06-30 and ends 2023-07-05
-[Scan invitation functionality-P] starts 2023-06-30 and ends 2023-07-07
-[Terms and conditions  screen-A] starts 2023-07-06 and ends 2023-07-07
-[Almost there functionality-A] starts 2023-07-10 and ends 2023-07-12
-[Create Account functionality-P] starts 2023-07-10 and ends 2023-07-12
-[Verify Email functionality-P] starts 2023-07-12 and ends 2023-07-13
-[Verification Code functionality-P] starts 2023-07-13 and ends 2023-07-14
-[Check Status functionality-A] starts 2023-07-13 and ends 2023-07-17
-[Create a pin code functionality-P] starts 2023-07-17 and ends 2023-07-1
-[Pending review functionality-A] starts 2023-07-18 and ends 2023-07-19
-[See account details-A] starts 2023-07-21 and ends 2023-07-25
-[Invite peer functionality-P] starts 2023-07-23 and ends 2023-07-24
-[Click Finish functionality-A] starts 2023-07-26 and ends 2023-07-27
-[Congratulations functionality-P] starts 2023-07-24 and ends 2023-07-27
-[Error and bugs-A] starts 2023-06-28 and ends 2023-08-01
-[Error and bugs-P] starts 2023-06-28 and ends 2023-08-01
-[Unit test cases using Jest-P] starts 2023-07-28 and ends 2023-08-01
+[Tell Us About You Screen UI-A] starts 2023-06-30 and ends 2023-07-03
+[Custom Components with validation-A] starts 2023-07-04 and ends 2023-07-05
+[Terms and conditions screen-A] starts 2023-07-06 and ends 2023-07-06
+[Almost there functionality UI-A] starts 2023-07-07 and ends 2023-07-07
+[Almost there functionality with-A] starts 2023-07-10 and ends 2023-07-11
+[Pending and Peer info with carousel -A] starts 2023-07-12 and ends 2023-07-12
+[Check Status functionality-A] starts 2023-07-13 and ends 2023-07-13
+[Technical details-A] starts 2023-07-14 and ends 2023-07-14
+[See account details-A] starts 2023-07-17 and ends 2023-07-18
+[Click Finish functionality-A] starts 2023-07-19 and ends 2023-07-19
+[Error and bugs-A] starts 2023-06-28 and ends 2023-07-24
 
-[Current Provider screen-A] is 80% completed
+[Information popup functionality-P] starts 2023-06-29 and ends 2023-06-29
+[QRCode Scan manager-P] starts 2023-06-30 and ends 2023-07-03
+[Scan invitation UI-P] starts 2023-07-04 and ends 2023-07-04
+[Use scan details and change provider-P] starts 2023-07-05 and ends 2023-07-07
+[Scan invitation screenflow with full functionality-P] starts 2023-07-07 and ends 2023-07-07
+[Create Account functionality-P] starts 2023-07-10 and ends 2023-07-10
+[Verify Email functionality-P] starts 2023-07-10 and ends 2023-07-10
+[Verification Code functionality-P] starts 2023-07-10 and ends 2023-07-11
+[Create a pin code UI-P] starts 2023-07-12 and ends 2023-07-12
+[Pin validation-P] starts 2023-07-13 and ends 2023-07-13
+[jest test setup in RN-App-P] starts 2023-07-14 and ends 2023-07-14
+[Pin validation Test case using jest-P] starts 2023-07-17 and ends 2023-07-18
+
+[Invite peer functionality-P] starts 2023-07-19 and ends 2023-07-19
+[Flow upto Congratulations functionality-P] starts 2023-07-20 and ends 2023-07-21
+[Error and bugs-P] starts 2023-06-29 and ends 2023-07-24
+
+[Current Provider screen-A completed] is 100% completed
 [Information popup functionality-P completed] is 100% completed
+[Scan invitation UI-P completed] is 100% completed
+[Use scan details and change provider-P completed] is 100% completed
+[Scan invitation screenflow with full functionality-P completed] is 100% completed
+[Create Account functionality-P completed] is 50% completed
 
 @endgantt

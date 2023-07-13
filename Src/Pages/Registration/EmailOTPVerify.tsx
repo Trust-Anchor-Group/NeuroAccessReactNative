@@ -67,7 +67,7 @@ export const EmailOTPVerify = ({ navigation, route }: Props) => {
       );
       setIsLoading(false);
       if (response?.eMail) {
-        navigation.navigate('CreateAccount');
+        navigation.navigate('TellUsAboutYou');
       }
     } catch (e) {
       setIsLoading(false);

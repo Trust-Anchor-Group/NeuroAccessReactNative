@@ -14,7 +14,8 @@ export default {
     resend: 'पुन: भेजें',
     verify: 'सत्यापित करें',
     close: 'बंद करें',
-    search: 'Search',
+    search: 'खोज',    
+    done: 'पूर्ण'
   },
   choosePurposeScreen: {
     label: 'पहुंच का उद्देश्य चुनें',
@@ -81,8 +82,12 @@ export default {
                 `,
     },
   },
+  serviceProviderInformation: {
+    title: 'सेवा प्रदाता',
+    description: 'सेवा प्रदाता एक ऐसा संगठन है जो आपकी डिजिटल पहचान को जोड़ने और प्रबंधित करने में आपकी सहायता करता है। वे ऐसी सेवाएँ प्रदान करते हैं जो आपको विभिन्न ऑनलाइन प्लेटफ़ॉर्म और एप्लिकेशन तक सुरक्षित रूप से पहुंचने और उपयोग करने की अनुमति देती हैं। वे तकनीकी पहलुओं, प्रमाणीकरण और डेटा सुरक्षा का ध्यान रखते हैं, ताकि आप डिजिटल दुनिया के लाभों का आनंद लेने पर ध्यान केंद्रित कर सकें.'
+  },
   currentProvider: {
-    title: 'वर्तमान प्रदाता',
+    title: 'चयनित प्रदाता',
     providerLink: 'eu.id.tagroot.io',
     detail: 'आपके सेवा प्रदाता का चयन कर लिया गया है',
     continueDetail:
@@ -91,6 +96,14 @@ export default {
     createAccount: 'इस प्रदाता पर एक नया खाता बनाएँ',
     changeService: 'सेवा प्रदाता बदलें',
     serviceProvider: 'सेवा प्रदाता क्या है?',
+    domainTitle: 'Domain:',
+  },
+  qrCodeScanner: {
+    serviceProviderBtn : 'Point the camera at the QR-code with the above symbol',
+    invitaionTitle: 'Scan invitation',
+    enterObInfoManuallyTitle: 'QRCode जानकारी दर्ज करें या कॉपी पेस्ट करें',
+    enterObInfoManuallyPlaceholder: 'यहां QRCode जानकारी दर्ज करें या कॉपी पेस्ट करें',
+    errorQRCodeInfo: 'कृपया सही QRCode जानकारी दर्ज करें!',
   },
   tellUsAboutYou: {
     headerTitle: 'हमें अपने बारे में बताओ',

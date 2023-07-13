@@ -1,14 +1,29 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
+import { useSelector } from 'react-redux';
 import { Loader } from '@Controls/index';
+import Config from 'react-native-config';
+
 
 const LoginContext = createContext();
 
 export const LoginProvider = ({ children }) => {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const { userDetails, loading, error } = useSelector((state) => state.user);
+  const { selectedDomain } = useSelector((state) => state.domain);
+
+  const [isLoggedIn, setIsLoggedIn] = useState(userDetails?.email && userDetails?.tokenData ? true : false);
   const [appLoading, setAppLoading] = useState(false);
   const [profile, setProfile] = useState({});
-  useEffect(() => {}, [isLoggedIn, appLoading]);
+
+  if (selectedDomain) {
+    Config.AGENT_API_URL = Config.AGENT_API_URL + selectedDomain.Domain;
+    Config.Host = selectedDomain.Domain;
+    Config.ApiKey = selectedDomain.Key;
+    Config.Secret = selectedDomain.Secret;  
+  }
+
+  useEffect(() => {
+  }, [isLoggedIn, appLoading]);
   return (
     <>
       {appLoading ? (

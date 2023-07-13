@@ -31,6 +31,7 @@ export const MobileInputViewStyle = (themeColors: any) =>
     },
     input: {
       flex: 1,
+      height: moderateScale(40),
       fontFamily: 'Neue Haas Grotesk Text Pro',
       fontSize: moderateScale(16),
       color: themeColors.mobileInput.color,

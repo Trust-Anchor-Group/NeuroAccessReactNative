@@ -38,6 +38,9 @@ export const InformationOverlay: React.FC<Props> = ({
           <TextLabel variant={TextLabelVariants.DESCRIPTION}>
             {description}
           </TextLabel>
+          <View
+            style={InformationOverlayStyle(themeColors).spacer}
+          />
           <ActionButton
             title={t('buttonTitle.close')}
             textStyle={ChooseAccountTypeStyle(themeColors).sendText}

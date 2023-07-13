@@ -91,6 +91,14 @@ export const Colors = {
       focusBorder: '#3E776D',
       imageBorder: '#181F25',
     },
+    scanner: {
+      cameraBtnBg: '#F4F5F7',
+      cameraButtons: '#F5F6F7',
+      providerBtn: '#396E64',
+      providerBtnError: 'rgba(242, 73, 92, 1)',
+      blurBg: '#181F25',
+      cornerColor: '#F4F5F7'
+    }
   },
   dark: {
     background: '#161617',
@@ -121,6 +129,7 @@ export const Colors = {
       disableText: 'rgba(255, 255, 255, 0.3)',
       bg: '#50998C',
       disableBg: '#4A4A4D',
+      link: 'rgba(79, 126, 172, 1)'
     },
     choosePurpose: {
       itemDefaultBg: '#3E3E40',
@@ -184,5 +193,12 @@ export const Colors = {
       focusBorder: '#3E776D',
       imageBorder: 'rgba(255, 255, 255, 0.9)',
     },
+    scanner: {
+      cameraBtnBg: '#F4F5F7',
+      cameraButtons: '#F5F6F7',
+      providerBtn: '#396E64',
+      providerBtnError: 'rgba(242, 73, 92, 1)',
+      blurBg: 'rgba(24, 31, 37, 0.7)'
+    }
   },
 };

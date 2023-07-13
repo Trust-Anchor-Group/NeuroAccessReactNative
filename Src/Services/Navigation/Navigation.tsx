@@ -97,7 +97,14 @@ export const AuthStack = () => {
 
 export const ApplicationStack = () => {
   return (
-    <Stack.Navigator initialRouteName={'HomeScreen'}>
+    <Stack.Navigator initialRouteName={'TellUsAboutYou'}>
+      <Stack.Screen
+        name="TellUsAboutYou"
+        component={TellUsAboutYou}
+        options={{
+          headerShown: false,
+        }}
+      />
       <Stack.Screen
         name="HomeScreen"
         component={Home}

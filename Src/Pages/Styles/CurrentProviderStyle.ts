@@ -1,7 +1,7 @@
-import { StyleSheet } from 'react-native';
-import { moderateScale, verticalScale } from '@Theme/Metrics';
+import { Dimensions, StyleSheet } from 'react-native';
+import { horizontalScale, moderateScale, verticalScale } from '@Theme/Metrics';
 
-export const CurrentProviderStyle = (themeColors: any) =>
+export const CurrentProviderStyle = (themeColors?: any) =>
   StyleSheet.create({
     headerText: { alignSelf: 'center' },
     linkText: {
@@ -56,4 +56,16 @@ export const CurrentProviderStyle = (themeColors: any) =>
       color: themeColors.currentProvider.titleUnSelected,
       fontSize: moderateScale(11),
     },
+    serviceProviderDetailsContainer: {margin: moderateScale(20)},
+    qrCodeScannerContainer: {
+      position: 'absolute',
+      width: Dimensions.get('window').width,
+      height: Dimensions.get('window').height,
+    },
+    domainDetailsContainer: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      justifyContent: 'center',
+    },
+    infoIconMargin: {margin: horizontalScale(5)}
   });
