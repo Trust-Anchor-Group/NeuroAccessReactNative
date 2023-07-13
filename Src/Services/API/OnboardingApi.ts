@@ -25,6 +25,7 @@ export const OnboardingAPI = {
         xhttp.onreadystatechange = function () {
           if (xhttp.readyState == 4) {
             let Response = xhttp.responseText;
+            console.log('onboarding error reponse---',Response)
             if (xhttp.status === 200) {
               Response = JSON.parse(Response);
               SetResult(Response);

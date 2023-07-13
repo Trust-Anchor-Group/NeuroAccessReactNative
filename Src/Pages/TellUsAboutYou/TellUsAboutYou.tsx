@@ -38,15 +38,47 @@ import {
 import { PERMISSIONS } from 'react-native-permissions';
 import { CountryDialog } from '@Controls/CountryDialog';
 import { countryCodes } from '@Services/Data/index';
+import { ThunkDispatch } from '@reduxjs/toolkit';
+import { useDispatch, useSelector } from 'react-redux';
+import { getAlgorithmListApi } from '@Services/Redux/Actions/GetAlgorithmList';
+import { Algorithm } from '@Services/Redux/Reducers/CryptoSlice';
+import { AgentAPI } from '@Services/API/Agent';
+import Config from 'react-native-config';
+import {
+  ApplyLegalPayload,
+  applyLegalIdApi,
+  AddIdAttachmentPayload,
+  addIdAttachmentApi,
+  PnrPayload,
+  validatePNrApi,
+} from '@Services/Redux/Actions/GetAlgorithmList';
+
+const ApiKey = Config.ApiKey;
+const Secret = Config.Secret;
 
 export const TellUsAboutYou = ({
   navigation,
 }: StackScreenProps<{ Profile: any }>) => {
   const { t } = useTranslation();
   const { themeColors } = useContext(ThemeContext);
-  const [imageUri, setImageUri] = useState<string | null>(null);
+  const [imageUri, setImageUri] = useState();
   const [isModalVisible, setIsModalVisible] = useState(false);
   const formikRef = useRef();
+  const accountPassword = useRef();
+  const keyPassword = useRef();
+  const countryISOCode = useRef();
+  const legalID = useRef();
+  const algorithmVal = useRef<Algorithm>();
+  const { userDetails } = useSelector((state) => state.user);
+  const {
+    algorithmDetails,
+    pnrResponse,
+    legalResponse,
+    attachmentResponse,
+    loading,
+    error,
+  } = useSelector((state) => state.crypto);
+  const dispatch = useDispatch<ThunkDispatch<any, any, any>>();
 
   const imageRef = useRef<View>(null);
   const firstNameRef = useRef<TextInput>(null);
@@ -72,7 +104,81 @@ export const TellUsAboutYou = ({
         PERMISSIONS.ANDROID.READ_MEDIA_IMAGES
       );
     }
+    dispatch(getAlgorithmListApi());
   }, []);
+
+  useEffect(() => {
+    filterAlgorithm(algorithmDetails.Algorithms);
+  }, [algorithmDetails]);
+
+  useEffect(() => {
+    const pnrHandler = Object.entries(pnrResponse).length !== 0;
+    if (pnrHandler) {
+      if (pnrResponse.countrySupported && pnrResponse.isValid) {
+        formikRef.current?.setFieldValue(
+          'personalNumber',
+          pnrResponse.normalized
+        );
+      } else {
+        formikRef.current?.setErrors({
+          personalNumber: t('tellUsAboutYou.pnrInvalid'),
+        });
+      }
+    }
+  }, [pnrResponse]);
+
+  useEffect(() => {
+    const legalHandler = Object.entries(legalResponse).length !== 0;
+    if (legalHandler) {
+      const state = legalResponse.Identity.status.state;
+      if (state === 'Created') {
+        const id = legalResponse.Identity.id;
+        legalID.current = id;
+        uploadAttachment(id);
+      }
+    }
+  }, [legalResponse]);
+
+  useEffect(() => {
+    const attachmentHandler = Object.entries(attachmentResponse).length !== 0;
+    if (attachmentHandler) {
+      const state = legalResponse.Identity.status.state;
+      if (state === 'Created') {
+      }
+    }
+  }, [attachmentResponse]);
+
+  const filterAlgorithm = async (algorithms: any) => {
+    let highestSecurityStrength = 0;
+    let resultFinal: Algorithm | undefined;
+
+    if (algorithms !== undefined) {
+      await algorithms.forEach((algorithm: Algorithm) => {
+        if (
+          algorithm.safe &&
+          algorithm.securityStrength > highestSecurityStrength
+        ) {
+          highestSecurityStrength = algorithm.securityStrength;
+          resultFinal = algorithm;
+        }
+      });
+      algorithmVal.current = resultFinal;
+    }
+  };
+
+  const generateUniqueKey = async () => {
+    try {
+      const randomString = AgentAPI.Account.getRandomValues(32);
+      const s1 = userDetails.userName + ':' + randomString;
+      accountPassword.current = await AgentAPI.Account.Sign(
+        userDetails.userName,
+        s1
+      );
+
+      const s2 = Secret + ':' + randomString;
+      keyPassword.current = await AgentAPI.Account.Sign(ApiKey, s2);
+    } catch (error) {}
+  };
 
   const openModal = () => {
     setIsModalVisible(true);
@@ -83,10 +189,99 @@ export const TellUsAboutYou = ({
   };
 
   const handleItemSelected = (selectedItem: any) => {
+    addressRef.current?.focus();
+    countryISOCode.current = selectedItem?.code;
     formikRef.current?.setFieldValue('country', selectedItem?.name['en']);
   };
 
-  const handleFormSubmit = (values: any) => {};
+  const handleFormSubmit = (values: any) => {
+    const properties = [
+      {
+        name: 'FIRST',
+        value: values.firstName,
+      },
+      {
+        name: 'LAST',
+        value: values.lastName,
+      },
+      {
+        name: 'PNR',
+        value: values.personalNumber,
+      },
+      {
+        name: 'ADDR',
+        value: values.address,
+      },
+      {
+        name: 'ZIP',
+        value: values.zip,
+      },
+      {
+        name: 'CITY',
+        value: values.city,
+      },
+      {
+        name: 'COUNTRY',
+        value: countryISOCode.current,
+      },
+    ];
+
+    if (values.middleName.length !== 0) {
+      properties.push({
+        name: 'MIDDLE',
+        value: values.middleName,
+      });
+    }
+    if (values.address2.length !== 0) {
+      properties.push({
+        name: 'ADDR2',
+        value: values.address2,
+      });
+    }
+
+    if (values.state.length !== 0) {
+      properties.push({
+        name: 'REGION',
+        value: values.state,
+      });
+    }
+
+    const applyLegalPayload: ApplyLegalPayload = {
+      LocalName: algorithmVal?.current?.localName,
+      Namespace: algorithmVal.current?.namespace,
+      KeyId: '5df048afef1941a40153ae55525034e8cf47dc2d60659a8dc7d26e7b5c551c02',
+      KeyPassword: 'ankush@12345',
+      AccountPassword: 'ankush@12345',
+      Properties: properties,
+    };
+    dispatch(applyLegalIdApi(applyLegalPayload));
+  };
+
+  const uploadAttachment = (id: string) => {
+    const addIdAttachmentPayload: AddIdAttachmentPayload = {
+      LocalName: algorithmVal?.current?.localName,
+      Namespace: algorithmVal.current?.namespace,
+      KeyId: '5df048afef1941a40153ae55525034e8cf47dc2d60659a8dc7d26e7b5c551c02',
+      KeyPassword: 'ankush@12345',
+      AccountPassword: 'ankush@12345',
+      LegalId: id,
+      Attachment: imageUri?.base64,
+      FileName: imageUri?.fileName,
+      ContentType: imageUri?.type,
+    };
+    dispatch(addIdAttachmentApi(addIdAttachmentPayload));
+  };
+
+  const checkPersonalNumber = (pnr: string) => {
+    if (pnr !== undefined) {
+      const pnrPayload: PnrPayload = {
+        countryCode: 'IN',
+        pnr: pnr,
+      };
+      dispatch(validatePNrApi(pnrPayload));
+    }
+  };
+
   const onBackClick = () => {
     navigation.goBack();
   };
@@ -174,7 +369,7 @@ export const TellUsAboutYou = ({
       } else if (response.error) {
       } else {
         setFieldValue('profileImage', response.assets[0].fileName);
-        setImageUri(response.assets[0].uri);
+        setImageUri(response.assets[0]);
       }
     });
   };
@@ -198,7 +393,7 @@ export const TellUsAboutYou = ({
         if (response.errorCode === 'camera_unavailable') {
         } else {
           setFieldValue('profileImage', response.assets[0].fileName);
-          setImageUri(response.assets[0].uri);
+          setImageUri(response.assets[0]);
         }
       }
     });
@@ -274,11 +469,11 @@ export const TellUsAboutYou = ({
                       iconColor={themeColors.tellUsAboutYou.checkBox}
                     />
 
-                    {imageUri && (
+                    {imageUri?.uri && (
                       <Image
                         resizeMode="cover"
                         resizeMethod="scale"
-                        source={{ uri: imageUri }}
+                        source={{ uri: imageUri?.uri }}
                         style={TellUsAboutYouStyle(themeColors).imageView}
                       />
                     )}
@@ -339,6 +534,7 @@ export const TellUsAboutYou = ({
                   }}
                   onFocus={() => setFieldTouched('firstName', true)}
                   isError={errorIcon(touched.firstName, errors.firstName)}
+                  autoCapitalize="none"
                   keyboardType="default"
                   returnKeyType="next"
                   onSubmitEditing={() => {
@@ -381,6 +577,7 @@ export const TellUsAboutYou = ({
                   onFocus={() => setFieldTouched('middleName', true)}
                   isError={errorIcon(touched.middleName, errors.middleName)}
                   errorStyle={TellUsAboutYouStyle(themeColors).errorText}
+                  autoCapitalize="none"
                   returnKeyType="next"
                   keyboardType="default"
                   ref={middleNameRef}
@@ -423,6 +620,7 @@ export const TellUsAboutYou = ({
                   onFocus={() => setFieldTouched('lastName', true)}
                   isError={errorIcon(touched.lastName, errors.lastName)}
                   errorStyle={TellUsAboutYouStyle(themeColors).errorText}
+                  autoCapitalize="none"
                   returnKeyType="next"
                   keyboardType="default"
                   ref={lastNameRef}
@@ -459,6 +657,7 @@ export const TellUsAboutYou = ({
                   value={values.personalNumber}
                   onChangeText={handleChange('personalNumber')}
                   onBlur={() => {
+                    checkPersonalNumber(values.personalNumber);
                     handleBlur('personalNumber');
                     setFieldTouched('personalNumber', false);
                   }}
@@ -468,6 +667,7 @@ export const TellUsAboutYou = ({
                     errors.personalNumber
                   )}
                   errorStyle={TellUsAboutYouStyle(themeColors).errorText}
+                  autoCapitalize="none"
                   returnKeyType="next"
                   keyboardType="default"
                   ref={personalNumberRef}
@@ -510,11 +710,15 @@ export const TellUsAboutYou = ({
                   onFocus={() => setFieldTouched('country', true)}
                   isError={errorIcon(touched.country, errors.country)}
                   errorStyle={TellUsAboutYouStyle(themeColors).errorText}
+                  autoCapitalize="none"
                   returnKeyType="next"
                   keyboardType="default"
                   ref={countryRef}
                   editable={false}
-                  onTouchStart={() => openModal()}
+                  onTouchStart={() => {
+                    addressRef.current?.focus();
+                    openModal();
+                  }}
                   onSubmitEditing={() => {
                     addressRef.current?.focus();
                   }}
@@ -554,6 +758,7 @@ export const TellUsAboutYou = ({
                   onFocus={() => setFieldTouched('address', true)}
                   isError={errorIcon(touched.address, errors.address)}
                   errorStyle={TellUsAboutYouStyle(themeColors).errorText}
+                  autoCapitalize="none"
                   returnKeyType="next"
                   keyboardType="default"
                   ref={addressRef}
@@ -596,6 +801,7 @@ export const TellUsAboutYou = ({
                   onFocus={() => setFieldTouched('address2', true)}
                   isError={errorIcon(touched.address2, errors.address2)}
                   errorStyle={TellUsAboutYouStyle(themeColors).errorText}
+                  autoCapitalize="none"
                   returnKeyType="next"
                   keyboardType="default"
                   ref={address2Ref}
@@ -633,6 +839,7 @@ export const TellUsAboutYou = ({
                   onFocus={() => setFieldTouched('zip', true)}
                   isError={errorIcon(touched.zip, errors.zip)}
                   errorStyle={TellUsAboutYouStyle(themeColors).errorText}
+                  autoCapitalize="none"
                   returnKeyType="next"
                   keyboardType="default"
                   ref={zipRef}
@@ -671,6 +878,7 @@ export const TellUsAboutYou = ({
                   onFocus={() => setFieldTouched('city', true)}
                   isError={errorIcon(touched.city, errors.city)}
                   errorStyle={TellUsAboutYouStyle(themeColors).errorText}
+                  autoCapitalize="none"
                   returnKeyType="next"
                   keyboardType="default"
                   ref={cityRef}

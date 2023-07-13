@@ -33,23 +33,19 @@ export const validationSchema = yup.object().shape({
   firstName: yup
     .string()
     .min(2, 'tellUsAboutYou.nameRequired')
-    .required('tellUsAboutYou.nameRequired')
-    .matches(/^[a-zA-Z]+$/, 'tellUsAboutYou.alphabetsValidation'),
+    .required('tellUsAboutYou.nameRequired'),
   lastName: yup
     .string()
     .min(2, 'tellUsAboutYou.lastNameRequired')
-    .required('tellUsAboutYou.lastNameRequired')
-    .matches(/^[a-zA-Z]+$/, 'tellUsAboutYou.alphabetsValidation'),
+    .required('tellUsAboutYou.lastNameRequired'),
   personalNumber: yup
     .string()
     .min(10, 'tellUsAboutYou.personalNumberRequired')
-    .required('tellUsAboutYou.personalNumberRequired')
-    .matches(/^[0-9]+$/, 'tellUsAboutYou.numericValidation'),
+    .required('tellUsAboutYou.personalNumberRequired'),
   country: yup
     .string()
     .min(2, 'tellUsAboutYou.countryRequired')
-    .required('tellUsAboutYou.countryRequired')
-    .matches(/^[a-zA-Z]+$/, 'tellUsAboutYou.alphabetsValidation'),
+    .required('tellUsAboutYou.countryRequired'),
   address: yup
     .string()
     .min(5, 'tellUsAboutYou.addressNumberRequired')
@@ -57,17 +53,10 @@ export const validationSchema = yup.object().shape({
   zip: yup
     .string()
     .min(5, 'tellUsAboutYou.zipRequired')
-    .required('tellUsAboutYou.zipRequired')
-    .matches(/^[0-9]+$/, 'tellUsAboutYou.numericValidation'),
+    .required('tellUsAboutYou.zipRequired'),
   city: yup
     .string()
     .min(2, 'tellUsAboutYou.cityRequired')
-    .required('tellUsAboutYou.cityRequired')
-    .matches(/^[a-zA-Z]+$/, 'tellUsAboutYou.alphabetsValidation'),
-  state: yup
-    .string()
-    .min(2, 'tellUsAboutYou.stateRequired')
-    .required('tellUsAboutYou.stateRequired')
-    .matches(/^[a-zA-Z]+$/, 'tellUsAboutYou.alphabetsValidation'),
+    .required('tellUsAboutYou.cityRequired'),
   isTermCondition: yup.boolean().oneOf([true], 'tellUsAboutYou.inputRequired'),
 });
