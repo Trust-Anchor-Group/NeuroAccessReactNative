@@ -91,11 +91,13 @@ export const CurrentProvider = ({
   };
 
   const handleSubmit = () => {
-    Config.AGENT_API_URL = Config.AGENT_API_URL + selectedDomain.Domain;
-    Config.Host = selectedDomain.Domain;
-    Config.ApiKey = selectedDomain.Key;
-    Config.Secret = selectedDomain.Secret;
-    selectedDomain && isCreateAccountSelected && navigation.navigate('EnterUserName');
+    if (selectedDomain && isCreateAccountSelected) {
+      Config.AGENT_API_URL = Config.AGENT_API_URL + selectedDomain.Domain;
+      Config.Host = selectedDomain.Domain;
+      Config.ApiKey = selectedDomain.Key;
+      Config.Secret = selectedDomain.Secret;
+      navigation.navigate('EnterUserName');  
+    }
   };
 
   const touchableView = (selectedValue: any) => {
