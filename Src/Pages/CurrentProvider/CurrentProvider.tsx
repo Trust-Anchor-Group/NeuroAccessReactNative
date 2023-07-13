@@ -30,6 +30,7 @@ import {
 } from '@Services/Redux/Actions/GetDomainDetails';
 import { DomainInfo } from '@Services/Redux/Reducers/DomainSlice';
 import { moderateScale } from '@Theme/Metrics';
+import Config from 'react-native-config';
 
 interface ProviderDetails {
   domain: string;
@@ -55,6 +56,8 @@ export const CurrentProvider = ({
     useState<boolean>(false);
   const [showServiceProviderInfo, setShowServiceProviderInfo] =
     useState<boolean>(false);
+  const [showDomainInfo, setShowDomainInfo] =
+    useState<boolean>(false);
   const [showScanner, setShowScanner] = useState<boolean>(false);
   const [selectedProvider, setSelectedProvider] = useState<DomainInfo>();
 
@@ -79,12 +82,20 @@ export const CurrentProvider = ({
     setShowServiceProviderInfo(!showServiceProviderInfo);
   };
 
+  const toggleDomainInfoOverlay = () => {
+    setShowDomainInfo(!showDomainInfo);
+  };
+
   const toggleScannerOverlay = () => {
     setShowScanner(!showScanner);
   };
 
   const handleSubmit = () => {
-   selectedDomain && isCreateAccountSelected && navigation.navigate('EnterUserName');
+    Config.AGENT_API_URL = Config.AGENT_API_URL + selectedDomain.Domain;
+    Config.Host = selectedDomain.Domain;
+    Config.ApiKey = selectedDomain.Key;
+    Config.Secret = selectedDomain.Secret;
+    selectedDomain && isCreateAccountSelected && navigation.navigate('EnterUserName');
   };
 
   const touchableView = (selectedValue: any) => {
@@ -225,6 +236,13 @@ export const CurrentProvider = ({
   const overLayViews = () => {
     return (
       <>
+        {showDomainInfo && (
+          <InformationOverlay
+            toggleOverlay={toggleDomainInfoOverlay}
+            title={t(`serviceProviderInformation.title`)}
+            description={t(`serviceProviderInformation.description`)}
+          />
+        )}
         {showServiceProviderInfo && (
           <InformationOverlay
             toggleOverlay={toggleOverlay}
@@ -283,6 +301,7 @@ export const CurrentProvider = ({
             <InformationIcon
               style={CurrentProviderStyle(themeColors).infoIconMargin}
               textColor={themeColors.currentProvider.link}
+              onPress={toggleDomainInfoOverlay}
             />
           </View>
           <TextLabel
@@ -310,7 +329,7 @@ export const CurrentProvider = ({
             { justifyContent: 'space-between' },
           ]}
         >
-          {defaultDomain?.Domain !== selectedProvider?.Domain && (
+          {(selectedProvider && defaultDomain?.Domain !== selectedProvider?.Domain) && (
             <ActionButton
               textStyle={[
                 CurrentProviderStyle(themeColors).linkText,
