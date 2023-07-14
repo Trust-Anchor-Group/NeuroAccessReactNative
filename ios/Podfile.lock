@@ -817,18 +817,16 @@ SPEC CHECKSUMS:
   ReactCommon: 85c98ab0a509e70bf5ee5d9715cf68dbf495b84c
   RNCAsyncStorage: ddc4ee162bfd41b0d2c68bf2d95acd81dd7f1f93
   RNGestureHandler: 42ec7c28dd02d540ed6c9159c57a98ff016492dc
-
   RNPermissions: f1b49dd05fa9b83993cd05a9ee115247944d8f1a
+  RNReanimated: f186e85d9f28c9383d05ca39e11dd194f59093ec
   RNScreens: 218801c16a2782546d30bd2026bb625c0302d70f
   RNSVG: 53c661b76829783cdaf9b7a57258f3d3b4c28315
   SocketRocket: f32cd54efbe0f095c4d7594881e52619cfe80b17
-  RNReanimated: f186e85d9f28c9383d05ca39e11dd194f59093ec
   vision-camera-code-scanner: dda884a7f3ec8243a2a6d6489b91860648371bca
   VisionCamera: c6356b309f7b8e185b7be2e703ec67bb35acf345
-
   Yoga: 065f0b74dba4832d6e328238de46eb72c5de9556
   YogaKit: f782866e155069a2cca2517aafea43200b01fd5a
 
 PODFILE CHECKSUM: 23cc168ff3cfedbd1f0ece9a07dd06633d06f0e6
 
-COCOAPODS: 1.12.0
+COCOAPODS: 1.12.1
