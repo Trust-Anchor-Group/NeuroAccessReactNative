@@ -7,13 +7,21 @@ export type ApplyLegalPayload = {
   KeyId: string;
   KeyPassword: string;
   AccountPassword: string;
-  Properties:{ [x: string]: any };
-}
+  Properties: { [x: string]: any };
+};
 
 export type PnrPayload = {
   countryCode: string;
   pnr: string;
-}
+};
+
+export type CreateKeyPayload = {
+  LocalName: string;
+  Namespace: string;
+  Id: string;
+  KeyPassword: string;
+  AccountPassword: string;
+};
 
 export type AddIdAttachmentPayload = {
   LocalName: string;
@@ -21,11 +29,11 @@ export type AddIdAttachmentPayload = {
   KeyId: string;
   KeyPassword: string;
   AccountPassword: string;
-  LegalId: any,
-  Attachment: string,
-  FileName: string,
-  ContentType: string
-}
+  LegalId: any;
+  Attachment: string;
+  FileName: string;
+  ContentType: string;
+};
 
 export const getAlgorithmListApi = createAsyncThunk(
   'crypto/getAlgorithmListApi',
@@ -39,12 +47,32 @@ export const getAlgorithmListApi = createAsyncThunk(
   }
 );
 
-export const  validatePNrApi = createAsyncThunk(
+export const validatePNrApi = createAsyncThunk(
   'crypto/validatePNrApi',
   async (payload: PnrPayload) => {
     try {
-      const response = await AgentAPI.Legal.ValidatePNr(payload.countryCode,
-        payload.pnr);
+      const response = await AgentAPI.Legal.ValidatePNr(
+        payload.countryCode,
+        payload.pnr
+      );
+      return response;
+    } catch (error) {
+      throw error?.response?.data;
+    }
+  }
+);
+
+export const createKeyIdApi = createAsyncThunk(
+  'crypto/createKeyIdApi',
+  async (payload: CreateKeyPayload) => {
+    try {
+      const response = await AgentAPI.Crypto.CreateKey(
+        payload.LocalName,
+        payload.Namespace,
+        payload.Id,
+        payload.KeyPassword,
+        payload.AccountPassword
+      );
       return response;
     } catch (error) {
       throw error?.response?.data;
@@ -56,14 +84,14 @@ export const applyLegalIdApi = createAsyncThunk(
   'crypto/applyLegalIdApi',
   async (payload: ApplyLegalPayload) => {
     try {
-      console.log('print request====',payload)
-      const response = await AgentAPI.Legal.ApplyId(payload.LocalName,
+      const response = await AgentAPI.Legal.ApplyId(
+        payload.LocalName,
         payload.Namespace,
         payload.KeyId,
         payload.KeyPassword,
         payload.AccountPassword,
-        payload.Properties);
-        console.log('legal id response',response)
+        payload.Properties
+      );
       return response;
     } catch (error) {
       throw error?.response?.data;
@@ -75,7 +103,8 @@ export const addIdAttachmentApi = createAsyncThunk(
   'crypto/addIdAttachmentApi',
   async (payload: AddIdAttachmentPayload) => {
     try {
-      const response = await AgentAPI.Legal.AddIdAttachment(payload.LocalName,
+      const response = await AgentAPI.Legal.AddIdAttachment(
+        payload.LocalName,
         payload.Namespace,
         payload.KeyId,
         payload.KeyPassword,
@@ -83,7 +112,8 @@ export const addIdAttachmentApi = createAsyncThunk(
         payload.LegalId,
         payload.Attachment,
         payload.FileName,
-        payload.ContentType);
+        payload.ContentType
+      );
       return response;
     } catch (error) {
       throw error?.response?.data;

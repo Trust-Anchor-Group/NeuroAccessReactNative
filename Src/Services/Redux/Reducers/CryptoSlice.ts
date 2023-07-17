@@ -4,6 +4,7 @@ import {
   validatePNrApi,
   applyLegalIdApi,
   addIdAttachmentApi,
+  createKeyIdApi,
 } from '../Actions/GetAlgorithmList';
 
 export interface Algorithm {
@@ -17,6 +18,7 @@ export interface Algorithm {
 
 interface CryptoState {
   algorithmDetails: Algorithm[];
+  createKeyResponse: {};
   pnrResponse: {};
   legalResponse: {};
   attachmentResponse: {};
@@ -26,6 +28,7 @@ interface CryptoState {
 
 const initialState: CryptoState = {
   algorithmDetails: [],
+  createKeyResponse: {},
   pnrResponse: {},
   legalResponse: {},
   attachmentResponse: {},
@@ -48,6 +51,18 @@ const cryptoSlice = createSlice({
         state.algorithmDetails = action.payload;
       })
       .addCase(getAlgorithmListApi.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action?.error?.message || '';
+      })
+      .addCase(createKeyIdApi.pending, (state) => {
+        state.loading = true;
+        state.error = '';
+      })
+      .addCase(createKeyIdApi.fulfilled, (state, action) => {
+        state.loading = false;
+        state.createKeyResponse = action.payload;
+      })
+      .addCase(createKeyIdApi.rejected, (state, action) => {
         state.loading = false;
         state.error = action?.error?.message || '';
       })

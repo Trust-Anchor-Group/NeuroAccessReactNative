@@ -34,7 +34,7 @@ export const OnboardingAPI = {
             if (!Internal) OnboardingAPI.IO.AfterResponse(Response);
           }
         };
-
+        console.log('the host name is ------',Config.ID_API_URL )
         if (!Internal) this.BeforeRequest(RequestPayload);
 
         xhttp.open('POST', Config.ID_API_URL + Resource);

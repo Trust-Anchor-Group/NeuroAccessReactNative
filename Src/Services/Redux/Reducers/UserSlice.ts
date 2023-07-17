@@ -7,6 +7,9 @@ import {
   saveNumber,
   createAccountUsingMobileNumber,
   sendEmailVerificationMessage,
+  saveAccountPassword,
+  saveKeyId,
+  saveKeyIdPassword,
 } from '../Actions/GetUserDetails';
 import { ContextType } from '@Services/Data';
 
@@ -19,6 +22,8 @@ type UserProfile = {
     code: string;
   };
   password?: string;
+  keyId?: string;
+  keyPassword?: string;
   tokenData?: any;
 };
 
@@ -77,6 +82,21 @@ const userSlice = createSlice({
       .addCase(saveEmail.fulfilled, (state, action) => {
         state.loading = false;
         state.userDetails = { ...state.userDetails, email: action.payload };
+      })
+      .addCase(saveAccountPassword.fulfilled, (state, action) => {
+        state.loading = false;
+        state.userDetails = { ...state.userDetails, password: action.payload };
+      })
+      .addCase(saveKeyId.fulfilled, (state, action) => {
+        state.loading = false;
+        state.userDetails = { ...state.userDetails, keyId: action.payload };
+      })
+      .addCase(saveKeyIdPassword.fulfilled, (state, action) => {
+        state.loading = false;
+        state.userDetails = {
+          ...state.userDetails,
+          keyPassword: action.payload,
+        };
       })
       .addCase(saveNumber.fulfilled, (state, action) => {
         state.loading = false;

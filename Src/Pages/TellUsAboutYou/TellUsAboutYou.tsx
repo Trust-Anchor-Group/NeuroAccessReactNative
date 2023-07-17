@@ -51,7 +51,10 @@ import {
   addIdAttachmentApi,
   PnrPayload,
   validatePNrApi,
+  createKeyIdApi,
+  CreateKeyPayload,
 } from '@Services/Redux/Actions/GetAlgorithmList';
+import { saveKeyIdPassword } from '@Services/Redux/Actions/GetUserDetails';
 
 const ApiKey = Config.ApiKey;
 const Secret = Config.Secret;
@@ -64,14 +67,13 @@ export const TellUsAboutYou = ({
   const [imageUri, setImageUri] = useState();
   const [isModalVisible, setIsModalVisible] = useState(false);
   const formikRef = useRef();
-  const accountPassword = useRef();
-  const keyPassword = useRef();
   const countryISOCode = useRef();
   const legalID = useRef();
   const algorithmVal = useRef<Algorithm>();
   const { userDetails } = useSelector((state) => state.user);
   const {
     algorithmDetails,
+    createKeyResponse,
     pnrResponse,
     legalResponse,
     attachmentResponse,
@@ -105,11 +107,23 @@ export const TellUsAboutYou = ({
       );
     }
     dispatch(getAlgorithmListApi());
+    generateUniqueKey();
   }, []);
 
   useEffect(() => {
     filterAlgorithm(algorithmDetails.Algorithms);
   }, [algorithmDetails]);
+
+  useEffect(() => {
+    const createKeyHandler = Object.entries(createKeyResponse).length !== 0;
+    console.log('create key response---', createKeyResponse);
+    if (createKeyHandler) {
+      // const state = createKeyResponse.Identity.status.state;
+      // if (state === 'Created') {
+      //   const id = createKeyResponse.Identity.id;
+      // }
+    }
+  }, [createKeyResponse]);
 
   useEffect(() => {
     const pnrHandler = Object.entries(pnrResponse).length !== 0;
@@ -164,20 +178,6 @@ export const TellUsAboutYou = ({
       });
       algorithmVal.current = resultFinal;
     }
-  };
-
-  const generateUniqueKey = async () => {
-    try {
-      const randomString = AgentAPI.Account.getRandomValues(32);
-      const s1 = userDetails.userName + ':' + randomString;
-      accountPassword.current = await AgentAPI.Account.Sign(
-        userDetails.userName,
-        s1
-      );
-
-      const s2 = Secret + ':' + randomString;
-      keyPassword.current = await AgentAPI.Account.Sign(ApiKey, s2);
-    } catch (error) {}
   };
 
   const openModal = () => {
@@ -249,21 +249,42 @@ export const TellUsAboutYou = ({
     const applyLegalPayload: ApplyLegalPayload = {
       LocalName: algorithmVal?.current?.localName,
       Namespace: algorithmVal.current?.namespace,
-      KeyId: '5df048afef1941a40153ae55525034e8cf47dc2d60659a8dc7d26e7b5c551c02',
-      KeyPassword: 'ankush@12345',
-      AccountPassword: 'ankush@12345',
+      KeyId: userDetails?.keyId,
+      KeyPassword: userDetails?.keyPassword,
+      AccountPassword: userDetails?.password,
       Properties: properties,
     };
     dispatch(applyLegalIdApi(applyLegalPayload));
+  };
+
+  const generateUniqueKey = async () => {
+    try {
+      const randomString = AgentAPI.Account.getRandomValues(32);
+      const s2 = Secret + ':' + randomString;
+      const keyPassword = await AgentAPI.Account.Sign(ApiKey, s2);
+      dispatch(saveKeyIdPassword(keyPassword));
+      createKeyCall(keyPassword);
+    } catch (error) {}
+  };
+
+  const createKeyCall = (keyPassword: string) => {
+    const addIdAttachmentPayload: CreateKeyPayload = {
+      LocalName: algorithmVal?.current?.localName,
+      Namespace: algorithmVal.current?.namespace,
+      Id: userDetails?.keyId,
+      KeyPassword: keyPassword,
+      AccountPassword: userDetails?.password,
+    };
+    dispatch(createKeyIdApi(addIdAttachmentPayload));
   };
 
   const uploadAttachment = (id: string) => {
     const addIdAttachmentPayload: AddIdAttachmentPayload = {
       LocalName: algorithmVal?.current?.localName,
       Namespace: algorithmVal.current?.namespace,
-      KeyId: '5df048afef1941a40153ae55525034e8cf47dc2d60659a8dc7d26e7b5c551c02',
-      KeyPassword: 'ankush@12345',
-      AccountPassword: 'ankush@12345',
+      KeyId: userDetails?.keyId,
+      KeyPassword: userDetails?.keyPassword,
+      AccountPassword: userDetails?.password,
       LegalId: id,
       Attachment: imageUri?.base64,
       FileName: imageUri?.fileName,
