@@ -343,16 +343,16 @@ export const AgentAPI = {
         ':' +
         Password +
         ':' +
-        ApiKey +
+        Config.ApiKey +
         ':' +
         Nonce;
       const Response = await AgentAPI.IO.Request('/Agent/Account/Create', {
         userName: UserName,
         eMail: EMail,
         password: Password,
-        apiKey: ApiKey,
+        apiKey: Config.ApiKey,
         nonce: Nonce,
-        signature: await this.Sign(Secret, s),
+        signature: await this.Sign(Config.Secret, s),
         seconds: Seconds,
       });
 

@@ -16,7 +16,7 @@ export const LoginProvider = ({ children }) => {
   const [profile, setProfile] = useState({});
 
   if (selectedDomain) {
-    Config.AGENT_API_URL = Config.AGENT_API_URL + selectedDomain.Domain;
+    Config.AGENT_API_URL = 'https://' + selectedDomain.Domain;
     Config.Host = selectedDomain.Domain;
     Config.ApiKey = selectedDomain.Key;
     Config.Secret = selectedDomain.Secret;  
