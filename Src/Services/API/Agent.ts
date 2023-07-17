@@ -8,9 +8,6 @@ import hmacSHA256 from 'crypto-js/hmac-sha256';
 import Base64 from 'crypto-js/enc-base64';
 import Config from 'react-native-config';
 
-const host = Config.Host;
-const ApiKey = Config.ApiKey;
-const Secret = Config.Secret;
 const Seconds = 3500;
 
 export const AgentAPI = {
@@ -337,7 +334,7 @@ export const AgentAPI = {
       const s =
         UserName +
         ':' +
-        host +
+        Config.Host +
         ':' +
         EMail +
         ':' +
@@ -385,7 +382,7 @@ export const AgentAPI = {
     },
     Login: async function (UserName: string, Password: any, Seconds: number) {
       const Nonce = this.getRandomValues(32);
-      const s = UserName + ':' + host + ':' + Nonce;
+      const s = UserName + ':' + Config.Host + ':' + Nonce;
       let raw = {
         userName: UserName,
         nonce: Nonce,
@@ -727,7 +724,7 @@ export const AgentAPI = {
       const Nonce = AgentAPI.Account.getRandomValues(32);
 
       const s1 =
-        UserName + ':' + host + ':' + LocalName + ':' + Namespace + ':' + Id;
+        UserName + ':' + Config.Host + ':' + LocalName + ':' + Namespace + ':' + Id;
       const KeySignature = await AgentAPI.Account.Sign(KeyPassword, s1);
       const s2 = s1 + ':' + KeySignature + ':' + Nonce;
       const RequestSignature = await AgentAPI.Account.Sign(AccountPassword, s2);
@@ -773,7 +770,7 @@ export const AgentAPI = {
       const UserName = AgentAPI.Account.GetSessionString('AgentAPI.UserName');
       const Nonce = AgentAPI.Account.getRandomValues(32);
       const s1 =
-        UserName + ':' + host + ':' + LocalName + ':' + Namespace + ':' + KeyId;
+        UserName + ':' + Config.Host + ':' + LocalName + ':' + Namespace + ':' + KeyId;
       const KeySignature = await AgentAPI.Account.Sign(KeyPassword, s1);
       let s2 = s1 + ':' + KeySignature + ':' + Nonce;
       const PropertiesVector = [];
@@ -818,7 +815,7 @@ export const AgentAPI = {
       const UserName = AgentAPI.Account.GetSessionString('AgentAPI.UserName');
       const Nonce = AgentAPI.Account.getRandomValues(32);
       const s1 =
-        UserName + ':' + host + ':' + LocalName + ':' + Namespace + ':' + KeyId;
+        UserName + ':' + Config.Host + ':' + LocalName + ':' + Namespace + ':' + KeyId;
       const KeySignature = await AgentAPI.Account.Sign(KeyPassword, s1);
       const s2 =
         s1 +
@@ -919,7 +916,7 @@ export const AgentAPI = {
       const UserName = AgentAPI.Account.GetSessionString('AgentAPI.UserName');
       const Nonce = AgentAPI.Account.getRandomValues(32);
       const s1 =
-        UserName + ':' + host + ':' + LocalName + ':' + Namespace + ':' + KeyId;
+        UserName + ':' + Config.Host + ':' + LocalName + ':' + Namespace + ':' + KeyId;
       const KeySignature = await AgentAPI.Account.Sign(KeyPassword, s1);
       const s2 =
         s1 +
