@@ -21,6 +21,7 @@ import { getDomainDetails, setDomainDetails } from '@Services/Redux/Actions/GetD
 import { useSelector, useDispatch } from 'react-redux';
 import { ThunkDispatch } from '@reduxjs/toolkit';
 import { DomainInfo } from '@Services/Redux/Reducers/DomainSlice';
+import { StackActions } from '@react-navigation/native';
 
 type Props = StackScreenProps<{}>;
 
@@ -68,7 +69,7 @@ export const OTPVerify = ({ navigation, route }: Props) => {
         Secret: response['Secret']
       };
       dispatch(setDomainDetails(responseObj));
-      navigation.navigate('CurrentProvider');
+      navigation.dispatch(StackActions.replace('CurrentProvider'));
     }
   };
   const onBackClick = () => {
