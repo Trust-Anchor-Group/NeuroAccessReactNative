@@ -31,6 +31,7 @@ import {
 import { DomainInfo } from '@Services/Redux/Reducers/DomainSlice';
 import { moderateScale } from '@Theme/Metrics';
 import Config from 'react-native-config';
+import { StackActions } from '@react-navigation/native';
 
 interface ProviderDetails {
   domain: string;
@@ -92,11 +93,11 @@ export const CurrentProvider = ({
 
   const handleSubmit = () => {
     if (selectedDomain && isCreateAccountSelected) {
-      Config.AGENT_API_URL = Config.AGENT_API_URL + selectedDomain.Domain;
+      Config.AGENT_API_URL = 'https://' + selectedDomain.Domain;
       Config.Host = selectedDomain.Domain;
       Config.ApiKey = selectedDomain.Key;
       Config.Secret = selectedDomain.Secret;
-      navigation.navigate('EnterUserName');  
+      navigation.dispatch(StackActions.replace('EnterUserName'));
     }
   };
 

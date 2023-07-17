@@ -1,4 +1,4 @@
-import { View } from 'react-native';
+import { Alert, View } from 'react-native';
 import React, { useContext, useEffect, useRef, useState } from 'react';
 import { StackScreenProps } from '@react-navigation/stack';
 import { ThunkDispatch } from '@reduxjs/toolkit';
@@ -18,11 +18,13 @@ import { useTranslation } from 'react-i18next';
 import { ThemeContext } from '@Theme/Provider/ThemeContext';
 import { InformationOverlay } from '@Controls/InformationOverlay';
 import { selectedPupose } from '@Services/Redux/Actions/GetUserDetails';
+import { StackActions } from '@react-navigation/native';
 
 export const ChooseAccountType = ({
   navigation,
 }: StackScreenProps<{ Profile: any }>) => {
   const { t } = useTranslation();
+  const [appLoading, setAppLoading] = useState(true);
   const { userDetails } = useSelector((state) => state.user);
   const { themeColors } = useContext(ThemeContext);
   const [selected, setSelected] = useState<ContextType>();
@@ -31,6 +33,21 @@ export const ChooseAccountType = ({
     useState<boolean>(false);
   const overlayInfo = useRef<ContextType>();
   const dispatch = useDispatch<ThunkDispatch<any, any, any>>();
+
+  useEffect(() => {
+    setAppLoading(false)
+    setTimeout(() => {
+      if (userDetails.email) {
+        navigation.dispatch(StackActions.replace('TellUsAboutYou'));
+      } else if (userDetails.userName) {
+        navigation.dispatch(StackActions.replace('EnterEmail'));
+      } else if (userDetails.mobileNumber) {
+        navigation.dispatch(StackActions.replace('CurrentProvider'));
+      } else if (userDetails.purpose) {
+        navigation.dispatch(StackActions.replace('EnterMobileNumber'));
+      }
+    }, 100);    
+  }, [])
 
   useEffect(() => {
     if (!selected && userDetails && userDetails['purpose']) {
@@ -51,6 +68,9 @@ export const ChooseAccountType = ({
     navigation.navigate('Settings');
   };
 
+  if (appLoading) {
+    return <></>
+  }
   return (
     <NeuroAccessBackground>
       <View style={styles(themeColors).container}>
@@ -99,7 +119,7 @@ export const ChooseAccountType = ({
             onPress={async () => {
               if (selected) {
                 dispatch(selectedPupose(selected));
-                navigation.navigate('EnterMobileNumber');
+                navigation.dispatch(StackActions.replace('EnterMobileNumber'));
               }
             }}
           />
