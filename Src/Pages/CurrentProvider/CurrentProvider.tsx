@@ -51,14 +51,13 @@ export const CurrentProvider = ({
     error: domainInfoError,
   } = useSelector((state) => state.domain);
   const { themeColors } = useContext(ThemeContext);
-  const currentProviderStyle = CurrentProviderStyle(themeColors)
+  const currentProviderStyle = CurrentProviderStyle(themeColors);
   const [loading, setLoading] = useState(false);
   const [isCreateAccountSelected, setCreateAccountSelected] =
     useState<boolean>(false);
   const [showServiceProviderInfo, setShowServiceProviderInfo] =
     useState<boolean>(false);
-  const [showDomainInfo, setShowDomainInfo] =
-    useState<boolean>(false);
+  const [showDomainInfo, setShowDomainInfo] = useState<boolean>(false);
   const [showScanner, setShowScanner] = useState<boolean>(false);
   const [selectedProvider, setSelectedProvider] = useState<DomainInfo>();
 
@@ -157,7 +156,11 @@ export const CurrentProvider = ({
 
   const serviceProviderDetails = () => {
     return (
-      <View style={CurrentProviderStyle(themeColors).serviceProviderDetailsContainer}>
+      <View
+        style={
+          CurrentProviderStyle(themeColors).serviceProviderDetailsContainer
+        }
+      >
         <TextLabel
           style={CurrentProviderStyle(themeColors).detailText}
           variant={TextLabelVariants.LABEL}
@@ -180,9 +183,7 @@ export const CurrentProvider = ({
   const userSelection = () => {
     return (
       <View style={[styles(themeColors).inputContainer]}>
-        <TextLabel
-          variant={TextLabelVariants.INPUTLABEL}
-        >
+        <TextLabel variant={TextLabelVariants.INPUTLABEL}>
           {t('currentProvider.optionTitle')}
         </TextLabel>
 
@@ -254,9 +255,7 @@ export const CurrentProvider = ({
           />
         )}
         {showScanner && (
-          <View
-            style={currentProviderStyle.qrCodeScannerContainer}
-          >
+          <View style={currentProviderStyle.qrCodeScannerContainer}>
             <QRCodeScanner
               toggleOverlay={toggleScannerOverlay}
               onSelect={handleQRCodeSelection}
@@ -332,17 +331,18 @@ export const CurrentProvider = ({
             { justifyContent: 'space-between' },
           ]}
         >
-          {(selectedProvider && defaultDomain?.Domain !== selectedProvider?.Domain) && (
-            <ActionButton
-              textStyle={[
-                CurrentProviderStyle(themeColors).linkText,
-                { fontSize: moderateScale(14) },
-              ]}
-              buttonStyle={{ backgroundColor: themeColors.button.linkText }}
-              title={t('Undo Selection')}
-              onPress={() => setSelectedProvider(defaultDomain)}
-            />
-          )}
+          {selectedProvider &&
+            defaultDomain?.Domain !== selectedProvider?.Domain && (
+              <ActionButton
+                textStyle={[
+                  CurrentProviderStyle(themeColors).linkText,
+                  { fontSize: moderateScale(14) },
+                ]}
+                buttonStyle={{ backgroundColor: themeColors.button.linkText }}
+                title={t('Undo Selection')}
+                onPress={() => setSelectedProvider(defaultDomain)}
+              />
+            )}
           <ActionButton
             disabled={!isCreateAccountSelected}
             textStyle={[

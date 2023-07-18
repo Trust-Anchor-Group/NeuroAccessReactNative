@@ -1,18 +1,19 @@
-
 import { createSlice } from '@reduxjs/toolkit';
 import {
-  getDomainDetails, setDomainDetails, setSelectedDomain
+  getDomainDetails,
+  setDomainDetails,
+  setSelectedDomain,
 } from '../Actions/GetDomainDetails';
 import { ContextType } from '@Services/Data';
 
 export interface DomainInfo {
-  Domain?: string
-  Key?: string
-  Secret?: string
-  useEncryption?: boolean
-  humanReadableName?: string
-  humanReadableDescription?: string
-};
+  Domain?: string;
+  Key?: string;
+  Secret?: string;
+  useEncryption?: boolean;
+  humanReadableName?: string;
+  humanReadableDescription?: string;
+}
 
 const initialState = {
   defaultDomain: <DomainInfo>{},
@@ -33,7 +34,7 @@ const domainSlice = createSlice({
       })
       .addCase(getDomainDetails.fulfilled, (state, action) => {
         state.loading = false;
-        state.defaultDomain = {...action.payload};
+        state.defaultDomain = { ...action.payload };
       })
       .addCase(getDomainDetails.rejected, (state, action) => {
         state.loading = false;
@@ -41,12 +42,12 @@ const domainSlice = createSlice({
       })
       .addCase(setDomainDetails.fulfilled, (state, action) => {
         state.loading = false;
-        state.defaultDomain = {...action.payload};
+        state.defaultDomain = { ...action.payload };
       })
       .addCase(setSelectedDomain.fulfilled, (state, action) => {
         state.loading = false;
         state.selectedDomain = action.payload;
-      })
+      });
   },
 });
 

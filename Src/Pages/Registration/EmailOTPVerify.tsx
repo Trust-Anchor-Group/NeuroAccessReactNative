@@ -87,7 +87,7 @@ export const EmailOTPVerify = ({ navigation, route }: Props) => {
       const userPayload: UserPayload = {
         UserName: userDetails?.userName,
         EMail: userDetails?.email,
-        Password: userDetails?.email,
+        Password: userDetails?.password,
       };
       setIsLoading(true);
       dispatch(createAccountUsingEmail(userPayload));

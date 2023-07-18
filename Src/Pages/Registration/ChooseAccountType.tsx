@@ -57,7 +57,7 @@ export const ChooseAccountType = ({
   }, []);
 
   useEffect(() => {
-    setAppLoading(false)
+    setAppLoading(false);
     setTimeout(() => {
       if (userDetails.email) {
         navigation.dispatch(StackActions.replace('TellUsAboutYou'));
@@ -92,7 +92,7 @@ export const ChooseAccountType = ({
   };
 
   if (appLoading) {
-    return <></>
+    return <></>;
   }
   return (
     <NeuroAccessBackground>

@@ -28,6 +28,10 @@ target 'NeuroAccess' do
   flags = get_default_flags()
   
   pod 'react-native-config', :path => '../node_modules/react-native-config'
+  permissions_path = '../node_modules/react-native-permissions/ios'
+  pod 'RNPermissions', :path => '../node_modules/react-native-permissions'
+  pod 'Permission-Camera', :path => "#{permissions_path}/Camera/Permission-Camera.podspec"
+  pod 'Permission-PhotoLibrary', :path => "#{permissions_path}/PhotoLibrary"
 
   use_react_native!(
     :path => config[:reactNativePath],
