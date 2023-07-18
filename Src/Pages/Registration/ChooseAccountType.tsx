@@ -57,7 +57,7 @@ export const ChooseAccountType = ({
   }, []);
 
   useEffect(() => {
-    setAppLoading(false)
+    setAppLoading(false);
     setTimeout(() => {
 
       navigation.dispatch(StackActions.replace('AlmostThere'));
@@ -94,7 +94,7 @@ export const ChooseAccountType = ({
   };
 
   if (appLoading) {
-    return <></>
+    return <></>;
   }
   return (
     <NeuroAccessBackground>

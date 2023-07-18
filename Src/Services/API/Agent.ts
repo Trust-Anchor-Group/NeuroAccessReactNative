@@ -22,7 +22,6 @@ export const AgentAPI = {
         xhttp.onreadystatechange = function () {
           if (xhttp.readyState == 4) {
             let Response = xhttp.responseText;
-
             if (xhttp.status === 200) {
               Response = JSON.parse(Response);
               SetResult(Response);
@@ -33,11 +32,10 @@ export const AgentAPI = {
         };
 
         if (!Internal) this.BeforeRequest(RequestPayload);
-
         xhttp.open('POST', Config.AGENT_API_URL + Resource);
         xhttp.setRequestHeader('Content-Type', 'application/json');
         xhttp.setRequestHeader('Accept', 'application/json');
-
+        xhttp.setRequestHeader('Referer', 'lab.tagroot.io');
         var Token = await AgentAPI.Account.GetSessionString('AgentAPI.Token');
         if (Token) xhttp.setRequestHeader('Authorization', 'Bearer ' + Token);
 
@@ -69,10 +67,9 @@ export const AgentAPI = {
         if (!Internal) this.BeforeRequest(RequestPayload);
 
         xhttp.open('GET', 'https://' + Domain + Resource);
-        xhttp.setRequestHeader("Accept", "application/json");
-        xhttp.setRequestHeader("Accept-Language", "en");
-        xhttp.setRequestHeader("Content-Type", "text/plain");
-        
+        xhttp.setRequestHeader('Accept', 'application/json');
+        xhttp.setRequestHeader('Accept-Language', 'en');
+        xhttp.setRequestHeader('Content-Type', 'text/plain');
 
         xhttp.send(JSON.stringify(RequestPayload));
       });
@@ -313,7 +310,6 @@ export const AgentAPI = {
       );
     },
     GetDomainInfo: async function (domain: string) {
-
       const Request = {};
       const Response = await AgentAPI.IO.GetRequestWithDomain(
         domain,
@@ -352,7 +348,6 @@ export const AgentAPI = {
         signature: await this.Sign(Config.Secret, s),
         seconds: Seconds,
       });
-
       this.SetSessionString('AgentAPI.UserName', UserName);
       this.SaveSessionToken(Response.jwt, Seconds, Math.round(Seconds / 2));
 
@@ -714,17 +709,26 @@ export const AgentAPI = {
       return Response;
     },
     CreateKey: async function (
+      UserName: string,
       LocalName: string,
       Namespace: string,
       Id: string,
       KeyPassword: any,
       AccountPassword: any
     ) {
-      const UserName = AgentAPI.Account.GetSessionString('AgentAPI.UserName');
+      //const UserName = AgentAPI.Account.GetSessionString('AgentAPI.UserName');
       const Nonce = AgentAPI.Account.getRandomValues(32);
 
       const s1 =
-        UserName + ':' + Config.Host + ':' + LocalName + ':' + Namespace + ':' + Id;
+        UserName +
+        ':' +
+        Config.Host +
+        ':' +
+        LocalName +
+        ':' +
+        Namespace +
+        ':' +
+        Id;
       const KeySignature = await AgentAPI.Account.Sign(KeyPassword, s1);
       const s2 = s1 + ':' + KeySignature + ':' + Nonce;
       const RequestSignature = await AgentAPI.Account.Sign(AccountPassword, s2);
@@ -737,12 +741,10 @@ export const AgentAPI = {
         keySignature: KeySignature,
         requestSignature: RequestSignature,
       };
-
       const Response = await AgentAPI.IO.Request(
         '/Agent/Crypto/CreateKey',
         Request
       );
-
       return Response;
     },
     GetPublicKey: async function (KeyId: any) {
@@ -759,7 +761,27 @@ export const AgentAPI = {
     },
   },
   Legal: {
+    ValidatePNr: async function (CountryCode: string, PNr: string) {
+      const Request = {
+        countryCode: CountryCode,
+        pnr: PNr,
+      };
+      const Response = await AgentAPI.IO.Request(
+        '/Agent/Legal/ValidatePNr',
+        Request
+      );
+      return Response;
+    },
+    GetApplicationAttributes: async function () {
+      const Request = {};
+      const Response = await AgentAPI.IO.Request(
+        '/Agent/Legal/GetApplicationAttributes',
+        Request
+      );
+      return Response;
+    },
     ApplyId: async function (
+      UserName: string,
       LocalName: string,
       Namespace: string,
       KeyId: string,
@@ -767,25 +789,30 @@ export const AgentAPI = {
       AccountPassword: any,
       Properties: { [x: string]: any }
     ) {
-      const UserName = AgentAPI.Account.GetSessionString('AgentAPI.UserName');
+      // const UserName = AgentAPI.Account.GetSessionString('AgentAPI.UserName');
       const Nonce = AgentAPI.Account.getRandomValues(32);
       const s1 =
-        UserName + ':' + Config.Host + ':' + LocalName + ':' + Namespace + ':' + KeyId;
+        UserName +
+        ':' +
+        Config.Host +
+        ':' +
+        LocalName +
+        ':' +
+        Namespace +
+        ':' +
+        KeyId;
       const KeySignature = await AgentAPI.Account.Sign(KeyPassword, s1);
       let s2 = s1 + ':' + KeySignature + ':' + Nonce;
       const PropertiesVector = [];
-
       for (const PropertyName in Properties) {
         const PropertyValue = Properties[PropertyName];
-        s2 += ':' + PropertyName + ':' + PropertyValue;
+        s2 += ':' + PropertyValue.name + ':' + PropertyValue.value;
         PropertiesVector.push({
-          name: PropertyName,
-          value: PropertyValue,
+          name: PropertyValue.name,
+          value: PropertyValue.value,
         });
       }
-
       const RequestSignature = await AgentAPI.Account.Sign(AccountPassword, s2);
-
       const Request = {
         keyId: KeyId,
         nonce: Nonce,
@@ -798,10 +825,10 @@ export const AgentAPI = {
         '/Agent/Legal/ApplyId',
         Request
       );
-
       return Response;
     },
     AddIdAttachment: async function (
+      UserName: string,
       LocalName: string,
       Namespace: string,
       KeyId: string,
@@ -812,10 +839,18 @@ export const AgentAPI = {
       FileName: string,
       ContentType: string
     ) {
-      const UserName = AgentAPI.Account.GetSessionString('AgentAPI.UserName');
+      //const UserName = AgentAPI.Account.GetSessionString('AgentAPI.UserName');
       const Nonce = AgentAPI.Account.getRandomValues(32);
       const s1 =
-        UserName + ':' + Config.Host + ':' + LocalName + ':' + Namespace + ':' + KeyId;
+        UserName +
+        ':' +
+        Config.Host +
+        ':' +
+        LocalName +
+        ':' +
+        Namespace +
+        ':' +
+        KeyId;
       const KeySignature = await AgentAPI.Account.Sign(KeyPassword, s1);
       const s2 =
         s1 +
@@ -916,7 +951,15 @@ export const AgentAPI = {
       const UserName = AgentAPI.Account.GetSessionString('AgentAPI.UserName');
       const Nonce = AgentAPI.Account.getRandomValues(32);
       const s1 =
-        UserName + ':' + Config.Host + ':' + LocalName + ':' + Namespace + ':' + KeyId;
+        UserName +
+        ':' +
+        Config.Host +
+        ':' +
+        LocalName +
+        ':' +
+        Namespace +
+        ':' +
+        KeyId;
       const KeySignature = await AgentAPI.Account.Sign(KeyPassword, s1);
       const s2 =
         s1 +

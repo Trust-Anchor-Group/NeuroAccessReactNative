@@ -9,7 +9,10 @@ import {
 import { GlobalStyle as styles, EnterMobileNumberStyle } from '@Pages/Styles';
 import { StackScreenProps } from '@react-navigation/stack';
 import { useDispatch, useSelector } from 'react-redux';
-import { createAccountUsingMobileNumber, saveNumber } from '@Services/Redux/Actions/GetUserDetails';
+import {
+  createAccountUsingMobileNumber,
+  saveNumber,
+} from '@Services/Redux/Actions/GetUserDetails';
 import { ThunkDispatch } from '@reduxjs/toolkit';
 import { Logo } from '@Assets/Svgs';
 import {
@@ -30,9 +33,7 @@ import { isValidPhone } from '@Helpers/Validation';
 import { Loader } from '@Controls/index';
 import { OnboardingAPI } from '@Services/API/OnboardingApi';
 
-export const EnterMobileNumber = ({
-  navigation,
-}: StackScreenProps<{}>) => {
+export const EnterMobileNumber = ({ navigation }: StackScreenProps<{}>) => {
   const { t } = useTranslation();
   const dispatch = useDispatch<ThunkDispatch<any, any, any>>();
   const { userDetails, loading, error } = useSelector((state) => state.user);
@@ -40,7 +41,9 @@ export const EnterMobileNumber = ({
   const [countryFlag, setCountryFlag] = useState('');
   const countryISOCode = React.useRef('');
   const mobileCode = React.useRef(userDetails?.mobileNumber?.code);
-  const [mobileNumber, setMobileNumber] = useState(userDetails?.mobileNumber?.number);
+  const [mobileNumber, setMobileNumber] = useState(
+    userDetails?.mobileNumber?.number
+  );
   const [isModalVisible, setIsModalVisible] = useState(false);
   const mobileNumberInputRef = React.useRef<TextInputRef>(null);
 
@@ -94,13 +97,13 @@ export const EnterMobileNumber = ({
   };
 
   const handleSubmit = async () => {
-    try {      
+    try {
       const isFormValid = mobileNumberInputRef.current?.validate();
       if (isFormValid) {
         const mobileData = {
           number: mobileNumber,
-          code: mobileCode.current
-        }
+          code: mobileCode.current,
+        };
         const number = mobileCode.current + mobileNumber;
         await dispatch(createAccountUsingMobileNumber(number));
         await dispatch(saveNumber(mobileData));

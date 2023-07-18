@@ -23,7 +23,13 @@ import { isValidEmail } from '@Helpers/index';
 import { AgentAPI } from '@Services/API/Agent';
 import { GlobalStyle as styles, EnterEmailStyle } from '@Pages/Styles';
 import { useDispatch, useSelector } from 'react-redux';
-import { UserPayload, createAccountUsingEmail, saveEmail, sendEmailVerificationMessage } from '@Services/Redux/Actions/GetUserDetails';
+import {
+  UserPayload,
+  createAccountUsingEmail,
+  saveEmail,
+  sendEmailVerificationMessage,
+  saveAccountPassword,
+} from '@Services/Redux/Actions/GetUserDetails';
 import { ThunkDispatch } from '@reduxjs/toolkit';
 
 export const EnterEmail = ({
@@ -38,11 +44,27 @@ export const EnterEmail = ({
 
   useEffect(() => {}, [loading]);
 
-  const handleSubmit = async () => {
+  const handleSubmit = () => {
+    generateUniqueKey();
+  };
+
+  const generateUniqueKey = async () => {
+    try {
+      const randomString = AgentAPI.Account.getRandomValues(32);
+      const s1 = userDetails?.userName + ':' + email + ':' + randomString;
+      const accountPassword = await AgentAPI.Account.Sign(
+        userDetails.userName,
+        s1
+      );
+      callCreateAccount(accountPassword);
+    } catch (error) {}
+  };
+
+  const callCreateAccount = async (accountPassword: string) => {
     const userPayload: UserPayload = {
       UserName: userDetails?.userName,
       EMail: email,
-      Password: email,
+      Password: accountPassword,
     };
     const isFormValid = emailInputRef.current?.validate();
     if (isFormValid) {
@@ -50,10 +72,11 @@ export const EnterEmail = ({
       try {
         dispatch(createAccountUsingEmail(userPayload));
         dispatch(saveEmail(email));
-        navigation.navigate('EmailOTPVerify');  
+        dispatch(saveAccountPassword(accountPassword));
+        navigation.navigate('EmailOTPVerify');
       } catch (error) {
         alert(error);
-      }      
+      }
     }
   };
 

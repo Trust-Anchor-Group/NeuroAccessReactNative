@@ -10,16 +10,16 @@ export type UserPayload = {
   ApiKey?: string;
   Secret?: any;
   Seconds?: number;
-}
+};
 
 export const sendEmailVerificationMessage = createAsyncThunk(
   'user/sendEmailVerificationMessage',
   async (email: string) => {
     try {
       const response = await OnboardingAPI.ID.sendEmailVerificationMessage(
-        email,
+        email
       );
-      return response ;
+      return response;
     } catch (error) {
       throw error?.response?.data;
     }
@@ -33,11 +33,11 @@ export const createAccountUsingEmail = createAsyncThunk(
       const response = await AgentAPI.Account.Create(
         payload.UserName,
         payload.EMail,
-        payload.Password,
+        payload.Password
       );
-      return response ;
+      return response;
     } catch (error) {
-      throw error
+      throw error;
     }
   }
 );
@@ -46,9 +46,10 @@ export const createAccountUsingMobileNumber = createAsyncThunk(
   'user/createAccountUsingMobileNumber',
   async (mobileNumber: string) => {
     try {
-      
-      const response = await OnboardingAPI.ID.sendVerificationMessage(mobileNumber);
-      return response ;
+      const response = await OnboardingAPI.ID.sendVerificationMessage(
+        mobileNumber
+      );
+      return response;
     } catch (error) {
       throw error?.response?.data;
     }
@@ -59,7 +60,7 @@ export const saveEmail = createAsyncThunk(
   'user/saveEmail',
   async (email: string) => {
     try {
-      return email
+      return email;
     } catch (error) {
       throw error?.response?.data;
     }
@@ -70,7 +71,7 @@ export const saveNumber = createAsyncThunk(
   'user/saveNumber',
   async (mobileNumber: {}) => {
     try {
-      return mobileNumber
+      return mobileNumber;
     } catch (error) {
       throw error?.response?.data;
     }
@@ -88,6 +89,39 @@ export const addUserName = createAsyncThunk(
   }
 );
 
+export const saveAccountPassword = createAsyncThunk(
+  'user/saveAccountPassword',
+  async (accountPassword: string) => {
+    try {
+      return accountPassword;
+    } catch (error) {
+      throw error?.response?.data;
+    }
+  }
+);
+
+export const saveKeyId = createAsyncThunk(
+  'user/saveKeyId',
+  async (keyId: string) => {
+    try {
+      return keyId;
+    } catch (error) {
+      throw error?.response?.data;
+    }
+  }
+);
+
+export const saveKeyIdPassword = createAsyncThunk(
+  'user/saveKeyIdPassword',
+  async (keyPassword: string) => {
+    try {
+      return keyPassword;
+    } catch (error) {
+      throw error?.response?.data;
+    }
+  }
+);
+
 export const selectedPupose = createAsyncThunk(
   'user/selectedPupose',
   async (selectedPupose: ContextType) => {
@@ -98,6 +132,3 @@ export const selectedPupose = createAsyncThunk(
     }
   }
 );
-
-
-
