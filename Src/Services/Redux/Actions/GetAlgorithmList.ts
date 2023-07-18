@@ -2,6 +2,7 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import { AgentAPI } from '@Services/API/Agent';
 
 export type ApplyLegalPayload = {
+  userName: string;
   LocalName: string;
   Namespace: string;
   KeyId: string;
@@ -16,6 +17,7 @@ export type PnrPayload = {
 };
 
 export type CreateKeyPayload = {
+  userName: string;
   LocalName: string;
   Namespace: string;
   Id: string;
@@ -24,6 +26,7 @@ export type CreateKeyPayload = {
 };
 
 export type AddIdAttachmentPayload = {
+  userName: string;
   LocalName: string;
   Namespace: string;
   KeyId: string;
@@ -67,6 +70,7 @@ export const createKeyIdApi = createAsyncThunk(
   async (payload: CreateKeyPayload) => {
     try {
       const response = await AgentAPI.Crypto.CreateKey(
+        payload.userName,
         payload.LocalName,
         payload.Namespace,
         payload.Id,
@@ -85,6 +89,7 @@ export const applyLegalIdApi = createAsyncThunk(
   async (payload: ApplyLegalPayload) => {
     try {
       const response = await AgentAPI.Legal.ApplyId(
+        payload.userName,
         payload.LocalName,
         payload.Namespace,
         payload.KeyId,
@@ -104,6 +109,7 @@ export const addIdAttachmentApi = createAsyncThunk(
   async (payload: AddIdAttachmentPayload) => {
     try {
       const response = await AgentAPI.Legal.AddIdAttachment(
+        payload.userName,
         payload.LocalName,
         payload.Namespace,
         payload.KeyId,

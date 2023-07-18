@@ -35,7 +35,7 @@ export const ChooseAccountType = ({
   const dispatch = useDispatch<ThunkDispatch<any, any, any>>();
 
   useEffect(() => {
-    setAppLoading(false)
+    setAppLoading(false);
     setTimeout(() => {
       if (userDetails.email) {
         navigation.dispatch(StackActions.replace('TellUsAboutYou'));
@@ -46,8 +46,8 @@ export const ChooseAccountType = ({
       } else if (userDetails.purpose) {
         navigation.dispatch(StackActions.replace('EnterMobileNumber'));
       }
-    }, 100);    
-  }, [])
+    }, 100);
+  }, []);
 
   useEffect(() => {
     if (!selected && userDetails && userDetails['purpose']) {
@@ -69,7 +69,7 @@ export const ChooseAccountType = ({
   };
 
   if (appLoading) {
-    return <></>
+    return <></>;
   }
   return (
     <NeuroAccessBackground>

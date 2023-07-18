@@ -17,11 +17,15 @@ import { ThemeContext } from '@Theme/Provider';
 import { AgentAPI } from '@Services/API/Agent';
 import { Loader } from '@Controls/index';
 import { OnboardingAPI } from '@Services/API/OnboardingApi';
-import { getDomainDetails, setDomainDetails } from '@Services/Redux/Actions/GetDomainDetails';
+import {
+  getDomainDetails,
+  setDomainDetails,
+} from '@Services/Redux/Actions/GetDomainDetails';
 import { useSelector, useDispatch } from 'react-redux';
 import { ThunkDispatch } from '@reduxjs/toolkit';
 import { DomainInfo } from '@Services/Redux/Reducers/DomainSlice';
 import { StackActions } from '@react-navigation/native';
+import { saveKeyId } from '@Services/Redux/Actions/GetUserDetails';
 
 type Props = StackScreenProps<{}>;
 
@@ -66,9 +70,13 @@ export const OTPVerify = ({ navigation, route }: Props) => {
       let responseObj: DomainInfo = {
         Domain: response['Domain'],
         Key: response['Key'],
-        Secret: response['Secret']
+        Secret: response['Secret'],
       };
       dispatch(setDomainDetails(responseObj));
+      if (responseObj.Key !== undefined) {
+        dispatch(saveKeyId(responseObj.Key));
+      }
+
       navigation.dispatch(StackActions.replace('CurrentProvider'));
     }
   };

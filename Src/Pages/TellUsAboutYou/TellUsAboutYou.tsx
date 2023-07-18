@@ -55,6 +55,7 @@ import {
   CreateKeyPayload,
 } from '@Services/Redux/Actions/GetAlgorithmList';
 import { saveKeyIdPassword } from '@Services/Redux/Actions/GetUserDetails';
+import { Loader } from '@Controls/index';
 
 const ApiKey = Config.ApiKey;
 const Secret = Config.Secret;
@@ -69,6 +70,7 @@ export const TellUsAboutYou = ({
   const formikRef = useRef();
   const countryISOCode = useRef();
   const legalID = useRef();
+  const propertiesRef = useRef();
   const algorithmVal = useRef<Algorithm>();
   const { userDetails } = useSelector((state) => state.user);
   const {
@@ -107,7 +109,6 @@ export const TellUsAboutYou = ({
       );
     }
     dispatch(getAlgorithmListApi());
-    generateUniqueKey();
   }, []);
 
   useEffect(() => {
@@ -116,8 +117,22 @@ export const TellUsAboutYou = ({
 
   useEffect(() => {
     const createKeyHandler = Object.entries(createKeyResponse).length !== 0;
-    console.log('create key response---', createKeyResponse);
+
     if (createKeyHandler) {
+      if (propertiesRef.current !== undefined) {
+        const applyLegalPayload: ApplyLegalPayload = {
+          userName: userDetails.userName,
+          LocalName: algorithmVal?.current?.localName,
+          Namespace: algorithmVal.current?.namespace,
+          KeyId: userDetails?.keyId,
+          KeyPassword: userDetails?.keyPassword,
+          AccountPassword: userDetails?.password,
+          Properties: propertiesRef.current,
+        };
+
+        dispatch(applyLegalIdApi(applyLegalPayload));
+      }
+
       // const state = createKeyResponse.Identity.status.state;
       // if (state === 'Created') {
       //   const id = createKeyResponse.Identity.id;
@@ -246,15 +261,8 @@ export const TellUsAboutYou = ({
       });
     }
 
-    const applyLegalPayload: ApplyLegalPayload = {
-      LocalName: algorithmVal?.current?.localName,
-      Namespace: algorithmVal.current?.namespace,
-      KeyId: userDetails?.keyId,
-      KeyPassword: userDetails?.keyPassword,
-      AccountPassword: userDetails?.password,
-      Properties: properties,
-    };
-    dispatch(applyLegalIdApi(applyLegalPayload));
+    propertiesRef.current = properties;
+    generateUniqueKey();
   };
 
   const generateUniqueKey = async () => {
@@ -269,8 +277,9 @@ export const TellUsAboutYou = ({
 
   const createKeyCall = (keyPassword: string) => {
     const addIdAttachmentPayload: CreateKeyPayload = {
+      userName: userDetails.userName,
       LocalName: algorithmVal?.current?.localName,
-      Namespace: algorithmVal.current?.namespace,
+      Namespace: algorithmVal?.current?.namespace,
       Id: userDetails?.keyId,
       KeyPassword: keyPassword,
       AccountPassword: userDetails?.password,
@@ -280,6 +289,7 @@ export const TellUsAboutYou = ({
 
   const uploadAttachment = (id: string) => {
     const addIdAttachmentPayload: AddIdAttachmentPayload = {
+      userName: userDetails.userName,
       LocalName: algorithmVal?.current?.localName,
       Namespace: algorithmVal.current?.namespace,
       KeyId: userDetails?.keyId,
@@ -1034,6 +1044,8 @@ export const TellUsAboutYou = ({
         data={countryCodes}
         onItemSelected={handleItemSelected}
       />
+
+      <Loader loading={loading} />
     </NeuroAccessBackground>
   );
 };

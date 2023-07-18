@@ -18,14 +18,13 @@ export const OnboardingAPI = {
     Request: async function (
       Resource: string,
       RequestPayload: any,
-      Internal?: any,
+      Internal?: any
     ) {
       const Request = new Promise(async (SetResult, SetException) => {
         let xhttp = new XMLHttpRequest();
         xhttp.onreadystatechange = function () {
           if (xhttp.readyState == 4) {
             let Response = xhttp.responseText;
-            console.log('onboarding response---',Response)
             if (xhttp.status === 200) {
               Response = JSON.parse(Response);
               SetResult(Response);
@@ -34,14 +33,15 @@ export const OnboardingAPI = {
             if (!Internal) OnboardingAPI.IO.AfterResponse(Response);
           }
         };
-        console.log('the host name is ------',Config.ID_API_URL )
         if (!Internal) this.BeforeRequest(RequestPayload);
 
         xhttp.open('POST', Config.ID_API_URL + Resource);
         xhttp.setRequestHeader('Content-Type', 'application/json');
         xhttp.setRequestHeader('Accept', 'application/json');
 
-        var Token = await OnboardingAPI.Account.GetSessionString('OnboardingAPI.Token');
+        var Token = await OnboardingAPI.Account.GetSessionString(
+          'OnboardingAPI.Token'
+        );
         if (Token) xhttp.setRequestHeader('Authorization', 'Bearer ' + Token);
 
         xhttp.send(JSON.stringify(RequestPayload));
@@ -68,7 +68,7 @@ export const OnboardingAPI = {
       const Response = await OnboardingAPI.IO.Request(
         '/ID/CountryCode.ws',
         {},
-        {},
+        {}
       );
       return Response;
     },
@@ -76,7 +76,7 @@ export const OnboardingAPI = {
       const Response = await OnboardingAPI.IO.Request(
         '/ID/SendVerificationMessage.ws',
         { Nr: mobileNumber },
-        {},
+        {}
       );
       return Response;
     },
@@ -84,7 +84,7 @@ export const OnboardingAPI = {
       const Response = await OnboardingAPI.IO.Request(
         '/ID/VerifyNumber.ws',
         { Nr: mobileNumber, Code: parseInt(code), Test: true },
-        {},
+        {}
       );
       return Response;
     },
@@ -231,10 +231,16 @@ export const OnboardingAPI = {
     },
     RefreshToken: async function () {
       OnboardingAPI.Account.RemoveSessionValue('OnboardingAPI.RefreshTimer');
-      OnboardingAPI.Account.RemoveSessionValue('OnboardingAPI.RefreshTimerElapses');
-      OnboardingAPI.Account.RemoveSessionValue('OnboardingAPI.RefreshTimerExpires');
+      OnboardingAPI.Account.RemoveSessionValue(
+        'OnboardingAPI.RefreshTimerElapses'
+      );
+      OnboardingAPI.Account.RemoveSessionValue(
+        'OnboardingAPI.RefreshTimerExpires'
+      );
 
-      const Seconds = OnboardingAPI.Account.GetSessionInt('OnboardingAPI.Seconds');
+      const Seconds = OnboardingAPI.Account.GetSessionInt(
+        'OnboardingAPI.Seconds'
+      );
       if (Seconds) OnboardingAPI.Account.Refresh(Seconds, true);
     },
     RestartActiveSession: function () {
@@ -293,7 +299,10 @@ export const OnboardingAPI = {
 
       this.SetSessionString('OnboardingAPI.Token', Token);
       this.SetSessionInt('OnboardingAPI.Seconds', Seconds);
-      this.SetSessionInt("OnboardingAPI.RefreshTimer", setTimeout(this.RefreshToken, 1000 * Next));
+      this.SetSessionInt(
+        'OnboardingAPI.RefreshTimer',
+        setTimeout(this.RefreshToken, 1000 * Next)
+      );
       this.SetSessionInt('OnboardingAPI.RefreshTimerElapses', Now + Next);
       this.SetSessionInt('OnboardingAPI.RefreshTimerExpires', Now + Seconds);
 
@@ -354,10 +363,13 @@ export const OnboardingAPI = {
       );
     },
     VerifyEMail: async function (EMail: any, Code: any) {
-      const Result = await OnboardingAPI.IO.Request('/Agent/Account/VerifyEMail', {
-        eMail: EMail,
-        code: Code,
-      });
+      const Result = await OnboardingAPI.IO.Request(
+        '/Agent/Account/VerifyEMail',
+        {
+          eMail: EMail,
+          code: Code,
+        }
+      );
 
       this.SetSessionString('OnboardingAPI.UserName', Result.userName);
 
@@ -372,7 +384,10 @@ export const OnboardingAPI = {
         signature: await this.Sign(Password, s),
         seconds: 3500,
       };
-      const Response = await OnboardingAPI.IO.Request('/Agent/Account/Login', raw);
+      const Response = await OnboardingAPI.IO.Request(
+        '/Agent/Account/Login',
+        raw
+      );
 
       this.SetSessionString('OnboardingAPI.UserName', UserName);
       this.SaveSessionToken(Response.jwt, Seconds, Math.round(Seconds / 2));
@@ -407,7 +422,10 @@ export const OnboardingAPI = {
       this.RemoveSessionValue('OnboardingAPI.RefreshTimerElapses');
       this.RemoveSessionValue('OnboardingAPI.RefreshTimerExpires');
 
-      const Response = await OnboardingAPI.IO.Request('/Agent/Account/Logout', {});
+      const Response = await OnboardingAPI.IO.Request(
+        '/Agent/Account/Logout',
+        {}
+      );
 
       this.RemoveSessionValue('OnboardingAPI.Token');
 
