@@ -1,4 +1,4 @@
-import { Alert, View } from 'react-native';
+import { Alert, AppState, View } from 'react-native';
 import React, { useContext, useEffect, useRef, useState } from 'react';
 import { StackScreenProps } from '@react-navigation/stack';
 import { ThunkDispatch } from '@reduxjs/toolkit';
@@ -34,11 +34,35 @@ export const ChooseAccountType = ({
   const overlayInfo = useRef<ContextType>();
   const dispatch = useDispatch<ThunkDispatch<any, any, any>>();
 
+  const appState = React.useRef(AppState.currentState);
+  const [appStateVisible, setAppStateVisible] = useState(appState.current);
+
+  useEffect(() => {
+    if (appStateVisible === 'inactive') {
+      if (selected) {
+        dispatch(selectedPupose(selected));
+      }    
+    }
+  }, [appStateVisible]);
+
+  React.useEffect(() => {
+    const subscription = AppState.addEventListener('change', (nextAppState) => {
+      appState.current = nextAppState;
+      setAppStateVisible(appState.current);
+    });
+
+    return () => {
+      subscription.remove();
+    };
+  }, []);
+
   useEffect(() => {
     setAppLoading(false)
     setTimeout(() => {
       if (userDetails.email) {
         navigation.dispatch(StackActions.replace('TellUsAboutYou'));
+      } else if (userDetails.userName && !userDetails.email) {
+        navigation.dispatch(StackActions.replace('EnterUserName'));
       } else if (userDetails.userName) {
         navigation.dispatch(StackActions.replace('EnterEmail'));
       } else if (userDetails.mobileNumber) {
@@ -46,7 +70,7 @@ export const ChooseAccountType = ({
       } else if (userDetails.purpose) {
         navigation.dispatch(StackActions.replace('EnterMobileNumber'));
       }
-    }, 100);    
+    }, 10);    
   }, [])
 
   useEffect(() => {
@@ -59,7 +83,6 @@ export const ChooseAccountType = ({
   const toggleOverlay = (item?: ContextType) => {
     overlayInfo.current = item;
     setShowOverlay(!showOverlay);
-    // setShowServiceProviderInfo(!showServiceProviderInfo);
   };
 
   const onBackAction = () => {};

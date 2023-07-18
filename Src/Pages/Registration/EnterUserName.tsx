@@ -1,10 +1,11 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect, useCallback } from 'react';
 import {
   View,
   KeyboardAvoidingView,
   Platform,
   Keyboard,
   ScrollView,
+  AppState,
 } from 'react-native';
 import { GlobalStyle as styles, EnterMobileNumberStyle } from '@Pages/Styles';
 import { StackScreenProps } from '@react-navigation/stack';
@@ -30,8 +31,28 @@ export const EnterUserName = ({
   const { userDetails, loading, error } = useSelector((state) => state.user);
   const { themeColors } = useContext(ThemeContext);
   const userNameInputRef = React.useRef<TextInputRef>(null);
-  const [userName, setUserName] = useState(userDetails?.userName || '');
+  const [userName, setUserName] = useState('');
   const dispatch = useDispatch<ThunkDispatch<any, any, any>>();
+
+  const appState = React.useRef(AppState.currentState);
+  const [appStateVisible, setAppStateVisible] = useState(appState.current);
+  
+  useEffect(() => {
+    if (appStateVisible === 'inactive') {
+      dispatch(addUserName(userName));
+    }
+  }, [appStateVisible]);
+  
+  React.useEffect(() => {
+    const subscription = AppState.addEventListener("change", nextAppState => {
+      appState.current = nextAppState;
+      setAppStateVisible(appState.current);
+    });
+
+    return () => {
+      subscription.remove();
+    };
+  }, []);
 
   const onBackClick = () => {
     navigation.goBack();
@@ -88,7 +109,7 @@ export const EnterUserName = ({
             <InputBox
               keyboardType="default"
               ref={userNameInputRef}
-              value={userName}
+              value={userName === '' ? userDetails?.userName : userName}
               onChangeText={(val) => {
                 setUserName(val);
               }}
@@ -97,9 +118,7 @@ export const EnterUserName = ({
               placeholder={t('enterUserName.placeHolder')}
               autoFocus={false}
               autoCapitalize="none"
-              onAction={() => {
-                handleSubmit;
-              }}
+              onAction={handleSubmit}
             />
           </View>
 
@@ -116,6 +135,7 @@ export const EnterUserName = ({
         </ScrollView>
 
         <NavigationHeader
+          hideBackAction={true}
           onBackAction={onBackClick}
           onLanguageAction={onLanguageClick}
         />
