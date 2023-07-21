@@ -9,6 +9,7 @@ import {
   EnterMobileNumber,
   CreateAccount,
   EnterUserName,
+  AlmostThereStatus
 } from '@Pages/Registration';
 import { Settings } from '@Pages/Settings';
 import { CurrentProvider, TellUsAboutYou } from '@Pages/index';
@@ -79,6 +80,14 @@ export const AuthStack = () => {
       <Stack.Screen
         name="TellUsAboutYou"
         component={TellUsAboutYou}
+        options={{
+          headerShown: false,
+        }}
+      />
+
+      <Stack.Screen
+        name="AlmostThereStatus"
+        component={AlmostThereStatus}
         options={{
           headerShown: false,
         }}

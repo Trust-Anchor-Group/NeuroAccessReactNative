@@ -12,3 +12,5 @@ export { MobileInputView } from './MobileInputView';
 export { NetworkService as InternetStatus } from '@Services/Network/NetworkService';
 export { OtpInput } from './OtpInput';
 export { ShowError } from './ShowError';
+export { AlmostStatusLabel } from './AlmostStatusLable';
+export { AlmostTechnicalLabel } from './AlmostTechnicalLabel';

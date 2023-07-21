@@ -13,3 +13,6 @@ export { SelectedCheckBox } from './SelectedCheckBox';
 export { UnselectedCheckBox } from './UnselectedCheckBox';
 export { ExclamationIcon } from './ExclamationIcon';
 export { LargeUserIcon } from './LargeUserIcon';
+export { CopyPastIcon } from './CopyPastIcon';
+export { ArrowDownIcon } from './ArrowDownIcon';
+export { ArrowUpIcon } from './ArrowUpIcon';
