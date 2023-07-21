@@ -60,21 +60,19 @@ export const ChooseAccountType = ({
     setAppLoading(false);
     setTimeout(() => {
 
-      
-      navigation.dispatch(StackActions.replace('AlmostThereStatus'));
-
-      // if (userDetails.email) {
-      //   navigation.dispatch(StackActions.replace('TellUsAboutYou'));
-      // } else if (userDetails.userName && !userDetails.email) {
-      //   navigation.dispatch(StackActions.replace('EnterUserName'));
-      // } else if (userDetails.userName) {
-      //   navigation.dispatch(StackActions.replace('EnterEmail'));
-      // } else if (userDetails.mobileNumber) {
-      //   navigation.dispatch(StackActions.replace('CurrentProvider'));
-      // } else if (userDetails.purpose) {
-      //   navigation.dispatch(StackActions.replace('EnterMobileNumber'));
-      // }
-    }, 10);    
+     // navigation.dispatch(StackActions.replace('AlmostThere'));
+      if (userDetails.email) {
+        navigation.dispatch(StackActions.replace('TellUsAboutYou'));
+      } else if (userDetails.userName && !userDetails.email) {
+        navigation.dispatch(StackActions.replace('EnterUserName'));
+      } else if (userDetails.userName) {
+        navigation.dispatch(StackActions.replace('EnterEmail'));
+      } else if (userDetails.mobileNumber) {
+        navigation.dispatch(StackActions.replace('CurrentProvider'));
+      } else if (userDetails.purpose) {
+        navigation.dispatch(StackActions.replace('EnterMobileNumber'));
+      }
+     }, 10);    
   }, [])
 
   useEffect(() => {

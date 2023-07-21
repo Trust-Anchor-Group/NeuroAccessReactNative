@@ -32,7 +32,10 @@ export const CountryDialog: React.FC<SearchModalProps> = ({
 
   const handleSearch = (text: string) => {
     setSearchText(text);
-    const filteredItems = data.filter((item) => item.name['en'].includes(text));
+    const filteredItems = data.filter((item) =>{
+      const countryName = item.name['en'].toLowerCase();
+      return countryName.includes(text)});
+    
     setFilteredData(filteredItems);
   };
 

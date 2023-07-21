@@ -55,6 +55,16 @@ export const GlobalStyle = (themeColors?: any) =>
       fontWeight: '700',
       alignSelf: 'center',
     },
+    appButtonIcon: {
+      flexDirection:'row',
+      height: button.height,
+      backgroundColor: themeColors?.button?.bg,
+      borderRadius: button.borderRadius,
+      justifyContent: 'center',
+      alignItems: 'center',
+      alignSelf:'center',
+      paddingVertical:moderateScale(5),
+    },
     space: {
       width: '100%',
       height: moderateScale(20),

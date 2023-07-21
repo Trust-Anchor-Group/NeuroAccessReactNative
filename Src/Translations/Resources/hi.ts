@@ -145,4 +145,14 @@ export default {
     alphabetsValidation: 'केवल अक्षर हैं',
     numericValidation: 'केवल संख्याएँ शामिल हैं',
   },
+  almostThere:{
+    title:'वहाँ लगभग!',
+    pendingReview: 'लम्बित समीक्षा',
+    remainingPeer:'शेष सहकर्मी समीक्षाएँ: ',
+    details:'आप नीचे अपने आवेदन की प्रगति को ट्रैक कर सकते हैं और देख सकते हैं कि आपकी जानकारी की समीक्षा किसने की है।',
+    checkStatus: 'स्थिति जाँचिए',
+    reviewProcess:'पुनरावलोकन प्रक्रिया',
+    peerReview:'समकक्ष समीक्षा प्रक्रिया',
+    invitePeer:'सहकर्मी को आमंत्रित करें'
+  }
 };

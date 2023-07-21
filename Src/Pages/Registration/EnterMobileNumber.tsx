@@ -32,6 +32,11 @@ import { countryCodes } from '@Services/Data/index';
 import { isValidPhone } from '@Helpers/Validation';
 import { Loader } from '@Controls/index';
 import { OnboardingAPI } from '@Services/API/OnboardingApi';
+import {
+  requestMultiPermission,
+  requestMultiPermissionIos,
+} from '@Services/Permission/RequestPermission';
+import { PERMISSIONS } from 'react-native-permissions';
 
 export const EnterMobileNumber = ({ navigation }: StackScreenProps<{}>) => {
   const { t } = useTranslation();
@@ -78,6 +83,27 @@ export const EnterMobileNumber = ({ navigation }: StackScreenProps<{}>) => {
   };
 
   useEffect(() => {
+    if (Platform.OS === 'ios') {
+      requestMultiPermissionIos(
+        PERMISSIONS.IOS.CAMERA,
+        PERMISSIONS.IOS.PHOTO_LIBRARY
+      );
+    } else {
+      const androidVersion = parseInt(Platform.Version, 10);
+      if (androidVersion <= 10) {
+        requestMultiPermission(
+          PERMISSIONS.ANDROID.CAMERA,
+          PERMISSIONS.ANDROID.READ_EXTERNAL_STORAGE,
+          PERMISSIONS.ANDROID.WRITE_EXTERNAL_STORAGE
+        );
+      } else {
+        requestMultiPermissionIos(
+          PERMISSIONS.ANDROID.CAMERA,
+          PERMISSIONS.ANDROID.READ_MEDIA_IMAGES
+        );
+      }
+    }
+
     const callCountryCode = async () => {
       try {
         const createData = await OnboardingAPI.ID.CountryCode();

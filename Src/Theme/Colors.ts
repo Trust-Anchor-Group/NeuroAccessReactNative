@@ -204,6 +204,11 @@ export const Colors = {
       providerBtn: '#396E64',
       providerBtnError: 'rgba(242, 73, 92, 1)',
       blurBg: 'rgba(24, 31, 37, 0.7)'
+    },
+    almost:{
+      remainingPeer:'#A87AB0',
+      borderColor: 'rgba(255, 255, 255, 0.9)',
+      shadowColor: '#171717'
     }
   },
 };

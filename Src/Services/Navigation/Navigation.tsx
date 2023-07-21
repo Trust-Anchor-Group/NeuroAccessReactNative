@@ -8,11 +8,11 @@ import {
   EnterEmail,
   EnterMobileNumber,
   CreateAccount,
-  EnterUserName,
   AlmostThereStatus
+  EnterUserName,AlmostThere
 } from '@Pages/Registration';
 import { Settings } from '@Pages/Settings';
-import { CurrentProvider, TellUsAboutYou } from '@Pages/index';
+import { CurrentProvider, TellUsAboutYou  } from '@Pages/index';
 
 const Stack = createStackNavigator();
 
@@ -85,6 +85,14 @@ export const AuthStack = () => {
         }}
       />
 
+<Stack.Screen
+        name="AlmostThere"
+        component={AlmostThere}
+        options={{
+          headerShown: false,
+        }}
+      />
+
       <Stack.Screen
         name="AlmostThereStatus"
         component={AlmostThereStatus}
@@ -106,7 +114,7 @@ export const AuthStack = () => {
 
 export const ApplicationStack = () => {
   return (
-    <Stack.Navigator initialRouteName={'TellUsAboutYou'}>
+    <Stack.Navigator initialRouteName={'AlmostThere'}>
       <Stack.Screen
         name="TellUsAboutYou"
         component={TellUsAboutYou}
@@ -114,6 +122,7 @@ export const ApplicationStack = () => {
           headerShown: false,
         }}
       />
+
       <Stack.Screen
         name="HomeScreen"
         component={Home}

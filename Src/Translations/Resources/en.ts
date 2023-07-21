@@ -144,7 +144,6 @@ export default {
     alphabetsValidation: 'only contain alphabets',
     numericValidation: 'only contain numbers',
   },
-
   almostThere:{
     title:'Almost there!',
     pendingReview: 'Pending review',
