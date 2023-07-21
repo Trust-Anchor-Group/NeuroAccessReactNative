@@ -35,7 +35,7 @@ export const AgentAPI = {
         xhttp.open('POST', Config.AGENT_API_URL + Resource);
         xhttp.setRequestHeader('Content-Type', 'application/json');
         xhttp.setRequestHeader('Accept', 'application/json');
-        xhttp.setRequestHeader('Referer', 'lab.tagroot.io');
+        xhttp.setRequestHeader('Referer', Config.Host);
         var Token = await AgentAPI.Account.GetSessionString('AgentAPI.Token');
         if (Token) xhttp.setRequestHeader('Authorization', 'Bearer ' + Token);
 

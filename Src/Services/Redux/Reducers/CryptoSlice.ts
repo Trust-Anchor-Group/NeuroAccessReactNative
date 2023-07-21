@@ -4,7 +4,7 @@ import {
   validatePNrApi,
   applyLegalIdApi,
   addIdAttachmentApi,
-  createKeyIdApi,
+  createKeyIdApi, clearState
 } from '../Actions/GetAlgorithmList';
 
 export interface Algorithm {
@@ -101,6 +101,14 @@ const cryptoSlice = createSlice({
       .addCase(addIdAttachmentApi.rejected, (state, action) => {
         state.loading = false;
         state.error = action?.error?.message || '';
+      })
+      .addCase(clearState.fulfilled, (state, action) => {
+        state.loading = false;
+        state.error = '';
+        state.createKeyResponse= {};
+        state.pnrResponse= {};
+        state.legalResponse={};
+        state.attachmentResponse={};
       });
   },
 });

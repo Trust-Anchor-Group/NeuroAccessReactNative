@@ -34,6 +34,8 @@ import { launchCamera, launchImageLibrary } from 'react-native-image-picker';
 import {
   requestMultiPermission,
   checkMultiPermission,
+  checkMultiPermissionIos,
+  requestMultiPermissionIos,
 } from '@Services/Permission/RequestPermission';
 import { PERMISSIONS } from 'react-native-permissions';
 import { CountryDialog } from '@Controls/CountryDialog';
@@ -53,10 +55,15 @@ import {
   validatePNrApi,
   createKeyIdApi,
   CreateKeyPayload,
+  clearState,
 } from '@Services/Redux/Actions/GetAlgorithmList';
-import { saveKeyIdPassword } from '@Services/Redux/Actions/GetUserDetails';
+import {
+  saveKeyIdPassword,
+  saveLegalID,
+} from '@Services/Redux/Actions/GetUserDetails';
 import { Loader } from '@Controls/index';
-
+import { saveBase64ToFile } from '@Services/Storage';
+import { saveIdentity } from '@Services/Redux/Reducers/IdentitySlice';
 const ApiKey = Config.ApiKey;
 const Secret = Config.Secret;
 
@@ -98,15 +105,24 @@ export const TellUsAboutYou = ({
 
   useEffect(() => {
     if (Platform.OS === 'ios') {
-      requestMultiPermission(
+      requestMultiPermissionIos(
         PERMISSIONS.IOS.CAMERA,
         PERMISSIONS.IOS.PHOTO_LIBRARY
       );
     } else {
-      requestMultiPermission(
-        PERMISSIONS.ANDROID.CAMERA,
-        PERMISSIONS.ANDROID.READ_MEDIA_IMAGES
-      );
+      const androidVersion = parseInt(Platform.Version, 10);
+      if (androidVersion <= 10) {
+        requestMultiPermission(
+          PERMISSIONS.ANDROID.CAMERA,
+          PERMISSIONS.ANDROID.READ_EXTERNAL_STORAGE,
+          PERMISSIONS.ANDROID.WRITE_EXTERNAL_STORAGE
+        );
+      } else {
+        requestMultiPermissionIos(
+          PERMISSIONS.ANDROID.CAMERA,
+          PERMISSIONS.ANDROID.READ_MEDIA_IMAGES
+        );
+      }
     }
     dispatch(getAlgorithmListApi());
   }, []);
@@ -117,28 +133,23 @@ export const TellUsAboutYou = ({
 
   useEffect(() => {
     const createKeyHandler = Object.entries(createKeyResponse).length !== 0;
-
     if (createKeyHandler) {
-      if (propertiesRef.current !== undefined) {
-        const applyLegalPayload: ApplyLegalPayload = {
-          userName: userDetails.userName,
-          LocalName: algorithmVal?.current?.localName,
-          Namespace: algorithmVal.current?.namespace,
-          KeyId: userDetails?.keyId,
-          KeyPassword: userDetails?.keyPassword,
-          AccountPassword: userDetails?.password,
-          Properties: propertiesRef.current,
-        };
-
-        dispatch(applyLegalIdApi(applyLegalPayload));
-      }
-
-      // const state = createKeyResponse.Identity.status.state;
-      // if (state === 'Created') {
-      //   const id = createKeyResponse.Identity.id;
-      // }
+      callApplyForLegalId();
     }
   }, [createKeyResponse]);
+
+  const callApplyForLegalId = async () => {
+    const applyLegalPayload: ApplyLegalPayload = {
+      userName: userDetails.userName,
+      LocalName: algorithmVal?.current?.localName,
+      Namespace: algorithmVal.current?.namespace,
+      KeyId: userDetails?.keyId,
+      KeyPassword: userDetails?.keyPassword,
+      AccountPassword: userDetails?.password,
+      Properties: propertiesRef.current,
+    };
+    await dispatch(applyLegalIdApi(applyLegalPayload));
+  };
 
   useEffect(() => {
     const pnrHandler = Object.entries(pnrResponse).length !== 0;
@@ -163,19 +174,44 @@ export const TellUsAboutYou = ({
       if (state === 'Created') {
         const id = legalResponse.Identity.id;
         legalID.current = id;
-        uploadAttachment(id);
+        callUploadAttachment(id, legalResponse);
       }
     }
   }, [legalResponse]);
+
+  const callUploadAttachment = async (legalId: string, legalResponse: any) => {
+    await dispatch(saveIdentity(legalResponse));
+    await dispatch(saveLegalID(legalId));
+    uploadAttachment(legalId);
+  };
 
   useEffect(() => {
     const attachmentHandler = Object.entries(attachmentResponse).length !== 0;
     if (attachmentHandler) {
       const state = legalResponse.Identity.status.state;
       if (state === 'Created') {
+        handleSaveFile();
       }
     }
   }, [attachmentResponse]);
+
+  const handleSaveFile = async () => {
+    try {
+      const result = await saveBase64ToFile(imageUri?.base64);
+      if (result) {
+        attachmentResponseNavigation();
+      } else {
+        attachmentResponseNavigation();
+      }
+    } catch (error) {
+      console.error('Error:', error);
+    }
+  };
+
+  const attachmentResponseNavigation = async () => {
+    await dispatch(clearState());
+    navigation.navigate('AlmostThere');
+  };
 
   const filterAlgorithm = async (algorithms: any) => {
     let highestSecurityStrength = 0;
@@ -270,12 +306,12 @@ export const TellUsAboutYou = ({
       const randomString = AgentAPI.Account.getRandomValues(32);
       const s2 = Secret + ':' + randomString;
       const keyPassword = await AgentAPI.Account.Sign(ApiKey, s2);
-      dispatch(saveKeyIdPassword(keyPassword));
+      await dispatch(saveKeyIdPassword(keyPassword));
       createKeyCall(keyPassword);
     } catch (error) {}
   };
 
-  const createKeyCall = (keyPassword: string) => {
+  const createKeyCall = async (keyPassword: string) => {
     const addIdAttachmentPayload: CreateKeyPayload = {
       userName: userDetails.userName,
       LocalName: algorithmVal?.current?.localName,
@@ -284,10 +320,10 @@ export const TellUsAboutYou = ({
       KeyPassword: keyPassword,
       AccountPassword: userDetails?.password,
     };
-    dispatch(createKeyIdApi(addIdAttachmentPayload));
+    await dispatch(createKeyIdApi(addIdAttachmentPayload));
   };
 
-  const uploadAttachment = (id: string) => {
+  const uploadAttachment = async (id: string) => {
     const addIdAttachmentPayload: AddIdAttachmentPayload = {
       userName: userDetails.userName,
       LocalName: algorithmVal?.current?.localName,
@@ -300,16 +336,16 @@ export const TellUsAboutYou = ({
       FileName: imageUri?.fileName,
       ContentType: imageUri?.type,
     };
-    dispatch(addIdAttachmentApi(addIdAttachmentPayload));
+    await dispatch(addIdAttachmentApi(addIdAttachmentPayload));
   };
 
-  const checkPersonalNumber = (pnr: string) => {
+  const checkPersonalNumber = async (pnr: string) => {
     if (pnr !== undefined) {
       const pnrPayload: PnrPayload = {
         countryCode: 'IN',
         pnr: pnr,
       };
-      dispatch(validatePNrApi(pnrPayload));
+      await dispatch(validatePNrApi(pnrPayload));
     }
   };
 
@@ -356,7 +392,7 @@ export const TellUsAboutYou = ({
   const userAction = async (action: string, setFieldValue: any) => {
     imageRef.current && imageRef.current.focus();
     if (Platform.OS === 'ios') {
-      checkMultiPermission(
+      checkMultiPermissionIos(
         PERMISSIONS.IOS.CAMERA,
         PERMISSIONS.IOS.PHOTO_LIBRARY
       )
@@ -369,18 +405,35 @@ export const TellUsAboutYou = ({
         })
         .catch((error: any) => {});
     } else {
-      checkMultiPermission(
-        PERMISSIONS.ANDROID.CAMERA,
-        PERMISSIONS.ANDROID.READ_MEDIA_IMAGES
-      )
-        .then((result: boolean) => {
-          if (result) {
-            action === 'gallery'
-              ? openGallery(setFieldValue)
-              : openCamera(setFieldValue);
-          }
-        })
-        .catch((error: any) => {});
+      const androidVersion = parseInt(Platform.Version, 10);
+      if (androidVersion <= 10) {
+        checkMultiPermission(
+          PERMISSIONS.ANDROID.CAMERA,
+          PERMISSIONS.ANDROID.READ_EXTERNAL_STORAGE,
+          PERMISSIONS.ANDROID.WRITE_EXTERNAL_STORAGE
+        )
+          .then((result: boolean) => {
+            if (result) {
+              action === 'gallery'
+                ? openGallery(setFieldValue)
+                : openCamera(setFieldValue);
+            }
+          })
+          .catch((error: any) => {});
+      } else {
+        checkMultiPermissionIos(
+          PERMISSIONS.ANDROID.CAMERA,
+          PERMISSIONS.ANDROID.READ_MEDIA_IMAGES
+        )
+          .then((result: boolean) => {
+            if (result) {
+              action === 'gallery'
+                ? openGallery(setFieldValue)
+                : openCamera(setFieldValue);
+            }
+          })
+          .catch((error: any) => {});
+      }
     }
   };
   const openGallery = async (setFieldValue: any) => {
@@ -721,39 +774,48 @@ export const TellUsAboutYou = ({
                 >
                   {t('tellUsAboutYou.country')}
                 </TextLabel>
-                <NeuroTextInput
-                  neuroStyle={[
-                    TellUsAboutYouStyle(themeColors).textInput,
-                    borderColor(
-                      touched.country,
-                      errors.country,
-                      values.country
-                    ),
-                  ]}
-                  placeholder={t('tellUsAboutYou.enterCountry')}
-                  placeholderTextColor={themeColors.tellUsAboutYou.placeHolder}
-                  value={values.country}
-                  onChangeText={handleChange('country')}
-                  onBlur={() => {
-                    handleBlur('country');
-                    setFieldTouched('country', false);
-                  }}
-                  onFocus={() => setFieldTouched('country', true)}
-                  isError={errorIcon(touched.country, errors.country)}
-                  errorStyle={TellUsAboutYouStyle(themeColors).errorText}
-                  autoCapitalize="none"
-                  returnKeyType="next"
-                  keyboardType="default"
-                  ref={countryRef}
-                  editable={false}
-                  onTouchStart={() => {
-                    addressRef.current?.focus();
+
+                <TouchableOpacity
+                  onPress={() => {
                     openModal();
                   }}
-                  onSubmitEditing={() => {
-                    addressRef.current?.focus();
-                  }}
-                />
+                >
+                  <NeuroTextInput
+                    neuroStyle={[
+                      TellUsAboutYouStyle(themeColors).textInput,
+                      borderColor(
+                        touched.country,
+                        errors.country,
+                        values.country
+                      ),
+                    ]}
+                    placeholder={t('tellUsAboutYou.enterCountry')}
+                    placeholderTextColor={
+                      themeColors.tellUsAboutYou.placeHolder
+                    }
+                    value={values.country}
+                    onChangeText={handleChange('country')}
+                    onBlur={() => {
+                      handleBlur('country');
+                      setFieldTouched('country', false);
+                    }}
+                    onFocus={() => setFieldTouched('country', true)}
+                    isError={errorIcon(touched.country, errors.country)}
+                    errorStyle={TellUsAboutYouStyle(themeColors).errorText}
+                    autoCapitalize="none"
+                    returnKeyType="next"
+                    keyboardType="default"
+                    ref={countryRef}
+                    editable={false}
+                    onTouchStart={() => {
+                      addressRef.current?.focus();
+                      openModal();
+                    }}
+                    onSubmitEditing={() => {
+                      addressRef.current?.focus();
+                    }}
+                  />
+                </TouchableOpacity>
                 {errors.country && (
                   <TextLabel
                     variant={TextLabelVariants.XSMALL}

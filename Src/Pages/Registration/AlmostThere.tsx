@@ -8,6 +8,7 @@ import {
   TextInput,
   Keyboard,
   Image,
+  Dimensions,
 } from 'react-native';
 import { StackScreenProps } from '@react-navigation/stack';
 import {
@@ -20,21 +21,62 @@ import {
 } from '@Controls/index';
 import { useTranslation } from 'react-i18next';
 import { ThemeContext } from '@Theme/Provider/ThemeContext';
+import { GlobalStyle as styles, AlmostThereStyle } from '@Pages/Styles';
+import { ThunkDispatch } from '@reduxjs/toolkit';
+import { useDispatch, useSelector } from 'react-redux';
+import { Loader } from '@Controls/index';
 import {
-  GlobalStyle as styles,
-  AlmostThereStyle,
-} from '@Pages/Styles';
-
-export const AlmostThere = () => {
+  getIdentityApi,
+  getApplicationAttributeApi,
+} from '@Services/Redux/Actions/GetStatusForIdentity';
+import { readBase64FromFile } from '@Services/Storage';
+export const AlmostThere = ({
+  navigation,
+}: StackScreenProps<{ Profile: any }>) => {
   const { t } = useTranslation();
   const { themeColors } = useContext(ThemeContext);
+  const [imageUri, setImageURI] = useState('');
+  const [numberOfRemaining, setNumberOfRemaining] = useState('');
+  const { width, height } = Dimensions.get('window');
+  const borderRadius = Math.min(width, height) * 0.5;
+  const dispatch = useDispatch<ThunkDispatch<any, any, any>>();
+  const { userDetails } = useSelector((state) => state.user);
+  const { attributeResponse, loading, error } = useSelector(
+    (state) => state.identity
+  );
 
   const onBackClick = () => {
-    // navigation.goBack();
+    navigation.goBack();
   };
 
   const onLanguageClick = () => {
-    // navigation.navigate('Settings');
+    navigation.navigate('Settings');
+  };
+
+  useEffect(() => {
+    readAndUseBase64();
+    getIdentityData();
+  }, []);
+
+  const getIdentityData = async () => {
+    await dispatch(getApplicationAttributeApi());
+  };
+  useEffect(() => {
+    const attributeHandler = Object.entries(attributeResponse).length !== 0;
+    if (attributeHandler) {
+      const val = attributeHandler?.nrReviewers + '';
+      setNumberOfRemaining(val);
+    }
+  }, [attributeResponse]);
+
+  const readAndUseBase64 = async () => {
+    try {
+      const base64String = await readBase64FromFile();
+      setImageURI(base64String);
+    } catch (error) {
+      console.error('Error:', error);
+      throw error;
+    }
   };
 
   return (
@@ -46,7 +88,7 @@ export const AlmostThere = () => {
           style={AlmostThereStyle(themeColors).headerTxt}
           variant={TextLabelVariants.HEADER}
         >
-          {'Almost there!'}
+          {t('almostThere.title')}
         </TextLabel>
 
         <View
@@ -56,38 +98,58 @@ export const AlmostThere = () => {
           ]}
         >
           <View style={AlmostThereStyle(themeColors).imageContainer}>
-            <Image
+            <View
               style={[
-                AlmostThereStyle(themeColors).image,
-                { borderColor: '#181F25' },
+                AlmostThereStyle(themeColors).imageView,
+                { borderRadius },
               ]}
-              // source={{uri: `data:image/png;base64,${encodedBase64}`}}
-            />
+            >
+              <Image
+                source={{ uri: `data:image/png;base64,${imageUri}` }}
+                style={AlmostThereStyle(themeColors).image}
+                resizeMode="cover"
+              />
+            </View>
 
             <View style={AlmostThereStyle(themeColors).userInfo}>
               <TextLabel
                 style={AlmostThereStyle(themeColors).name}
                 variant={TextLabelVariants.HEADER}
               >
-                {'hello'}
+                {userDetails?.userName}
               </TextLabel>
 
               <TextLabel
                 style={AlmostThereStyle(themeColors).mobile}
                 variant={TextLabelVariants.DESCRIPTION}
               >
-                {'description'}
+                {userDetails?.mobileNumber?.number}
               </TextLabel>
             </View>
           </View>
 
           <View style={AlmostThereStyle(themeColors).detailContainer}>
-            <View style={AlmostThereStyle(themeColors).pendingContainer}></View>
+            <View
+              style={[
+                AlmostThereStyle(themeColors).pendingContainer,
+                { borderRadius },
+              ]}
+            >
+              <View
+                style={[
+                  AlmostThereStyle(themeColors).image,
+                  {
+                    borderRadius,
+                    backgroundColor: themeColors.almost.remainingPeer,
+                  },
+                ]}
+              />
+            </View>
             <TextLabel
               style={AlmostThereStyle(themeColors).pendingReviewTxt}
               variant={TextLabelVariants.LABEL}
             >
-              {'Pending review'}
+              {t('almostThere.pendingReview')}
             </TextLabel>
           </View>
 
@@ -95,16 +157,14 @@ export const AlmostThere = () => {
             style={AlmostThereStyle(themeColors).remainingPeerTxt}
             variant={TextLabelVariants.DESCRIPTION}
           >
-            {'Remaining peer reviews:'}
+            {t('almostThere.remainingPeer') + numberOfRemaining}
           </TextLabel>
 
           <TextLabel
             style={AlmostThereStyle(themeColors).descriptionTxt}
             variant={TextLabelVariants.DESCRIPTION}
           >
-            {
-              'You can track the progress of your application below and see who has reviewed your information.'
-            }
+            {t('almostThere.details')}
           </TextLabel>
 
           <TouchableOpacity style={AlmostThereStyle(themeColors).checkStatus}>
@@ -112,28 +172,22 @@ export const AlmostThere = () => {
               style={AlmostThereStyle(themeColors).checkStatusTxt}
               variant={TextLabelVariants.INPUTLABEL}
             >
-              {'Check Status'}
+              {t('almostThere.checkStatus')}
             </TextLabel>
           </TouchableOpacity>
         </View>
-        <TouchableOpacity
-          style={AlmostThereStyle(themeColors).providerInfo}
-          //onPress={toggleOverlay}
-        >
+        <TouchableOpacity style={AlmostThereStyle(themeColors).providerInfo}>
           <ShowError
-            errorMessage={'Review process'}
+            errorMessage={t('almostThere.reviewProcess')}
             styles={AlmostThereStyle(themeColors).infoText}
             colorCode={themeColors.currentProvider.titleUnSelected}
             changeColor={true}
           />
         </TouchableOpacity>
         <View style={AlmostThereStyle(themeColors).bottomContainer}>
-          <TouchableOpacity
-            style={AlmostThereStyle(themeColors).providerInfo}
-            //onPress={toggleOverlay}
-          >
+          <TouchableOpacity style={AlmostThereStyle(themeColors).providerInfo}>
             <ShowError
-              errorMessage={'Peer review process'}
+              errorMessage={t('almostThere.peerReview')}
               styles={AlmostThereStyle(themeColors).infoText}
               colorCode={themeColors.currentProvider.titleUnSelected}
               changeColor={true}
@@ -141,14 +195,12 @@ export const AlmostThere = () => {
           </TouchableOpacity>
           <View style={AlmostThereStyle(themeColors).spacer} />
           <ActionButtonWithIcon
-            title={'Invite peer'}
+            title={t('almostThere.invitePeer')}
             buttonStyle={AlmostThereStyle(themeColors).actionButton}
             textStyle={AlmostThereStyle(themeColors).sendText}
-            //onPress={}
           />
         </View>
       </View>
-
       <NavigationHeader
         hideBackAction={true}
         onBackAction={onBackClick}

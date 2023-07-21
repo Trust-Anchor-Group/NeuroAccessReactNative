@@ -9,6 +9,7 @@ export { SplashBackground } from './SplashBackground';
 export { TextLabel } from './TextLabel';
 export { TextLabelVariants } from './TextLabel';
 export { MobileInputView } from './MobileInputView';
+import MobileInputView from './MobileInputView';
 export { NetworkService as InternetStatus } from '@Services/Network/NetworkService';
 export { OtpInput } from './OtpInput';
 export { ShowError } from './ShowError';

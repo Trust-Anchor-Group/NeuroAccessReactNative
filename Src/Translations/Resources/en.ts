@@ -144,4 +144,14 @@ export default {
     alphabetsValidation: 'only contain alphabets',
     numericValidation: 'only contain numbers',
   },
+  almostThere:{
+    title:'Almost there!',
+    pendingReview: 'Pending review',
+    remainingPeer:'Remaining peer reviews: ',
+    details:'You can track the progress of your application below and see who has reviewed your information.',
+    checkStatus: 'Check Status',
+    reviewProcess:'Review process',
+    peerReview:'Peer review process',
+    invitePeer:'Invite peer'
+  }
 };

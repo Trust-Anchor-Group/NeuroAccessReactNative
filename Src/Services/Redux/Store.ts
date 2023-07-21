@@ -9,7 +9,7 @@ import autoMergeLevel2 from 'redux-persist/es/stateReconciler/autoMergeLevel2';
 const persistConfig = {
   key: 'root',
   storage: EncryptedStorage,
-  whitelist: ['user', 'domain'],
+  whitelist: ['user', 'domain','identity'],
   blackList: [],
   stateReconciler: autoMergeLevel2,
 };

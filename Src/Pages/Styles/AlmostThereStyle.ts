@@ -16,7 +16,7 @@ export const AlmostThereStyle = (themeColors: any) =>
     },
     shadowProp: {
       shadowOffset: { width: horizontalScale(-2), height: verticalScale(4) },
-      shadowColor: '#171717',
+      shadowColor: themeColors.informationView.shadowColor,
       shadowOpacity: moderateScale(0.2),
       shadowRadius: moderateScale(3),
     },
@@ -27,11 +27,16 @@ export const AlmostThereStyle = (themeColors: any) =>
       height: verticalScale(89),
       gap: moderateScale(16),
     },
-    image: {
+    imageView: {
       borderWidth: moderateScale(1),
-      borderRadius: moderateScale(40),
-      height: verticalScale(70),
-      width: horizontalScale(58),
+      borderColor: themeColors.almost.borderColor,
+      height: verticalScale(69),
+      width: horizontalScale(69),
+      overflow: 'hidden',
+    },
+    image: {
+      height: '100%',
+      width: '100%',
     },
     userInfo: { justifyContent: 'center', alignItems: 'center' },
     detailContainer: {
@@ -42,12 +47,10 @@ export const AlmostThereStyle = (themeColors: any) =>
     },
     pendingContainer: {
       height: verticalScale(20),
-      width: horizontalScale(17),
-      borderRadius: moderateScale(10),
-      backgroundColor: '#A87AB0',
+      width: horizontalScale(20),
     },
     checkStatus: {
-      borderColor: '#181F25',
+      borderColor: themeColors.almost.borderColor,
       alignItems: 'center',
       borderRadius: moderateScale(4),
       borderWidth: moderateScale(0.5),
@@ -87,7 +90,7 @@ export const AlmostThereStyle = (themeColors: any) =>
       fontSize: moderateScale(12),
       lineHeight: verticalScale(17.6),
       letterSpacing: moderateScale(0.1),
-      color: '#A87AB0',
+      color: themeColors.almost.remainingPeer,
     },
     descriptionTxt: {
       marginTop: moderateScale(16),
@@ -109,8 +112,12 @@ export const AlmostThereStyle = (themeColors: any) =>
       alignItems: 'center',
       marginTop: moderateScale(10),
     },
-    bottomContainer:{ position: 'absolute', bottom: moderateScale(20), width: '100%' },
-    actionButton:{ width: '90%' },
+    bottomContainer: {
+      position: 'absolute',
+      bottom: moderateScale(20),
+      width: '100%',
+    },
+    actionButton: { width: '90%' },
     infoText: {
       color: themeColors.currentProvider.titleUnSelected,
       fontSize: moderateScale(11),
