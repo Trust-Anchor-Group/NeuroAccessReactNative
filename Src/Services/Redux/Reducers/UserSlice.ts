@@ -9,7 +9,7 @@ import {
   sendEmailVerificationMessage,
   saveAccountPassword,
   saveKeyId,
-  saveKeyIdPassword,
+  saveKeyIdPassword, saveLegalID
 } from '../Actions/GetUserDetails';
 import { ContextType } from '@Services/Data';
 
@@ -23,6 +23,7 @@ type UserProfile = {
   };
   password?: string;
   keyId?: string;
+  legalId?: string;
   keyPassword?: string;
   tokenData?: any;
 };
@@ -96,6 +97,13 @@ const userSlice = createSlice({
         state.userDetails = {
           ...state.userDetails,
           keyPassword: action.payload,
+        };
+      })
+      .addCase(saveLegalID.fulfilled, (state, action) => {
+        state.loading = false;
+        state.userDetails = {
+          ...state.userDetails,
+          legalId: action.payload,
         };
       })
       .addCase(saveNumber.fulfilled, (state, action) => {

@@ -126,3 +126,15 @@ export const addIdAttachmentApi = createAsyncThunk(
     }
   }
 );
+
+
+export const clearState = createAsyncThunk(
+  'crypto/clearState',
+  async () => {
+    try {
+      return {};
+    } catch (error) {
+      throw error?.response?.data;
+    }
+  }
+);

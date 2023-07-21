@@ -13,3 +13,4 @@ export { SelectedCheckBox } from './SelectedCheckBox';
 export { UnselectedCheckBox } from './UnselectedCheckBox';
 export { ExclamationIcon } from './ExclamationIcon';
 export { LargeUserIcon } from './LargeUserIcon';
+export { InvitePeerIcon } from './InvitePeerIcon';

@@ -98,6 +98,11 @@ export const Colors = {
       providerBtnError: 'rgba(242, 73, 92, 1)',
       blurBg: '#181F25',
       cornerColor: '#F4F5F7'
+    },
+    almost:{
+      remainingPeer:'#A87AB0',
+      borderColor: '#181F25',
+      shadowColor: '#171717'
     }
   },
   dark: {
@@ -199,6 +204,11 @@ export const Colors = {
       providerBtn: '#396E64',
       providerBtnError: 'rgba(242, 73, 92, 1)',
       blurBg: 'rgba(24, 31, 37, 0.7)'
+    },
+    almost:{
+      remainingPeer:'#A87AB0',
+      borderColor: 'rgba(255, 255, 255, 0.9)',
+      shadowColor: '#171717'
     }
   },
 };

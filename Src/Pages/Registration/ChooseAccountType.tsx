@@ -59,6 +59,8 @@ export const ChooseAccountType = ({
   useEffect(() => {
     setAppLoading(false);
     setTimeout(() => {
+
+     // navigation.dispatch(StackActions.replace('AlmostThere'));
       if (userDetails.email) {
         navigation.dispatch(StackActions.replace('TellUsAboutYou'));
       } else if (userDetails.userName && !userDetails.email) {
@@ -70,7 +72,7 @@ export const ChooseAccountType = ({
       } else if (userDetails.purpose) {
         navigation.dispatch(StackActions.replace('EnterMobileNumber'));
       }
-    }, 10);    
+     }, 10);    
   }, [])
 
   useEffect(() => {

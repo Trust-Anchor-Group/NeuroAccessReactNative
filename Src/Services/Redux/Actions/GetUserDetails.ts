@@ -132,3 +132,14 @@ export const selectedPupose = createAsyncThunk(
     }
   }
 );
+
+export const saveLegalID = createAsyncThunk(
+  'user/saveLegalID',
+  async (legalID: string) => {
+    try {
+      return legalID;
+    } catch (error) {
+      throw error?.response?.data;
+    }
+  }
+);
