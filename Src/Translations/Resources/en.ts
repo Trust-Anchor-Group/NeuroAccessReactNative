@@ -198,5 +198,8 @@ export default {
     EnterNewPin: 'Enter new pin',
     PinCreateSuccess: 'Pin Created Successfully!',
     IncorrectPin: 'Incorrect Pin!',
+    ConfirmPinRequired: 'Confirm Pin is required!',
+    PinDontMatched: 'Your pin do not match!',
+    UnlockPinRequired: 'Unlock Pin is required!'
   },
 };

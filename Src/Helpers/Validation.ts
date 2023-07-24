@@ -66,8 +66,8 @@ export const validationSchema = yup.object().shape({
 export const unlockAppValidationSchema = yup.object().shape({
   confirmPin: yup
     .string()
-    .min(8, 'Confirm Pin is required!')
-    .required('Confirm Pin is required!'),
+    .min(8, 'PIN.UnlockPinRequired')
+    .required('PIN.UnlockPinRequired'),
 });
 
 export const pinValidationSchema = yup.object().shape({
@@ -86,8 +86,8 @@ export const pinValidationSchema = yup.object().shape({
   ,
   confirmPin: yup
     .string()
-    .oneOf([yup.ref('newPin')], 'Your pin do not match!')
-    .required('Confirm Pin is required!'),
+    .oneOf([yup.ref('newPin')], 'PIN.PinDontMatched')
+    .required('PIN.ConfirmPinRequired'),
 });
 
 const getPinValidationErrorMsg = (result: number) => {
