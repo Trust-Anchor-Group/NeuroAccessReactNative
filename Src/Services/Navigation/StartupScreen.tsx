@@ -4,15 +4,20 @@ import { AuthStack, ApplicationStack } from './Navigation';
 import { useLogin } from './LoginProvider';
 import { Splash } from '@Pages/Splash';
 import { NetworkService } from '@Services/Network/NetworkService';
+import { retrieveUserSession } from '@Services/Storage';
+import { Constants } from '@Helpers/Constants';
 
 export function StartupScreen() {
   const { isLoggedIn } = useLogin();
   const [appLoading, setAppLoading] = useState(true);
+  const initialRoute = React.useRef('')
 
   useEffect(() => {
-    setTimeout(() => {
+    setTimeout( async () => {
+      const storedPassword = await retrieveUserSession(Constants.Authentication.PinKey);
+      {storedPassword ? initialRoute.current = 'VerifyPin' : 'ChooseAccoutType'}  
       setAppLoading(false);
-    }, 1000);
+    }, 100);
   }, [appLoading]);
 
   if (appLoading) {
@@ -21,7 +26,7 @@ export function StartupScreen() {
   return (
     <View style={styles.container}>
       <NetworkService />
-      {isLoggedIn ? <AuthStack /> : <AuthStack />}
+      {isLoggedIn ? <AuthStack initialRoute={initialRoute.current} /> : <AuthStack initialRoute={initialRoute.current}/>}
     </View>
   );
 }

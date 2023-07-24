@@ -14,8 +14,10 @@ export default {
     resend: 'पुन: भेजें',
     verify: 'सत्यापित करें',
     close: 'बंद करें',
-    search: 'खोज',    
-    done: 'पूर्ण'
+    search: 'खोज',
+    done: 'पूर्ण',
+    unlock: 'अभी खोलें',
+    CreatePin: 'पिन बनाएं',
   },
   choosePurposeScreen: {
     label: 'पहुंच का उद्देश्य चुनें',
@@ -84,7 +86,8 @@ export default {
   },
   serviceProviderInformation: {
     title: 'सेवा प्रदाता',
-    description: 'सेवा प्रदाता एक ऐसा संगठन है जो आपकी डिजिटल पहचान को जोड़ने और प्रबंधित करने में आपकी सहायता करता है। वे ऐसी सेवाएँ प्रदान करते हैं जो आपको विभिन्न ऑनलाइन प्लेटफ़ॉर्म और एप्लिकेशन तक सुरक्षित रूप से पहुंचने और उपयोग करने की अनुमति देती हैं। वे तकनीकी पहलुओं, प्रमाणीकरण और डेटा सुरक्षा का ध्यान रखते हैं, ताकि आप डिजिटल दुनिया के लाभों का आनंद लेने पर ध्यान केंद्रित कर सकें.'
+    description:
+      'सेवा प्रदाता एक ऐसा संगठन है जो आपकी डिजिटल पहचान को जोड़ने और प्रबंधित करने में आपकी सहायता करता है। वे ऐसी सेवाएँ प्रदान करते हैं जो आपको विभिन्न ऑनलाइन प्लेटफ़ॉर्म और एप्लिकेशन तक सुरक्षित रूप से पहुंचने और उपयोग करने की अनुमति देती हैं। वे तकनीकी पहलुओं, प्रमाणीकरण और डेटा सुरक्षा का ध्यान रखते हैं, ताकि आप डिजिटल दुनिया के लाभों का आनंद लेने पर ध्यान केंद्रित कर सकें.',
   },
   currentProvider: {
     title: 'चयनित प्रदाता',
@@ -99,10 +102,11 @@ export default {
     domainTitle: 'Domain:',
   },
   qrCodeScanner: {
-    serviceProviderBtn : 'Point the camera at the QR-code with the above symbol',
+    serviceProviderBtn: 'Point the camera at the QR-code with the above symbol',
     invitaionTitle: 'Scan invitation',
     enterObInfoManuallyTitle: 'QRCode जानकारी दर्ज करें या कॉपी पेस्ट करें',
-    enterObInfoManuallyPlaceholder: 'यहां QRCode जानकारी दर्ज करें या कॉपी पेस्ट करें',
+    enterObInfoManuallyPlaceholder:
+      'यहां QRCode जानकारी दर्ज करें या कॉपी पेस्ट करें',
     errorQRCodeInfo: 'कृपया सही QRCode जानकारी दर्ज करें!',
   },
   tellUsAboutYou: {
@@ -145,14 +149,56 @@ export default {
     alphabetsValidation: 'केवल अक्षर हैं',
     numericValidation: 'केवल संख्याएँ शामिल हैं',
   },
-  almostThere:{
-    title:'वहाँ लगभग!',
+  almostThere: {
+    title: 'वहाँ लगभग!',
     pendingReview: 'लम्बित समीक्षा',
-    remainingPeer:'शेष सहकर्मी समीक्षाएँ: ',
-    details:'आप नीचे अपने आवेदन की प्रगति को ट्रैक कर सकते हैं और देख सकते हैं कि आपकी जानकारी की समीक्षा किसने की है।',
+    remainingPeer: 'शेष सहकर्मी समीक्षाएँ: ',
+    details:
+      'आप नीचे अपने आवेदन की प्रगति को ट्रैक कर सकते हैं और देख सकते हैं कि आपकी जानकारी की समीक्षा किसने की है।',
     checkStatus: 'स्थिति जाँचिए',
-    reviewProcess:'पुनरावलोकन प्रक्रिया',
-    peerReview:'समकक्ष समीक्षा प्रक्रिया',
-    invitePeer:'सहकर्मी को आमंत्रित करें'
-  }
+    reviewProcess: 'पुनरावलोकन प्रक्रिया',
+    peerReview: 'समकक्ष समीक्षा प्रक्रिया',
+    invitePeer: 'सहकर्मी को आमंत्रित करें',
+  },
+  PIN: {
+    Title: 'एक पिन कोड बनाएं',
+    Description:
+      'आपकी न्यूरो-पहचान और संवेदनशील जानकारी की सुरक्षा बढ़ाने के लिए, हम पिन या पासवर्ड बनाकर सुरक्षा की एक अतिरिक्त परत जोड़ने की सलाह देते हैं।',
+    EnterConfirmPinTitle: 'पिन की पुष्टि करें',
+    EnterConfirmPinPlaceholder: 'दोबारा पिन डालें',
+    PinIsInvalid: 'पिन अमान्य है. आपके पास {0} प्रयास शेष हैं',
+    PinIsInvalidAplicationBlockedForever:
+      'पिन दर्ज करने का प्रयास समाप्त हो गया है। आपका एप्लिकेशन हमेशा के लिए ब्लॉक कर दिया गया है',
+    PinIsInvalidAplicationBlocked:
+      'पिन दर्ज करने का प्रयास समाप्त हो गया है। आपका एप्लिकेशन {0} तक ब्लॉक कर दिया गया है.',
+    PinIsInvalidAplicationBlockedTillTomorrow:
+      'पिन दर्ज करने का प्रयास समाप्त हो गया है। आपका आवेदन कल तक के लिए {0} पर ब्लॉक कर दिया गया है।',
+    PinIsInvalidAplicationBlockedForOneWeek:
+      'पिन दर्ज करने का प्रयास समाप्त हो गया है। आपका आवेदन एक सप्ताह के लिए अवरुद्ध कर दिया गया है',
+    PinMustNotIncludeWhitespace:
+      'पिन नंबर में आगे या पीछे का खाली स्थान शामिल नहीं होना चाहिए।',
+    PinOrPassword: 'पिन या पासवर्ड',
+    PinsDoNotMatch: 'पिन मेल नहीं खाते',
+    PinTooShort: 'पिन की लंबाई कम से कम 8 अक्षर होनी चाहिए.',
+    WrongPin: 'ग़लत पिन!',
+    UnlockTitle: 'न्यूरो-एक्सेस अनलॉक करें',
+    UnlockDescription:
+      'न्यूरो-एक्सेस ऐप तक पहुंचने के लिए प्रमाणीकरण आवश्यक है, पिन दर्ज करें!',
+    EnterPinPlaceholder: 'पिन दर्ज करें',
+    NotEnoughDigitsOrSigns: 'पिन में पर्याप्त अंक या चिह्न मौजूद नहीं हैं!',
+    NotEnoughLettersOrDigits: 'पिन में पर्याप्त अक्षर या अंक मौजूद नहीं हैं!',
+    NotEnoughLettersOrSigns: 'पिन में पर्याप्त अक्षर या चिह्न मौजूद नहीं हैं!',
+    ContainsAddressExist: 'पिन में पता शामिल है!',
+    ContainsNameExist: 'पिन में नाम शामिल है!',
+    ContainsPersonalNumberExist: 'पिन में व्यक्तिगत नंबर शामिल है!',
+    PhoneNumberExist: 'पिन में फ़ोन नंबर शामिल है!',
+    EmailExist: 'पिन में ईमेल शामिल है!',
+    IdenticalSymbolsExist:
+      'एक पिन में 2 से अधिक समान प्रतीक नहीं होने चाहिए।',
+    SequencedSymbolsExist:
+      'एक पिन में 2 से अधिक अनुक्रमित प्रतीक नहीं होने चाहिए। \n उदा. "12" या "अब"',
+    EnterNewPin: 'नया पिन डालें',
+    PinCreateSuccess: 'पिन सफलतापूर्वक बनाया गया!',
+    IncorrectPin: 'ग़लत पिन!',
+  },
 };

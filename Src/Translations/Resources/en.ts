@@ -14,7 +14,9 @@ export default {
     verify: 'Verify',
     close: 'Close',
     search: 'Search',
-    done: 'Done'
+    done: 'Done',
+    unlock: 'Unlock now',
+    CreatePin: 'Create pin',
   },
   choosePurposeScreen: {
     label: 'Choose access purpose',
@@ -84,7 +86,8 @@ export default {
   },
   serviceProviderInformation: {
     title: 'Service Provider',
-    description: 'A service provider is an organization that helps you connect and manage your digital identity. They offer services that allow you to access and use various online platforms and applications securely. They take care of the technical aspects, authentication, and data protection, so you can focus on enjoying the benefits of the digital world.'
+    description:
+      'A service provider is an organization that helps you connect and manage your digital identity. They offer services that allow you to access and use various online platforms and applications securely. They take care of the technical aspects, authentication, and data protection, so you can focus on enjoying the benefits of the digital world.',
   },
   currentProvider: {
     title: 'Selected Provider',
@@ -99,7 +102,7 @@ export default {
     domainTitle: 'Domain:',
   },
   qrCodeScanner: {
-    serviceProviderBtn : 'Point the camera at the QR-code with the above symbol',
+    serviceProviderBtn: 'Point the camera at the QR-code with the above symbol',
     invitaionTitle: 'Scan invitation',
     enterObInfoManuallyTitle: 'Enter QRCode Info or Copy Paste',
     enterObInfoManuallyPlaceholder: 'Enter QRCode Info or Copy Paste here',
@@ -144,14 +147,56 @@ export default {
     alphabetsValidation: 'only contain alphabets',
     numericValidation: 'only contain numbers',
   },
-  almostThere:{
-    title:'Almost there!',
+  almostThere: {
+    title: 'Almost there!',
     pendingReview: 'Pending review',
-    remainingPeer:'Remaining peer reviews: ',
-    details:'You can track the progress of your application below and see who has reviewed your information.',
+    remainingPeer: 'Remaining peer reviews: ',
+    details:
+      'You can track the progress of your application below and see who has reviewed your information.',
     checkStatus: 'Check Status',
-    reviewProcess:'Review process',
-    peerReview:'Peer review process',
-    invitePeer:'Invite peer'
-  }
+    reviewProcess: 'Review process',
+    peerReview: 'Peer review process',
+    invitePeer: 'Invite peer',
+  },
+  PIN: {
+    Title: 'Create a PIN code',
+    Description:
+      'To enhance the security of your Neuro-Identity and sensitive information, we recommend adding an extra layer of protection by creating a PIN or password.',
+    EnterConfirmPinTitle: 'Confirm pin',
+    EnterConfirmPinPlaceholder: 'Enter pin again',
+    PinIsInvalid: 'PIN is invalid. You have {0} remaining attempts',
+    PinIsInvalidAplicationBlockedForever:
+      'PIN attempts entering is exceded. Your application has been blocked forever',
+    PinIsInvalidAplicationBlocked:
+      'PIN attempts entering is exceded. Your application has been blocked till {0}.',
+    PinIsInvalidAplicationBlockedTillTomorrow:
+      'PIN attempts entering is exceded. Your application has been blocked till tomorrow at {0}.',
+    PinIsInvalidAplicationBlockedForOneWeek:
+      'PIN attempts entering is exceded. Your application has been blocked for one week',
+    PinMustNotIncludeWhitespace:
+      'PIN number must not include leading or trailing whitespace.',
+    PinOrPassword: 'PIN or password',
+    PinsDoNotMatch: 'PINs do not match',
+    PinTooShort: 'PIN length must be at least 8 characters.',
+    WrongPin: 'Wrong Pin!',
+    UnlockTitle: 'Unlock Neuro-Access',
+    UnlockDescription:
+      'Authentication is required to access the Neuro-Access app, Enter PIN!',
+    EnterPinPlaceholder: 'Enter pin',
+    NotEnoughDigitsOrSigns: 'Not Enough Digits Or Signs exist in the Pin!',
+    NotEnoughLettersOrDigits: 'Not Enough Letters Or Digits exist in the Pin!',
+    NotEnoughLettersOrSigns: 'Not Enough Letters Or Signs exist in the Pin!',
+    ContainsAddressExist: 'Contains Address in the Pin!',
+    ContainsNameExist: 'Contains Name in the Pin!',
+    ContainsPersonalNumberExist: 'Contains Personal Number in the Pin!',
+    PhoneNumberExist: 'Contains Phone number in the Pin!',
+    EmailExist: 'Contains Email in the Pin!',
+    IdenticalSymbolsExist:
+      'A PIN must not contain more than 2 identical symbols.',
+    SequencedSymbolsExist:
+      'A PIN must not contain more than 2 sequenced symbols. \n e.g. "12" or "ab"',
+    EnterNewPin: 'Enter new pin',
+    PinCreateSuccess: 'Pin Created Successfully!',
+    IncorrectPin: 'Incorrect Pin!',
+  },
 };

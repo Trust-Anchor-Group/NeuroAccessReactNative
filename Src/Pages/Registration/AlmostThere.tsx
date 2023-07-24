@@ -1,12 +1,7 @@
-import React, { useContext, useEffect, useRef, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import {
   TouchableOpacity,
   View,
-  ScrollView,
-  Platform,
-  KeyboardAvoidingView,
-  TextInput,
-  Keyboard,
   Image,
   Dimensions,
 } from 'react-native';
@@ -24,9 +19,7 @@ import { ThemeContext } from '@Theme/Provider/ThemeContext';
 import { GlobalStyle as styles, AlmostThereStyle } from '@Pages/Styles';
 import { ThunkDispatch } from '@reduxjs/toolkit';
 import { useDispatch, useSelector } from 'react-redux';
-import { Loader } from '@Controls/index';
 import {
-  getIdentityApi,
   getApplicationAttributeApi,
 } from '@Services/Redux/Actions/GetStatusForIdentity';
 import { readBase64FromFile } from '@Services/Storage';
@@ -41,7 +34,7 @@ export const AlmostThere = ({
   const borderRadius = Math.min(width, height) * 0.5;
   const dispatch = useDispatch<ThunkDispatch<any, any, any>>();
   const { userDetails } = useSelector((state) => state.user);
-  const { attributeResponse, loading, error } = useSelector(
+  const { attributeResponse } = useSelector(
     (state) => state.identity
   );
 
@@ -198,6 +191,7 @@ export const AlmostThere = ({
             title={t('almostThere.invitePeer')}
             buttonStyle={AlmostThereStyle(themeColors).actionButton}
             textStyle={AlmostThereStyle(themeColors).sendText}
+            onPress={() => navigation.navigate('CreatePin')}
           />
         </View>
       </View>
