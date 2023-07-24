@@ -24,6 +24,7 @@ import { pinValidationSchema, Constants, computePinHash  } from '@Helpers/index'
 import { ThunkDispatch } from '@reduxjs/toolkit';
 import { useDispatch, useSelector } from 'react-redux';
 import { retrieveUserSession, storeUserSession } from '@Services/Storage';
+import {AgentAPI} from '../../Services/API/Agent';
 
 export const CreatePin = ({
   navigation,
@@ -60,16 +61,20 @@ export const CreatePin = ({
       }
     }
   }
-  const hashPassword = (password: string) => {
-    const objectId = identityResponse.Identity.id;
+  const hashPassword = async (password: string) => {
+    let objectId = await retrieveUserSession(Constants.Authentication.ObjectId);
+    if (!objectId) {
+      objectId = AgentAPI.Account.getRandomValues(32);
+      await storeUserSession(Constants.Authentication.ObjectId, objectId);
+    }
     const hashedPassword = computePinHash(password, objectId, Config.Host || '', userDetails.userName, userDetails.legalId);
     return hashedPassword;
   };
   
   const handleFormSubmit = async (values: any) => {
-    const hashedPassword = hashPassword(values.newPin);
-    await storeUserSession('Pin', hashedPassword);
-    const storedPassword = await retrieveUserSession('Pin');
+    const hashedPassword = await hashPassword(values.newPin);
+    await storeUserSession(Constants.Authentication.PinKey, hashedPassword);
+    const storedPassword = await retrieveUserSession(Constants.Authentication.PinKey);
     if (hashedPassword === storedPassword) {
       alert(t('PIN.PinCreateSuccess'))
     } else {

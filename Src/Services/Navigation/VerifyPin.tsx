@@ -35,8 +35,8 @@ export const VerifyPin = ({
   const formikRef = useRef();
   const confirmPin = useRef<TextInput>(null);
 
-  const hashPassword = (password: string) => {
-    const objectId = identityResponse.Identity.id;
+  const hashPassword = async (password: string) => {
+    const objectId = await retrieveUserSession(Constants.Authentication.ObjectId);
     const hashedPassword = computePinHash(
       password,
       objectId,
@@ -48,7 +48,7 @@ export const VerifyPin = ({
   };
 
   const handleFormSubmit = async (values: any) => {
-    const hashedPassword = hashPassword(values.confirmPin);
+    const hashedPassword = await hashPassword(values.confirmPin);
     const storedPassword = await retrieveUserSession(
       Constants.Authentication.PinKey
     );

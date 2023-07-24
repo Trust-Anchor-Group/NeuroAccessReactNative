@@ -31,6 +31,11 @@ export const Constants = {
     /// Key for user pin to store locally.
     /// </summary>
     PinKey: 'Pin',
+
+    /// <summary>
+    /// Key for user pin to store locally.
+    /// </summary>
+    ObjectId: 'ObjectId',
   },
   UserDetails: {},
   XmppProperties: {
