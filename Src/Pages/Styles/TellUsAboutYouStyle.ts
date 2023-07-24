@@ -113,4 +113,5 @@ export const TellUsAboutYouStyle = (themeColors: any) =>
     button: {
       marginBottom: moderateScale(20),
     },
+    actionButtonContainer: { height: '90%', justifyContent: 'flex-end' },
   });
