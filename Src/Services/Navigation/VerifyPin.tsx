@@ -187,7 +187,7 @@ export const VerifyPin = ({
                   </TextLabel>
                 )}
 
-                <View style={{ height: '90%', justifyContent: 'flex-end' }}>
+                <View style={TellUsAboutYouStyle(themeColors).actionButtonContainer}>
                   <ActionButton
                     disabled={!isValid}
                     textStyle={[TellUsAboutYouStyle(themeColors).sendText]}
