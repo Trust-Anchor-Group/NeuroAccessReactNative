@@ -14,9 +14,7 @@ import { ThemeContext } from '@Theme/Provider/ThemeContext';
 import { GlobalStyle as styles, AlmostThereStyle } from '@Pages/Styles';
 import { ThunkDispatch } from '@reduxjs/toolkit';
 import { useDispatch, useSelector } from 'react-redux';
-import { Loader } from '@Controls/index';
 import {
-  getIdentityApi,
   getApplicationAttributeApi,
 } from '@Services/Redux/Actions/GetStatusForIdentity';
 import { readBase64FromFile } from '@Services/Storage';
@@ -290,6 +288,7 @@ export const AlmostThere = ({
             }
             buttonStyle={AlmostThereStyle(themeColors).actionButton}
             textStyle={AlmostThereStyle(themeColors).sendText}
+            onPress={() => navigation.navigate('CreatePin')}
           />
         </View>
       </View>

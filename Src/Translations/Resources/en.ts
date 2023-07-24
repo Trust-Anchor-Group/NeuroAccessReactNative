@@ -15,6 +15,8 @@ export default {
     close: 'Close',
     search: 'Search',
     done: 'Done',
+    unlock: 'Unlock now',
+    CreatePin: 'Create pin',
   },
   choosePurposeScreen: {
     label: 'Choose access purpose',
@@ -145,41 +147,14 @@ export default {
     alphabetsValidation: 'only contain alphabets',
     numericValidation: 'only contain numbers',
   },
-  almostThere: {
-    title: 'Almost there!',
-    congTitle: 'Congratulations!',
+  almostThere:{
+    title:'Almost there!',
     pendingReview: 'Pending review',
-    verified: 'Verified',
-    remainingPeer: 'Remaining peer reviews: ',
-    details:
-      'You can track the progress of your application below and see who has reviewed your information.',
-    verifyDetails: 'Your account has been reviewed and approved!',
+    remainingPeer:'Remaining peer reviews: ',
+    details:'You can track the progress of your application below and see who has reviewed your information.',
     checkStatus: 'Check Status',
-    seeAccount: 'See account',
-    reviewProcess: 'Review process',
-    peerReview: 'Peer review process',
-    invitePeer: 'Invite peer',
-    finishSetup: 'Finnish setup',
-    firstName: 'First name',
-    middleName: 'Middle name',
-    lastName: 'Last name',
-    pnr: 'Personal number',
-    address: 'Address',
-    zip: 'Postal code',
-    city: 'City',
-    state: 'State',
-    country: 'Country',
-    mobile: 'Mobile Number',
-    agent: 'Agent',
-  },
-  peerReviewProcess: {
-    title: 'Peer review',
-    detail:
-      'To speed up the process, you can invite a trusted peer to review your application. Simply scan their Neuro-Access QR-code and they will be able to see and verify your information. Once enough peers have certified your information, your application will be automatically approved by our team.',
-  },
-  pendingReview: {
-    title: 'Pending review!',
-    detail:
-      'We are currently reviewing your identity information to ensure its accuracy. The process involves manual validation by our team or validation by a group of trusted peers.',
-  },
+    reviewProcess:'Review process',
+    peerReview:'Peer review process',
+    invitePeer:'Invite peer'
+  }
 };

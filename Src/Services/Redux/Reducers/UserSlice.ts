@@ -13,7 +13,7 @@ import {
 } from '../Actions/GetUserDetails';
 import { ContextType } from '@Services/Data';
 
-type UserProfile = {
+export type UserProfile = {
   userName?: string;
   email?: string;
   purpose: ContextType;

@@ -26,6 +26,7 @@ export const ChooseAccountType = ({
   const { t } = useTranslation();
   const [appLoading, setAppLoading] = useState(true);
   const { userDetails } = useSelector((state) => state.user);
+  const { identityResponse } = useSelector((state) => state.identity);
   const { themeColors } = useContext(ThemeContext);
   const [selected, setSelected] = useState<ContextType>();
   const [showOverlay, setShowOverlay] = useState<boolean>(false);
@@ -59,7 +60,9 @@ export const ChooseAccountType = ({
   useEffect(() => {
     setAppLoading(false);
     setTimeout(() => {
-      if (userDetails.email) {
+      if (identityResponse?.Identity?.status) {
+        navigation.dispatch(StackActions.replace('AlmostThere'));
+      } else if (userDetails.email) {
         navigation.dispatch(StackActions.replace('TellUsAboutYou'));
       } else if (userDetails.userName && !userDetails.email) {
         navigation.dispatch(StackActions.replace('EnterUserName'));
