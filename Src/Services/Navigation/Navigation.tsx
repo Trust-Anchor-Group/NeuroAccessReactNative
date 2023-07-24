@@ -8,7 +8,7 @@ import {
   EnterEmail,
   EnterMobileNumber,
   CreateAccount,
-  AlmostThereStatus
+  AlmostThereStatus,
   EnterUserName,AlmostThere
 } from '@Pages/Registration';
 import { Settings } from '@Pages/Settings';

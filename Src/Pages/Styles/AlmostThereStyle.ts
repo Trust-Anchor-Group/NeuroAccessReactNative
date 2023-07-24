@@ -30,9 +30,10 @@ export const AlmostThereStyle = (themeColors: any) =>
     imageView: {
       borderWidth: moderateScale(1),
       borderColor: themeColors.almost.borderColor,
-      height: verticalScale(69),
-      width: horizontalScale(69),
+      height: moderateScale(69),
+      width: moderateScale(69),
       overflow: 'hidden',
+      borderRadius: moderateScale(35),
     },
     image: {
       height: '100%',
@@ -46,8 +47,9 @@ export const AlmostThereStyle = (themeColors: any) =>
       alignItems: 'center',
     },
     pendingContainer: {
-      height: verticalScale(20),
-      width: horizontalScale(20),
+      height: moderateScale(18),
+      width: moderateScale(18),
+      borderRadius: moderateScale(9),
     },
     checkStatus: {
       borderColor: themeColors.almost.borderColor,

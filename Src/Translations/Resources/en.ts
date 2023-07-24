@@ -14,7 +14,7 @@ export default {
     verify: 'Verify',
     close: 'Close',
     search: 'Search',
-    done: 'Done'
+    done: 'Done',
   },
   choosePurposeScreen: {
     label: 'Choose access purpose',
@@ -84,7 +84,8 @@ export default {
   },
   serviceProviderInformation: {
     title: 'Service Provider',
-    description: 'A service provider is an organization that helps you connect and manage your digital identity. They offer services that allow you to access and use various online platforms and applications securely. They take care of the technical aspects, authentication, and data protection, so you can focus on enjoying the benefits of the digital world.'
+    description:
+      'A service provider is an organization that helps you connect and manage your digital identity. They offer services that allow you to access and use various online platforms and applications securely. They take care of the technical aspects, authentication, and data protection, so you can focus on enjoying the benefits of the digital world.',
   },
   currentProvider: {
     title: 'Selected Provider',
@@ -99,7 +100,7 @@ export default {
     domainTitle: 'Domain:',
   },
   qrCodeScanner: {
-    serviceProviderBtn : 'Point the camera at the QR-code with the above symbol',
+    serviceProviderBtn: 'Point the camera at the QR-code with the above symbol',
     invitaionTitle: 'Scan invitation',
     enterObInfoManuallyTitle: 'Enter QRCode Info or Copy Paste',
     enterObInfoManuallyPlaceholder: 'Enter QRCode Info or Copy Paste here',
@@ -144,14 +145,41 @@ export default {
     alphabetsValidation: 'only contain alphabets',
     numericValidation: 'only contain numbers',
   },
-  almostThere:{
-    title:'Almost there!',
+  almostThere: {
+    title: 'Almost there!',
+    congTitle: 'Congratulations!',
     pendingReview: 'Pending review',
-    remainingPeer:'Remaining peer reviews: ',
-    details:'You can track the progress of your application below and see who has reviewed your information.',
+    verified: 'Verified',
+    remainingPeer: 'Remaining peer reviews: ',
+    details:
+      'You can track the progress of your application below and see who has reviewed your information.',
+    verifyDetails: 'Your account has been reviewed and approved!',
     checkStatus: 'Check Status',
-    reviewProcess:'Review process',
-    peerReview:'Peer review process',
-    invitePeer:'Invite peer'
-  }
+    seeAccount: 'See account',
+    reviewProcess: 'Review process',
+    peerReview: 'Peer review process',
+    invitePeer: 'Invite peer',
+    finishSetup: 'Finnish setup',
+    firstName: 'First name',
+    middleName: 'Middle name',
+    lastName: 'Last name',
+    pnr: 'Personal number',
+    address: 'Address',
+    zip: 'Postal code',
+    city: 'City',
+    state: 'State',
+    country: 'Country',
+    mobile: 'Mobile Number',
+    agent: 'Agent',
+  },
+  peerReviewProcess: {
+    title: 'Peer review',
+    detail:
+      'To speed up the process, you can invite a trusted peer to review your application. Simply scan their Neuro-Access QR-code and they will be able to see and verify your information. Once enough peers have certified your information, your application will be automatically approved by our team.',
+  },
+  pendingReview: {
+    title: 'Pending review!',
+    detail:
+      'We are currently reviewing your identity information to ensure its accuracy. The process involves manual validation by our team or validation by a group of trusted peers.',
+  },
 };

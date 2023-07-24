@@ -13,12 +13,14 @@ import { ThemeContext } from '@Theme/Provider/ThemeContext';
 import { InvitePeerIcon } from '@Assets/Svgs';
 interface Props extends TouchableOpacityProps {
   title: string;
+  hideIcon?: boolean;
   buttonStyle?: StyleProp<ViewStyle>;
   textStyle?: StyleProp<TextStyle>;
 }
 
 export const ActionButtonWithIcon: FC<Props> = ({
   title,
+  hideIcon,
   buttonStyle,
   textStyle,
   ...restProps
@@ -30,7 +32,7 @@ export const ActionButtonWithIcon: FC<Props> = ({
       {...restProps}
       style={[styles.appButtonIcon, buttonStyle]}
     >
-      <InvitePeerIcon iconColor="#F5F6F7" />
+      {!hideIcon&&<InvitePeerIcon iconColor={themeColors.almost.buttonIcon} />}
       <TextLabel variant={TextLabelVariants.INPUTLABEL} style={textStyle}>
         {title}
       </TextLabel>

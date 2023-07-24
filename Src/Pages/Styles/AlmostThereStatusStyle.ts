@@ -8,17 +8,17 @@ export const AlmostThereStatusStyle = (themeColors: any) =>
       justifyContent: 'center',
       alignItems: 'center',
       width: '90%',
-      height:'90%',
+      height: '90%',
       paddingVertical: moderateScale(15),
       paddingHorizontal: moderateScale(20),
       borderRadius: moderateScale(8),
       backgroundColor: themeColors.informationView.informationBg,
     },
-    scrollView:{ width: '100%', marginTop: moderateScale(5) },
-    line:{
+    scrollView: { width: '100%', marginTop: moderateScale(5) },
+    line: {
       width: '100%',
       height: moderateScale(0.5),
-      backgroundColor: 'rgba(24, 31, 37, 0.5)',
+      backgroundColor: themeColors.almost.horizontalLine,
       marginVertical: moderateScale(5),
     },
     shadowProp: {
@@ -41,7 +41,7 @@ export const AlmostThereStatusStyle = (themeColors: any) =>
       height: moderateScale(69),
       width: moderateScale(69),
       overflow: 'hidden',
-      borderRadius: moderateScale(35)
+      borderRadius: moderateScale(35),
     },
     userInfo: { justifyContent: 'center', alignItems: 'center' },
     detailContainer: {
@@ -50,15 +50,15 @@ export const AlmostThereStatusStyle = (themeColors: any) =>
       flexDirection: 'row',
       alignItems: 'center',
     },
-    technical:{ flexDirection: 'row', padding: moderateScale(16) },
+    technical: { flexDirection: 'row', padding: moderateScale(16) },
     pendingContainer: {
-      height: moderateScale(20),
-      width: moderateScale(20),
-      borderRadius: moderateScale(15)
+      height: moderateScale(18),
+      width: moderateScale(18),
+      borderRadius: moderateScale(9),
     },
-    upIcon:{ justifyContent: 'center', paddingLeft: moderateScale(5) },
-    downIcon:{ justifyContent: 'center' },
-    toggle:{
+    upIcon: { justifyContent: 'center', paddingLeft: moderateScale(5) },
+    downIcon: { justifyContent: 'center' },
+    toggle: {
       width: '100%',
       flexWrap: 'wrap',
       gap: moderateScale(8),
@@ -96,7 +96,7 @@ export const AlmostThereStatusStyle = (themeColors: any) =>
       lineHeight: verticalScale(17.6),
       letterSpacing: moderateScale(0.1),
       color: themeColors.almost.remainingPeer,
-      marginBottom:10
+      marginBottom: moderateScale(10),
     },
     spacer: {
       padding: moderateScale(10),

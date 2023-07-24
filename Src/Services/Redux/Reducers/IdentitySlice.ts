@@ -2,12 +2,13 @@ import { createSlice } from '@reduxjs/toolkit';
 import {
   getIdentityApi,
   getPopMessageApi,
-  getApplicationAttributeApi
+  getApplicationAttributeApi,
 } from '../Actions/GetStatusForIdentity';
 
 interface CryptoState {
   identityResponse: {};
   popMessageResponse: {};
+  popMessageLastResponse: {};
   attributeResponse: {};
   loading: boolean;
   error: string;
@@ -16,6 +17,7 @@ interface CryptoState {
 const initialState = {
   identityResponse: {},
   popMessageResponse: {},
+  popMessageLastResponse: {},
   attributeResponse: {},
   loading: false,
   error: '',
@@ -28,7 +30,9 @@ const identitySlice = createSlice({
     saveIdentity: (state, action) => {
       state.identityResponse = action.payload;
     },
-
+    savePopMessageLast: (state, action) => {
+      state.popMessageLastResponse = action.payload;
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -71,5 +75,6 @@ const identitySlice = createSlice({
   },
 });
 
-export const {saveIdentity} = identitySlice.actions;
+export const { saveIdentity } = identitySlice.actions;
+export const { savePopMessageLast } = identitySlice.actions;
 export default identitySlice.reducer;

@@ -18,7 +18,7 @@ export const ArrowDownIcon: React.FC<LayerColor> = ({ ...restProps }) => (
     >
       <Path
         d="M7.91 8.29492L12.5 12.8749L17.09 8.29492L18.5 9.70492L12.5 15.7049L6.5 9.70492L7.91 8.29492Z"
-        fill="black"
+        fill={restProps.logoColor}
       />
     </Svg>
   </TouchableOpacity>
