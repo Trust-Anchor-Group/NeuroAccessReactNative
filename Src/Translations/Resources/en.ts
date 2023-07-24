@@ -147,14 +147,85 @@ export default {
     alphabetsValidation: 'only contain alphabets',
     numericValidation: 'only contain numbers',
   },
-  almostThere:{
-    title:'Almost there!',
+  almostThere: {
+    title: 'Almost there!',
+    congTitle: 'Congratulations!',
     pendingReview: 'Pending review',
-    remainingPeer:'Remaining peer reviews: ',
-    details:'You can track the progress of your application below and see who has reviewed your information.',
+    verified: 'Verified',
+    remainingPeer: 'Remaining peer reviews: ',
+    details:
+      'You can track the progress of your application below and see who has reviewed your information.',
+    verifyDetails: 'Your account has been reviewed and approved!',
     checkStatus: 'Check Status',
-    reviewProcess:'Review process',
-    peerReview:'Peer review process',
-    invitePeer:'Invite peer'
-  }
+    seeAccount: 'See account',
+    reviewProcess: 'Review process',
+    peerReview: 'Peer review process',
+    invitePeer: 'Invite peer',
+    finishSetup: 'Finnish setup',
+    firstName: 'First name',
+    middleName: 'Middle name',
+    lastName: 'Last name',
+    pnr: 'Personal number',
+    address: 'Address',
+    zip: 'Postal code',
+    city: 'City',
+    state: 'State',
+    country: 'Country',
+    mobile: 'Mobile Number',
+    agent: 'Agent',
+  },
+  peerReviewProcess: {
+    title: 'Peer review',
+    detail:
+      'To speed up the process, you can invite a trusted peer to review your application. Simply scan their Neuro-Access QR-code and they will be able to see and verify your information. Once enough peers have certified your information, your application will be automatically approved by our team.',
+  },
+  pendingReview: {
+    title: 'Pending review!',
+    detail:
+      'We are currently reviewing your identity information to ensure its accuracy. The process involves manual validation by our team or validation by a group of trusted peers.',
+  },
+  PIN: {
+    Title: 'Create a PIN code',
+    Description:
+      'To enhance the security of your Neuro-Identity and sensitive information, we recommend adding an extra layer of protection by creating a PIN or password.',
+    EnterConfirmPinTitle: 'Confirm pin',
+    EnterConfirmPinPlaceholder: 'Enter pin again',
+    PinIsInvalid: 'PIN is invalid. You have {0} remaining attempts',
+    PinIsInvalidAplicationBlockedForever:
+      'PIN attempts entering is exceded. Your application has been blocked forever',
+    PinIsInvalidAplicationBlocked:
+      'PIN attempts entering is exceded. Your application has been blocked till {0}.',
+    PinIsInvalidAplicationBlockedTillTomorrow:
+      'PIN attempts entering is exceded. Your application has been blocked till tomorrow at {0}.',
+    PinIsInvalidAplicationBlockedForOneWeek:
+      'PIN attempts entering is exceded. Your application has been blocked for one week',
+    PinMustNotIncludeWhitespace:
+      'PIN number must not include leading or trailing whitespace.',
+    PinOrPassword: 'PIN or password',
+    PinsDoNotMatch: 'PINs do not match',
+    PinTooShort: 'PIN length must be at least 8 characters.',
+    WrongPin: 'Wrong Pin!',
+    UnlockTitle: 'Unlock Neuro-Access',
+    UnlockDescription:
+      'Authentication is required to access the Neuro-Access app, Enter PIN!',
+    EnterPinPlaceholder: 'Enter pin',
+    NotEnoughDigitsOrSigns: 'Not Enough Digits Or Signs exist in the Pin!',
+    NotEnoughLettersOrDigits: 'Not Enough Letters Or Digits exist in the Pin!',
+    NotEnoughLettersOrSigns: 'Not Enough Letters Or Signs exist in the Pin!',
+    ContainsAddressExist: 'Contains Address in the Pin!',
+    ContainsNameExist: 'Contains Name in the Pin!',
+    ContainsPersonalNumberExist: 'Contains Personal Number in the Pin!',
+    PhoneNumberExist: 'Contains Phone number in the Pin!',
+    EmailExist: 'Contains Email in the Pin!',
+    IdenticalSymbolsExist:
+      'A PIN must not contain more than 2 identical symbols.',
+    SequencedSymbolsExist:
+      'A PIN must not contain more than 2 sequenced symbols. \n e.g. "12" or "ab"',
+    EnterNewPin: 'Enter new pin',
+    PinCreateSuccess: 'Pin Created Successfully!',
+    IncorrectPin: 'Incorrect Pin!',
+    ConfirmPinRequired: 'Confirm Pin is required!',
+    PinDontMatched: 'Your pin do not match!',
+    UnlockPinRequired: 'Unlock Pin is required!'
+  },
 };
