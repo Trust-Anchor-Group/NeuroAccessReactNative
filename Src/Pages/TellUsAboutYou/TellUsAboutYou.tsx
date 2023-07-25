@@ -10,6 +10,16 @@ import {
   Image,
 } from 'react-native';
 import { StackScreenProps } from '@react-navigation/stack';
+import { useTranslation } from 'react-i18next';
+import { Formik } from 'formik';
+import { ThunkDispatch } from '@reduxjs/toolkit';
+import Config from 'react-native-config';
+import { launchCamera, launchImageLibrary } from 'react-native-image-picker';
+import { useDispatch, useSelector } from 'react-redux';
+import { ThemeContext } from '@Theme/Provider/ThemeContext';
+import { GlobalStyle as styles, TellUsAboutYouStyle } from '@Pages/Styles';
+import { NeuroTextInput } from '@Controls/NeuroTextInput';
+import { validationSchema } from '@Helpers/Validation';
 import {
   NeuroAccessBackground,
   NavigationHeader,
@@ -17,12 +27,6 @@ import {
   TextLabelVariants,
   ActionButton,
 } from '@Controls/index';
-import { useTranslation } from 'react-i18next';
-import { ThemeContext } from '@Theme/Provider/ThemeContext';
-import { GlobalStyle as styles, TellUsAboutYouStyle } from '@Pages/Styles';
-import { NeuroTextInput } from '@Controls/NeuroTextInput';
-import { Formik } from 'formik';
-import { validationSchema } from '@Helpers/Validation';
 import {
   CameraIcon,
   GalleryIcon,
@@ -30,7 +34,6 @@ import {
   UnselectedCheckBox,
   SelectedCheckBox,
 } from '@Assets/Svgs';
-import { launchCamera, launchImageLibrary } from 'react-native-image-picker';
 import {
   requestMultiPermission,
   checkMultiPermission,
@@ -40,12 +43,10 @@ import {
 import { PERMISSIONS } from 'react-native-permissions';
 import { CountryDialog } from '@Controls/CountryDialog';
 import { countryCodes } from '@Services/Data/index';
-import { ThunkDispatch } from '@reduxjs/toolkit';
-import { useDispatch, useSelector } from 'react-redux';
 import { getAlgorithmListApi } from '@Services/Redux/Actions/GetAlgorithmList';
 import { Algorithm } from '@Services/Redux/Reducers/CryptoSlice';
 import { AgentAPI } from '@Services/API/Agent';
-import Config from 'react-native-config';
+
 import {
   ApplyLegalPayload,
   applyLegalIdApi,

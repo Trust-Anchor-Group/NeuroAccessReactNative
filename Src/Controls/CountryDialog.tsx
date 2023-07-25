@@ -74,6 +74,7 @@ export const CountryDialog: React.FC<SearchModalProps> = ({
               style={styles.searchInput}
               placeholder={t('buttonTitle.search')}
               value={searchText}
+              autoCapitalize='none'
               onChangeText={handleSearch}
             />
 

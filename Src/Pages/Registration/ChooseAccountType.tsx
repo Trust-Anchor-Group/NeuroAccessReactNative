@@ -42,7 +42,7 @@ export const ChooseAccountType = ({
     if (appStateVisible === 'inactive') {
       if (selected) {
         dispatch(selectedPupose(selected));
-      }    
+      }
     }
   }, [appStateVisible]);
 
@@ -73,8 +73,8 @@ export const ChooseAccountType = ({
       } else if (userDetails.purpose) {
         navigation.dispatch(StackActions.replace('EnterMobileNumber'));
       }
-     }, 10);    
-  }, [])
+    }, 10);
+  }, []);
 
   useEffect(() => {
     if (!selected && userDetails && userDetails['purpose']) {

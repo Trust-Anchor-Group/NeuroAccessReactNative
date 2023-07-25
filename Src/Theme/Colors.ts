@@ -97,13 +97,20 @@ export const Colors = {
       providerBtn: '#396E64',
       providerBtnError: 'rgba(242, 73, 92, 1)',
       blurBg: '#181F25',
-      cornerColor: '#F4F5F7'
+      cornerColor: '#F4F5F7',
     },
-    almost:{
-      remainingPeer:'#A87AB0',
+    almost: {
+      label: 'rgba(24, 31, 37, 0.5)',
+      created: '#4F7EAC',
+      value: '#181F25',
+      link: '#4F7EAC',
+      remainingPeer: '#A87AB0',
+      approved: '#3E776D',
       borderColor: '#181F25',
-      shadowColor: '#171717'
-    }
+      shadowColor: '#171717',
+      horizontalLine: 'rgba(24, 31, 37, 0.5)',
+      buttonIcon: '#F5F6F7',
+    },
   },
   dark: {
     background: '#161617',
@@ -134,7 +141,7 @@ export const Colors = {
       disableText: 'rgba(255, 255, 255, 0.3)',
       bg: '#50998C',
       disableBg: '#4A4A4D',
-      link: 'rgba(79, 126, 172, 1)'
+      link: 'rgba(79, 126, 172, 1)',
     },
     choosePurpose: {
       itemDefaultBg: '#3E3E40',
@@ -203,12 +210,19 @@ export const Colors = {
       cameraButtons: '#F5F6F7',
       providerBtn: '#396E64',
       providerBtnError: 'rgba(242, 73, 92, 1)',
-      blurBg: 'rgba(24, 31, 37, 0.7)'
+      blurBg: 'rgba(24, 31, 37, 0.7)',
     },
-    almost:{
-      remainingPeer:'#A87AB0',
+    almost: {
+      label: 'rgba(255, 255, 255, 0.5)',
+      created: '#50998C',
+      value: 'rgba(255, 255, 255, 0.9)',
+      link: '#8FADCC',
+      remainingPeer: '#A87AB0',
+      approved: '#3E776D',
       borderColor: 'rgba(255, 255, 255, 0.9)',
-      shadowColor: '#171717'
-    }
+      shadowColor: '#171717',
+      horizontalLine: 'rgba(255, 255, 255, 0.3)',
+      buttonIcon: '#161617',
+    },
   },
 };

@@ -8,7 +8,9 @@ import {
   EnterEmail,
   EnterMobileNumber,
   CreateAccount,
-  EnterUserName,AlmostThere
+  AlmostThereStatus,
+  EnterUserName,
+  AlmostThere,
 } from '@Pages/Registration';
 import { Settings } from '@Pages/Settings';
 import { CurrentProvider, TellUsAboutYou } from '@Pages/index';
@@ -18,14 +20,15 @@ import { VerifyPin } from './VerifyPin';
 const Stack = createStackNavigator();
 
 interface Props {
-  initialRoute: string
+  initialRoute: string;
   callBack?: () => boolean;
 }
 
-export const AuthStack = ({initialRoute} : Props) => {
+export const AuthStack = ({ initialRoute }: Props) => {
   return (
-    <Stack.Navigator initialRouteName={initialRoute ? initialRoute : 'ChooseAccoutType'}>
-      
+    <Stack.Navigator
+      initialRouteName={initialRoute ? initialRoute : 'ChooseAccoutType'}
+    >
       <Stack.Screen
         name="VerifyPin"
         component={VerifyPin}
@@ -99,7 +102,7 @@ export const AuthStack = ({initialRoute} : Props) => {
           headerShown: false,
         }}
       />
-      
+
       <Stack.Screen
         name="CreatePin"
         component={CreatePin}
@@ -107,10 +110,18 @@ export const AuthStack = ({initialRoute} : Props) => {
           headerShown: false,
         }}
       />
-      
+
       <Stack.Screen
         name="AlmostThere"
         component={AlmostThere}
+        options={{
+          headerShown: false,
+        }}
+      />
+
+      <Stack.Screen
+        name="AlmostThereStatus"
+        component={AlmostThereStatus}
         options={{
           headerShown: false,
         }}

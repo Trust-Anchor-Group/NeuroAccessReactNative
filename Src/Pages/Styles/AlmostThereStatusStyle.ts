@@ -1,18 +1,25 @@
 import { horizontalScale, moderateScale, verticalScale } from '@Theme/Metrics';
 import { StyleSheet } from 'react-native';
 
-export const AlmostThereStyle = (themeColors: any) =>
+export const AlmostThereStatusStyle = (themeColors: any) =>
   StyleSheet.create({
     informationContainer: {
       alignSelf: 'center',
-      marginTop: moderateScale(50),
       justifyContent: 'center',
       alignItems: 'center',
       width: '90%',
+      height: '90%',
       paddingVertical: moderateScale(15),
       paddingHorizontal: moderateScale(20),
       borderRadius: moderateScale(8),
       backgroundColor: themeColors.informationView.informationBg,
+    },
+    scrollView: { width: '100%', marginTop: moderateScale(5) },
+    line: {
+      width: '100%',
+      height: moderateScale(0.5),
+      backgroundColor: themeColors.almost.horizontalLine,
+      marginVertical: moderateScale(5),
     },
     shadowProp: {
       shadowOffset: { width: horizontalScale(-2), height: verticalScale(4) },
@@ -21,6 +28,7 @@ export const AlmostThereStyle = (themeColors: any) =>
       shadowRadius: moderateScale(3),
     },
     imageContainer: {
+      marginTop: moderateScale(20),
       flexDirection: 'row',
       alignItems: 'center',
       width: '70%',
@@ -35,10 +43,6 @@ export const AlmostThereStyle = (themeColors: any) =>
       overflow: 'hidden',
       borderRadius: moderateScale(35),
     },
-    image: {
-      height: '100%',
-      width: '100%',
-    },
     userInfo: { justifyContent: 'center', alignItems: 'center' },
     detailContainer: {
       marginTop: moderateScale(5),
@@ -46,20 +50,19 @@ export const AlmostThereStyle = (themeColors: any) =>
       flexDirection: 'row',
       alignItems: 'center',
     },
+    technical: { flexDirection: 'row', padding: moderateScale(16) },
     pendingContainer: {
       height: moderateScale(18),
       width: moderateScale(18),
       borderRadius: moderateScale(9),
     },
-    checkStatus: {
-      borderColor: themeColors.almost.borderColor,
-      alignItems: 'center',
-      borderRadius: moderateScale(4),
-      borderWidth: moderateScale(0.5),
-      paddingHorizontal: moderateScale(24),
-      paddingVertical: moderateScale(10),
-      marginTop: moderateScale(20),
+    upIcon: { justifyContent: 'center', paddingLeft: moderateScale(5) },
+    downIcon: { justifyContent: 'center' },
+    toggle: {
       width: '100%',
+      flexWrap: 'wrap',
+      gap: moderateScale(8),
+      marginBottom: moderateScale(15),
     },
     headerTxt: {
       alignSelf: 'center',
@@ -93,18 +96,7 @@ export const AlmostThereStyle = (themeColors: any) =>
       lineHeight: verticalScale(17.6),
       letterSpacing: moderateScale(0.1),
       color: themeColors.almost.remainingPeer,
-    },
-    descriptionTxt: {
-      marginTop: moderateScale(16),
-      textAlign: 'center',
-      fontSize: moderateScale(14),
-      lineHeight: verticalScale(21.2),
-      letterSpacing: moderateScale(0.5),
-    },
-    checkStatusTxt: {
-      fontSize: moderateScale(16),
-      lineHeight: verticalScale(23.2),
-      letterSpacing: moderateScale(0.1),
+      marginBottom: moderateScale(10),
     },
     spacer: {
       padding: moderateScale(10),
@@ -113,11 +105,6 @@ export const AlmostThereStyle = (themeColors: any) =>
       justifyContent: 'center',
       alignItems: 'center',
       marginTop: moderateScale(10),
-    },
-    bottomContainer: {
-      position: 'absolute',
-      bottom: moderateScale(20),
-      width: '100%',
     },
     actionButton: { width: '90%' },
     infoText: {
