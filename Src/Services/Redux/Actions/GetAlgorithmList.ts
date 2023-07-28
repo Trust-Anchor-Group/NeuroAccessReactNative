@@ -127,14 +127,22 @@ export const addIdAttachmentApi = createAsyncThunk(
   }
 );
 
-
-export const clearState = createAsyncThunk(
-  'crypto/clearState',
-  async () => {
+export const readyForApproval = createAsyncThunk(
+  'crypto/readyForApproval',
+  async (legalId: any) => {
     try {
-      return {};
+      const response = await AgentAPI.Legal.ReadyForApproval(legalId);
+      return response;
     } catch (error) {
       throw error?.response?.data;
     }
   }
 );
+
+export const clearState = createAsyncThunk('crypto/clearState', async () => {
+  try {
+    return {};
+  } catch (error) {
+    throw error?.response?.data;
+  }
+});

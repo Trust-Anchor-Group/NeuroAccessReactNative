@@ -9,6 +9,7 @@ import {
   ActionButtonWithIcon,
   ShowError,
 } from '@Controls/index';
+import Config from 'react-native-config';
 import { useTranslation } from 'react-i18next';
 import { ThemeContext } from '@Theme/Provider/ThemeContext';
 import { GlobalStyle as styles, AlmostThereStatusStyle } from '@Pages/Styles';
@@ -17,10 +18,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Loader } from '@Controls/index';
 import { AlmostStatusLabel, AlmostTechnicalLabel } from '@Controls/index';
 import { ArrowDownIcon, ArrowUpIcon } from '@Assets/Svgs';
-import {
-  getIdentityApi,
-  getApplicationAttributeApi,
-} from '@Services/Redux/Actions/GetStatusForIdentity';
+import { getApplicationAttributeApi } from '@Services/Redux/Actions/GetStatusForIdentity';
 import { readBase64FromFile } from '@Services/Storage';
 import { AlmostStatusList } from '@Controls/AlmostStatusList';
 import { InformationOverlay } from '@Controls/InformationOverlay';
@@ -29,6 +27,7 @@ import {
   PopMessagePayload,
 } from '@Services/Redux/Actions/GetStatusForIdentity';
 import { savePopMessageLast } from '@Services/Redux/Reducers/IdentitySlice';
+import { convertUTCToLocalTime } from '@Helpers/Utils';
 
 export const AlmostThereStatus = ({
   navigation,
@@ -41,9 +40,13 @@ export const AlmostThereStatus = ({
   const [technicalToggle, setTechnicalToggle] = useState(false);
   const [intervalId, setIntervalId] = useState<NodeJS.Timeout | null>(null);
   const approveStatus = useRef(false);
+  const userFullName = useRef('');
+  const presonalNumber = useRef('');
   const dispatch = useDispatch<ThunkDispatch<any, any, any>>();
   const { userDetails } = useSelector((state) => state.user);
-  const { identityResponse } = useSelector((state) => state.identity);
+  const { identityResponse, pnrNumber } = useSelector(
+    (state) => state.identity
+  );
   const {
     attributeResponse,
     popMessageResponse,
@@ -61,7 +64,7 @@ export const AlmostThereStatus = ({
   };
 
   useEffect(() => {
-    readAndUseBase64();
+    userIdentity();
     getIdentityData();
   }, []);
 
@@ -76,13 +79,17 @@ export const AlmostThereStatus = ({
     }
   }, [attributeResponse]);
 
-  useEffect(() => {
-    const id = setInterval(popMessage, 2000);
-    setIntervalId(id);
+  React.useEffect(() => {
+    const unsubscribe = navigation.addListener('focus', () => {
+      const id = setInterval(popMessage, 2000);
+      setIntervalId(id);
+    });
+
     return () => {
-      clearInterval(id);
+      clearInterval(intervalId);
+      unsubscribe();
     };
-  }, []);
+  }, [navigation]);
 
   const popMessage = async () => {
     const popMessagePayload: PopMessagePayload = {
@@ -119,6 +126,44 @@ export const AlmostThereStatus = ({
     if (intervalId) {
       clearInterval(intervalId);
       setIntervalId(null);
+    }
+  };
+
+  const userIdentity = () => {
+    let fullName = '';
+    identityResponse?.Identity?.property.map((item, index) => {
+      if (item?.name === 'FIRST') {
+        fullName = item?.value;
+      } else if (item?.name === 'MIDDLE') {
+        fullName = fullName + ' ' + item?.value;
+      } else if (item?.name === 'LAST') {
+        fullName = fullName + ' ' + item?.value;
+      } else if (item?.name === 'PNR') {
+        presonalNumber.current = item?.value;
+      }
+    });
+    userFullName.current = fullName;
+    readAndUseBase64();
+  };
+
+  const validDate = () => {
+    let validDate = '';
+
+    return validDate;
+  };
+
+  const splitDate = (dateTimeFrom: string, dateTimeTo?: string) => {
+    if (approveStatus.current) {
+      const [datePart, timePart] = dateTimeFrom.split('T');
+      if (dateTimeTo !== undefined) {
+        const [datePartTo, timePartTo] = dateTimeTo.split('T');
+        return datePart + ' ... ' + datePartTo;
+      } else {
+        return datePart;
+      }
+    } else {
+      const val = convertUTCToLocalTime(dateTimeFrom);
+      return val;
     }
   };
 
@@ -168,24 +213,26 @@ export const AlmostThereStatus = ({
             ]}
           >
             <View style={AlmostThereStatusStyle(themeColors).imageContainer}>
-              <Image
-                style={[AlmostThereStatusStyle(themeColors).imageView]}
-                source={{ uri: `data:image/png;base64,${imageUri}` }}
-                resizeMode="cover"
-              />
+              <View style={AlmostThereStatusStyle(themeColors).imageView}>
+                <Image
+                  style={[AlmostThereStatusStyle(themeColors).image]}
+                  source={{ uri: `data:image/png;base64,${imageUri}` }}
+                  resizeMode="cover"
+                />
+              </View>
               <View style={AlmostThereStatusStyle(themeColors).userInfo}>
                 <TextLabel
                   style={AlmostThereStatusStyle(themeColors).name}
                   variant={TextLabelVariants.HEADER}
                 >
-                  {userDetails?.userName}
+                  {userFullName.current}
                 </TextLabel>
 
                 <TextLabel
                   style={AlmostThereStatusStyle(themeColors).mobile}
                   variant={TextLabelVariants.DESCRIPTION}
                 >
-                  {userDetails?.mobileNumber?.number}
+                  {presonalNumber.current}
                 </TextLabel>
               </View>
             </View>
@@ -221,27 +268,40 @@ export const AlmostThereStatus = ({
             )}
 
             <AlmostStatusLabel
+              styleTitle={{ flex: 0.2 }}
+              styleValue={{ flex: 0.8 }}
               title="Created"
-              titleValue={identityResponse?.Identity?.status?.created}
+              titleValue={splitDate(
+                identityResponse?.Identity?.status?.created
+              )}
               titleValueColor={themeColors.almost.created}
             />
             <AlmostStatusLabel
-              title="Updated"
-              titleValue={identityResponse?.Identity?.status?.to}
+              styleTitle={{ flex: 0.2 }}
+              styleValue={{ flex: 0.8 }}
+              title={approveStatus.current ? 'Valid' : 'Updated'}
+              titleValue={
+                approveStatus.current
+                  ? splitDate(
+                      identityResponse?.Identity?.status?.from,
+                      identityResponse?.Identity?.status?.to
+                    )
+                  : splitDate(identityResponse?.Identity?.status?.created)
+              }
               titleValueColor={themeColors.almost.created}
             />
 
             <View style={AlmostThereStatusStyle(themeColors).line} />
 
-            <AlmostStatusList data={identityResponse?.Identity?.property} />
+            <View style={{ width: '100%' }}>
+              <AlmostStatusList data={identityResponse?.Identity?.property} />
+            </View>
+
             <TouchableOpacity
               style={AlmostThereStatusStyle(themeColors).technical}
               onPress={() => setTechnicalToggle(!technicalToggle)}
             >
-              <TextLabel
-                variant={TextLabelVariants.INPUTLABEL}
-                // style={{ textAlign: 'left' }}
-              >
+              <TextLabel variant={TextLabelVariants.INPUTLABEL}>
                 {'Technical'}
               </TextLabel>
               {technicalToggle ? (
@@ -262,12 +322,14 @@ export const AlmostThereStatus = ({
             {technicalToggle && (
               <View style={AlmostThereStatusStyle(themeColors).toggle}>
                 <AlmostTechnicalLabel
-                  title="Neuro-ID"
+                  title={t('almostThere.neuroID')}
+                  prefix="Legal ID: "
                   link={identityResponse?.Identity?.id}
                 />
                 <AlmostTechnicalLabel
-                  title="Network"
-                  link={identityResponse?.Identity?.serverSignature?.value}
+                  title={t('almostThere.networkId')}
+                  prefix="Network ID: "
+                  link={userDetails?.userName + '@' + Config.Host}
                 />
               </View>
             )}

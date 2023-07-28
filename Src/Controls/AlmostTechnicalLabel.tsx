@@ -1,5 +1,6 @@
 import { FC, useContext } from 'react';
 import { View } from 'react-native';
+import Clipboard from '@react-native-clipboard/clipboard';
 import { TextLabel } from './TextLabel';
 import { TextLabelVariants } from './TextLabel';
 import { GlobalStyle } from '@Pages/Styles';
@@ -9,11 +10,17 @@ import { AlmostTechnicalLabelStyle } from './Styles';
 interface Props {
   title: string;
   link: string;
+  prefix: string;
 }
 
-export const AlmostTechnicalLabel: FC<Props> = ({ title, link }) => {
+export const AlmostTechnicalLabel: FC<Props> = ({ title, link, prefix }) => {
   const { themeColors } = useContext(ThemeContext);
   const styles = GlobalStyle(themeColors);
+
+  const getCopiedData = (text: string) => {
+    Clipboard.setString(prefix + text);
+  };
+
   return (
     <View style={AlmostTechnicalLabelStyle(themeColors).Container}>
       <View style={AlmostTechnicalLabelStyle(themeColors).detailContainer}>
@@ -25,6 +32,7 @@ export const AlmostTechnicalLabel: FC<Props> = ({ title, link }) => {
         </TextLabel>
 
         <CopyPastIcon
+          onPress={() => getCopiedData(link)}
           style={AlmostTechnicalLabelStyle(themeColors).icon}
           textColor={themeColors.almost.horizontalLine}
         />

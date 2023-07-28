@@ -33,6 +33,9 @@ const identitySlice = createSlice({
     savePopMessageLast: (state, action) => {
       state.popMessageLastResponse = action.payload;
     },
+    clearIdentity: (state) => {
+      state.identityResponse = {};
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -76,5 +79,6 @@ const identitySlice = createSlice({
 });
 
 export const { saveIdentity } = identitySlice.actions;
+export const { clearIdentity } = identitySlice.actions;
 export const { savePopMessageLast } = identitySlice.actions;
 export default identitySlice.reducer;

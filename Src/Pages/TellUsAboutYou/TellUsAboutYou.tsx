@@ -57,14 +57,20 @@ import {
   createKeyIdApi,
   CreateKeyPayload,
   clearState,
+  readyForApproval,
 } from '@Services/Redux/Actions/GetAlgorithmList';
+import { clearReadyForApproval } from '@Services/Redux/Reducers/CryptoSlice';
 import {
   saveKeyIdPassword,
   saveLegalID,
 } from '@Services/Redux/Actions/GetUserDetails';
 import { Loader } from '@Controls/index';
 import { saveBase64ToFile } from '@Services/Storage';
-import { saveIdentity } from '@Services/Redux/Reducers/IdentitySlice';
+import {
+  saveIdentity,
+  clearIdentity,
+} from '@Services/Redux/Reducers/IdentitySlice';
+import { patternCheck } from '@Helpers/PresonalNumberValidation';
 const ApiKey = Config.ApiKey;
 const Secret = Config.Secret;
 
@@ -78,6 +84,8 @@ export const TellUsAboutYou = ({
   const formikRef = useRef();
   const countryISOCode = useRef();
   const legalID = useRef();
+  const aadhaarLoading = useRef(false);
+  const placeHolderForPersonalNbr = useRef('');
   const propertiesRef = useRef();
   const algorithmVal = useRef<Algorithm>();
   const { userDetails } = useSelector((state) => state.user);
@@ -87,6 +95,7 @@ export const TellUsAboutYou = ({
     pnrResponse,
     legalResponse,
     attachmentResponse,
+    readyForApprovalResponse,
     loading,
     error,
   } = useSelector((state) => state.crypto);
@@ -155,6 +164,8 @@ export const TellUsAboutYou = ({
   useEffect(() => {
     const pnrHandler = Object.entries(pnrResponse).length !== 0;
     if (pnrHandler) {
+      aadhaarLoading.current = false;
+
       if (pnrResponse.countrySupported && pnrResponse.isValid) {
         formikRef.current?.setFieldValue(
           'personalNumber',
@@ -196,20 +207,28 @@ export const TellUsAboutYou = ({
     }
   }, [attachmentResponse]);
 
+  const readyForApprovalCall = async () => {
+    await dispatch(readyForApproval(legalID.current));
+  };
+
+  useEffect(() => {
+    if (readyForApprovalResponse !== null) navigateAlmost();
+  }, [readyForApprovalResponse]);
+
   const handleSaveFile = async () => {
     try {
       const result = await saveBase64ToFile(imageUri?.base64);
       if (result) {
-        attachmentResponseNavigation();
+        readyForApprovalCall();
       } else {
-        attachmentResponseNavigation();
+        readyForApprovalCall();
       }
     } catch (error) {
       console.error('Error:', error);
     }
   };
 
-  const attachmentResponseNavigation = async () => {
+  const navigateAlmost = async () => {
     await dispatch(clearState());
     navigation.navigate('AlmostThere');
   };
@@ -241,9 +260,19 @@ export const TellUsAboutYou = ({
   };
 
   const handleItemSelected = (selectedItem: any) => {
-    addressRef.current?.focus();
     countryISOCode.current = selectedItem?.code;
     formikRef.current?.setFieldValue('country', selectedItem?.name['en']);
+    checkNumber(selectedItem?.code);
+  };
+
+  const checkNumber = (countryISO: string) => {
+    const selectedValue = patternCheck.find(
+      (element) => element.countryCode === countryISO
+    );
+    if (selectedValue !== undefined) {
+      placeHolderForPersonalNbr.current = selectedValue.displayString;
+    }
+    personalNumberRef?.current?.focus();
   };
 
   const handleFormSubmit = (values: any) => {
@@ -297,7 +326,6 @@ export const TellUsAboutYou = ({
         value: values.state,
       });
     }
-
     propertiesRef.current = properties;
     generateUniqueKey();
   };
@@ -308,6 +336,8 @@ export const TellUsAboutYou = ({
       const s2 = Secret + ':' + randomString;
       const keyPassword = await AgentAPI.Account.Sign(ApiKey, s2);
       await dispatch(saveKeyIdPassword(keyPassword));
+      dispatch(clearIdentity());
+      dispatch(clearReadyForApproval());
       createKeyCall(keyPassword);
     } catch (error) {}
   };
@@ -341,9 +371,9 @@ export const TellUsAboutYou = ({
   };
 
   const checkPersonalNumber = async (pnr: string) => {
-    if (pnr !== undefined) {
+    if (pnr !== undefined && countryISOCode.current !== undefined) {
       const pnrPayload: PnrPayload = {
-        countryCode: 'IN',
+        countryCode: countryISOCode.current,
         pnr: pnr,
       };
       await dispatch(validatePNrApi(pnrPayload));
@@ -726,53 +756,6 @@ export const TellUsAboutYou = ({
                   style={TellUsAboutYouStyle(themeColors).label}
                   variant={TextLabelVariants.INPUTLABEL}
                 >
-                  {t('tellUsAboutYou.personalNumber')}
-                </TextLabel>
-                <NeuroTextInput
-                  neuroStyle={[
-                    TellUsAboutYouStyle(themeColors).textInput,
-                    borderColor(
-                      touched.personalNumber,
-                      errors.personalNumber,
-                      values.personalNumber
-                    ),
-                  ]}
-                  placeholder={t('tellUsAboutYou.enterPersonal')}
-                  placeholderTextColor={themeColors.tellUsAboutYou.placeHolder}
-                  value={values.personalNumber}
-                  onChangeText={handleChange('personalNumber')}
-                  onBlur={() => {
-                    checkPersonalNumber(values.personalNumber);
-                    handleBlur('personalNumber');
-                    setFieldTouched('personalNumber', false);
-                  }}
-                  onFocus={() => setFieldTouched('personalNumber', true)}
-                  isError={errorIcon(
-                    touched.personalNumber,
-                    errors.personalNumber
-                  )}
-                  errorStyle={TellUsAboutYouStyle(themeColors).errorText}
-                  autoCapitalize="none"
-                  returnKeyType="next"
-                  keyboardType="default"
-                  ref={personalNumberRef}
-                  onSubmitEditing={() => {
-                    countryRef.current?.focus();
-                  }}
-                />
-                {errors.personalNumber && (
-                  <TextLabel
-                    variant={TextLabelVariants.XSMALL}
-                    style={TellUsAboutYouStyle(themeColors).error}
-                  >
-                    {t(errors.personalNumber)}
-                  </TextLabel>
-                )}
-
-                <TextLabel
-                  style={TellUsAboutYouStyle(themeColors).label}
-                  variant={TextLabelVariants.INPUTLABEL}
-                >
                   {t('tellUsAboutYou.country')}
                 </TextLabel>
 
@@ -809,12 +792,9 @@ export const TellUsAboutYou = ({
                     ref={countryRef}
                     editable={false}
                     onTouchStart={() => {
-                      addressRef.current?.focus();
                       openModal();
                     }}
-                    onSubmitEditing={() => {
-                      addressRef.current?.focus();
-                    }}
+                    onSubmitEditing={() => {}}
                   />
                 </TouchableOpacity>
                 {errors.country && (
@@ -823,6 +803,54 @@ export const TellUsAboutYou = ({
                     style={TellUsAboutYouStyle(themeColors).error}
                   >
                     {t(errors.country)}
+                  </TextLabel>
+                )}
+
+                <TextLabel
+                  style={TellUsAboutYouStyle(themeColors).label}
+                  variant={TextLabelVariants.INPUTLABEL}
+                >
+                  {t('tellUsAboutYou.personalNumber')}
+                </TextLabel>
+                <NeuroTextInput
+                  neuroStyle={[
+                    TellUsAboutYouStyle(themeColors).textInput,
+                    borderColor(
+                      touched.personalNumber,
+                      errors.personalNumber,
+                      values.personalNumber
+                    ),
+                  ]}
+                  placeholder={placeHolderForPersonalNbr.current}
+                  placeholderTextColor={themeColors.tellUsAboutYou.placeHolder}
+                  value={values.personalNumber}
+                  onChangeText={handleChange('personalNumber')}
+                  onBlur={() => {
+                    aadhaarLoading.current = true;
+                    checkPersonalNumber(values.personalNumber);
+                    handleBlur('personalNumber');
+                    setFieldTouched('personalNumber', false);
+                  }}
+                  onFocus={() => setFieldTouched('personalNumber', true)}
+                  isError={errorIcon(
+                    touched.personalNumber,
+                    errors.personalNumber
+                  )}
+                  errorStyle={TellUsAboutYouStyle(themeColors).errorText}
+                  autoCapitalize="none"
+                  returnKeyType="next"
+                  keyboardType="default"
+                  ref={personalNumberRef}
+                  onSubmitEditing={() => {
+                    addressRef.current?.focus();
+                  }}
+                />
+                {errors.personalNumber && (
+                  <TextLabel
+                    variant={TextLabelVariants.XSMALL}
+                    style={TellUsAboutYouStyle(themeColors).error}
+                  >
+                    {t(errors.personalNumber)}
                   </TextLabel>
                 )}
 
@@ -1107,8 +1135,7 @@ export const TellUsAboutYou = ({
         data={countryCodes}
         onItemSelected={handleItemSelected}
       />
-
-      <Loader loading={loading} />
+      {!aadhaarLoading.current && <Loader loading={loading} />}
     </NeuroAccessBackground>
   );
 };
