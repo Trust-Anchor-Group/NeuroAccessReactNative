@@ -5,6 +5,7 @@ import {
   Platform,
   Keyboard,
   ActivityIndicator,
+  Alert,
 } from 'react-native';
 import { StackScreenProps } from '@react-navigation/stack';
 import {
@@ -27,10 +28,11 @@ import {
   UserPayload,
   createAccountUsingEmail,
   saveEmail,
-  sendEmailVerificationMessage,
   saveAccountPassword,
 } from '@Services/Redux/Actions/GetUserDetails';
 import { ThunkDispatch } from '@reduxjs/toolkit';
+import { setUserSliceError } from '@Services/Redux/Reducers/UserSlice';
+import { isEmpty } from '@Helpers/Utils';
 
 export const EnterEmail = ({
   navigation,
@@ -40,9 +42,30 @@ export const EnterEmail = ({
   const { userDetails, loading, error } = useSelector((state) => state.user);
   const { themeColors } = useContext(ThemeContext);
   const emailInputRef = useRef<TextInputRef>(null);
+  const accountPassword = useRef<string>('');
   const [email, setEmail] = useState(userDetails?.email);
 
-  useEffect(() => {}, [loading]);
+  useEffect(() => {
+    if (error) {
+      Alert.alert('Error!', JSON.stringify(error), [
+        {
+          text: 'ok',
+          onPress: () => dispatch(setUserSliceError('')),
+        }
+      ]);
+    }
+  }, [error]);
+
+  useEffect(() => {
+    if (!isEmpty(userDetails?.tokenData)) {
+      const nextPage = async () => {
+        await dispatch(saveEmail(email));
+        await dispatch(saveAccountPassword(accountPassword?.current));
+        navigation.navigate('EmailOTPVerify');  
+      }
+      nextPage()
+    }
+  }, [userDetails?.tokenData]);
 
   const handleSubmit = () => {
     generateUniqueKey();
@@ -52,28 +75,25 @@ export const EnterEmail = ({
     try {
       const randomString = AgentAPI.Account.getRandomValues(32);
       const s1 = userDetails?.userName + ':' + email + ':' + randomString;
-      const accountPassword = await AgentAPI.Account.Sign(
+      accountPassword.current = await AgentAPI.Account.Sign(
         userDetails.userName,
         s1
       );
-      callCreateAccount(accountPassword);
+      callCreateAccount();
     } catch (error) {}
   };
 
-  const callCreateAccount = async (accountPassword: string) => {
+  const callCreateAccount = async () => {
     const userPayload: UserPayload = {
       UserName: userDetails?.userName,
       EMail: email,
-      Password: accountPassword,
+      Password: accountPassword.current,
     };
     const isFormValid = emailInputRef.current?.validate();
     if (isFormValid) {
       Keyboard.dismiss();
       try {
-        dispatch(createAccountUsingEmail(userPayload));
-        dispatch(saveEmail(email));
-        dispatch(saveAccountPassword(accountPassword));
-        navigation.navigate('EmailOTPVerify');
+        await dispatch(createAccountUsingEmail(userPayload));
       } catch (error) {
         alert(error);
       }

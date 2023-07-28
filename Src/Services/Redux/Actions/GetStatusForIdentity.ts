@@ -11,36 +11,48 @@ export type PopMessagePayload = {
 
 export const getIdentityApi = createAsyncThunk(
   'identity/getIdentityApi',
-  async (payload: IdentityPayload) => {
+  async (payload: IdentityPayload, { fulfillWithValue, rejectWithValue }) => {
     try {
       const response = await AgentAPI.Legal.GetIdentity(payload.LegalId);
-      return response;
+      return fulfillWithValue(response);
     } catch (error) {
-      throw error?.response?.data;
+      const message =
+        typeof error?.message === 'string'
+          ? error?.message
+          : error?.message?.Message;
+      throw rejectWithValue(message);
     }
   }
 );
 
 export const getApplicationAttributeApi = createAsyncThunk(
   'identity/getApplicationAttributeApi',
-  async () => {
+  async (_, { fulfillWithValue, rejectWithValue }) => {
     try {
       const response = await AgentAPI.Legal.GetApplicationAttributes();
-      return response;
+      return fulfillWithValue(response);
     } catch (error) {
-      throw error?.response?.data;
+      const message =
+        typeof error?.message === 'string'
+          ? error?.message
+          : error?.message?.Message;
+      throw rejectWithValue(message);
     }
   }
 );
 
 export const getPopMessageApi = createAsyncThunk(
   'identity/getPopMessageApi',
-  async (payload: PopMessagePayload) => {
+  async (payload: PopMessagePayload, { fulfillWithValue, rejectWithValue }) => {
     try {
       const response = await AgentAPI.Xmpp.PopMessages(payload.MaxCount);
-      return response;
+      return fulfillWithValue(response);
     } catch (error) {
-      throw error?.response?.data;
+      const message =
+        typeof error?.message === 'string'
+          ? error?.message
+          : error?.message?.Message;
+      throw rejectWithValue(message);
     }
   }
 );

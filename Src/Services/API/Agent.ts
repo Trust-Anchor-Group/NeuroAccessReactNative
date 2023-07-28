@@ -22,11 +22,38 @@ export const AgentAPI = {
         xhttp.onreadystatechange = function () {
           if (xhttp.readyState == 4) {
             let Response = xhttp.responseText;
+            console.log(
+              'Resource --> ',
+              Resource,
+              '\n xhttp.status ---> ',
+              xhttp.status
+            );
             if (xhttp.status === 200) {
               Response = JSON.parse(Response);
               SetResult(Response);
-            } else SetException(Response);
+            } else {
+              var Alternatives = [];
+              var i = 1;
+              var Alternative = xhttp.getResponseHeader(
+                'X-AlternativeName' + (i++).toString()
+              );
 
+              while (Alternative) {
+                Alternatives.push(Alternative);
+                Alternative = xhttp.getResponseHeader(
+                  'X-AlternativeName' + (i++).toString()
+                );
+              }
+
+              var Error = {
+                message: Response,
+                statusCode: xhttp.status,
+                statusMessage: xhttp.statusText,
+                alternatives: Alternatives,
+              };
+              console.log('Error --> ', JSON.stringify(Error));
+              SetException(Error);
+            }
             if (!Internal) AgentAPI.IO.AfterResponse(Response);
           }
         };
@@ -60,7 +87,29 @@ export const AgentAPI = {
             if (xhttp.status === 200) {
               Response = JSON.parse(Response);
               SetResult(Response);
-            } else SetException(Response);
+            } else {
+              var Alternatives = [];
+              var i = 1;
+              var Alternative = xhttp.getResponseHeader(
+                'X-AlternativeName' + (i++).toString()
+              );
+
+              while (Alternative) {
+                Alternatives.push(Alternative);
+                Alternative = xhttp.getResponseHeader(
+                  'X-AlternativeName' + (i++).toString()
+                );
+              }
+
+              var Error = {
+                message: Response,
+                statusCode: xhttp.status,
+                statusMessage: xhttp.statusText,
+                alternatives: Alternatives,
+              };
+
+              SetException(Error);
+            }
 
             if (!Internal) AgentAPI.IO.AfterResponse(Response);
           }
@@ -312,7 +361,9 @@ export const AgentAPI = {
       );
     },
     GetDomainInfo: async function (domain: string) {
-      const Request = {};
+      const Request = {
+        Code: "8deUo7/dmIE/KaJPf78yORVlkTb2aNRnSPhRAQxdpHw="
+    };
       const Response = await AgentAPI.IO.GetRequestWithDomain(
         domain,
         '/Agent/Account/DomainInfo',
@@ -341,7 +392,7 @@ export const AgentAPI = {
         Config.ApiKey +
         ':' +
         Nonce;
-      const Response = await AgentAPI.IO.Request('/Agent/Account/Create', {
+     const Response = await AgentAPI.IO.Request('/Agent/Account/Create', {
         userName: UserName,
         eMail: EMail,
         password: Password,
@@ -349,10 +400,9 @@ export const AgentAPI = {
         nonce: Nonce,
         signature: await this.Sign(Config.Secret, s),
         seconds: Seconds,
-      });
+      })
       this.SetSessionString('AgentAPI.UserName', UserName);
-      this.SaveSessionToken(Response.jwt, Seconds, Math.round(Seconds / 2));
-
+      this.SaveSessionToken(Response?.jwt, Seconds, Math.round(Seconds / 2));
       return Response;
     },
     GetSessionToken: async function () {

@@ -40,34 +40,42 @@ export type AddIdAttachmentPayload = {
 
 export const getAlgorithmListApi = createAsyncThunk(
   'crypto/getAlgorithmListApi',
-  async () => {
+  async (_, { fulfillWithValue, rejectWithValue }) => {
     try {
       const response = await AgentAPI.Crypto.GetAlgorithms();
-      return response;
+      return fulfillWithValue(response);
     } catch (error) {
-      throw error?.response?.data;
+      const message =
+        typeof error?.message === 'string'
+          ? error?.message
+          : error?.message?.Message;
+      throw rejectWithValue(message);
     }
   }
 );
 
 export const validatePNrApi = createAsyncThunk(
   'crypto/validatePNrApi',
-  async (payload: PnrPayload) => {
+  async (payload: PnrPayload, { fulfillWithValue, rejectWithValue }) => {
     try {
       const response = await AgentAPI.Legal.ValidatePNr(
         payload.countryCode,
         payload.pnr
       );
-      return response;
+      return fulfillWithValue(response);
     } catch (error) {
-      throw error?.response?.data;
+      const message =
+        typeof error?.message === 'string'
+          ? error?.message
+          : error?.message?.Message;
+      throw rejectWithValue(message);
     }
   }
 );
 
 export const createKeyIdApi = createAsyncThunk(
   'crypto/createKeyIdApi',
-  async (payload: CreateKeyPayload) => {
+  async (payload: CreateKeyPayload, { fulfillWithValue, rejectWithValue }) => {
     try {
       const response = await AgentAPI.Crypto.CreateKey(
         payload.userName,
@@ -77,16 +85,20 @@ export const createKeyIdApi = createAsyncThunk(
         payload.KeyPassword,
         payload.AccountPassword
       );
-      return response;
+      return fulfillWithValue(response);
     } catch (error) {
-      throw error?.response?.data;
+      const message =
+        typeof error?.message === 'string'
+          ? error?.message
+          : error?.message?.Message;
+      throw rejectWithValue(message);
     }
   }
 );
 
 export const applyLegalIdApi = createAsyncThunk(
   'crypto/applyLegalIdApi',
-  async (payload: ApplyLegalPayload) => {
+  async (payload: ApplyLegalPayload, { fulfillWithValue, rejectWithValue }) => {
     try {
       const response = await AgentAPI.Legal.ApplyId(
         payload.userName,
@@ -97,16 +109,23 @@ export const applyLegalIdApi = createAsyncThunk(
         payload.AccountPassword,
         payload.Properties
       );
-      return response;
+      return fulfillWithValue(response);
     } catch (error) {
-      throw error?.response?.data;
+      const message =
+        typeof error?.message === 'string'
+          ? error?.message
+          : error?.message?.Message;
+      throw rejectWithValue(message);
     }
   }
 );
 
 export const addIdAttachmentApi = createAsyncThunk(
   'crypto/addIdAttachmentApi',
-  async (payload: AddIdAttachmentPayload) => {
+  async (
+    payload: AddIdAttachmentPayload,
+    { fulfillWithValue, rejectWithValue }
+  ) => {
     try {
       const response = await AgentAPI.Legal.AddIdAttachment(
         payload.userName,
@@ -120,21 +139,21 @@ export const addIdAttachmentApi = createAsyncThunk(
         payload.FileName,
         payload.ContentType
       );
-      return response;
+      return fulfillWithValue(response);
     } catch (error) {
-      throw error?.response?.data;
+      const message =
+        typeof error?.message === 'string'
+          ? error?.message
+          : error?.message?.Message;
+      throw rejectWithValue(message);
     }
   }
 );
 
-
-export const clearState = createAsyncThunk(
-  'crypto/clearState',
-  async () => {
-    try {
-      return {};
-    } catch (error) {
-      throw error?.response?.data;
-    }
+export const clearState = createAsyncThunk('crypto/clearState', async () => {
+  try {
+    return {};
+  } catch (error) {
+    throw error?.response?.data;
   }
-);
+});

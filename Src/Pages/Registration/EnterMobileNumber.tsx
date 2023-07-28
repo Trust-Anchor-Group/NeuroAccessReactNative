@@ -5,12 +5,14 @@ import {
   Platform,
   Keyboard,
   ScrollView,
+  Alert,
 } from 'react-native';
 import { GlobalStyle as styles, EnterMobileNumberStyle } from '@Pages/Styles';
 import { StackScreenProps } from '@react-navigation/stack';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   createAccountUsingMobileNumber,
+  getUsersCountry,
   saveNumber,
 } from '@Services/Redux/Actions/GetUserDetails';
 import { ThunkDispatch } from '@reduxjs/toolkit';
@@ -37,11 +39,16 @@ import {
   requestMultiPermissionIos,
 } from '@Services/Permission/RequestPermission';
 import { PERMISSIONS } from 'react-native-permissions';
+import { StackActions } from '@react-navigation/native';
+import { clearSendVerificationCodeResponse, setUserSliceError } from '@Services/Redux/Reducers/UserSlice';
+import { isEmpty } from '@Helpers/Utils';
 
 export const EnterMobileNumber = ({ navigation }: StackScreenProps<{}>) => {
   const { t } = useTranslation();
   const dispatch = useDispatch<ThunkDispatch<any, any, any>>();
-  const { userDetails, loading, error } = useSelector((state) => state.user);
+  const { userDetails, sendVerificationCodeResponse, loading, error } = useSelector(
+    (state) => state.user
+  );
   const { themeColors } = useContext(ThemeContext);
   const [countryFlag, setCountryFlag] = useState('');
   const countryISOCode = React.useRef('');
@@ -51,6 +58,26 @@ export const EnterMobileNumber = ({ navigation }: StackScreenProps<{}>) => {
   );
   const [isModalVisible, setIsModalVisible] = useState(false);
   const mobileNumberInputRef = React.useRef<TextInputRef>(null);
+
+  useEffect(() => {
+    if (error) {
+      Alert.alert('Error!', JSON.stringify(error), [
+        {
+          text: 'ok',
+          onPress: () => {
+            dispatch(setUserSliceError(''))
+          },
+        },
+      ]);
+    }
+  }, [error]);
+ 
+  useEffect(() => {
+    if (!isEmpty(sendVerificationCodeResponse) && sendVerificationCodeResponse?.Status) {
+      navigation.navigate('OTPVerify');
+      dispatch(clearSendVerificationCodeResponse(undefined))
+    }
+  }, [sendVerificationCodeResponse]);
 
   const openModal = () => {
     setIsModalVisible(true);
@@ -82,6 +109,21 @@ export const EnterMobileNumber = ({ navigation }: StackScreenProps<{}>) => {
     navigation.navigate('Settings');
   };
 
+  React.useEffect(() => {
+    const callCountryCode = async () => {
+      try {
+        await dispatch(getUsersCountry());
+      } catch (error) {
+        throw error;
+      }
+    };
+    callCountryCode();
+  }, []);
+
+  React.useEffect(() => {
+    handleSearchCountryISOCode(userDetails?.country?.CountryCode);
+  }, [userDetails]);
+
   useEffect(() => {
     if (Platform.OS === 'ios') {
       requestMultiPermissionIos(
@@ -103,14 +145,6 @@ export const EnterMobileNumber = ({ navigation }: StackScreenProps<{}>) => {
         );
       }
     }
-
-    const callCountryCode = async () => {
-      try {
-        const createData = await OnboardingAPI.ID.CountryCode();
-        handleSearchCountryISOCode(createData.CountryCode);
-      } catch (error) {}
-    };
-    callCountryCode();
   }, []);
 
   const handleSearchCountryISOCode = (isoCode: string) => {
@@ -133,9 +167,10 @@ export const EnterMobileNumber = ({ navigation }: StackScreenProps<{}>) => {
         const number = mobileCode.current + mobileNumber;
         await dispatch(createAccountUsingMobileNumber(number));
         await dispatch(saveNumber(mobileData));
-        navigation.navigate('OTPVerify');
       }
-    } catch (error) {}
+    } catch (error) {
+      throw error;
+    }
   };
 
   return (
@@ -212,6 +247,7 @@ export const EnterMobileNumber = ({ navigation }: StackScreenProps<{}>) => {
         </ScrollView>
 
         <NavigationHeader
+          hideBackAction={true}
           onBackAction={onBackClick}
           onLanguageAction={onLanguageClick}
         />

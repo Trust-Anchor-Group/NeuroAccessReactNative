@@ -1,5 +1,11 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { Dimensions, TouchableOpacity, View, ScrollView } from 'react-native';
+import {
+  Dimensions,
+  TouchableOpacity,
+  View,
+  ScrollView,
+  Alert,
+} from 'react-native';
 import { StackScreenProps } from '@react-navigation/stack';
 import {
   NeuroAccessBackground,
@@ -28,10 +34,14 @@ import {
   getDomainDetails,
   setSelectedDomain,
 } from '@Services/Redux/Actions/GetDomainDetails';
-import { DomainInfo } from '@Services/Redux/Reducers/DomainSlice';
+import {
+  DomainInfo,
+  setDomainSliceError,
+} from '@Services/Redux/Reducers/DomainSlice';
 import { moderateScale } from '@Theme/Metrics';
 import Config from 'react-native-config';
 import { StackActions } from '@react-navigation/native';
+import { setUserSliceError } from '@Services/Redux/Reducers/UserSlice';
 
 interface ProviderDetails {
   domain: string;
@@ -61,9 +71,25 @@ export const CurrentProvider = ({
   const [showScanner, setShowScanner] = useState<boolean>(false);
   const [selectedProvider, setSelectedProvider] = useState<DomainInfo>();
 
+  useEffect(() => {
+    if (domainInfoError) {
+      Alert.alert('Error!', JSON.stringify(domainInfoError), [
+        {
+          text: 'ok',
+          onPress: () => {
+            dispatch(setDomainSliceError(''));
+          },
+        },
+      ]);
+    }
+  }, [domainInfoError]);
+
   React.useEffect(() => {
     if (!defaultDomain?.humanReadableName) {
-      dispatch(getDomainDetails(defaultDomain.Domain));
+      const getDomainInfo = async () => {
+        // await dispatch(getDomainDetails(defaultDomain?.Domain));
+      };
+      getDomainInfo()
     }
     if (!selectedDomain?.Domain) {
       dispatch(setSelectedDomain(defaultDomain));
@@ -142,15 +168,23 @@ export const CurrentProvider = ({
 
   const handleQRCodeSelection = async (domainInfo: DomainInfo) => {
     if (domainInfo.Domain) {
-      setLoading(true);
-      const response = await AgentAPI.Account.GetDomainInfo(domainInfo.Domain);
-      setLoading(false);
-      domainInfo.humanReadableDescription =
-        response['humanReadableDescription'];
-      domainInfo.humanReadableName = response['humanReadableName'];
-      domainInfo.useEncryption = response['useEncryption'];
-      setSelectedProvider(domainInfo);
-      dispatch(setSelectedDomain(domainInfo));
+      try {
+        setLoading(true);
+        const response = await AgentAPI.Account.GetDomainInfo(
+          domainInfo.Domain
+        );
+        console.log('response ----> ', response);
+
+        setLoading(false);
+        domainInfo.humanReadableDescription =
+          response['humanReadableDescription'];
+        domainInfo.humanReadableName = response['humanReadableName'];
+        domainInfo.useEncryption = response['useEncryption'];
+        setSelectedProvider(domainInfo);
+        dispatch(setSelectedDomain(domainInfo));
+      } catch (error) {
+        console.log('Error ----> ', error);
+      }
     }
   };
 

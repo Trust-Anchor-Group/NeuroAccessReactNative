@@ -1,4 +1,4 @@
-import { View, KeyboardAvoidingView, Platform } from 'react-native';
+import { View, KeyboardAvoidingView, Platform, Alert } from 'react-native';
 import React, { useState, useContext, useEffect } from 'react';
 import { StackScreenProps } from '@react-navigation/stack';
 import {
@@ -20,12 +20,21 @@ import { OnboardingAPI } from '@Services/API/OnboardingApi';
 import {
   getDomainDetails,
   setDomainDetails,
+  mobileNumberOtpVerification,
 } from '@Services/Redux/Actions/GetDomainDetails';
 import { useSelector, useDispatch } from 'react-redux';
-import { ThunkDispatch } from '@reduxjs/toolkit';
-import { DomainInfo } from '@Services/Redux/Reducers/DomainSlice';
+import { ThunkDispatch, unwrapResult } from '@reduxjs/toolkit';
+import {
+  DomainInfo,
+  setDomainSliceError,
+} from '@Services/Redux/Reducers/DomainSlice';
 import { StackActions } from '@react-navigation/native';
-import { saveKeyId } from '@Services/Redux/Actions/GetUserDetails';
+import {
+  createAccountUsingMobileNumber,
+  saveKeyId,
+} from '@Services/Redux/Actions/GetUserDetails';
+import { setUserSliceError } from '@Services/Redux/Reducers/UserSlice';
+import { isEmpty } from '@Helpers/Utils';
 
 type Props = StackScreenProps<{}>;
 
@@ -33,13 +42,40 @@ export const OTPVerify = ({ navigation, route }: Props) => {
   const { t } = useTranslation();
   const dispatch = useDispatch<ThunkDispatch<any, any, any>>();
   const { userDetails, loading, error } = useSelector((state) => state.user);
-  const { number, code } = userDetails?.mobileNumber;
+  const {
+    defaultDomain,
+    loading: isDomainLoading,
+    error: domainError,
+  } = useSelector((state) => state.domain);
+  const number = userDetails?.mobileNumber?.number;
+  const code = userDetails?.mobileNumber?.code;
   const mobileNumber = code + number;
   const { themeColors } = useContext(ThemeContext);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [otpValue, setOTPValue] = useState('');
   const [isError, setIsError] = useState(false);
   const errorMessage = React.useRef('');
+
+  useEffect(() => {
+    if (error || domainError) {
+      Alert.alert('Error!', JSON.stringify(error ? error : domainError), [
+        {
+          text: 'ok',
+          onPress: () => {
+            error
+              ? dispatch(setUserSliceError(''))
+              : dispatch(setDomainSliceError(''));
+          },
+        },
+      ]);
+    }
+  }, [error, domainError]);
+ 
+  useEffect(() => {
+    if (!isEmpty(defaultDomain)) {
+      navigation.dispatch(StackActions.replace('CurrentProvider'));
+    }
+  }, [defaultDomain]);
 
   const handleOTPChange = (otp: string) => {
     setIsError(false);
@@ -63,21 +99,11 @@ export const OTPVerify = ({ navigation, route }: Props) => {
   };
 
   const callVerificationCode = async () => {
-    setIsLoading(true);
-    let response = await OnboardingAPI.ID.verifyNumber(mobileNumber, otpValue);
-    setIsLoading(false);
-    if (response?.Status) {
-      let responseObj: DomainInfo = {
-        Domain: response['Domain'],
-        Key: response['Key'],
-        Secret: response['Secret'],
-      };
-      dispatch(setDomainDetails(responseObj));
-      if (responseObj.Key !== undefined) {
-        dispatch(saveKeyId(responseObj.Key));
-      }
-
-      navigation.dispatch(StackActions.replace('CurrentProvider'));
+    try {
+      await dispatch(mobileNumberOtpVerification({ mobileNumber, otpValue }))
+    } catch (error) {
+      console.log('dispatch(mobileNumberOtpVerification -- ', error)
+      alert(error)
     }
   };
   const onBackClick = () => {
@@ -90,16 +116,9 @@ export const OTPVerify = ({ navigation, route }: Props) => {
 
   const callResendCode = async () => {
     try {
-      setOTPValue('');
-      setIsLoading(true);
-      const response = await OnboardingAPI.ID.sendVerificationMessage(
-        mobileNumber
-      );
-      setIsLoading(false);
-      if (response.Status) {
-      }
+      await dispatch(createAccountUsingMobileNumber(mobileNumber));
     } catch (error) {
-      setIsLoading(false);
+      throw error;
     }
   };
 
@@ -165,7 +184,7 @@ export const OTPVerify = ({ navigation, route }: Props) => {
         onBackAction={onBackClick}
         onLanguageAction={onLanguageClick}
       />
-      <Loader loading={isLoading} />
+      <Loader loading={loading || isDomainLoading} />
     </NeuroAccessBackground>
   );
 };

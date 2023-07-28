@@ -20,3 +20,12 @@ export function computePinHash(pin: string, objectId: string, domain: string, ac
 
   return sha384Hash.toString();
 }
+
+export function isEmpty(obj: any) {
+  for(var prop in obj) {
+      if(obj.hasOwnProperty(prop))
+          return false;
+  }
+
+  return true;
+}

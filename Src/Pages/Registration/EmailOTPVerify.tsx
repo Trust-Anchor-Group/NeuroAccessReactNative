@@ -34,8 +34,10 @@ export const EmailOTPVerify = ({ navigation, route }: Props) => {
   const { themeColors } = useContext(ThemeContext);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [otpValue, setOTPValue] = useState('');
-  const [isError, setIsError] = useState(false);
-  const errorMessage = React.useRef('');
+  const [isError, setIsError] = useState(error.length ? true : false);
+  const errorMessage = React.useRef(error);
+
+  React.useEffect(() => {},[error]);
 
   const handleOTPChange = (otp: string) => {
     setIsError(false);
@@ -69,8 +71,9 @@ export const EmailOTPVerify = ({ navigation, route }: Props) => {
       if (response?.eMail) {
         navigation.navigate('TellUsAboutYou');
       }
-    } catch (e) {
+    } catch (error) {
       setIsLoading(false);
+      alert(`Error : ${error['message']}`)
     }
   };
   const onBackClick = () => {
@@ -90,11 +93,12 @@ export const EmailOTPVerify = ({ navigation, route }: Props) => {
         Password: userDetails?.password,
       };
       setIsLoading(true);
-      dispatch(createAccountUsingEmail(userPayload));
+      await dispatch(createAccountUsingEmail(userPayload));
       setIsLoading(false);
-      if (response.Status) {
-      }
-    } catch (error) {}
+    } catch (error) {
+      console.log(`Error : ${error}`)
+      alert(`Error : ${error['message']}`)
+    }
   };
 
   return (

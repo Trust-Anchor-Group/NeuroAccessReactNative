@@ -3,10 +3,11 @@ import { AgentAPI } from '@Services/API/Agent';
 import { OnboardingAPI } from '@Services/API/OnboardingApi';
 import { ContextType } from '@Services/Data';
 import { DomainInfo } from '../Reducers/DomainSlice';
+import { isEmpty } from '@Helpers/Utils';
 
 export const getDomainDetails = createAsyncThunk(
   'user/getDomainDetails',
-  async (domain: string) => {
+  async (domain: string, {rejectWithValue, fulfillWithValue}) => {
     try {
       const response = await AgentAPI.Account.GetDomainInfo(domain);
       let responseObj: DomainInfo = {
@@ -15,10 +16,13 @@ export const getDomainDetails = createAsyncThunk(
         humanReadableName: response['humanReadableName'],
         humanReadableDescription: response['humanReadableDescription'],
       };
-      return responseObj;
-
+      return fulfillWithValue(responseObj);    
     } catch (error) {
-      throw error?.response?.data;
+      const message =
+        typeof error?.message === 'string'
+          ? error?.message
+          : error?.message?.Message;
+      throw rejectWithValue(message);
     }
   }
 );
@@ -45,4 +49,23 @@ export const setSelectedDomain = createAsyncThunk(
   }
 );
 
-
+export const mobileNumberOtpVerification = createAsyncThunk(
+  'domain/mobileNumberOtpVerification',
+  async ({ mobileNumber, otpValue }: any, { rejectWithValue, fulfillWithValue }) => {
+    try {
+      const response = await OnboardingAPI.ID.verifyNumber(mobileNumber, otpValue)
+      let responseObj: DomainInfo = {
+        Domain: response.Domain,
+        Secret: response.Secret,
+        Key: response.Key,
+      };
+      return fulfillWithValue(responseObj);    
+    } catch (error) {
+      const message =
+        typeof error?.message === 'string'
+          ? error?.message
+          : error?.message?.Message;
+      throw rejectWithValue(message);
+    }
+  }
+);
