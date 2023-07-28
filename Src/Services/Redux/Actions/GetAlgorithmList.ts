@@ -157,3 +157,15 @@ export const clearState = createAsyncThunk('crypto/clearState', async () => {
     throw error?.response?.data;
   }
 });
+
+export const readyForApproval = createAsyncThunk(
+  'crypto/readyForApproval',
+  async (legalId: any) => {
+    try {
+      const response = await AgentAPI.Legal.ReadyForApproval(legalId);
+      return response;
+    } catch (error) {
+      throw error?.response?.data;
+    }
+  }
+);

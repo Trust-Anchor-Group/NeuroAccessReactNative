@@ -4,7 +4,9 @@ import {
   validatePNrApi,
   applyLegalIdApi,
   addIdAttachmentApi,
-  createKeyIdApi, clearState
+  createKeyIdApi,
+  clearState,
+  readyForApproval,
 } from '../Actions/GetAlgorithmList';
 
 export interface Algorithm {
@@ -22,6 +24,7 @@ interface CryptoState {
   pnrResponse: {};
   legalResponse: {};
   attachmentResponse: {};
+  readyForApprovalResponse: null;
   loading: boolean;
   error: string;
 }
@@ -32,6 +35,7 @@ const initialState: CryptoState = {
   pnrResponse: {},
   legalResponse: {},
   attachmentResponse: {},
+  readyForApprovalResponse: null,
   loading: false,
   error: '',
 };
@@ -39,7 +43,11 @@ const initialState: CryptoState = {
 const cryptoSlice = createSlice({
   name: 'crypto',
   initialState,
-  reducers: {},
+  reducers: {
+    clearReadyForApproval: (state) => {
+      state.readyForApprovalResponse = null;
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(getAlgorithmListApi.pending, (state) => {
@@ -102,15 +110,28 @@ const cryptoSlice = createSlice({
         state.loading = false;
         state.error = action?.error?.message || '';
       })
+      .addCase(readyForApproval.pending, (state) => {
+        state.loading = true;
+        state.error = '';
+      })
+      .addCase(readyForApproval.fulfilled, (state, action) => {
+        state.loading = false;
+        state.readyForApprovalResponse = action.payload;
+      })
+      .addCase(readyForApproval.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action?.error?.message || '';
+      })
       .addCase(clearState.fulfilled, (state, action) => {
         state.loading = false;
         state.error = '';
-        state.createKeyResponse= {};
-        state.pnrResponse= {};
-        state.legalResponse={};
-        state.attachmentResponse={};
+        state.createKeyResponse = {};
+        state.pnrResponse = {};
+        state.legalResponse = {};
+        state.attachmentResponse = {};
       });
   },
 });
 
+export const { clearReadyForApproval } = cryptoSlice.actions;
 export default cryptoSlice.reducer;

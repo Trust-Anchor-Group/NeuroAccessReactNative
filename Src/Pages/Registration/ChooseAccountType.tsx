@@ -62,6 +62,7 @@ export const ChooseAccountType = ({
 
   useEffect(() => {
     setAppLoading(false);
+
     setTimeout(() => {
       // navigation.dispatch(StackActions.replace('CurrentProvider'));
 

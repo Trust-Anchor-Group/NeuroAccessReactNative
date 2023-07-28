@@ -9,12 +9,16 @@ interface Props {
   title: string;
   titleValue: string;
   titleValueColor?: string;
+  styleTitle?: any;
+  styleValue?: any;
 }
 
 export const AlmostStatusLabel: FC<Props> = ({
   title,
   titleValue,
   titleValueColor,
+  styleTitle,
+  styleValue,
 }) => {
   const { themeColors } = useContext(ThemeContext);
   const styles = GlobalStyle(themeColors);
@@ -22,7 +26,7 @@ export const AlmostStatusLabel: FC<Props> = ({
     <View style={AlmostStatusLabelStyle(themeColors).Container}>
       <TextLabel
         variant={TextLabelVariants.INPUTLABEL}
-        style={AlmostStatusLabelStyle(themeColors).label}
+        style={[AlmostStatusLabelStyle(themeColors).label, styleTitle]}
       >
         {title}
       </TextLabel>
@@ -32,6 +36,7 @@ export const AlmostStatusLabel: FC<Props> = ({
         style={[
           AlmostStatusLabelStyle(themeColors).value,
           { color: titleValueColor },
+          styleValue,
         ]}
       >
         {titleValue}

@@ -21,13 +21,18 @@ export const AlmostThereStyle = (themeColors: any) =>
       shadowRadius: moderateScale(3),
     },
     imageContainer: {
+      marginTop: moderateScale(20),
       flexDirection: 'row',
+      justifyContent: 'center',
       alignItems: 'center',
-      width: '70%',
-      height: verticalScale(89),
-      gap: moderateScale(16),
+      width: '100%',
     },
     imageView: {
+      flex: 0.4,
+      alignItems: 'flex-end',
+      paddingRight: moderateScale(10),
+    },
+    image: {
       borderWidth: moderateScale(1),
       borderColor: themeColors.almost.borderColor,
       height: moderateScale(69),
@@ -35,11 +40,21 @@ export const AlmostThereStyle = (themeColors: any) =>
       overflow: 'hidden',
       borderRadius: moderateScale(35),
     },
-    image: {
-      height: '100%',
-      width: '100%',
+    userInfo: {
+      flex: 0.6,
+      flexWrap: 'wrap',
+      justifyContent: 'center',
+      alignItems: 'center',
     },
-    userInfo: { justifyContent: 'center', alignItems: 'center' },
+    name: {
+      marginRight: moderateScale(0),
+      flexWrap: 'wrap',
+      alignSelf: 'flex-start',
+      textAlign: 'left',
+      fontSize: moderateScale(18),
+      lineHeight: moderateScale(25.2),
+      letterSpacing: moderateScale(0.1),
+    },
     detailContainer: {
       marginTop: moderateScale(5),
       gap: moderateScale(16),
@@ -66,14 +81,6 @@ export const AlmostThereStyle = (themeColors: any) =>
       textAlign: 'center',
       fontSize: moderateScale(32),
       lineHeight: moderateScale(40.4),
-    },
-    name: {
-      flexWrap: 'wrap',
-      alignSelf: 'flex-start',
-      textAlign: 'left',
-      fontSize: moderateScale(18),
-      lineHeight: moderateScale(25.2),
-      letterSpacing: moderateScale(0.1),
     },
     mobile: {
       alignSelf: 'flex-start',

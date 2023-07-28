@@ -175,6 +175,8 @@ export default {
     country: 'देश',
     mobile: 'मोबाइल नंबर',
     agent: 'प्रतिनिधि',
+    neuroID: 'न्यूरो-आईडी',
+    networkId: 'नेटवर्क आईडी (JID)',
   },
   peerReviewProcess: {
     title: 'सहकर्मी समीक्षा',
@@ -219,8 +221,7 @@ export default {
     ContainsPersonalNumberExist: 'पिन में व्यक्तिगत नंबर शामिल है!',
     PhoneNumberExist: 'पिन में फ़ोन नंबर शामिल है!',
     EmailExist: 'पिन में ईमेल शामिल है!',
-    IdenticalSymbolsExist:
-      'एक पिन में 2 से अधिक समान प्रतीक नहीं होने चाहिए।',
+    IdenticalSymbolsExist: 'एक पिन में 2 से अधिक समान प्रतीक नहीं होने चाहिए।',
     SequencedSymbolsExist:
       'एक पिन में 2 से अधिक अनुक्रमित प्रतीक नहीं होने चाहिए। \n उदा. "12" या "अब"',
     EnterNewPin: 'नया पिन डालें',

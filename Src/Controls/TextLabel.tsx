@@ -13,7 +13,7 @@ export enum TextLabelVariants {
   INPUTLABEL = 'inputLabel',
   ERRORLABEL = 'errorLabel',
   XSMALL = 'xSmall',
-  DESCRIPTION= 'description'
+  DESCRIPTION = 'description',
 }
 
 export const TextLabel: React.FC<CustomTextProps> = ({
@@ -42,5 +42,12 @@ export const TextLabel: React.FC<CustomTextProps> = ({
     }
   };
 
-  return <Text {...restProps} style={[getVariantStyle(), restProps && restProps?.style]}>{children}</Text>;
+  return (
+    <Text
+      {...restProps}
+      style={[getVariantStyle(), restProps && restProps?.style]}
+    >
+      {children}
+    </Text>
+  );
 };
