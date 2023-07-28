@@ -59,6 +59,7 @@ export const ChooseAccountType = ({
 
   useEffect(() => {
     setAppLoading(false);
+
     setTimeout(() => {
       if (identityResponse?.Identity?.status) {
         navigation.dispatch(StackActions.replace('AlmostThere'));

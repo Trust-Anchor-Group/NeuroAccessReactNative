@@ -32,7 +32,9 @@ export const ActionButtonWithIcon: FC<Props> = ({
       {...restProps}
       style={[styles.appButtonIcon, buttonStyle]}
     >
-      {!hideIcon&&<InvitePeerIcon iconColor={themeColors.almost.buttonIcon} />}
+      {!hideIcon && (
+        <InvitePeerIcon iconColor={themeColors.almost.buttonIcon} />
+      )}
       <TextLabel variant={TextLabelVariants.INPUTLABEL} style={textStyle}>
         {title}
       </TextLabel>

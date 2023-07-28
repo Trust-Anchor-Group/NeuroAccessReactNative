@@ -15,8 +15,6 @@ export default {
     close: 'Close',
     search: 'Search',
     done: 'Done',
-    unlock: 'Unlock now',
-    CreatePin: 'Create pin',
   },
   choosePurposeScreen: {
     label: 'Choose access purpose',
@@ -173,6 +171,8 @@ export default {
     country: 'Country',
     mobile: 'Mobile Number',
     agent: 'Agent',
+    neuroID: 'Neuro-ID',
+    networkId: 'Network ID (JID)',
   },
   peerReviewProcess: {
     title: 'Peer review',
@@ -226,6 +226,6 @@ export default {
     IncorrectPin: 'Incorrect Pin!',
     ConfirmPinRequired: 'Confirm Pin is required!',
     PinDontMatched: 'Your pin do not match!',
-    UnlockPinRequired: 'Unlock Pin is required!'
+    UnlockPinRequired: 'Unlock Pin is required!',
   },
 };

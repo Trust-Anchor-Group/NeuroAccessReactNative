@@ -14,9 +14,7 @@ import { ThemeContext } from '@Theme/Provider/ThemeContext';
 import { GlobalStyle as styles, AlmostThereStyle } from '@Pages/Styles';
 import { ThunkDispatch } from '@reduxjs/toolkit';
 import { useDispatch, useSelector } from 'react-redux';
-import {
-  getApplicationAttributeApi,
-} from '@Services/Redux/Actions/GetStatusForIdentity';
+import { getApplicationAttributeApi } from '@Services/Redux/Actions/GetStatusForIdentity';
 import { readBase64FromFile } from '@Services/Storage';
 import {
   getPopMessageApi,
@@ -33,11 +31,14 @@ export const AlmostThere = ({
   const [showOverlay, setShowOverlay] = useState<boolean>(false);
   const overlyTitle = useRef('');
   const overlyDetail = useRef('');
+  const userFullName = useRef('');
+  const presonalNumber = useRef('');
   const [imageUri, setImageURI] = useState('');
   const approveStatus = useRef(false);
+  const showPeerReviewButton = useRef(false);
   const [numberOfRemaining, setNumberOfRemaining] = useState('');
   const dispatch = useDispatch<ThunkDispatch<any, any, any>>();
-  const { userDetails } = useSelector((state) => state.user);
+  const { identityResponse } = useSelector((state) => state.identity);
   const {
     attributeResponse,
     popMessageResponse,
@@ -55,7 +56,7 @@ export const AlmostThere = ({
   };
 
   useEffect(() => {
-    readAndUseBase64();
+    userIdentity();
     getIdentityData();
   }, []);
 
@@ -70,13 +71,16 @@ export const AlmostThere = ({
     }
   }, [attributeResponse]);
 
-  useEffect(() => {
-    const id = setInterval(popMessage, 2000);
-    setIntervalId(id);
+  React.useEffect(() => {
+    const unsubscribe = navigation.addListener('focus', () => {
+      const id = setInterval(popMessage, 2000);
+      setIntervalId(id);
+    });
     return () => {
-      clearInterval(id);
+      clearInterval(intervalId);
+      unsubscribe();
     };
-  }, []);
+  }, [navigation]);
 
   const popMessage = async () => {
     const popMessagePayload: PopMessagePayload = {
@@ -129,6 +133,7 @@ export const AlmostThere = ({
   const handleOnPress = () => {
     stopInterval();
     if (approveStatus.current) {
+      navigation.navigate('CreatePin');
     } else {
     }
   };
@@ -139,8 +144,28 @@ export const AlmostThere = ({
   };
 
   const toggleOverlay = () => {
+    showPeerReviewButton.current = false;
     setShowOverlay(!showOverlay);
   };
+
+  const userIdentity = () => {
+    let fullName = '';
+    identityResponse?.Identity?.property.map((item, index) => {
+      if (item?.name === 'FIRST') {
+        fullName = item?.value;
+      } else if (item?.name === 'MIDDLE') {
+        fullName = fullName + ' ' + item?.value;
+      } else if (item?.name === 'LAST') {
+        fullName = fullName + ' ' + item?.value;
+      } else if (item?.name === 'PNR') {
+        presonalNumber.current = item?.value;
+      }
+    });
+    userFullName.current = fullName;
+    readAndUseBase64();
+  };
+
+  const peerReviewAction = () => {};
 
   return (
     <NeuroAccessBackground>
@@ -163,25 +188,27 @@ export const AlmostThere = ({
           ]}
         >
           <View style={AlmostThereStyle(themeColors).imageContainer}>
-            <Image
-              style={[AlmostThereStyle(themeColors).imageView]}
-              source={{ uri: `data:image/png;base64,${imageUri}` }}
-              resizeMode="cover"
-            />
+            <View style={AlmostThereStyle(themeColors).imageView}>
+              <Image
+                style={[AlmostThereStyle(themeColors).image]}
+                source={{ uri: `data:image/png;base64,${imageUri}` }}
+                resizeMode="cover"
+              />
+            </View>
 
             <View style={AlmostThereStyle(themeColors).userInfo}>
               <TextLabel
                 style={AlmostThereStyle(themeColors).name}
                 variant={TextLabelVariants.HEADER}
               >
-                {userDetails?.userName}
+                {userFullName.current}
               </TextLabel>
 
               <TextLabel
                 style={AlmostThereStyle(themeColors).mobile}
                 variant={TextLabelVariants.DESCRIPTION}
               >
-                {userDetails?.mobileNumber?.number}
+                {presonalNumber.current}
               </TextLabel>
             </View>
           </View>
@@ -264,6 +291,7 @@ export const AlmostThere = ({
             <TouchableOpacity
               style={AlmostThereStyle(themeColors).providerInfo}
               onPress={() => {
+                showPeerReviewButton.current = true;
                 overlyTitle.current = t('peerReviewProcess.title');
                 overlyDetail.current = t('peerReviewProcess.detail');
                 setShowOverlay(true);
@@ -288,7 +316,6 @@ export const AlmostThere = ({
             }
             buttonStyle={AlmostThereStyle(themeColors).actionButton}
             textStyle={AlmostThereStyle(themeColors).sendText}
-            onPress={() => navigation.navigate('CreatePin')}
           />
         </View>
       </View>
@@ -298,6 +325,8 @@ export const AlmostThere = ({
           toggleOverlay={toggleOverlay}
           title={overlyTitle.current}
           description={overlyDetail.current}
+          peerReview={peerReviewAction}
+          showPeerReview={showPeerReviewButton.current}
         />
       )}
 

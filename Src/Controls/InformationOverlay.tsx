@@ -8,15 +8,20 @@ import { InformationOverlayStyle } from './Styles';
 import { ActionButton } from './ActionButton';
 import { TextLabel } from './TextLabel';
 import { TextLabelVariants } from './TextLabel';
+import { ActionButtonWithIcon } from './ActionButtonWithIcon';
 interface Props {
   title: string;
   description: string;
   toggleOverlay: () => void;
+  peerReview?: () => void;
+  showPeerReview?: boolean | false;
 }
 export const InformationOverlay: React.FC<Props> = ({
   title,
   description,
   toggleOverlay,
+  showPeerReview,
+  peerReview,
 }) => {
   const { themeColors } = useContext(ThemeContext);
 
@@ -38,9 +43,18 @@ export const InformationOverlay: React.FC<Props> = ({
           <TextLabel variant={TextLabelVariants.DESCRIPTION}>
             {description}
           </TextLabel>
-          <View
-            style={InformationOverlayStyle(themeColors).spacer}
-          />
+          <View style={InformationOverlayStyle(themeColors).spacer} />
+
+          {showPeerReview && (
+            <ActionButtonWithIcon
+              onPress={peerReview}
+              hideIcon={false}
+              title={t('almostThere.invitePeer')}
+              buttonStyle={InformationOverlayStyle(themeColors).actionButton}
+              textStyle={InformationOverlayStyle(themeColors).sendText}
+            />
+          )}
+
           <ActionButton
             title={t('buttonTitle.close')}
             textStyle={ChooseAccountTypeStyle(themeColors).sendText}
