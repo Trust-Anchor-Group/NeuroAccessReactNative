@@ -32,7 +32,7 @@ Project starts 2023-06-01
 [Click Finish functionality-A] starts 2023-07-19 and ends 2023-07-19
 [Error and bugs-A] starts 2023-06-28 and ends 2023-07-24
 
-[Information popup functionality-P] starts 2023-06-29 and ends 2023-06-29
+[Information popup functionality-P ] starts 2023-06-29 and ends 2023-06-29
 [QRCode Scan manager-P] starts 2023-06-30 and ends 2023-07-03
 [Scan invitation UI-P] starts 2023-07-04 and ends 2023-07-04
 [Use scan details and change provider-P] starts 2023-07-05 and ends 2023-07-07
@@ -44,16 +44,23 @@ Project starts 2023-06-01
 [Pin validation-P] starts 2023-07-13 and ends 2023-07-13
 [jest test setup in RN-App-P] starts 2023-07-14 and ends 2023-07-14
 [Pin validation Test case using jest-P] starts 2023-07-17 and ends 2023-07-18
+[Error Handling throught the app-P] starts 2023-07-17 and ends 2023-07-31
+[Current Provider screen with changed domain details-P] starts 2023-07-17 and ends 2023-07-31
 
 [Invite peer functionality-P] starts 2023-07-19 and ends 2023-07-19
 [Flow upto Congratulations functionality-P] starts 2023-07-20 and ends 2023-07-21
 [Error and bugs-P] starts 2023-06-29 and ends 2023-07-24
 
-[Current Provider screen-A completed] is 100% completed
+[Current Provider screen with changed domain details-P completed] is 100% completed
 [Information popup functionality-P completed] is 100% completed
 [Scan invitation UI-P completed] is 100% completed
 [Use scan details and change provider-P completed] is 100% completed
 [Scan invitation screenflow with full functionality-P completed] is 100% completed
-[Create Account functionality-P completed] is 50% completed
+[Create Account functionality-P completed] is 100% completed
+[Verify Email functionality-P completed] is 100% completed
+[Verification Code functionality-P completed] is 100% completed
+[Create a pin code UI-P completed] is 100% completed
+[Pin validation-P completed] is 100% completed
+[Error Handling throught the app-P completed] is 90% completed
 
 @endgantt
