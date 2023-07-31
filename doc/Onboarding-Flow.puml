@@ -8,7 +8,7 @@ sunday are closed
 
 ganttDiagram {
   task {
-    BackGroundColor GreenYellow
+    BackGroundColor Green
     LineColor Blue
     unstarted {
       BackGroundColor Fuchsia 
@@ -32,7 +32,7 @@ Project starts 2023-06-01
 [See account details-A] starts 2023-07-17 and ends 2023-07-18
 [Click Finish functionality-A] starts 2023-07-19 and ends 2023-07-19
 [Invite peer show list of providers functionality-A] starts 2023-07-31 and ends 2023-08-01
-[Error and bugs-A] starts 2023-06-28 and ends 2023-07-24
+[Error and bugs-A] starts 2023-07-24 and ends 2023-07-31
 
 [Current Provider screen-A] is 100% complete
 [Tell Us About You Screen UI-A] is 100% complete
@@ -46,7 +46,7 @@ Project starts 2023-06-01
 [See account details-A] is 100% complete
 [Click Finish functionality-A] is 100% complete
 [Invite peer show list of providers functionality-A] is 10% complete
-[Error and bugs-A] is 70% complete
+[Error and bugs-A] is 80% complete
 
 
 
@@ -64,7 +64,7 @@ Project starts 2023-06-01
 [Pin validation Test case using jest-P] starts 2023-07-17 and ends 2023-07-18
 [Invite peer functionality using QRCode-P] starts 2023-07-19 and ends 2023-07-19
 [Flow upto Congratulations functionality-P] starts 2023-07-20 and ends 2023-07-21
-[Error and bugs-P] starts 2023-06-29 and ends 2023-07-24
+[Error and bugs-P] starts 2023-07-24 and ends 2023-07-31
  
 
 [Information popup functionality-P] is 100% complete
