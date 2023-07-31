@@ -30,6 +30,7 @@ Project starts 2023-06-01
 [Technical details-A] starts 2023-07-14 and ends 2023-07-14
 [See account details-A] starts 2023-07-17 and ends 2023-07-18
 [Click Finish functionality-A] starts 2023-07-19 and ends 2023-07-19
+[Invite peer show list of providers functionality-A] starts 2023-07-31 and ends 2023-08-01
 [Error and bugs-A] starts 2023-06-28 and ends 2023-07-24
 
 [Information popup functionality-P ] starts 2023-06-29 and ends 2023-06-29
@@ -62,5 +63,18 @@ Project starts 2023-06-01
 [Create a pin code UI-P completed] is 100% completed
 [Pin validation-P completed] is 100% completed
 [Error Handling throught the app-P completed] is 90% completed
+
+[Current Provider screen-A completed] is 100% completed
+[Tell Us About You Screen UI-A completed] is 100% completed
+[Custom Components with validation-A completed] is 100% completed
+[Terms and conditions screen-A completed] is 100% completed
+[Almost there functionality UI-A completed] is 100% completed
+[Almost there functionality with-A completed] is 100% completed
+[Pending and Peer info with carousel -A completed] is 100% completed
+[Check Status functionality-A completed] is 100% completed
+[Technical details-A completed] is 100% completed
+[See account details-A completed] is 100% completed
+[Click Finish functionality-A completed] is 100% completed
+[Error and bugs-A completed] is 90% completed
 
 @endgantt
