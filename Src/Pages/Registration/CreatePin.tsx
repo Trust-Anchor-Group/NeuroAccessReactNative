@@ -1,4 +1,4 @@
-import React, { useContext, useRef } from 'react';
+import React, { useContext, useEffect, useRef } from 'react';
 import {
   View,
   ScrollView,
@@ -20,11 +20,11 @@ import {
 import { ThemeContext } from '@Theme/Provider/ThemeContext';
 import { GlobalStyle as styles, TellUsAboutYouStyle } from '@Pages/Styles';
 import { NeuroTextInput } from '@Controls/NeuroTextInput';
-import { pinValidationSchema, Constants, computePinHash  } from '@Helpers/index';
-import { ThunkDispatch } from '@reduxjs/toolkit';
-import { useDispatch, useSelector } from 'react-redux';
+import { pinValidationSchema, Constants, computePinHash } from '@Helpers/index';
+import { useSelector } from 'react-redux';
 import { retrieveUserSession, storeUserSession } from '@Services/Storage';
-import {AgentAPI} from '../../Services/API/Agent';
+import { AgentAPI } from '../../Services/API/Agent';
+import { StackActions } from '@react-navigation/native';
 
 export const CreatePin = ({
   navigation,
@@ -34,30 +34,31 @@ export const CreatePin = ({
   const formikRef = useRef();
   const { userDetails } = useSelector((state) => state.user);
   const { identityResponse } = useSelector((state) => state.identity);
-  console.log(identityResponse.Identity.property)
-  const dispatch = useDispatch<ThunkDispatch<any, any, any>>();
 
   const newPin = useRef<TextInput>(null);
   const confirmPin = useRef<TextInput>(null);
 
+  useEffect(() => {
+    newPin.current?.focus()
+  }, [])
+
   if (userDetails) {
     Constants.UserDetails = userDetails;
-    for (const item of identityResponse.Identity.property) {
-      console.log(item)
-      if (item.name === 'FIRST') {
-        Constants.LegalIdentity.FIRST = item.value;
+    for (const item of identityResponse?.Identity?.property) {
+      if (item?.name === 'FIRST') {
+        Constants.LegalIdentity.FIRST = item?.value;
       }
-      if (item.name === 'MIDDLE') {
-        Constants.LegalIdentity.MIDDLE = item.value;
+      if (item?.name === 'MIDDLE') {
+        Constants.LegalIdentity.MIDDLE = item?.value;
       }
-      if (item.name === 'LAST') {
-        Constants.LegalIdentity.LAST = item.value;
+      if (item?.name === 'LAST') {
+        Constants.LegalIdentity.LAST = item?.value;
       }
-      if (item.name === 'ADDR') {
-        Constants.LegalIdentity.ADDR = item.value;
+      if (item?.name === 'ADDR') {
+        Constants.LegalIdentity.ADDR = item?.value;
       }
-      if (item.name === 'ADDR2') {
-        Constants.LegalIdentity.ADDR2 = item.value;
+      if (item?.name === 'ADDR2') {
+        Constants.LegalIdentity.ADDR2 = item?.value;
       }
     }
   }
@@ -67,18 +68,27 @@ export const CreatePin = ({
       objectId = AgentAPI.Account.getRandomValues(32);
       await storeUserSession(Constants.Authentication.ObjectId, objectId);
     }
-    const hashedPassword = computePinHash(password, objectId, Config.Host || '', userDetails.userName, userDetails.legalId);
+    const hashedPassword = computePinHash(
+      password,
+      objectId,
+      Config.Host || '',
+      userDetails.userName,
+      userDetails.legalId
+    );
     return hashedPassword;
   };
-  
+
   const handleFormSubmit = async (values: any) => {
     const hashedPassword = await hashPassword(values.newPin);
     await storeUserSession(Constants.Authentication.PinKey, hashedPassword);
-    const storedPassword = await retrieveUserSession(Constants.Authentication.PinKey);
+    const storedPassword = await retrieveUserSession(
+      Constants.Authentication.PinKey
+    );
     if (hashedPassword === storedPassword) {
-      alert(t('PIN.PinCreateSuccess'))
+      alert(t('PIN.PinCreateSuccess'));
+      navigation.dispatch(StackActions.replace('HomeScreen'));
     } else {
-      alert(t('PIN.IncorrectPin'))
+      alert(t('PIN.IncorrectPin'));
     }
   };
 
@@ -140,9 +150,7 @@ export const CreatePin = ({
           style={[TellUsAboutYouStyle(themeColors).detailHeight]}
           variant={TextLabelVariants.LABEL}
         >
-          {t(
-            'PIN.Description'
-          )}
+          {t('PIN.Description')}
         </TextLabel>
 
         <ScrollView showsVerticalScrollIndicator={false}>
@@ -251,7 +259,9 @@ export const CreatePin = ({
                   </TextLabel>
                 )}
 
-                <View style={TellUsAboutYouStyle(themeColors).actionButtonContainer}>
+                <View
+                  style={TellUsAboutYouStyle(themeColors).actionButtonContainer}
+                >
                   <ActionButton
                     disabled={!isValid}
                     textStyle={[TellUsAboutYouStyle(themeColors).sendText]}

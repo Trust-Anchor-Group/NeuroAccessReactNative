@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useRef, useState } from 'react';
-import { TouchableOpacity, View, Image } from 'react-native';
+import { TouchableOpacity, View, Image, Alert } from 'react-native';
 import { StackScreenProps } from '@react-navigation/stack';
 import {
   NeuroAccessBackground,
@@ -38,14 +38,28 @@ export const AlmostThere = ({
   const showPeerReviewButton = useRef(false);
   const [numberOfRemaining, setNumberOfRemaining] = useState('');
   const dispatch = useDispatch<ThunkDispatch<any, any, any>>();
-  const { identityResponse } = useSelector((state) => state.identity);
   const {
+    identityResponse,
     attributeResponse,
     popMessageResponse,
     popMessageLastResponse,
     loading,
     error,
+    setIdentitySliceError
   } = useSelector((state) => state.identity);
+
+  useEffect(() => {
+    if (error) {
+      Alert.alert(t('Error.ErrorTitle'), JSON.stringify(error), [
+        {
+          text: 'ok',
+          onPress: () => {
+            dispatch(setIdentitySliceError(''))
+          },
+        },
+      ]);
+    }
+  }, [error]);
 
   const onBackClick = () => {
     navigation.goBack();

@@ -27,6 +27,9 @@ export const ChooseAccountType = ({
   const [appLoading, setAppLoading] = useState(true);
   const { userDetails } = useSelector((state) => state.user);
   const { identityResponse } = useSelector((state) => state.identity);
+  const {
+    defaultDomain,
+  } = useSelector((state) => state.domain);  
   const { themeColors } = useContext(ThemeContext);
   const [selected, setSelected] = useState<ContextType>();
   const [showOverlay, setShowOverlay] = useState<boolean>(false);
@@ -61,17 +64,19 @@ export const ChooseAccountType = ({
     setAppLoading(false);
 
     setTimeout(() => {
+      navigation.dispatch(StackActions.replace('CreatePin'));
+      return
       if (identityResponse?.Identity?.status) {
         navigation.dispatch(StackActions.replace('AlmostThere'));
-      } else if (userDetails.email) {
+      } else if (userDetails?.userName && userDetails?.email) {
         navigation.dispatch(StackActions.replace('TellUsAboutYou'));
-      } else if (userDetails.userName && !userDetails.email) {
+      } else if (userDetails?.userName && !userDetails?.email) {
         navigation.dispatch(StackActions.replace('EnterUserName'));
-      } else if (userDetails.userName) {
-        navigation.dispatch(StackActions.replace('EnterEmail'));
-      } else if (userDetails.mobileNumber) {
+      } else if (userDetails?.userName) {
+        navigation.dispatch(StackActions.replace('EnterUserName'));
+      } else if (defaultDomain) {
         navigation.dispatch(StackActions.replace('CurrentProvider'));
-      } else if (userDetails.purpose) {
+      } else if (userDetails?.purpose) {
         navigation.dispatch(StackActions.replace('EnterMobileNumber'));
       }
     }, 10);

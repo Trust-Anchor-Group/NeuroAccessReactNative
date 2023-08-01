@@ -11,10 +11,11 @@ import {
   AlmostThereStatus,
   EnterUserName,
   AlmostThere,
+  CurrentProvider, 
+  TellUsAboutYou,
+  CreatePin
 } from '@Pages/Registration';
 import { Settings } from '@Pages/Settings';
-import { CurrentProvider, TellUsAboutYou } from '@Pages/index';
-import { CreatePin } from '@Pages/Registration/CreatePin';
 import { VerifyPin } from './VerifyPin';
 
 const Stack = createStackNavigator();
@@ -132,6 +133,13 @@ export const AuthStack = ({ initialRoute }: Props) => {
         component={Settings}
         options={{
           headerTitle: 'Settings',
+        }}
+      />
+      <Stack.Screen
+        name="HomeScreen"
+        component={Home}
+        options={{
+          headerShown: false,
         }}
       />
     </Stack.Navigator>

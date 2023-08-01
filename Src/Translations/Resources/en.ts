@@ -159,7 +159,7 @@ export default {
     reviewProcess: 'Review process',
     peerReview: 'Peer review process',
     invitePeer: 'Invite peer',
-    finishSetup: 'Finnish setup',
+    finishSetup: 'Finish setup',
     firstName: 'First name',
     middleName: 'Middle name',
     lastName: 'Last name',
@@ -228,4 +228,7 @@ export default {
     PinDontMatched: 'Your pin do not match!',
     UnlockPinRequired: 'Unlock Pin is required!',
   },
+  Error: {
+    ErrorTitle: 'Something went wrong!'
+  }
 };

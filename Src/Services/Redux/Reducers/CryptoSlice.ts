@@ -26,7 +26,7 @@ interface CryptoState {
   attachmentResponse: {};
   readyForApprovalResponse: null;
   loading: boolean;
-  error: string;
+  error: any;
 }
 
 const initialState: CryptoState = {
@@ -37,7 +37,7 @@ const initialState: CryptoState = {
   attachmentResponse: {},
   readyForApprovalResponse: null,
   loading: false,
-  error: '',
+  error: <any> undefined,
 };
 
 const cryptoSlice = createSlice({
@@ -46,6 +46,9 @@ const cryptoSlice = createSlice({
   reducers: {
     clearReadyForApproval: (state) => {
       state.readyForApprovalResponse = null;
+    },
+    setCryptoSliceError: (state, action) => {
+      state.error = action.payload;
     },
   },
   extraReducers: (builder) => {
@@ -60,7 +63,7 @@ const cryptoSlice = createSlice({
       })
       .addCase(getAlgorithmListApi.rejected, (state, action) => {
         state.loading = false;
-        state.error = action?.error?.message || '';
+        state.error = action.payload || '';
       })
       .addCase(createKeyIdApi.pending, (state) => {
         state.loading = true;
@@ -72,7 +75,7 @@ const cryptoSlice = createSlice({
       })
       .addCase(createKeyIdApi.rejected, (state, action) => {
         state.loading = false;
-        state.error = action?.error?.message || '';
+        state.error = action.payload || '';
       })
       .addCase(validatePNrApi.pending, (state) => {
         state.loading = true;
@@ -84,7 +87,7 @@ const cryptoSlice = createSlice({
       })
       .addCase(validatePNrApi.rejected, (state, action) => {
         state.loading = false;
-        state.error = action?.error?.message || '';
+        state.error = action.payload || '';
       })
       .addCase(applyLegalIdApi.pending, (state) => {
         state.loading = true;
@@ -96,7 +99,7 @@ const cryptoSlice = createSlice({
       })
       .addCase(applyLegalIdApi.rejected, (state, action) => {
         state.loading = false;
-        state.error = action?.error?.message || '';
+        state.error = action.payload || '';
       })
       .addCase(addIdAttachmentApi.pending, (state) => {
         state.loading = true;
@@ -108,7 +111,7 @@ const cryptoSlice = createSlice({
       })
       .addCase(addIdAttachmentApi.rejected, (state, action) => {
         state.loading = false;
-        state.error = action?.error?.message || '';
+        state.error = action.payload || '';
       })
       .addCase(readyForApproval.pending, (state) => {
         state.loading = true;
@@ -120,7 +123,7 @@ const cryptoSlice = createSlice({
       })
       .addCase(readyForApproval.rejected, (state, action) => {
         state.loading = false;
-        state.error = action?.error?.message || '';
+        state.error = action.payload || '';
       })
       .addCase(clearState.fulfilled, (state, action) => {
         state.loading = false;
@@ -133,5 +136,5 @@ const cryptoSlice = createSlice({
   },
 });
 
-export const { clearReadyForApproval } = cryptoSlice.actions;
+export const { clearReadyForApproval, setCryptoSliceError } = cryptoSlice.actions;
 export default cryptoSlice.reducer;

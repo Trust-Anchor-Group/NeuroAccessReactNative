@@ -1,5 +1,5 @@
 import { Platform } from 'react-native';
-var CryptoJS = require('crypto-js');
+let CryptoJS = require('crypto-js');
 
 export function computePinHash(
   pin: string,
@@ -25,6 +25,14 @@ export function computePinHash(
   const sha384Hash = CryptoJS.SHA384(data);
 
   return sha384Hash.toString();
+}
+
+export function isEmpty(obj: any) {
+  for (let prop in obj) {
+    if (obj.hasOwnProperty(prop)) return false;
+  }
+
+  return true;
 }
 
 export const convertUTCToLocalTime = (utcTimestamp: string) => {

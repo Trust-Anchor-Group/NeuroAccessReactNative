@@ -9,10 +9,6 @@ import Base64 from 'crypto-js/enc-base64';
 import Config from 'react-native-config';
 
 const host = Config.Host;
-const ApiKey = Config.ApiKey;
-const Secret = Config.Secret;
-const Seconds = 3500;
-
 export const OnboardingAPI = {
   IO: {
     Request: async function (
@@ -25,11 +21,20 @@ export const OnboardingAPI = {
         xhttp.onreadystatechange = function () {
           if (xhttp.readyState == 4) {
             let Response = xhttp.responseText;
+
             if (xhttp.status === 200) {
               Response = JSON.parse(Response);
-              SetResult(Response);
-            } else SetException(Response);
 
+              if (Response?.Status !== undefined && !Response?.Status) {
+                const Error = OnboardingAPI.IO.ParseError(xhttp, Response);
+                SetException(Error);
+              } else {
+                SetResult(Response);
+              }
+            } else {
+              const Error = OnboardingAPI.IO.ParseError(xhttp, Response);
+              SetException(Error);
+            }
             if (!Internal) OnboardingAPI.IO.AfterResponse(Response);
           }
         };
@@ -49,11 +54,29 @@ export const OnboardingAPI = {
 
       return await Request;
     },
-    BeforeRequest: function (Payload: any) {
-      // const Control = document.getElementById("AgentRequestPayload");
-      // if (Control)
-      // 	Control.innerText = JSON.stringify(Payload, null, 2);
+    ParseError: function (xhttp: any, Response: any) {
+      var Alternatives = [];
+      var i = 1;
+      var Alternative = xhttp.getResponseHeader(
+        'X-AlternativeName' + (i++).toString()
+      );
+
+      while (Alternative) {
+        Alternatives.push(Alternative);
+        Alternative = xhttp.getResponseHeader(
+          'X-AlternativeName' + (i++).toString()
+        );
+      }
+
+      var Error = {
+        message: Response,
+        statusCode: xhttp.status,
+        statusMessage: xhttp.statusText,
+        alternatives: Alternatives,
+      };
+      return Error;
     },
+    BeforeRequest: function (Payload: any) {},
     AfterResponse: function (Payload: any) {
       // const Control = document.getElementById("AgentResponsePayload");
       // if (Control)
@@ -73,20 +96,32 @@ export const OnboardingAPI = {
       return Response;
     },
     sendVerificationMessage: async function (mobileNumber: string) {
-      const Response = await OnboardingAPI.IO.Request(
+      const finalResponse = await OnboardingAPI.IO.Request(
         '/ID/SendVerificationMessage.ws',
         { Nr: mobileNumber },
         {}
-      );
-      return Response;
+      )
+        .then((Response) => {
+          return Response;
+        })
+        .catch((error: Error) => {
+          throw error;
+        });
+        return finalResponse;
     },
     verifyNumber: async function (mobileNumber: string, code: string) {
-      const Response = await OnboardingAPI.IO.Request(
+      const finalResponse = await OnboardingAPI.IO.Request(
         '/ID/VerifyNumber.ws',
         { Nr: mobileNumber, Code: parseInt(code), Test: true },
         {}
-      );
-      return Response;
+      )
+        .then((Response) => {
+          return Response;
+        })
+        .catch((error: Error) => {
+          throw error;
+        });
+      return finalResponse;
     },
   },
   Account: {
@@ -313,42 +348,6 @@ export const OnboardingAPI = {
           Seconds +
           's'
       );
-    },
-    Create: async function (
-      UserName: string,
-      EMail: string,
-      Password: string
-      // ApiKey?: string,
-      // Secret?: any,
-      // Seconds?: number
-    ) {
-      const Nonce = OnboardingAPI.Account.getRandomValues(32);
-      const s =
-        UserName +
-        ':' +
-        host +
-        ':' +
-        EMail +
-        ':' +
-        Password +
-        ':' +
-        ApiKey +
-        ':' +
-        Nonce;
-      const Response = await OnboardingAPI.IO.Request('/Agent/Account/Create', {
-        userName: UserName,
-        eMail: EMail,
-        password: Password,
-        apiKey: ApiKey,
-        nonce: Nonce,
-        signature: await this.Sign(Secret, s),
-        seconds: Seconds,
-      });
-
-      this.SetSessionString('OnboardingAPI.UserName', UserName);
-      this.SaveSessionToken(Response.jwt, Seconds, Math.round(Seconds / 2));
-
-      return Response;
     },
     GetSessionToken: async function () {
       const Response = await OnboardingAPI.IO.Request(
