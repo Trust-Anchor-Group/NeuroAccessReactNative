@@ -55,6 +55,7 @@ export const NeuroTextInput: React.FC<CustomTextInputProps> = forwardRef<
           style={neuroStyle}
           placeholder={placeholder}
           keyboardType={textInputProps.keyboardType}
+          autoComplete={'off'}
           onSubmitEditing={handleReturnKey}
           ref={ref}
         />

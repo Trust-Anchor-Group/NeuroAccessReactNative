@@ -47,7 +47,7 @@ export const EnterEmail = ({
 
   useEffect(() => {
     if (error) {
-      Alert.alert('Error!', JSON.stringify(error), [
+      Alert.alert(t('Error.ErrorTitle'), JSON.stringify(error), [
         {
           text: 'ok',
           onPress: () => dispatch(setUserSliceError('')),

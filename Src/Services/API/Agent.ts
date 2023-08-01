@@ -66,7 +66,8 @@ export const AgentAPI = {
           xhttp.setRequestHeader('Referer', Config.Host);
         }
         var Token = await AgentAPI.Account.GetSessionString('AgentAPI.Token');
-        if (Token) xhttp.setRequestHeader('Authorization', 'Bearer ' + Token);
+        console.log('Token - ', Token)
+        if (Token) xhttp.setRequestHeader('Authorization', 'Bearer ' + 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJqdGkiOiJQTFFtVjhLMEtDbWwvS3RzMDlHcThuKzJ6bEx2b25LQlgzay9GcFJ4Zm9vPSIsImlzcyI6ImxhYi50YWdyb290LmlvIiwic3ViIjoicHJhbW9kc3BoaW54QGxhYi50YWdyb290LmlvIiwiaWF0IjoxNjkwODA4MzA3LCJleHAiOjE2OTA4MTE4MDd9.k0R-cW1BiUUehlXA5YDBwV7o4r46kHzx1Lr4iTM3oJY');
 
         xhttp.send(JSON.stringify(RequestPayload));
       });

@@ -28,27 +28,26 @@ import MobileInputView from '@Controls/MobileInputView';
 import { TextInputRef } from '@Controls/MobileInputView';
 import { useTranslation } from 'react-i18next';
 import { ThemeContext } from '@Theme/Provider/ThemeContext';
-import { AgentAPI } from '@Services/API/Agent';
 import { CountryDialog } from '@Controls/CountryDialog';
 import { countryCodes } from '@Services/Data/index';
 import { isValidPhone } from '@Helpers/Validation';
 import { Loader } from '@Controls/index';
-import { OnboardingAPI } from '@Services/API/OnboardingApi';
 import {
   requestMultiPermission,
   requestMultiPermissionIos,
 } from '@Services/Permission/RequestPermission';
 import { PERMISSIONS } from 'react-native-permissions';
-import { StackActions } from '@react-navigation/native';
-import { clearSendVerificationCodeResponse, setUserSliceError } from '@Services/Redux/Reducers/UserSlice';
+import {
+  clearSendVerificationCodeResponse,
+  setUserSliceError,
+} from '@Services/Redux/Reducers/UserSlice';
 import { isEmpty } from '@Helpers/Utils';
 
 export const EnterMobileNumber = ({ navigation }: StackScreenProps<{}>) => {
   const { t } = useTranslation();
   const dispatch = useDispatch<ThunkDispatch<any, any, any>>();
-  const { userDetails, sendVerificationCodeResponse, loading, error } = useSelector(
-    (state) => state.user
-  );
+  const { userDetails, sendVerificationCodeResponse, loading, error } =
+    useSelector((state) => state.user);
   const { themeColors } = useContext(ThemeContext);
   const [countryFlag, setCountryFlag] = useState('');
   const countryISOCode = React.useRef('');
@@ -61,21 +60,24 @@ export const EnterMobileNumber = ({ navigation }: StackScreenProps<{}>) => {
 
   useEffect(() => {
     if (error) {
-      Alert.alert('Error!', JSON.stringify(error), [
+      Alert.alert(t('Error.ErrorTitle'), JSON.stringify(error), [
         {
           text: 'ok',
           onPress: () => {
-            dispatch(setUserSliceError(''))
+            dispatch(setUserSliceError(''));
           },
         },
       ]);
     }
   }, [error]);
- 
+
   useEffect(() => {
-    if (!isEmpty(sendVerificationCodeResponse) && sendVerificationCodeResponse?.Status) {
+    if (
+      !isEmpty(sendVerificationCodeResponse) &&
+      sendVerificationCodeResponse?.Status
+    ) {
       navigation.navigate('OTPVerify');
-      dispatch(clearSendVerificationCodeResponse(undefined))
+      dispatch(clearSendVerificationCodeResponse(undefined));
     }
   }, [sendVerificationCodeResponse]);
 

@@ -14,20 +14,11 @@ import { GlobalStyle as styles, EnterOTPVerifyStyle } from '@Pages/Styles';
 import { Logo } from '@Assets/Svgs';
 import { useTranslation } from 'react-i18next';
 import { ThemeContext } from '@Theme/Provider';
-import { AgentAPI } from '@Services/API/Agent';
 import { Loader } from '@Controls/index';
-import { OnboardingAPI } from '@Services/API/OnboardingApi';
-import {
-  getDomainDetails,
-  setDomainDetails,
-  mobileNumberOtpVerification,
-} from '@Services/Redux/Actions/GetDomainDetails';
+import { mobileNumberOtpVerification } from '@Services/Redux/Actions/GetDomainDetails';
 import { useSelector, useDispatch } from 'react-redux';
-import { ThunkDispatch, unwrapResult } from '@reduxjs/toolkit';
-import {
-  DomainInfo,
-  setDomainSliceError,
-} from '@Services/Redux/Reducers/DomainSlice';
+import { ThunkDispatch } from '@reduxjs/toolkit';
+import { setDomainSliceError } from '@Services/Redux/Reducers/DomainSlice';
 import { StackActions } from '@react-navigation/native';
 import {
   createAccountUsingMobileNumber,
@@ -51,28 +42,32 @@ export const OTPVerify = ({ navigation, route }: Props) => {
   const code = userDetails?.mobileNumber?.code;
   const mobileNumber = code + number;
   const { themeColors } = useContext(ThemeContext);
-  const [isLoading, setIsLoading] = useState<boolean>(false);
   const [otpValue, setOTPValue] = useState('');
   const [isError, setIsError] = useState(false);
   const errorMessage = React.useRef('');
 
   useEffect(() => {
     if (error || domainError) {
-      Alert.alert('Error!', JSON.stringify(error ? error : domainError), [
-        {
-          text: 'ok',
-          onPress: () => {
-            error
-              ? dispatch(setUserSliceError(''))
-              : dispatch(setDomainSliceError(''));
+      Alert.alert(
+        t('Error.ErrorTitle'),
+        JSON.stringify(error ? error : domainError),
+        [
+          {
+            text: 'ok',
+            onPress: () => {
+              error
+                ? dispatch(setUserSliceError(''))
+                : dispatch(setDomainSliceError(''));
+            },
           },
-        },
-      ]);
+        ]
+      );
     }
   }, [error, domainError]);
- 
+
   useEffect(() => {
     if (!isEmpty(defaultDomain)) {
+      dispatch(saveKeyId(defaultDomain?.Key));
       navigation.dispatch(StackActions.replace('CurrentProvider'));
     }
   }, [defaultDomain]);
@@ -100,10 +95,9 @@ export const OTPVerify = ({ navigation, route }: Props) => {
 
   const callVerificationCode = async () => {
     try {
-      await dispatch(mobileNumberOtpVerification({ mobileNumber, otpValue }))
+      await dispatch(mobileNumberOtpVerification({ mobileNumber, otpValue }));
     } catch (error) {
-      console.log('dispatch(mobileNumberOtpVerification -- ', error)
-      alert(error)
+      console.log('dispatch(mobileNumberOtpVerification -- ', error);
     }
   };
   const onBackClick = () => {

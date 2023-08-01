@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect, useCallback } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import {
   View,
   KeyboardAvoidingView,
@@ -36,15 +36,15 @@ export const EnterUserName = ({
 
   const appState = React.useRef(AppState.currentState);
   const [appStateVisible, setAppStateVisible] = useState(appState.current);
-  
+
   useEffect(() => {
     if (appStateVisible === 'inactive') {
       dispatch(addUserName(userName));
     }
   }, [appStateVisible]);
-  
+
   React.useEffect(() => {
-    const subscription = AppState.addEventListener("change", nextAppState => {
+    const subscription = AppState.addEventListener('change', (nextAppState) => {
       appState.current = nextAppState;
       setAppStateVisible(appState.current);
     });

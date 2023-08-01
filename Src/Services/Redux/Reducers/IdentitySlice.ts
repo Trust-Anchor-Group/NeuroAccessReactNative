@@ -20,7 +20,7 @@ const initialState = {
   popMessageLastResponse: {},
   attributeResponse: {},
   loading: false,
-  error: '',
+  error: <any>undefined,
 };
 
 const identitySlice = createSlice({
@@ -49,7 +49,7 @@ const identitySlice = createSlice({
       })
       .addCase(getIdentityApi.rejected, (state, action) => {
         state.loading = false;
-        state.error = action?.error?.message || '';
+        state.error = action?.payload || '';
       })
       .addCase(getPopMessageApi.pending, (state) => {
         state.loading = true;
@@ -61,7 +61,7 @@ const identitySlice = createSlice({
       })
       .addCase(getPopMessageApi.rejected, (state, action) => {
         state.loading = false;
-        state.error = action?.error?.message || '';
+        state.error = action?.payload || '';
       })
       .addCase(getApplicationAttributeApi.pending, (state) => {
         state.loading = true;
@@ -73,7 +73,7 @@ const identitySlice = createSlice({
       })
       .addCase(getApplicationAttributeApi.rejected, (state, action) => {
         state.loading = false;
-        state.error = action?.error?.message || '';
+        state.error = action?.payload || '';
       });
   },
 });
