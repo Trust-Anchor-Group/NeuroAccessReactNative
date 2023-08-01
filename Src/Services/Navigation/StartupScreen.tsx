@@ -15,7 +15,7 @@ export function StartupScreen() {
   useEffect(() => {
     setTimeout( async () => {
       const storedPassword = await retrieveUserSession(Constants.Authentication.PinKey);
-      {storedPassword ? initialRoute.current = 'ChooseAccoutType' : 'ChooseAccoutType'}  
+      {storedPassword ? initialRoute.current = 'VerifyPin' : 'ChooseAccoutType'}  
       setAppLoading(false);
     }, 100);
   }, [appLoading]);
