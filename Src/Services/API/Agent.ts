@@ -39,7 +39,12 @@ export const AgentAPI = {
           xhttp.setRequestHeader('Referer', Config.Host);
         }
         var Token = await AgentAPI.Account.GetSessionString('AgentAPI.Token');
-        if (Token) xhttp.setRequestHeader('Authorization', 'Bearer ' + Token);
+        if (Token)
+          xhttp.setRequestHeader(
+            'Authorization',
+            'Bearer ' +
+              'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJqdGkiOiI1TkEvR1NpenJPMGN2cVNMVjlERndGQ2tHMHRodVpncVJuNEJjeHFQL3FJPSIsImlzcyI6ImxhYi50YWdyb290LmlvIiwic3ViIjoiYW5rdXNobW1AbGFiLnRhZ3Jvb3QuaW8iLCJpYXQiOjE2OTA4NzYxNjAsImV4cCI6MTY5MDg3OTc2MH0.CAcUbUesq1XcIH4sEXwqanIQ_yj3drHZZAGbaswGZM4'
+          );
 
         xhttp.send(JSON.stringify(RequestPayload));
       });
@@ -1049,6 +1054,224 @@ export const AgentAPI = {
         "'/>";
 
       await AgentAPI.Xmpp.SendXmlMessage(To, Xml);
+    },
+    GetServiceProvidersForIdReview: async function (LegalId: any) {
+      const Request = {
+        legalId: LegalId,
+      };
+      const Response = await AgentAPI.IO.Request(
+        '/Agent/Legal/GetServiceProvidersForIdReview',
+        Request
+      );
+      return Response;
+    },
+    SelectReviewService: async function (ServiceId: any, ServiceProvider: any) {
+      const Request = {
+        serviceId: ServiceId,
+        serviceProvider: ServiceProvider,
+      };
+      const Response = await AgentAPI.IO.Request(
+        '/Agent/Legal/SelectReviewService',
+        Request
+      );
+      return Response;
+    },
+    AuthorizeAccessToId: async function (
+      LegalId: any,
+      RemoteId: any,
+      Authorized: any
+    ) {
+      const Request = {
+        legalId: LegalId,
+        remoteId: RemoteId,
+        authorized: Authorized,
+      };
+      const Response = await AgentAPI.IO.Request(
+        '/Agent/Legal/AuthorizeAccessToId',
+        Request
+      );
+      return Response;
+    },
+    AuthorizeAccessToContract: async function (
+      ContractId: any,
+      RemoteId: any,
+      Authorized: any
+    ) {
+      const Request = {
+        contractId: ContractId,
+        remoteId: RemoteId,
+        authorized: Authorized,
+      };
+      const Response = await AgentAPI.IO.Request(
+        '/Agent/Legal/AuthorizeAccessToContract',
+        Request
+      );
+      return Response;
+    },
+    PetitionId: async function (
+      LocalName: any,
+      Namespace: any,
+      KeyId: any,
+      KeyPassword: any,
+      AccountPassword: any,
+      LegalId: any,
+      RemoteId: any,
+      PetitionId: any,
+      Purpose: any
+    ) {
+      const UserName = AgentAPI.Account.GetSessionString('AgentAPI.UserName');
+      const s1 =
+        UserName +
+        ':' +
+        Config.Host +
+        ':' +
+        LocalName +
+        ':' +
+        Namespace +
+        ':' +
+        KeyId;
+      const KeySignature = await AgentAPI.Account.Sign(KeyPassword, s1);
+      const s2 =
+        s1 +
+        ':' +
+        KeySignature +
+        ':' +
+        PetitionId +
+        ':' +
+        Purpose +
+        ':' +
+        LegalId +
+        ':' +
+        RemoteId;
+      const RequestSignature = await AgentAPI.Account.Sign(AccountPassword, s2);
+
+      const Request = {
+        keyId: KeyId,
+        keySignature: KeySignature,
+        requestSignature: RequestSignature,
+        legalId: LegalId,
+        remoteId: RemoteId,
+        petitionId: PetitionId,
+        purpose: Purpose,
+      };
+
+      const Response = await AgentAPI.IO.Request(
+        '/Agent/Legal/PetitionId',
+        Request
+      );
+      return Response;
+    },
+    PetitionSignature: async function (
+      LocalName: any,
+      Namespace: any,
+      KeyId: any,
+      KeyPassword: any,
+      AccountPassword: any,
+      LegalId: any,
+      RemoteId: any,
+      PetitionId: any,
+      Purpose: any,
+      ContentBase64: any
+    ) {
+      const UserName = AgentAPI.Account.GetSessionString('AgentAPI.UserName');
+      const s1 =
+        UserName +
+        ':' +
+        Config.Host +
+        ':' +
+        LocalName +
+        ':' +
+        Namespace +
+        ':' +
+        KeyId;
+      const KeySignature = await AgentAPI.Account.Sign(KeyPassword, s1);
+      const s2 =
+        s1 +
+        ':' +
+        KeySignature +
+        ':' +
+        PetitionId +
+        ':' +
+        Purpose +
+        ':' +
+        LegalId +
+        ':' +
+        RemoteId +
+        ':' +
+        ContentBase64;
+      const RequestSignature = await AgentAPI.Account.Sign(AccountPassword, s2);
+
+      const Request = {
+        keyId: KeyId,
+        keySignature: KeySignature,
+        requestSignature: RequestSignature,
+        legalId: LegalId,
+        remoteId: RemoteId,
+        petitionId: PetitionId,
+        purpose: Purpose,
+        contentBase64: ContentBase64,
+      };
+
+      const Response = await AgentAPI.IO.Request(
+        '/Agent/Legal/PetitionSignature',
+        Request
+      );
+
+      return Response;
+    },
+    PetitionPeerReview: async function (
+      LocalName: any,
+      Namespace: any,
+      KeyId: any,
+      KeyPassword: any,
+      AccountPassword: any,
+      LegalId: any,
+      RemoteId: any,
+      PetitionId: any,
+      Purpose: any
+    ) {
+      const UserName = AgentAPI.Account.GetSessionString('AgentAPI.UserName');
+      const s1 =
+        UserName +
+        ':' +
+        Config.Host +
+        ':' +
+        LocalName +
+        ':' +
+        Namespace +
+        ':' +
+        KeyId;
+      const KeySignature = await AgentAPI.Account.Sign(KeyPassword, s1);
+      const s2 =
+        s1 +
+        ':' +
+        KeySignature +
+        ':' +
+        PetitionId +
+        ':' +
+        Purpose +
+        ':' +
+        LegalId +
+        ':' +
+        RemoteId;
+      const RequestSignature = await AgentAPI.Account.Sign(AccountPassword, s2);
+
+      const Request = {
+        keyId: KeyId,
+        keySignature: KeySignature,
+        requestSignature: RequestSignature,
+        legalId: LegalId,
+        remoteId: RemoteId,
+        petitionId: PetitionId,
+        purpose: Purpose,
+      };
+
+      const Response = await AgentAPI.IO.Request(
+        '/Agent/Legal/PetitionPeerReview',
+        Request
+      );
+
+      return Response;
     },
   },
   Wallet: {
