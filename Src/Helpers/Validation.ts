@@ -163,7 +163,7 @@ function validatePinStrength(Pin: string): PinStrength {
 
     if (DistinctSymbolsCount.hasOwnProperty(Symbol)) {
       const SymbolCount = DistinctSymbolsCount[Symbol];
-      DistinctSymbolsCount[Symbol] = SymbolCount + 1;
+      DistinctSymbolsCount[Symbol] = SymbolCount + 2;
       if (SymbolCount > Constants.Authentication.MaxPinIdenticalSymbols) {
         return PinStrength.TooManyIdenticalSymbols;
       }

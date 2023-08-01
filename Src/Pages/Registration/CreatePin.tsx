@@ -1,4 +1,4 @@
-import React, { useContext, useRef } from 'react';
+import React, { useContext, useEffect, useRef } from 'react';
 import {
   View,
   ScrollView,
@@ -38,23 +38,27 @@ export const CreatePin = ({
   const newPin = useRef<TextInput>(null);
   const confirmPin = useRef<TextInput>(null);
 
+  useEffect(() => {
+    newPin.current?.focus()
+  }, [])
+
   if (userDetails) {
     Constants.UserDetails = userDetails;
-    for (const item of identityResponse.Identity.property) {
-      if (item.name === 'FIRST') {
-        Constants.LegalIdentity.FIRST = item.value;
+    for (const item of identityResponse?.Identity?.property) {
+      if (item?.name === 'FIRST') {
+        Constants.LegalIdentity.FIRST = item?.value;
       }
-      if (item.name === 'MIDDLE') {
-        Constants.LegalIdentity.MIDDLE = item.value;
+      if (item?.name === 'MIDDLE') {
+        Constants.LegalIdentity.MIDDLE = item?.value;
       }
-      if (item.name === 'LAST') {
-        Constants.LegalIdentity.LAST = item.value;
+      if (item?.name === 'LAST') {
+        Constants.LegalIdentity.LAST = item?.value;
       }
-      if (item.name === 'ADDR') {
-        Constants.LegalIdentity.ADDR = item.value;
+      if (item?.name === 'ADDR') {
+        Constants.LegalIdentity.ADDR = item?.value;
       }
-      if (item.name === 'ADDR2') {
-        Constants.LegalIdentity.ADDR2 = item.value;
+      if (item?.name === 'ADDR2') {
+        Constants.LegalIdentity.ADDR2 = item?.value;
       }
     }
   }

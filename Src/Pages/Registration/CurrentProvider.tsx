@@ -173,8 +173,6 @@ export const CurrentProvider = ({
         const response = await AgentAPI.Account.GetDomainInfo(
           domainInfo.Domain
         );
-        console.log('response ----> ', response);
-
         setLoading(false);
         domainInfo.humanReadableDescription =
           response['humanReadableDescription'];

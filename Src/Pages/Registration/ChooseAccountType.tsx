@@ -64,6 +64,8 @@ export const ChooseAccountType = ({
     setAppLoading(false);
 
     setTimeout(() => {
+      navigation.dispatch(StackActions.replace('CreatePin'));
+      return
       if (identityResponse?.Identity?.status) {
         navigation.dispatch(StackActions.replace('AlmostThere'));
       } else if (userDetails?.userName && userDetails?.email) {
