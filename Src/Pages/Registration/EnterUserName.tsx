@@ -39,7 +39,7 @@ export const EnterUserName = ({
 
   useEffect(() => {
     if (appStateVisible === 'inactive') {
-      dispatch(addUserName(userName));
+      userName !== '' && dispatch(addUserName(userName));
     }
   }, [appStateVisible]);
 

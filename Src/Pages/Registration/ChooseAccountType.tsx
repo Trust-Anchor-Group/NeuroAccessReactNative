@@ -64,21 +64,19 @@ export const ChooseAccountType = ({
     setAppLoading(false);
 
     setTimeout(() => {
-      navigation.dispatch(StackActions.replace('CurrentProvider'));
-
-      // if (identityResponse?.Identity?.status) {
-      //   navigation.dispatch(StackActions.replace('AlmostThere'));
-      // } else if (userDetails?.userName && userDetails?.email) {
-      //   navigation.dispatch(StackActions.replace('TellUsAboutYou'));
-      // } else if (userDetails?.userName && !userDetails?.email) {
-      //   navigation.dispatch(StackActions.replace('EnterUserName'));
-      // } else if (userDetails?.userName) {
-      //   navigation.dispatch(StackActions.replace('EnterUserName'));
-      // } else if (defaultDomain) {
-      //   navigation.dispatch(StackActions.replace('CurrentProvider'));
-      // } else if (userDetails?.purpose) {
-      //   navigation.dispatch(StackActions.replace('EnterMobileNumber'));
-      // }
+      if (identityResponse?.Identity?.status) {
+        navigation.dispatch(StackActions.replace('AlmostThere'));
+      } else if (userDetails?.userName && userDetails?.email) {
+        navigation.dispatch(StackActions.replace('TellUsAboutYou'));
+      } else if (userDetails?.userName && !userDetails?.email) {
+        navigation.dispatch(StackActions.replace('EnterUserName'));
+      } else if (userDetails?.userName) {
+        navigation.dispatch(StackActions.replace('EnterUserName'));
+      } else if (defaultDomain) {
+        navigation.dispatch(StackActions.replace('CurrentProvider'));
+      } else if (userDetails?.purpose) {
+        navigation.dispatch(StackActions.replace('EnterMobileNumber'));
+      }
     }, 10);
   }, []);
 
