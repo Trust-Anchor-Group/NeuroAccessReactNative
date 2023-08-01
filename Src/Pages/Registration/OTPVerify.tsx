@@ -97,7 +97,7 @@ export const OTPVerify = ({ navigation, route }: Props) => {
     try {
       await dispatch(mobileNumberOtpVerification({ mobileNumber, otpValue }));
     } catch (error) {
-      console.log('dispatch(mobileNumberOtpVerification -- ', error);
+      console.log('Error -- ', error);
     }
   };
   const onBackClick = () => {

@@ -39,15 +39,10 @@ const domainSlice = createSlice({
       })
       .addCase(mobileNumberOtpVerification.fulfilled, (state, action) => {
         state.loading = false;
-        console.log(
-          'mobileNumberOtpVerification.fulfilled == ',
-          action.payload
-        );
         state.defaultDomain = action.payload;
       })
       .addCase(mobileNumberOtpVerification.rejected, (state, action) => {
         state.loading = false;
-        console.log('mobileNumberOtpVerification - reject - ', action.payload);
         state.error = action.payload;
       })
       .addCase(getDomainDetails.pending, (state) => {

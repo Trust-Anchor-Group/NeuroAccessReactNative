@@ -41,7 +41,6 @@ export const CreatePin = ({
   if (userDetails) {
     Constants.UserDetails = userDetails;
     for (const item of identityResponse.Identity.property) {
-      console.log(item);
       if (item.name === 'FIRST') {
         Constants.LegalIdentity.FIRST = item.value;
       }

@@ -27,14 +27,8 @@ export const OnboardingAPI = {
 
               if (Response?.Status !== undefined && !Response?.Status) {
                 const Error = OnboardingAPI.IO.ParseError(xhttp, Response);
-                console.log(
-                  'Inside Response?.Status ------> ',
-                  JSON.stringify(Error),
-                  Response
-                );
                 SetException(Error);
               } else {
-                console.log('Response ------> ', Response);
                 SetResult(Response);
               }
             } else {
