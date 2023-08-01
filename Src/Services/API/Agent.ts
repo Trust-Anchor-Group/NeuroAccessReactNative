@@ -22,12 +22,6 @@ export const AgentAPI = {
         xhttp.onreadystatechange = function () {
           if (xhttp.readyState == 4) {
             let Response = xhttp.responseText;
-            console.log(
-              'Resource --> ',
-              Resource,
-              '\n xhttp.status ---> ',
-              xhttp.status
-            );
             if (xhttp.status === 200) {
               Response = JSON.parse(Response);
               SetResult(Response);
@@ -51,7 +45,6 @@ export const AgentAPI = {
                 statusMessage: xhttp.statusText,
                 alternatives: Alternatives,
               };
-              console.log('Error --> ', JSON.stringify(Error));
               SetException(Error);
             }
             if (!Internal) AgentAPI.IO.AfterResponse(Response);
@@ -66,8 +59,7 @@ export const AgentAPI = {
           xhttp.setRequestHeader('Referer', Config.Host);
         }
         var Token = await AgentAPI.Account.GetSessionString('AgentAPI.Token');
-        console.log('Token - ', Token)
-        if (Token) xhttp.setRequestHeader('Authorization', 'Bearer ' + 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJqdGkiOiJQTFFtVjhLMEtDbWwvS3RzMDlHcThuKzJ6bEx2b25LQlgzay9GcFJ4Zm9vPSIsImlzcyI6ImxhYi50YWdyb290LmlvIiwic3ViIjoicHJhbW9kc3BoaW54QGxhYi50YWdyb290LmlvIiwiaWF0IjoxNjkwODA4MzA3LCJleHAiOjE2OTA4MTE4MDd9.k0R-cW1BiUUehlXA5YDBwV7o4r46kHzx1Lr4iTM3oJY');
+        if (Token) xhttp.setRequestHeader('Authorization', 'Bearer ' + Token);
 
         xhttp.send(JSON.stringify(RequestPayload));
       });
