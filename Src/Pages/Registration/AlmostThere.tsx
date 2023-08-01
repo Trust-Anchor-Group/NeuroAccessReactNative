@@ -20,7 +20,7 @@ import {
   getPopMessageApi,
   PopMessagePayload,
 } from '@Services/Redux/Actions/GetStatusForIdentity';
-import { savePopMessageLast } from '@Services/Redux/Reducers/IdentitySlice';
+import { savePopMessageLast, setIdentitySliceError } from '@Services/Redux/Reducers/IdentitySlice';
 import { InformationOverlay } from '@Controls/InformationOverlay';
 export const AlmostThere = ({
   navigation,
@@ -45,7 +45,6 @@ export const AlmostThere = ({
     popMessageLastResponse,
     loading,
     error,
-    setIdentitySliceError
   } = useSelector((state) => state.identity);
 
   useEffect(() => {
