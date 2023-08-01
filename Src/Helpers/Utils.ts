@@ -5,18 +5,12 @@ export function computePinHash(
   pin: string,
   objectId: string,
   domain: string,
-  account: string,
-  legalJid: string
 ): string {
   const sb = new Array<string>();
 
   sb.push(objectId);
   sb.push(':');
   sb.push(domain);
-  sb.push(':');
-  sb.push(account);
-  sb.push(':');
-  sb.push(legalJid);
   sb.push(':');
   sb.push(pin);
 

@@ -72,8 +72,6 @@ export const CreatePin = ({
       password,
       objectId,
       Config.Host || '',
-      userDetails.userName,
-      userDetails.legalId
     );
     return hashedPassword;
   };
