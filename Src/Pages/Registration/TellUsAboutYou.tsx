@@ -8,6 +8,7 @@ import {
   TextInput,
   Keyboard,
   Image,
+  Alert,
 } from 'react-native';
 import { StackScreenProps } from '@react-navigation/stack';
 import { useTranslation } from 'react-i18next';
@@ -44,7 +45,7 @@ import { PERMISSIONS } from 'react-native-permissions';
 import { CountryDialog } from '@Controls/CountryDialog';
 import { countryCodes } from '@Services/Data/index';
 import { getAlgorithmListApi } from '@Services/Redux/Actions/GetAlgorithmList';
-import { Algorithm } from '@Services/Redux/Reducers/CryptoSlice';
+import { Algorithm, setCryptoSliceError } from '@Services/Redux/Reducers/CryptoSlice';
 import { AgentAPI } from '@Services/API/Agent';
 
 import {
@@ -112,6 +113,23 @@ export const TellUsAboutYou = ({
   const zipRef = useRef<TextInput>(null);
   const cityRef = useRef<TextInput>(null);
   const stateRef = useRef<TextInput>(null);
+
+  useEffect(() => {
+    if (error) {
+      Alert.alert(t('Error.ErrorTitle'), JSON.stringify(error), [
+        {
+          text: 'ok',
+          onPress: () => {
+            dispatch(setCryptoSliceError(''))
+          },
+        },
+      ]);
+    }
+  }, [error]);
+ 
+  useEffect(() => {
+    if (readyForApprovalResponse !== null) navigateAlmost();
+  }, [readyForApprovalResponse]);
 
   useEffect(() => {
     if (Platform.OS === 'ios') {
@@ -210,10 +228,6 @@ export const TellUsAboutYou = ({
   const readyForApprovalCall = async () => {
     await dispatch(readyForApproval(legalID.current));
   };
-
-  useEffect(() => {
-    if (readyForApprovalResponse !== null) navigateAlmost();
-  }, [readyForApprovalResponse]);
 
   const handleSaveFile = async () => {
     try {

@@ -1,23 +1,24 @@
 @startgantt
+
 saturday are closed
 sunday are closed
 
+
 <style>
+
 ganttDiagram {
   task {
-    BackGroundColor Red
-    LineColor Green 
+    BackGroundColor Green
+    LineColor Blue
     unstarted {
       BackGroundColor Fuchsia 
       LineColor FireBrick
     }
-    completed {
-      BackGroundColor GreenYellow 
-      LineColor Green
-    }
   }
 }
+
 </style>
+
 Project starts 2023-06-01
 [Current Provider screen-A] starts 2023-06-27 and ends 2023-06-29
 [Tell Us About You Screen UI-A] starts 2023-06-30 and ends 2023-07-03
@@ -31,9 +32,25 @@ Project starts 2023-06-01
 [See account details-A] starts 2023-07-17 and ends 2023-07-18
 [Click Finish functionality-A] starts 2023-07-19 and ends 2023-07-19
 [Invite peer show list of providers functionality-A] starts 2023-07-31 and ends 2023-08-01
-[Error and bugs-A] starts 2023-06-28 and ends 2023-07-24
+[Error and bugs-A] starts 2023-07-24 and ends 2023-07-31
 
-[Information popup functionality-P ] starts 2023-06-29 and ends 2023-06-29
+[Current Provider screen-A] is 100% complete
+[Tell Us About You Screen UI-A] is 100% complete
+[Custom Components with validation-A] is 100% complete
+[Terms and conditions screen-A] is 100% complete
+[Almost there functionality UI-A] is 100% complete
+[Almost there functionality with-A] is 100% complete
+[Pending and Peer info with carousel -A] is 100% complete
+[Check Status functionality-A] is 100% complete
+[Technical details-A] is 100% complete
+[See account details-A] is 100% complete
+[Click Finish functionality-A] is 100% complete
+[Invite peer show list of providers functionality-A] is 10% complete
+[Error and bugs-A] is 80% complete
+
+
+
+[Information popup functionality-P] starts 2023-06-29 and ends 2023-06-29
 [QRCode Scan manager-P] starts 2023-06-30 and ends 2023-07-03
 [Scan invitation UI-P] starts 2023-07-04 and ends 2023-07-04
 [Use scan details and change provider-P] starts 2023-07-05 and ends 2023-07-07
@@ -45,36 +62,26 @@ Project starts 2023-06-01
 [Pin validation-P] starts 2023-07-13 and ends 2023-07-13
 [jest test setup in RN-App-P] starts 2023-07-14 and ends 2023-07-14
 [Pin validation Test case using jest-P] starts 2023-07-17 and ends 2023-07-18
-[Error Handling throught the app-P] starts 2023-07-17 and ends 2023-07-31
-[Current Provider screen with changed domain details-P] starts 2023-07-17 and ends 2023-07-31
-
-[Invite peer functionality-P] starts 2023-07-19 and ends 2023-07-19
+[Invite peer functionality using QRCode-P] starts 2023-07-19 and ends 2023-07-19
 [Flow upto Congratulations functionality-P] starts 2023-07-20 and ends 2023-07-21
-[Error and bugs-P] starts 2023-06-29 and ends 2023-07-24
+[Error and bugs-P] starts 2023-07-24 and ends 2023-07-31
+ 
 
-[Current Provider screen with changed domain details-P completed] is 100% completed
-[Information popup functionality-P completed] is 100% completed
-[Scan invitation UI-P completed] is 100% completed
-[Use scan details and change provider-P completed] is 100% completed
-[Scan invitation screenflow with full functionality-P completed] is 100% completed
-[Create Account functionality-P completed] is 100% completed
-[Verify Email functionality-P completed] is 100% completed
-[Verification Code functionality-P completed] is 100% completed
-[Create a pin code UI-P completed] is 100% completed
-[Pin validation-P completed] is 100% completed
-[Error Handling throught the app-P completed] is 90% completed
+[Information popup functionality-P] is 100% complete
+[QRCode Scan manager-P] is 100% complete
+[Scan invitation UI-P] is 100% complete
+[Use scan details and change provider-P] is 100% complete
+[Scan invitation screenflow with full functionality-P] is 100% complete
+[Create Account functionality-P] is 100% complete
+[Verify Email functionality-P] is 100% complete
+[Verification Code functionality-P] is 100% complete
+[Create a pin code UI-P] is 100% complete
+[Pin validation-P] is 100% complete
+[jest test setup in RN-App-P] is 1% complete
+[Pin validation Test case using jest-P] is 100% complete
+[Invite peer functionality using QRCode-P] is 70% complete
+[Flow upto Congratulations functionality-P] is 100% complete
+[Error and bugs-P] is 90% complete
 
-[Current Provider screen-A completed] is 100% completed
-[Tell Us About You Screen UI-A completed] is 100% completed
-[Custom Components with validation-A completed] is 100% completed
-[Terms and conditions screen-A completed] is 100% completed
-[Almost there functionality UI-A completed] is 100% completed
-[Almost there functionality with-A completed] is 100% completed
-[Pending and Peer info with carousel -A completed] is 100% completed
-[Check Status functionality-A completed] is 100% completed
-[Technical details-A completed] is 100% completed
-[See account details-A completed] is 100% completed
-[Click Finish functionality-A completed] is 100% completed
-[Error and bugs-A completed] is 90% completed
 
 @endgantt

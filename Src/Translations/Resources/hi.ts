@@ -228,4 +228,7 @@ export default {
     PinCreateSuccess: 'पिन सफलतापूर्वक बनाया गया!',
     IncorrectPin: 'ग़लत पिन!',
   },
+  Error: {
+    ErrorTitle: 'कुछ गलत हो गया!'
+  }
 };

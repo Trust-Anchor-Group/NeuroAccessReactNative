@@ -125,6 +125,7 @@ const InputBox: React.ForwardRefRenderFunction<TextInputRef, InputBoxProps> = (
             isFocused && styles.inputFocused,
             error && styles.inputError,
           ]}
+          autoComplete={'off'}
           value={value}
           onChangeText={onChangeText}
           placeholder={placeholder}

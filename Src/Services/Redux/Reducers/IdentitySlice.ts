@@ -20,7 +20,7 @@ const initialState = {
   popMessageLastResponse: {},
   attributeResponse: {},
   loading: false,
-  error: '',
+  error: <any>undefined,
 };
 
 const identitySlice = createSlice({
@@ -36,6 +36,9 @@ const identitySlice = createSlice({
     clearIdentity: (state) => {
       state.identityResponse = {};
     },
+    setIdentitySliceError: (state, action) => {
+      state.error = action.payload;
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -49,7 +52,7 @@ const identitySlice = createSlice({
       })
       .addCase(getIdentityApi.rejected, (state, action) => {
         state.loading = false;
-        state.error = action?.error?.message || '';
+        state.error = action?.payload || '';
       })
       .addCase(getPopMessageApi.pending, (state) => {
         state.loading = true;
@@ -61,7 +64,7 @@ const identitySlice = createSlice({
       })
       .addCase(getPopMessageApi.rejected, (state, action) => {
         state.loading = false;
-        state.error = action?.error?.message || '';
+        state.error = action?.payload || '';
       })
       .addCase(getApplicationAttributeApi.pending, (state) => {
         state.loading = true;
@@ -73,12 +76,15 @@ const identitySlice = createSlice({
       })
       .addCase(getApplicationAttributeApi.rejected, (state, action) => {
         state.loading = false;
-        state.error = action?.error?.message || '';
+        state.error = action?.payload || '';
       });
   },
 });
 
-export const { saveIdentity } = identitySlice.actions;
-export const { clearIdentity } = identitySlice.actions;
-export const { savePopMessageLast } = identitySlice.actions;
+export const {
+  savePopMessageLast,
+  setIdentitySliceError,
+  saveIdentity,
+  clearIdentity,
+} = identitySlice.actions;
 export default identitySlice.reducer;

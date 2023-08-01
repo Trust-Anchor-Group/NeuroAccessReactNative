@@ -7,3 +7,6 @@ export { EnterMobileNumber } from './EnterMobileNumber';
 export { EnterUserName } from './EnterUserName';
 export { AlmostThereStatus } from './AlmostThereStatus';
 export { AlmostThere } from './AlmostThere';
+export { TellUsAboutYou } from './TellUsAboutYou';
+export { CurrentProvider } from "./CurrentProvider";
+export { CreatePin } from "./CreatePin";

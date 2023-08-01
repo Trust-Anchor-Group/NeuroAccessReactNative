@@ -94,6 +94,7 @@ const MobileInputView: React.ForwardRefRenderFunction<
           ref={inputRef}
           style={styles(themeColors).input}
           value={value}
+          autoComplete={'off'}
           onChangeText={onChangeText}
           placeholder={t('heading.mobilePlaceHolder')}
           placeholderTextColor={themeColors.dropdown}

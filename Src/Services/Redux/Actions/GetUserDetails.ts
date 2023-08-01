@@ -12,46 +12,40 @@ export type UserPayload = {
   Seconds?: number;
 };
 
-export const sendEmailVerificationMessage = createAsyncThunk(
-  'user/sendEmailVerificationMessage',
-  async (email: string) => {
-    try {
-      const response = await OnboardingAPI.ID.sendEmailVerificationMessage(
-        email
-      );
-      return response;
-    } catch (error) {
-      throw error?.response?.data;
-    }
-  }
-);
-
 export const createAccountUsingEmail = createAsyncThunk(
   'user/createAccountUsingEmail',
-  async (payload: UserPayload) => {
+  async (payload: UserPayload, { fulfillWithValue, rejectWithValue }) => {
     try {
       const response = await AgentAPI.Account.Create(
         payload.UserName,
         payload.EMail,
         payload.Password
       );
-      return response;
+      return fulfillWithValue(response);
     } catch (error) {
-      throw error;
+      const message =
+        typeof error?.message === 'string'
+          ? error?.message
+          : error?.message?.Message;
+      throw rejectWithValue(message);
     }
   }
 );
 
 export const createAccountUsingMobileNumber = createAsyncThunk(
   'user/createAccountUsingMobileNumber',
-  async (mobileNumber: string) => {
+  async (mobileNumber: string, { rejectWithValue, fulfillWithValue }) => {
     try {
       const response = await OnboardingAPI.ID.sendVerificationMessage(
         mobileNumber
       );
-      return response;
+      return fulfillWithValue(response);
     } catch (error) {
-      throw error?.response?.data;
+      const message =
+        typeof error?.message === 'string'
+          ? error?.message
+          : error?.message?.Message;
+      throw rejectWithValue(message);
     }
   }
 );
@@ -62,7 +56,7 @@ export const saveEmail = createAsyncThunk(
     try {
       return email;
     } catch (error) {
-      throw error?.response?.data;
+      throw error;
     }
   }
 );
@@ -73,7 +67,7 @@ export const saveNumber = createAsyncThunk(
     try {
       return mobileNumber;
     } catch (error) {
-      throw error?.response?.data;
+      throw error;
     }
   }
 );
@@ -84,7 +78,7 @@ export const addUserName = createAsyncThunk(
     try {
       return userName;
     } catch (error) {
-      throw error?.response?.data;
+      throw error;
     }
   }
 );
@@ -95,7 +89,7 @@ export const saveAccountPassword = createAsyncThunk(
     try {
       return accountPassword;
     } catch (error) {
-      throw error?.response?.data;
+      throw error;
     }
   }
 );
@@ -106,7 +100,7 @@ export const saveKeyId = createAsyncThunk(
     try {
       return keyId;
     } catch (error) {
-      throw error?.response?.data;
+      throw error;
     }
   }
 );
@@ -117,7 +111,7 @@ export const saveKeyIdPassword = createAsyncThunk(
     try {
       return keyPassword;
     } catch (error) {
-      throw error?.response?.data;
+      throw error;
     }
   }
 );
@@ -128,7 +122,7 @@ export const selectedPupose = createAsyncThunk(
     try {
       return selectedPupose;
     } catch (error) {
-      throw error?.response?.data;
+      throw error;
     }
   }
 );
@@ -139,7 +133,25 @@ export const saveLegalID = createAsyncThunk(
     try {
       return legalID;
     } catch (error) {
-      throw error?.response?.data;
+      throw error;
+    }
+  }
+);
+
+//Onboarding---
+
+export const getUsersCountry = createAsyncThunk(
+  'user/getUsersCountry',
+  async (_, { fulfillWithValue, rejectWithValue }) => {
+    try {
+      const response = await OnboardingAPI.ID.CountryCode();
+      return fulfillWithValue(response);
+    } catch (error) {
+      const message =
+        typeof error?.message === 'string'
+          ? error?.message
+          : error?.message?.Message;
+      throw rejectWithValue(message);
     }
   }
 );

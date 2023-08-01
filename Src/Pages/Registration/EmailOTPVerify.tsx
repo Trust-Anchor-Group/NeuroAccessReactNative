@@ -1,4 +1,4 @@
-import { View, KeyboardAvoidingView, Platform } from 'react-native';
+import { View, KeyboardAvoidingView, Platform, Alert } from 'react-native';
 import React, { useState, useContext } from 'react';
 import { StackScreenProps } from '@react-navigation/stack';
 import { useSelector, useDispatch } from 'react-redux';
@@ -11,19 +11,19 @@ import {
   ActionButton,
   TextLabel,
   TextLabelVariants,
+  Loader,
 } from '@Controls/index';
 import { GlobalStyle as styles, EnterOTPVerifyStyle } from '@Pages/Styles';
 import { Logo } from '@Assets/Svgs';
 import { useTranslation } from 'react-i18next';
 import { ThemeContext } from '@Theme/Provider';
 import { AgentAPI } from '@Services/API/Agent';
-import { Loader } from '@Controls/index';
-import { OnboardingAPI } from '@Services/API/OnboardingApi';
 import {
   UserPayload,
   createAccountUsingEmail,
 } from '@Services/Redux/Actions/GetUserDetails';
-import { AsyncThunkAction } from '@reduxjs/toolkit';
+import { setUserSliceError } from '@Services/Redux/Reducers/UserSlice';
+import { isEmpty } from '@Helpers/Utils';
 
 type Props = StackScreenProps<{}>;
 
@@ -34,8 +34,28 @@ export const EmailOTPVerify = ({ navigation, route }: Props) => {
   const { themeColors } = useContext(ThemeContext);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [otpValue, setOTPValue] = useState('');
-  const [isError, setIsError] = useState(false);
-  const errorMessage = React.useRef('');
+  const [isError, setIsError] = useState(error.length ? true : false);
+  const errorMessage = React.useRef(error);
+
+  React.useEffect(() => {
+    if (error) {
+      Alert.alert(t('Error.ErrorTitle'), JSON.stringify(error), [
+        {
+          text: 'ok',
+          onPress: () => dispatch(setUserSliceError('')),
+        },
+      ]);
+    }
+  }, [error]);
+
+  React.useEffect(() => {
+    if (!isEmpty(userDetails?.tokenData)) {
+      const nextPage = async () => {
+        navigation.navigate('EmailOTPVerify');
+      };
+      nextPage();
+    }
+  }, [userDetails?.tokenData]);
 
   const handleOTPChange = (otp: string) => {
     setIsError(false);
@@ -69,8 +89,9 @@ export const EmailOTPVerify = ({ navigation, route }: Props) => {
       if (response?.eMail) {
         navigation.navigate('TellUsAboutYou');
       }
-    } catch (e) {
+    } catch (error) {
       setIsLoading(false);
+      alert(`Error : ${error['message']}`);
     }
   };
   const onBackClick = () => {
@@ -89,12 +110,10 @@ export const EmailOTPVerify = ({ navigation, route }: Props) => {
         EMail: userDetails?.email,
         Password: userDetails?.password,
       };
-      setIsLoading(true);
-      dispatch(createAccountUsingEmail(userPayload));
-      setIsLoading(false);
-      if (response.Status) {
-      }
-    } catch (error) {}
+      await dispatch(createAccountUsingEmail(userPayload));
+    } catch (error) {
+      alert(`Error : ${error['message']}`);
+    }
   };
 
   return (
