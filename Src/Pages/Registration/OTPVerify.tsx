@@ -40,6 +40,7 @@ export const OTPVerify = ({ navigation, route }: Props) => {
   } = useSelector((state) => state.domain);
   const number = userDetails?.mobileNumber?.number;
   const code = userDetails?.mobileNumber?.code;
+  const purpose = (userDetails?.purpose?.value === 0 || userDetails?.purpose?.value === 1) ? false : true ;
   const mobileNumber = code + number;
   const { themeColors } = useContext(ThemeContext);
   const [otpValue, setOTPValue] = useState('');
@@ -95,7 +96,7 @@ export const OTPVerify = ({ navigation, route }: Props) => {
 
   const callVerificationCode = async () => {
     try {
-      await dispatch(mobileNumberOtpVerification({ mobileNumber, otpValue }));
+      await dispatch(mobileNumberOtpVerification({ mobileNumber, otpValue, purpose }));
     } catch (error) {
       console.log('Error -- ', error);
     }
