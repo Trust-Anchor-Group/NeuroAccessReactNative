@@ -15,7 +15,8 @@ export default {
     close: 'Close',
     search: 'Search',
     done: 'Done',
-    createPin: 'Create pin'
+    createPin: 'Create pin',
+    unlock: 'Unlock now'
   },
   choosePurposeScreen: {
     label: 'Choose access purpose',
