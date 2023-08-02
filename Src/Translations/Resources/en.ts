@@ -15,6 +15,7 @@ export default {
     close: 'Close',
     search: 'Search',
     done: 'Done',
+    createPin: 'Create pin'
   },
   choosePurposeScreen: {
     label: 'Choose access purpose',

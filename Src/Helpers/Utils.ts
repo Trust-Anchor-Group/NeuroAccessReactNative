@@ -21,7 +21,16 @@ export function computePinHash(
   return sha384Hash.toString();
 }
 
+// Define a type guard function to check if the value is boolean
+function isBoolean(value: any): value is boolean {
+  return typeof value === 'boolean';
+}
+
 export function isEmpty(obj: any) {
+  if (isBoolean(obj)) {
+    return false; // Return the original boolean value
+  }
+
   for (let prop in obj) {
     if (obj.hasOwnProperty(prop)) return false;
   }

@@ -180,5 +180,8 @@ export const Constants = {
     /// </summary>
     Building: 'BLD',
   },
-  LegalIdentity: <LegalIdentity>{}
+  LegalIdentity: <LegalIdentity>{},
+  DefaultValues: {
+    Host: 'lab.tagroot.io'
+  }
 };

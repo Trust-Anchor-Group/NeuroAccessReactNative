@@ -17,7 +17,7 @@ export default {
     search: 'खोज',
     done: 'पूर्ण',
     unlock: 'अभी खोलें',
-    CreatePin: 'पिन बनाएं',
+    createPin: 'पिन बनाएं',
   },
   choosePurposeScreen: {
     label: 'पहुंच का उद्देश्य चुनें',

@@ -28,8 +28,6 @@ import { StackActions } from '@react-navigation/native';
 export const VerifyPin = ({
   navigation,
 }: StackScreenProps<{ Profile: any }>) => {
-  const { userDetails } = useSelector((state) => state.user);
-  const { identityResponse } = useSelector((state) => state.identity);
   const { t } = useTranslation();
   const { themeColors } = useContext(ThemeContext);
   const formikRef = useRef();
@@ -40,9 +38,7 @@ export const VerifyPin = ({
     const hashedPassword = computePinHash(
       password,
       objectId,
-      Config.Host || '',
-      userDetails.userName,
-      userDetails.legalId
+      Config.Host ?? Constants.DefaultValues.Host,
     );
     return hashedPassword;
   };
@@ -137,8 +133,6 @@ export const VerifyPin = ({
               errors,
               touched,
               setFieldTouched,
-              setFieldValue,
-              isValidating,
               isValid,
             }) => (
               <View style={TellUsAboutYouStyle(themeColors).formView}>
