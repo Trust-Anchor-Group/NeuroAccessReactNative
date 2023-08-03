@@ -19,7 +19,7 @@ import { ThemeContext } from '@Theme/Provider/ThemeContext';
 import { InformationOverlay } from '@Controls/InformationOverlay';
 import { selectedPupose } from '@Services/Redux/Actions/GetUserDetails';
 import { StackActions } from '@react-navigation/native';
-
+import { isEmpty } from '@Helpers/Utils';
 export const ChooseAccountType = ({
   navigation,
 }: StackScreenProps<{ Profile: any }>) => {
@@ -64,8 +64,6 @@ export const ChooseAccountType = ({
     setAppLoading(false);
 
     setTimeout(() => {
-      navigation.dispatch(StackActions.replace('CreatePin'));
-      return
       if (identityResponse?.Identity?.status) {
         navigation.dispatch(StackActions.replace('AlmostThere'));
       } else if (userDetails?.userName && userDetails?.email) {
@@ -74,7 +72,7 @@ export const ChooseAccountType = ({
         navigation.dispatch(StackActions.replace('EnterUserName'));
       } else if (userDetails?.userName) {
         navigation.dispatch(StackActions.replace('EnterUserName'));
-      } else if (defaultDomain) {
+      } else if (!isEmpty(defaultDomain)) {
         navigation.dispatch(StackActions.replace('CurrentProvider'));
       } else if (userDetails?.purpose) {
         navigation.dispatch(StackActions.replace('EnterMobileNumber'));

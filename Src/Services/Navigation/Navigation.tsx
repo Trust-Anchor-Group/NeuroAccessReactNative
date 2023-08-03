@@ -11,9 +11,10 @@ import {
   AlmostThereStatus,
   EnterUserName,
   AlmostThere,
-  CurrentProvider, 
+  CurrentProvider,
   TellUsAboutYou,
-  CreatePin
+  CreatePin,
+  ReviewRequest,
 } from '@Pages/Registration';
 import { Settings } from '@Pages/Settings';
 import { VerifyPin } from './VerifyPin';
@@ -123,6 +124,14 @@ export const AuthStack = ({ initialRoute }: Props) => {
       <Stack.Screen
         name="AlmostThereStatus"
         component={AlmostThereStatus}
+        options={{
+          headerShown: false,
+        }}
+      />
+
+      <Stack.Screen
+        name="ReviewRequest"
+        component={ReviewRequest}
         options={{
           headerShown: false,
         }}

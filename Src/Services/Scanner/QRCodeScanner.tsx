@@ -12,6 +12,7 @@ import { Manually } from '@Assets/Svgs/Manually';
 import { FlashLight } from '@Assets/Svgs/FlashLight';
 import { ServiceProvider } from '@Assets/Svgs/ServiceProvider';
 import { ScannerBackButton } from '@Assets/Svgs/ScannerBackButton';
+import { ScannerPeerButton } from '@Assets/Svgs';
 import { ScannerBlurBg } from '@Assets/Svgs/ScannerBlurBg';
 import { DomainInfo } from '@Services/Redux/Reducers/DomainSlice';
 import { QRCodeScannerStyle as styles } from './QRCodeScannerStyle';
@@ -24,11 +25,13 @@ import Space from '@Controls/Space';
 
 const height = Dimensions.get('window').height;
 interface Props {
+  scannerType: string;
+  peerResult?: (result: any) => void;
   toggleOverlay: () => void;
-  onSelect: (qrcode: DomainInfo) => void;
+  onSelect?: (qrcode: DomainInfo) => void;
 }
 export const QRCodeScanner: React.FC<Props> = (props: Props) => {
-  const { toggleOverlay, onSelect } = props;
+  const { toggleOverlay, onSelect, scannerType, peerResult } = props;
   const { t } = useTranslation();
   const ref = React.useRef<BottomSheetRefProps>(null);
   const { themeColors } = useContext(ThemeContext);
@@ -90,14 +93,20 @@ export const QRCodeScanner: React.FC<Props> = (props: Props) => {
   };
   const handleGetQRCode = () => {
     if (barcodes) {
-      const str = barcodes[1]?.content?.data?.toString();
-      const domainDetails = getDomainDetailsFromObinfoString(str);
-      if (domainDetails) {
-        onSelect(domainDetails);
+      if (scannerType === 'reviewRequest' && barcodes.length!==0) {
+        peerResult(barcodes);
         toggleOverlay();
         setError(false);
       } else {
-        setError(false);
+        const str = barcodes[1]?.content?.data?.toString();
+        const domainDetails = getDomainDetailsFromObinfoString(str);
+        if (domainDetails) {
+          onSelect(domainDetails);
+          toggleOverlay();
+          setError(false);
+        } else {
+          setError(false);
+        }
       }
     }
   };
@@ -178,14 +187,24 @@ export const QRCodeScanner: React.FC<Props> = (props: Props) => {
         >
           {t('qrCodeScanner.invitaionTitle')}
         </TextLabel>
-        <ScannerBackButton
+       <ScannerBackButton
           style={styles(themeColors).backButton}
           onPress={toggleOverlay}
           bgColor={themeColors.scanner.cameraBtnBg}
           iconColor={themeColors.scanner.cameraButtons}
         />
         <View style={styles(themeColors).scannerActions}>
-          <ServiceProvider
+        {scannerType === 'reviewRequest'?<ScannerPeerButton
+          style={{ margin: 5 }}
+          enabled={barcodes.length > 0}
+          onPress={() => handleGetQRCode()}
+          iconColor={themeColors.scanner.cameraBtnBg}
+          bgColor={
+            isError
+              ? themeColors.scanner.providerBtnError
+              : themeColors.scanner.providerBtn
+          }
+        />: <ServiceProvider
             style={{ margin: 5 }}
             enabled={barcodes.length > 0}
             onPress={() => handleGetQRCode()}
@@ -195,7 +214,7 @@ export const QRCodeScanner: React.FC<Props> = (props: Props) => {
                 ? themeColors.scanner.providerBtnError
                 : themeColors.scanner.providerBtn
             }
-          />
+          />}
           <TextLabel
             style={styles(themeColors).aboutQRButton}
             variant={TextLabelVariants.DESCRIPTION}

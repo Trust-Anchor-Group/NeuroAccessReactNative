@@ -3,6 +3,10 @@ import {
   getIdentityApi,
   getPopMessageApi,
   getApplicationAttributeApi,
+  getServiceProvidersForIdReviewApi,
+  selectReviewServiceApi,
+  authorizeAccessToIdApi,
+  petitionPeerReviewApi
 } from '../Actions/GetStatusForIdentity';
 
 interface CryptoState {
@@ -19,6 +23,10 @@ const initialState = {
   popMessageResponse: {},
   popMessageLastResponse: {},
   attributeResponse: {},
+  selectReviewServiceResponse: null,
+  authorizeAccessToIdResponse: null,
+  petitionPeerReviewResponse: null,
+  getServiceProvidersForIdReviewResponse: {},
   loading: false,
   error: <any>undefined,
 };
@@ -75,6 +83,54 @@ const identitySlice = createSlice({
         state.attributeResponse = action.payload;
       })
       .addCase(getApplicationAttributeApi.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action?.payload || '';
+      })
+      .addCase(getServiceProvidersForIdReviewApi.pending, (state) => {
+        state.loading = true;
+        state.error = '';
+      })
+      .addCase(getServiceProvidersForIdReviewApi.fulfilled, (state, action) => {
+        state.loading = false;
+        state.getServiceProvidersForIdReviewResponse = action.payload;
+      })
+      .addCase(getServiceProvidersForIdReviewApi.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action?.payload || '';
+      })
+      .addCase(selectReviewServiceApi.pending, (state) => {
+        state.loading = true;
+        state.error = '';
+      })
+      .addCase(selectReviewServiceApi.fulfilled, (state, action) => {
+        state.loading = false;
+        state.selectReviewServiceResponse = action.payload;
+      })
+      .addCase(selectReviewServiceApi.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action?.payload || '';
+      })
+      .addCase(authorizeAccessToIdApi.pending, (state) => {
+        state.loading = true;
+        state.error = '';
+      })
+      .addCase(authorizeAccessToIdApi.fulfilled, (state, action) => {
+        state.loading = false;
+        state.authorizeAccessToIdResponse = action.payload;
+      })
+      .addCase(authorizeAccessToIdApi.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action?.payload || '';
+      })
+      .addCase(petitionPeerReviewApi.pending, (state) => {
+        state.loading = true;
+        state.error = '';
+      })
+      .addCase(petitionPeerReviewApi.fulfilled, (state, action) => {
+        state.loading = false;
+        state.petitionPeerReviewResponse = action.payload;
+      })
+      .addCase(petitionPeerReviewApi.rejected, (state, action) => {
         state.loading = false;
         state.error = action?.payload || '';
       });

@@ -19,8 +19,9 @@ import { readBase64FromFile } from '@Services/Storage';
 import {
   getPopMessageApi,
   PopMessagePayload,
+  getServiceProvidersForIdReviewApi
 } from '@Services/Redux/Actions/GetStatusForIdentity';
-import { savePopMessageLast } from '@Services/Redux/Reducers/IdentitySlice';
+import { savePopMessageLast, setIdentitySliceError } from '@Services/Redux/Reducers/IdentitySlice';
 import { InformationOverlay } from '@Controls/InformationOverlay';
 export const AlmostThere = ({
   navigation,
@@ -38,14 +39,15 @@ export const AlmostThere = ({
   const showPeerReviewButton = useRef(false);
   const [numberOfRemaining, setNumberOfRemaining] = useState('');
   const dispatch = useDispatch<ThunkDispatch<any, any, any>>();
+  const { userDetails } = useSelector((state) => state.user);
   const {
     identityResponse,
     attributeResponse,
     popMessageResponse,
     popMessageLastResponse,
+    getServiceProvidersForIdReviewResponse,
     loading,
-    error,
-    setIdentitySliceError
+    error
   } = useSelector((state) => state.identity);
 
   useEffect(() => {
@@ -70,8 +72,8 @@ export const AlmostThere = ({
   };
 
   useEffect(() => {
-    userIdentity();
-    getIdentityData();
+   // userIdentity();
+    //getIdentityData();
   }, []);
 
   const getIdentityData = async () => {
@@ -85,16 +87,24 @@ export const AlmostThere = ({
     }
   }, [attributeResponse]);
 
-  React.useEffect(() => {
-    const unsubscribe = navigation.addListener('focus', () => {
-      const id = setInterval(popMessage, 2000);
-      setIntervalId(id);
-    });
-    return () => {
-      clearInterval(intervalId);
-      unsubscribe();
-    };
-  }, [navigation]);
+  useEffect(() => {
+    const forIdReviewHandler = Object.entries(getServiceProvidersForIdReviewResponse).length !== 0;
+    if (forIdReviewHandler) {
+        console.log('for id review list',getServiceProvidersForIdReviewResponse)
+    }
+  }, [getServiceProvidersForIdReviewResponse]);
+
+
+  // React.useEffect(() => {
+  //   const unsubscribe = navigation.addListener('focus', () => {
+  //     const id = setInterval(popMessage, 2000);
+  //     setIntervalId(id);
+  //   });
+  //   return () => {
+  //     clearInterval(intervalId);
+  //     unsubscribe();
+  //   };
+  // }, [navigation]);
 
   const popMessage = async () => {
     const popMessagePayload: PopMessagePayload = {
@@ -144,17 +154,20 @@ export const AlmostThere = ({
     }
   };
 
-  const handleOnPress = () => {
-    stopInterval();
-    if (approveStatus.current) {
-      navigation.navigate('CreatePin');
-    } else {
-    }
+  const handleOnPress = async () => {
+    console.log('clicked on peervreview',userDetails?.legalId)
+    navigation.navigate('ReviewRequest');
+   // await dispatch(getServiceProvidersForIdReviewApi(userDetails?.legalId))
+    // stopInterval();
+    // if (approveStatus.current) {
+    //   navigation.navigate('CreatePin');
+    // } else {
+    // }
   };
 
   const handleCheckStatus = () => {
-    stopInterval();
-    navigation.navigate('AlmostThereStatus');
+   stopInterval();
+   navigation.navigate('AlmostThereStatus');
   };
 
   const toggleOverlay = () => {

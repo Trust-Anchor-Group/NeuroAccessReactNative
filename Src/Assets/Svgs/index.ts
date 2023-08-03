@@ -17,3 +17,4 @@ export { CopyPastIcon } from './CopyPastIcon';
 export { ArrowDownIcon } from './ArrowDownIcon';
 export { ArrowUpIcon } from './ArrowUpIcon';
 export { InvitePeerIcon } from './InvitePeerIcon';
+export { ScannerPeerButton } from './ScannerPeerButton';

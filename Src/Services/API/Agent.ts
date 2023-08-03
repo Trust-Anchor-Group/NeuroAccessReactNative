@@ -63,7 +63,7 @@ export const AgentAPI = {
           xhttp.setRequestHeader(
             'Authorization',
             'Bearer ' +
-              'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJqdGkiOiI1TkEvR1NpenJPMGN2cVNMVjlERndGQ2tHMHRodVpncVJuNEJjeHFQL3FJPSIsImlzcyI6ImxhYi50YWdyb290LmlvIiwic3ViIjoiYW5rdXNobW1AbGFiLnRhZ3Jvb3QuaW8iLCJpYXQiOjE2OTA4NzYxNjAsImV4cCI6MTY5MDg3OTc2MH0.CAcUbUesq1XcIH4sEXwqanIQ_yj3drHZZAGbaswGZM4'
+              'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJqdGkiOiIrS2Q2WnBDZVhEandlN050c1FzdTdOSXdRSXdDb24yMkhXWG5JOHFGdjNrPSIsImlzcyI6ImxhYi50YWdyb290LmlvIiwic3ViIjoiYW5rdXNoQUBsYWIudGFncm9vdC5pbyIsImlhdCI6MTY5MDk2NjI1OSwiZXhwIjoxNjkwOTY5ODU5fQ.MHDEq5A4l0TBd8rrWp_hcLZZQHaW48yx550mMNDHwgo'
           );
 
         xhttp.send(JSON.stringify(RequestPayload));
@@ -1102,6 +1102,7 @@ export const AgentAPI = {
       const Request = {
         legalId: LegalId,
       };
+      console.log('request------',Request)
       const Response = await AgentAPI.IO.Request(
         '/Agent/Legal/GetServiceProvidersForIdReview',
         Request
@@ -1263,6 +1264,7 @@ export const AgentAPI = {
       return Response;
     },
     PetitionPeerReview: async function (
+      UserName: any,
       LocalName: any,
       Namespace: any,
       KeyId: any,
@@ -1273,7 +1275,7 @@ export const AgentAPI = {
       PetitionId: any,
       Purpose: any
     ) {
-      const UserName = AgentAPI.Account.GetSessionString('AgentAPI.UserName');
+     // const UserName = AgentAPI.Account.GetSessionString('AgentAPI.UserName');
       const s1 =
         UserName +
         ':' +

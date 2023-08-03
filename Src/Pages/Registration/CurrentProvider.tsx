@@ -289,6 +289,7 @@ export const CurrentProvider = ({
         {showScanner && (
           <View style={currentProviderStyle.qrCodeScannerContainer}>
             <QRCodeScanner
+              scannerType='currentProvider'
               toggleOverlay={toggleScannerOverlay}
               onSelect={handleQRCodeSelection}
             />
