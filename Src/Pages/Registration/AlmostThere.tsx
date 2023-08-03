@@ -47,7 +47,7 @@ export const AlmostThere = ({
     popMessageLastResponse,
     getServiceProvidersForIdReviewResponse,
     loading,
-    error
+    error,
   } = useSelector((state) => state.identity);
 
   useEffect(() => {

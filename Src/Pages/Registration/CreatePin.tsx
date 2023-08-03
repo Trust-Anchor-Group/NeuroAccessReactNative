@@ -25,6 +25,7 @@ import { useSelector } from 'react-redux';
 import { retrieveUserSession, storeUserSession } from '@Services/Storage';
 import { AgentAPI } from '../../Services/API/Agent';
 import { StackActions } from '@react-navigation/native';
+import { isEmpty } from '@Helpers/Utils';
 
 export const CreatePin = ({
   navigation,
@@ -42,7 +43,7 @@ export const CreatePin = ({
     newPin.current?.focus()
   }, [])
 
-  if (userDetails) {
+  if (!isEmpty(userDetails) && !isEmpty(identityResponse)) {
     Constants.UserDetails = userDetails;
     for (const item of identityResponse?.Identity?.property) {
       if (item?.name === 'FIRST') {
@@ -71,9 +72,7 @@ export const CreatePin = ({
     const hashedPassword = computePinHash(
       password,
       objectId,
-      Config.Host || '',
-      userDetails.userName,
-      userDetails.legalId
+      Config.Host ?? Constants.DefaultValues.Host,
     );
     return hashedPassword;
   };
@@ -84,6 +83,7 @@ export const CreatePin = ({
     const storedPassword = await retrieveUserSession(
       Constants.Authentication.PinKey
     );
+    console.log('storedPassword = ', storedPassword)
     if (hashedPassword === storedPassword) {
       alert(t('PIN.PinCreateSuccess'));
       navigation.dispatch(StackActions.replace('HomeScreen'));
@@ -271,7 +271,7 @@ export const CreatePin = ({
                         backgroundColor: themeColors.button.disableBg,
                       },
                     ]}
-                    title={t('buttonTitle.CreatePin')}
+                    title={t('buttonTitle.createPin')}
                     onPress={handleSubmit}
                   />
                 </View>

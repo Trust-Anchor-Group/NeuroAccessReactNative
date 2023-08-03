@@ -51,9 +51,9 @@ export const setSelectedDomain = createAsyncThunk(
 
 export const mobileNumberOtpVerification = createAsyncThunk(
   'domain/mobileNumberOtpVerification',
-  async ({ mobileNumber, otpValue }: any, { rejectWithValue, fulfillWithValue }) => {
+  async ({ mobileNumber, otpValue, purpose }: any, { rejectWithValue, fulfillWithValue }) => {
     try {
-      const response = await OnboardingAPI.ID.verifyNumber(mobileNumber, otpValue)
+      const response = await OnboardingAPI.ID.verifyNumber(mobileNumber, otpValue, purpose)
       let responseObj: DomainInfo = {
         Domain: response.Domain,
         Secret: response.Secret,

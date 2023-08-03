@@ -75,12 +75,7 @@ export const ChooseNeuroAccessAppContext: FC<Props> = ({
       >
         {t(item.label)}
       </TextLabel>
-      <TouchableOpacity
-        onPress={() => toggleOverlay(item)}
-        style={styles.informationLogoContainer}
-      >
-        <InformationIcon textColor={getInformationLogoColor(index)} />
-      </TouchableOpacity>
+        <InformationIcon textColor={getInformationLogoColor(index)} onPress={() => toggleOverlay(item)}/>
     </TouchableOpacity>
   );
 

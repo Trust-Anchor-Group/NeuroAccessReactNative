@@ -109,10 +109,10 @@ export const OnboardingAPI = {
         });
         return finalResponse;
     },
-    verifyNumber: async function (mobileNumber: string, code: string) {
+    verifyNumber: async function (mobileNumber: string, code: string, purpose: boolean) {
       const finalResponse = await OnboardingAPI.IO.Request(
         '/ID/VerifyNumber.ws',
-        { Nr: mobileNumber, Code: parseInt(code), Test: true },
+        { Nr: mobileNumber, Code: parseInt(code), Test: purpose },
         {}
       )
         .then((Response) => {
