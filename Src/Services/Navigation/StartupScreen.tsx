@@ -7,6 +7,7 @@ import { NetworkService } from '@Services/Network/NetworkService';
 import { Constants } from '@Helpers/Constants';
 import { VerifyPin } from './VerifyPin';
 import { AgentAPI } from '@Services/API/Agent';
+import { retrieveUserSession } from '@Services/Storage';
 
 export function StartupScreen() {
   const { isLoggedIn } = useLogin();

@@ -30,10 +30,8 @@ import { retrieveUserSession, storeUserSession } from '@Services/Storage';
 import { StackActions } from '@react-navigation/native';
 import { isEmpty, replaceWithIntValue } from '@Helpers/Utility/Utils';
 import CountdownTimer from '@Helpers/Utility/LoginAuditor/CountDownTimer';
-import { clearLocalStorage } from '@Services/Storage';
 import EncryptedStorage from 'react-native-encrypted-storage';
 import Space from '../../Controls/Space';
-import CountDown from 'react-native-countdown-component';
 
 const PIN_BLOCK_THRESHOLD = 3; 
 // const BLOCK_TIME = 60 * 60 * 1000; // 1 hour in milliseconds Actually
@@ -51,7 +49,6 @@ export const VerifyPin = () => {
   const [error, setError] = React.useState('');
 
   React.useEffect(() => {}, [setRemainingTime]);
-
   const getBlockedTime = async () => {
     return new Promise(async (resolve) => {
       const attemptsValue = await EncryptedStorage.getItem(
@@ -293,12 +290,12 @@ export const VerifyPin = () => {
           {t('PIN.UnlockDescription')}
         </TextLabel>
 
-        {/* {remainingTime !== 0 && ( */}
-          {/* <View>
+        {remainingTime !== 0 && (
+          <View>
             <Space />
             <CountdownTimer targetTime={new Date().getTime() + remainingTime} />
-          </View> */}
-        {/* )} */}
+          </View> 
+        )}
 
         {remainingTime === 0 && (
           <ScrollView showsVerticalScrollIndicator={false}>
