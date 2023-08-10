@@ -1,4 +1,5 @@
 import { Platform } from 'react-native';
+import { Constants } from '../Constants';
 let CryptoJS = require('crypto-js');
 
 export function computePinHash(
@@ -67,3 +68,57 @@ const convertLocalTimeToUTCTime = (dateString: any) => {
     date.getUTCSeconds()
   ).toISOString();
 };
+
+export function replaceWithIntValue(inputString: string, intValue: number): string {
+  return inputString.replace(/\{0\}/g, intValue.toString());
+}
+
+
+class Instance {
+  static loginAuditor = {
+    async GetEarliestLoginOpportunity(
+      endpoint: string,
+      protocol: string
+    ): Promise<date | null> {
+      // Implement the logic to get the earliest login opportunity
+      // and return the DateTime in string format (or null if none found).
+      return null;
+    }
+  };
+}
+
+// Instantiate the UiSerializer (assuming it's a class)
+// const Ui = new UiSerializer();
+
+async function CheckUserBlocking() {
+  const DateTimeForLogin: Date | null =
+    await Instance.loginAuditor.GetEarliestLoginOpportunity(
+      Constants.Pin.RemoteEndpoint,
+      Constants.Pin.Protocol
+    );
+
+  if (DateTimeForLogin) {
+    let MessageAlert: string;
+
+    if (DateTimeForLogin === Constants.Pin.DateTimeMaxValue) {
+      // Adjust the condition to match the DateTime.MaxValue representation
+      MessageAlert = 'Pin.PinIsInvalidAplicationBlockedForever';
+    } else {
+      const LocalDateTime = new Date(DateTimeForLogin).toLocaleString();
+      const DateString = LocalDateTime;
+
+      if (DateTimeForLogin === Date) {
+        MessageAlert = 'Pin.PinIsInvalidAplicationBlocked'.replace("{0}", DateString);
+      } else if (
+        DateTimeForLogin ===
+        new Date(Date.now() + 86400000)
+      ) {
+        MessageAlert = 'Pin.PinIsInvalidAplicationBlockedTillTomorrow'.replace("{0}", DateString);
+      } else {
+        MessageAlert = 'Pin.PinIsInvalidAplicationBlocked'.replace("{0}", DateString);
+      }
+    }
+
+    return MessageAlert
+  }
+}

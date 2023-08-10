@@ -41,7 +41,7 @@ import {
   clearSendVerificationCodeResponse,
   setUserSliceError,
 } from '@Services/Redux/Reducers/UserSlice';
-import { isEmpty } from '@Helpers/Utils';
+import { isEmpty } from '@Helpers/Utility/Utils';
 
 export const EnterMobileNumber = ({ navigation }: StackScreenProps<{}>) => {
   const { t } = useTranslation();

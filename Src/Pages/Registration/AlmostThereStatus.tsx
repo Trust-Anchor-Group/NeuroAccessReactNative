@@ -27,7 +27,7 @@ import {
   PopMessagePayload,
 } from '@Services/Redux/Actions/GetStatusForIdentity';
 import { savePopMessageLast } from '@Services/Redux/Reducers/IdentitySlice';
-import { convertUTCToLocalTime } from '@Helpers/Utils';
+import { convertUTCToLocalTime } from '@Helpers/Utility/Utils';
 
 export const AlmostThereStatus = ({
   navigation,

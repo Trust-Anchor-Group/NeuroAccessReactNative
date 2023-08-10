@@ -3,7 +3,7 @@ import { AgentAPI } from '@Services/API/Agent';
 import { OnboardingAPI } from '@Services/API/OnboardingApi';
 import { ContextType } from '@Services/Data';
 import { DomainInfo } from '../Reducers/DomainSlice';
-import { isEmpty } from '@Helpers/Utils';
+import { isEmpty } from '@Helpers/Utility/Utils';
 
 export const getDomainDetails = createAsyncThunk(
   'user/getDomainDetails',

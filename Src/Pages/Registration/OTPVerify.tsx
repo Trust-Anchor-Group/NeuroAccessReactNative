@@ -9,12 +9,12 @@ import {
   ActionButton,
   TextLabel,
   TextLabelVariants,
+  Loader,
 } from '@Controls/index';
 import { GlobalStyle as styles, EnterOTPVerifyStyle } from '@Pages/Styles';
 import { Logo } from '@Assets/Svgs';
 import { useTranslation } from 'react-i18next';
 import { ThemeContext } from '@Theme/Provider';
-import { Loader } from '@Controls/index';
 import { mobileNumberOtpVerification } from '@Services/Redux/Actions/GetDomainDetails';
 import { useSelector, useDispatch } from 'react-redux';
 import { ThunkDispatch } from '@reduxjs/toolkit';
@@ -25,7 +25,7 @@ import {
   saveKeyId,
 } from '@Services/Redux/Actions/GetUserDetails';
 import { setUserSliceError } from '@Services/Redux/Reducers/UserSlice';
-import { isEmpty } from '@Helpers/Utils';
+import { isEmpty } from '@Helpers/Utility/Utils';
 
 type Props = StackScreenProps<{}>;
 
