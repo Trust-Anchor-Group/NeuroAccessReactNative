@@ -2,6 +2,7 @@ import { TextLabel, TextLabelVariants } from '@Controls/TextLabel';
 import { ThemeContext } from '@Theme/Provider';
 import React, { useState, useEffect, useContext } from 'react';
 import { View, Text } from 'react-native';
+import { CountDownTimerStyle } from './Styles';
 
 const CountdownTimer = ({ targetTime }) => {
   const [remainingTime, setRemainingTime] = useState(0);
@@ -36,23 +37,24 @@ const CountdownTimer = ({ targetTime }) => {
   const seconds = Math.floor((remainingTime % (1000 * 60)) / 1000);
 
   return (
-    <View
-      style={{
-        justifyContent: 'center',
-        alignItems: 'center',
-        height: 60,
-      }}
-    >
+    <View style={CountDownTimerStyle(themeColors).container}>
       {show ? (
-        <View
-          style={[{borderRadius: 10, padding: 10, backgroundColor: themeColors?.button?.bg }]}
-        >
-          <TextLabel style={{color: 'white'}} variant={TextLabelVariants.HEADER}><Text style={{color: 'white'}}>{`${padNumber(
-            hours
-          )}:${padNumber(minutes)}:${padNumber(seconds)}`}</Text></TextLabel>
-          <Text style={{color: 'orange'}}>{`    H    :    M   :    S    `}</Text>
+        <View style={CountDownTimerStyle(themeColors).timmer}>
+          <TextLabel
+            style={{ color: 'white' }}
+            variant={TextLabelVariants.HEADER}
+          >
+            <Text style={{ color: 'white' }}>{`${padNumber(hours)}:${padNumber(
+              minutes
+            )}:${padNumber(seconds)}`}</Text>
+          </TextLabel>
+          <Text
+            style={{ color: 'orange' }}
+          >{`    H    :    M   :    S    `}</Text>
         </View>
-      ) : <></>}
+      ) : (
+        <></>
+      )}
     </View>
   );
 };
