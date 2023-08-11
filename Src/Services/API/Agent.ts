@@ -8,7 +8,7 @@ import hmacSHA256 from 'crypto-js/hmac-sha256';
 import Base64 from 'crypto-js/enc-base64';
 import Config from 'react-native-config';
 
-const Seconds = 60 * 60; // 1 hour
+const Seconds = 1 * 60; // 1 hour
 
 export const AgentAPI = {
   IO: {
@@ -328,7 +328,17 @@ export const AgentAPI = {
       } else if (NewToken) {
         AgentAPI.IO.Log('Saving new session token.');
         await this.SaveSessionToken(Token, Seconds, Math.round(Seconds / 2));
-      } else AgentAPI.IO.Log('Obsolete session token.');
+      } else {
+        AgentAPI.IO.Log('Obsolete session token.');
+        const username = await this.GetSessionString('AgentAPI.UserName');
+        const password = await this.GetSessionString('AgentAPI.Password');
+        try {
+          const response = await AgentAPI.Account.Login(username, password, Seconds);
+          AgentAPI.IO.Log(`Silent login Response: ${JSON.stringify(response)}`);
+        } catch (error) {
+          AgentAPI.IO.Log(`Error: ${JSON.stringify(error)}`);
+        }        
+      }
     },
     SaveSessionToken: async function (Token: any, Seconds: number, Next: number) {
       const OldTimer = await this.GetSessionInt('AgentAPI.RefreshTimer');
@@ -398,6 +408,7 @@ export const AgentAPI = {
         seconds: Seconds,
       })
       this.SetSessionString('AgentAPI.UserName', UserName);
+      this.SetSessionString('AgentAPI.Password', Password);
       this.SaveSessionToken(Response?.jwt, Seconds, Math.round(Seconds / 2));
       return Response;
     },
