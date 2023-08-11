@@ -25,6 +25,8 @@ export const AgentAPI = {
             if (xhttp.status === 200) {
               Response = JSON.parse(Response);
               SetResult(Response);
+            } else if (xhttp.status === 401) {
+              return
             } else {
               var Alternatives = [];
               var i = 1;
