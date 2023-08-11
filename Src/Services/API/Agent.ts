@@ -8,7 +8,7 @@ import hmacSHA256 from 'crypto-js/hmac-sha256';
 import Base64 from 'crypto-js/enc-base64';
 import Config from 'react-native-config';
 
-const Seconds = 1 * 60; // 1 hour
+const Seconds = 60 * 60; // 1 hour
 
 export const AgentAPI = {
   IO: {
