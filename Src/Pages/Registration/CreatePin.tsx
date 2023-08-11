@@ -25,7 +25,7 @@ import { useSelector } from 'react-redux';
 import { retrieveUserSession, storeUserSession } from '@Services/Storage';
 import { AgentAPI } from '../../Services/API/Agent';
 import { StackActions } from '@react-navigation/native';
-import { isEmpty } from '@Helpers/Utils';
+import { isEmpty } from '@Helpers/Utility/Utils';
 
 export const CreatePin = ({
   navigation,

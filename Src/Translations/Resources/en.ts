@@ -229,6 +229,11 @@ export default {
     ConfirmPinRequired: 'Confirm Pin is required!',
     PinDontMatched: 'Your pin do not match!',
     UnlockPinRequired: 'Unlock Pin is required!',
+    LocalizePinIsInvalid: 'Looks up a localized string similar to PIN is invalid. You have {0} remaining attempts..',
+    // PinIsInvalidAplicationBlocked: 'Looks up a localized string similar to PIN attempts entering is exceded. Your application has been blocked till {0}..',
+    // PinIsInvalidAplicationBlockedForever: 'Looks up a localized string similar to PIN attempts entering is exceded. Your application has been blocked forever.',
+    // PinIsInvalidAplicationBlockedForOneWeek: "Looks up a localized string similar to PIN attempts entering is exceded. Your application has been blocked for one week.",
+    // PinIsInvalidAplicationBlockedTillTomorrow: 'Looks up a localized string similar to PIN attempts entering is exceded. Your application has been blocked till tomorrow at {0}..'
   },
   Error: {
     ErrorTitle: 'Something went wrong!'

@@ -4,20 +4,23 @@ import { AuthStack } from './Navigation';
 import { useLogin } from './LoginProvider';
 import { Splash } from '@Pages/Splash';
 import { NetworkService } from '@Services/Network/NetworkService';
-import { retrieveUserSession } from '@Services/Storage';
 import { Constants } from '@Helpers/Constants';
-import { isEmpty } from '@Helpers/Utils';
+import { VerifyPin } from './VerifyPin';
+import { AgentAPI } from '@Services/API/Agent';
+import { retrieveUserSession } from '@Services/Storage';
 
 export function StartupScreen() {
   const { isLoggedIn } = useLogin();
   const [appLoading, setAppLoading] = useState(true);
+  const storedPassword = React.useRef(false);
   const initialRoute = React.useRef('')
 
   
   useEffect(() => {
+    AgentAPI.Account.RestartActiveSession();
     const initialSetup = async () => {
-      const storedPassword = await retrieveUserSession(Constants.Authentication.PinKey);      
-      initialRoute.current = !isEmpty(storedPassword) ? 'VerifyPin' : 'ChooseAccoutType';  
+      storedPassword.current = await retrieveUserSession(Constants.Authentication.PinKey); 
+      initialRoute.current = storedPassword.current ? 'VerifyPin' : 'ChooseAccoutType';  
       setAppLoading(false);
     }
     setTimeout(() => {
@@ -25,10 +28,15 @@ export function StartupScreen() {
     }, 100);
   }, [appLoading]);
 
+  useEffect(() => {}, [storedPassword.current])
+
+  if (!appLoading && storedPassword.current) {
+    return <VerifyPin />
+  }
   if (appLoading) {
     return <Splash />;
   }
-  
+
   return (
     <View style={styles.container}>
       <NetworkService />

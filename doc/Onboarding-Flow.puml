@@ -99,6 +99,8 @@ Project starts 2023-06-01
 [Understanding for NeuroApp setup of Appstore and Playstore to release app-P] is 100% complete
 [Verify Pin when user comes to the app-P] is 100% complete
 [Lock user when user fails to verify pin-P] is 80% complete
+[Blur background issue in android-A] is 0% complete
+[Refresh Token, and User Details inside AGENT API-P] is 0% complete
 
 
 @endgantt

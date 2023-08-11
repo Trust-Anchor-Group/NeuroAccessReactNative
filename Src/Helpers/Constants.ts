@@ -182,6 +182,49 @@ export const Constants = {
   },
   LegalIdentity: <LegalIdentity>{},
   DefaultValues: {
-    Host: 'lab.tagroot.io'
-  }
+    Host: 'lab.tagroot.io',
+  },
+  Pin: {
+    // Possible time of inactivity
+    PossibleInactivityInMinutes: 5,
+
+    // Maximum pin entering attempts
+    MaxPinAttempts: 3,
+
+    /// <summary>
+    /// First Block in hours after 3 attempts
+    /// </summary>
+    FirstBlockInHours:1,
+    
+    /// <summary>
+    /// Second Block in hours after 3 attempts
+    /// </summary>
+    SecondBlockInHours: 24,
+    
+    /// <summary>
+    /// Third Block in hours after 3 attempts
+    /// </summary>
+    ThirdBlockInHours: 7*24,
+    
+    // Key for pin attempt counter
+    CurrentPinAttemptCounter: 'CurrentPinAttemptCounter',
+
+    // Log Object ID
+    LogAuditorObjectID: 'LogAuditorObjectID',
+
+    // Endpoint for LogAuditor
+    RemoteEndpoint: 'local',
+
+    // Protocol for LogAuditor
+    Protocol: 'local',
+
+    // Reason for LogAuditor
+    Reason: 'pinEnteringFailure',
+    
+    DateTimeMaxValue: '9999-12-31T23:59:59.9999999Z',
+
+    EnterAttemptsKey: 'Attempts',
+
+    RemainingTime: 'RemainingTime'
+  },
 };

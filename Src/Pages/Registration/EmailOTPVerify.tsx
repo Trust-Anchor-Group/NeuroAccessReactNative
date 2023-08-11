@@ -23,7 +23,7 @@ import {
   createAccountUsingEmail,
 } from '@Services/Redux/Actions/GetUserDetails';
 import { setUserSliceError } from '@Services/Redux/Reducers/UserSlice';
-import { isEmpty } from '@Helpers/Utils';
+import { isEmpty } from '@Helpers/Utility/Utils';
 
 type Props = StackScreenProps<{}>;
 
