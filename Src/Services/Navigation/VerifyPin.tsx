@@ -117,8 +117,8 @@ export const VerifyPin = () => {
           }
         }
       );
-      checkIfUserAlreadyBlocked();
     };
+    checkIfUserAlreadyBlocked();
   }, []);
 
   const CheckPinAndUnblockUser = async (Pin: string) => {
