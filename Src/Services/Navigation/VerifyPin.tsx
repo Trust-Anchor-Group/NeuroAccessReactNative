@@ -29,7 +29,7 @@ import {
 import { retrieveUserSession, storeUserSession } from '@Services/Storage';
 import { StackActions } from '@react-navigation/native';
 import { isEmpty, replaceWithIntValue } from '@Helpers/Utility/Utils';
-import CountdownTimer from '@Helpers/Utility/LoginAuditor/CountDownTimer';
+import CountdownTimer from '@Controls/CountDownTimer';
 import EncryptedStorage from 'react-native-encrypted-storage';
 import Space from '../../Controls/Space';
 
