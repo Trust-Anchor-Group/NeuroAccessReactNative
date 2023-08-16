@@ -26,7 +26,8 @@ export const AgentAPI = {
               Response = JSON.parse(Response);
               SetResult(Response);
             } else if (xhttp.status === 401) {
-              return
+              AgentAPI.IO.Log(Response)
+              SetResult('');
             } else {
               var Alternatives = [];
               var i = 1;
