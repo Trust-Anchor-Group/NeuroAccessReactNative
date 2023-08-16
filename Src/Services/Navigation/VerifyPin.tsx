@@ -1,4 +1,4 @@
-import React, { useContext, useRef } from 'react';
+import React, { useContext, useRef, useState } from 'react';
 import {
   View,
   ScrollView,
@@ -26,17 +26,174 @@ import {
   computePinHash,
   unlockAppValidationSchema,
 } from '@Helpers/index';
-import { retrieveUserSession } from '@Services/Storage';
+import { retrieveUserSession, storeUserSession } from '@Services/Storage';
 import { StackActions } from '@react-navigation/native';
-import Space from '@Controls/Space';
+import { isEmpty, replaceWithIntValue } from '@Helpers/Utility/Utils';
+import CountdownTimer from '@Controls/CountDownTimer';
+import EncryptedStorage from 'react-native-encrypted-storage';
+import Space from '../../Controls/Space';
 
-export const VerifyPin = ({
-  navigation,
-}: StackScreenProps<{ Profile: any }>) => {
+const PIN_BLOCK_THRESHOLD = 3; 
+// const BLOCK_TIME = 60 * 60 * 1000; // 1 hour in milliseconds Actually
+const OneHourInMiliseconds = 60 * 60 * 1000;
+
+export const VerifyPin = () => {
   const { t } = useTranslation();
+  const [remainingTime, setRemainingTime] = React.useState(0);
+  const blockedMessage = React.useRef('');
+  const [loading, isLoading] = useState(false);
+
   const { themeColors } = useContext(ThemeContext);
   const formikRef = useRef();
   const confirmPin = useRef<TextInput>(null);
+  const [error, setError] = React.useState('');
+
+  React.useEffect(() => {}, [setRemainingTime]);
+  const getBlockedTime = async () => {
+    return new Promise(async (resolve) => {
+      const attemptsValue = await EncryptedStorage.getItem(
+        Constants.Pin.EnterAttemptsKey
+      );
+
+      if (
+        parseInt(attemptsValue) % PIN_BLOCK_THRESHOLD === 0 &&
+        parseInt(attemptsValue) === PIN_BLOCK_THRESHOLD
+      ) {
+        resolve(Constants.Pin.FirstBlockInHours * OneHourInMiliseconds);
+      } else if (
+        parseInt(attemptsValue) % (PIN_BLOCK_THRESHOLD * 2) === 0 &&
+        parseInt(attemptsValue) === PIN_BLOCK_THRESHOLD * 2
+      ) {
+        resolve(Constants.Pin.SecondBlockInHours * OneHourInMiliseconds);
+      } else if (
+        parseInt(attemptsValue) % (PIN_BLOCK_THRESHOLD * 3) === 0 &&
+        parseInt(attemptsValue) === PIN_BLOCK_THRESHOLD * 3
+      ) {
+        resolve(Constants.Pin.ThirdBlockInHours * OneHourInMiliseconds);
+      } else if (parseInt(attemptsValue) > PIN_BLOCK_THRESHOLD * 3) {
+        resolve(new Date(Constants.Pin.DateTimeMaxValue).getTime());
+      } else resolve(0);
+    });
+  };
+
+  React.useEffect(() => {
+    const checkIfUserAlreadyBlocked = async () => {
+      isLoading(true);
+      EncryptedStorage.getItem(Constants.Pin.RemainingTime).then(
+        async (storedTime) => {
+          if (storedTime) {
+            const blockedTime = await getBlockedTime();
+            const timeDiff = new Date().getTime() - parseInt(storedTime);
+            const newRemainingTime = Math.max(0, blockedTime - timeDiff);
+            setRemainingTime(newRemainingTime);
+            isLoading(false);
+            if (newRemainingTime > 0) {
+              const blockedUpto = new Date(
+                new Date().getTime() + newRemainingTime
+              );
+              blockedMessage.current = t(
+                'PIN.PinIsInvalidAplicationBlocked'
+              ).replace('{0}', `${blockedUpto}`);
+              // Start a timer to update remaining time
+              const interval = setInterval(() => {
+                const timeDiff = new Date().getTime() - parseInt(storedTime);
+                const updatedRemainingTime = Math.max(
+                  0,
+                  blockedTime - timeDiff
+                );
+                setRemainingTime(updatedRemainingTime);
+
+                if (updatedRemainingTime <= 0) {
+                  clearInterval(interval);
+                  EncryptedStorage.removeItem(Constants.Pin.RemainingTime);
+                  blockedMessage.current = '';
+                }
+              }, 1000);
+            } else {
+              EncryptedStorage.removeItem(Constants.Pin.RemainingTime);
+              blockedMessage.current = '';
+              setRemainingTime(0);
+            }
+          }
+        }
+      );
+    };
+    checkIfUserAlreadyBlocked();
+  }, []);
+
+  const CheckPinAndUnblockUser = async (Pin: string) => {
+    const hashedPassword = await hashPassword(Pin);
+    const storedPassword = await retrieveUserSession(
+      Constants.Authentication.PinKey
+    );
+
+    if (hashedPassword === storedPassword) {
+      // Reset attempts and remaining time
+      EncryptedStorage.removeItem(Constants.Pin.EnterAttemptsKey);
+      EncryptedStorage.removeItem(Constants.Pin.RemainingTime);
+      blockedMessage.current = '';
+      setRemainingTime(0);
+      navigation.dispatch(StackActions.replace('ChooseAccoutType'));
+    } else {
+      const getAttempts = await EncryptedStorage.getItem(
+        Constants.Pin.EnterAttemptsKey
+      );
+      let updatedAttempts = 1;
+      if (!isEmpty(getAttempts)) {
+        updatedAttempts = parseInt(getAttempts) + 1;
+      }
+
+      EncryptedStorage.setItem(
+        Constants.Pin.EnterAttemptsKey,
+        updatedAttempts.toString()
+      );
+
+      const remainingAttempts =
+        PIN_BLOCK_THRESHOLD - (updatedAttempts % PIN_BLOCK_THRESHOLD);
+      if (updatedAttempts % PIN_BLOCK_THRESHOLD === 0) {
+        const currentTime = new Date().getTime();
+        EncryptedStorage.setItem(
+          Constants.Pin.RemainingTime,
+          currentTime.toString()
+        );
+        const blockedTime = await getBlockedTime();
+        const blockedUpto = new Date(new Date().getTime() + blockedTime);
+        blockedMessage.current = t('PIN.PinIsInvalidAplicationBlocked').replace(
+          '{0}',
+          `${blockedUpto}`
+        );
+        if (blockedTime) {
+          setRemainingTime(blockedTime);
+          const interval = setInterval(() => {
+            EncryptedStorage.getItem(Constants.Pin.RemainingTime).then(
+              (storedTime) => {
+                if (storedTime) {
+                  const timeDiff =
+                    new Date().getTime() - parseInt(storedTime, 10);
+                  const updatedRemainingTime = Math.max(
+                    0,
+                    blockedTime - timeDiff
+                  );
+                  setRemainingTime(updatedRemainingTime);
+
+                  if (updatedRemainingTime <= 0) {
+                    clearInterval(interval);
+                    EncryptedStorage.removeItem(Constants.Pin.RemainingTime);
+                    blockedMessage.current = '';
+                  }
+                } else {
+                  blockedMessage.current = '';
+                  setRemainingTime(0)
+                }
+              }
+            );
+          }, blockedTime);
+        }
+      } else {
+        alert(t('PIN.PinIsInvalid').replace('{0}', `${remainingAttempts}`));
+      }
+    }
+  };
 
   const hashPassword = async (password: string) => {
     const objectId = await retrieveUserSession(
@@ -51,15 +208,25 @@ export const VerifyPin = ({
   };
 
   const handleFormSubmit = async (values: any) => {
-    const hashedPassword = await hashPassword(values.confirmPin);
-    const storedPassword = await retrieveUserSession(
-      Constants.Authentication.PinKey
+    EncryptedStorage.getItem(Constants.Pin.RemainingTime).then(
+      async (storedTime) => {
+        if (storedTime) {
+          const blockedTime = await getBlockedTime();
+          const timeDiff = new Date().getTime() - parseInt(storedTime);
+          const newRemainingTime = Math.max(0, blockedTime - timeDiff);
+          setRemainingTime(newRemainingTime);
+          const blockedUpto = new Date(new Date().getTime() + newRemainingTime);
+          alert(
+            t('PIN.PinIsInvalidAplicationBlocked').replace(
+              '{0}',
+              `${blockedUpto}`
+            )
+          );
+        } else {
+          CheckPinAndUnblockUser(values.confirmPin);
+        }
+      }
     );
-    if (hashedPassword === storedPassword) {
-      navigation.dispatch(StackActions.replace('ChooseAccoutType'));
-    } else {
-      alert(t('PIN.WrongPin'));
-    }
   };
 
   const onBackClick = () => {
@@ -123,104 +290,119 @@ export const VerifyPin = ({
           {t('PIN.UnlockDescription')}
         </TextLabel>
 
-        <ScrollView showsVerticalScrollIndicator={false}>
-          <Formik
-            innerRef={formikRef}
-            initialValues={{
-              confirmPin: '',
-            }}
-            validationSchema={unlockAppValidationSchema}
-            onSubmit={handleFormSubmit}
-          >
-            {({
-              handleChange,
-              handleBlur,
-              handleSubmit,
-              values,
-              errors,
-              touched,
-              setFieldTouched,
-              isValid,
-            }) => (
-              <View style={TellUsAboutYouStyle(themeColors).formView}>
-                <TextLabel
-                  style={TellUsAboutYouStyle(themeColors).label}
-                  variant={TextLabelVariants.INPUTLABEL}
-                >
-                  {t('Enter pin')}
-                </TextLabel>
-                <NeuroTextInput
-                  neuroStyle={[
-                    TellUsAboutYouStyle(themeColors).textInput,
-                    borderColor(
-                      touched.confirmPin,
-                      errors.confirmPin,
-                      values.confirmPin
-                    ),
-                  ]}
-                  textAlign="center"
-                  secureTextEntry
-                  placeholder={t('PIN.EnterPinPlaceholder')}
-                  placeholderTextColor={themeColors.tellUsAboutYou.placeHolder}
-                  value={values.confirmPin}
-                  onChangeText={handleChange('confirmPin')}
-                  onBlur={() => {
-                    handleBlur('confirmPin');
-                    setFieldTouched('confirmPin', false);
-                  }}
-                  onFocus={() => setFieldTouched('confirmPin', true)}
-                  isError={errorIcon(touched.confirmPin, errors.confirmPin)}
-                  errorStyle={TellUsAboutYouStyle(themeColors).errorText}
-                  autoCapitalize="none"
-                  returnKeyType="next"
-                  keyboardType="default"
-                  ref={confirmPin}
-                  onSubmitEditing={() => {
-                    confirmPin.current?.focus();
-                  }}
-                />
-                {errors.confirmPin && (
+        {remainingTime !== 0 && (
+          <View>
+            <Space />
+            <CountdownTimer targetTime={new Date().getTime() + remainingTime} />
+          </View> 
+        )}
+
+        {remainingTime === 0 && (
+          <ScrollView showsVerticalScrollIndicator={false}>
+            <Formik
+              innerRef={formikRef}
+              initialValues={{
+                confirmPin: '',
+              }}
+              validationSchema={unlockAppValidationSchema}
+              onSubmit={handleFormSubmit}
+            >
+              {({
+                handleChange,
+                handleBlur,
+                handleSubmit,
+                values,
+                errors,
+                touched,
+                setFieldTouched,
+                isValid,
+              }) => (
+                <View style={TellUsAboutYouStyle(themeColors).formView}>
                   <TextLabel
-                    variant={TextLabelVariants.XSMALL}
-                    style={TellUsAboutYouStyle(themeColors).error}
+                    style={TellUsAboutYouStyle(themeColors).label}
+                    variant={TextLabelVariants.INPUTLABEL}
                   >
-                    {t(errors.confirmPin)}
+                    {t('Enter pin')}
                   </TextLabel>
-                )}
-
-                <Space />
-
-                <ActionButton
-                  disabled={!isValid}
-                  textStyle={[TellUsAboutYouStyle(themeColors).sendText]}
-                  buttonStyle={[
-                    TellUsAboutYouStyle(themeColors).button,
-                    !isValid && {
-                      backgroundColor: themeColors.button.disableBg,
-                    },
-                  ]}
-                  title={t('buttonTitle.unlock')}
-                  onPress={handleSubmit}
-                />
-
-                {/* <View style={TellUsAboutYouStyle(themeColors).actionButtonContainer}>
-                  <ActionButton
-                    disabled={!isValid}
-                    textStyle={[TellUsAboutYouStyle(themeColors).sendText]}
-                    buttonStyle={[
-                      TellUsAboutYouStyle(themeColors).button,
-                      !isValid && {
-                        backgroundColor: themeColors.button.disableBg,
-                      },
+                  <NeuroTextInput
+                    neuroStyle={[
+                      TellUsAboutYouStyle(themeColors).textInput,
+                      borderColor(
+                        touched.confirmPin,
+                        errors.confirmPin,
+                        values.confirmPin
+                      ),
                     ]}
-                    title={t('buttonTitle.unlock')}
-                    onPress={handleSubmit}
+                    textAlign="center"
+                    secureTextEntry
+                    placeholder={t('PIN.EnterPinPlaceholder')}
+                    placeholderTextColor={
+                      themeColors.tellUsAboutYou.placeHolder
+                    }
+                    value={values.confirmPin}
+                    onChangeText={handleChange('confirmPin')}
+                    onBlur={() => {
+                      handleBlur('confirmPin');
+                      setFieldTouched('confirmPin', false);
+                    }}
+                    onFocus={() => setFieldTouched('confirmPin', true)}
+                    isError={errorIcon(touched.confirmPin, errors.confirmPin)}
+                    errorStyle={TellUsAboutYouStyle(themeColors).errorText}
+                    autoCapitalize="none"
+                    returnKeyType="next"
+                    keyboardType="default"
+                    ref={confirmPin}
+                    onSubmitEditing={() => {
+                      confirmPin.current?.focus();
+                    }}
                   />
-                </View> */}
-              </View>
-            )}
-          </Formik>
-        </ScrollView>
+                  {errors.confirmPin && (
+                    <TextLabel
+                      variant={TextLabelVariants.XSMALL}
+                      style={TellUsAboutYouStyle(themeColors).error}
+                    >
+                      {t(errors.confirmPin)}
+                    </TextLabel>
+                  )}
+                  {error && (
+                    <TextLabel
+                      variant={TextLabelVariants.XSMALL}
+                      style={TellUsAboutYouStyle(themeColors).error}
+                    >
+                      {error}
+                    </TextLabel>
+                  )}
+
+                  <View
+                    style={
+                      TellUsAboutYouStyle(themeColors).actionButtonContainer
+                    }
+                  >
+                    <ActionButton
+                      disabled={!isValid}
+                      textStyle={[TellUsAboutYouStyle(themeColors).sendText]}
+                      buttonStyle={[
+                        TellUsAboutYouStyle(themeColors).button,
+                        !isValid && {
+                          backgroundColor: themeColors.button.disableBg,
+                        },
+                      ]}
+                      title={t('buttonTitle.unlock')}
+                      onPress={handleSubmit}
+                    />
+                  </View>
+                </View>
+              )}
+            </Formik>
+          </ScrollView>
+        )}
+        {remainingTime !== 0 && (
+          <View style={{ margin: 20 }}>
+            <TextLabel variant={TextLabelVariants.DESCRIPTION}>
+              {blockedMessage.current}
+            </TextLabel>
+          </View>
+        )}
       </KeyboardAvoidingView>
       <NavigationHeader
         hideBackAction={true}

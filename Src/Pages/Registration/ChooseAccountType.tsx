@@ -19,7 +19,8 @@ import { ThemeContext } from '@Theme/Provider/ThemeContext';
 import { InformationOverlay } from '@Controls/InformationOverlay';
 import { selectedPupose } from '@Services/Redux/Actions/GetUserDetails';
 import { StackActions } from '@react-navigation/native';
-import { isEmpty } from '@Helpers/Utils';
+import { isEmpty } from '@Helpers/Utility/Utils';
+
 export const ChooseAccountType = ({
   navigation,
 }: StackScreenProps<{ Profile: any }>) => {

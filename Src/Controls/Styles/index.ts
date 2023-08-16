@@ -12,3 +12,4 @@ export { NeuroTextInputStyle } from './NeuroTextInputStyle';
 export { BottomSheetStyles } from './BottomSheetStyle';
 export { AlmostStatusLabelStyle } from './AlmostStatusLabelStyle';
 export { AlmostTechnicalLabelStyle } from './AlmostTechnicalLabelStyle';
+export { CountDownTimerStyle } from './CountDownTimerStyle';

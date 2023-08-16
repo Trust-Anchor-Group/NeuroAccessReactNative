@@ -8,7 +8,7 @@ import hmacSHA256 from 'crypto-js/hmac-sha256';
 import Base64 from 'crypto-js/enc-base64';
 import Config from 'react-native-config';
 
-const Seconds = 3500;
+const Seconds = 60 * 60; // 1 hour
 
 export const AgentAPI = {
   IO: {
@@ -25,6 +25,9 @@ export const AgentAPI = {
             if (xhttp.status === 200) {
               Response = JSON.parse(Response);
               SetResult(Response);
+            } else if (xhttp.status === 401) {
+              AgentAPI.IO.Log(Response)
+              SetResult('');
             } else {
               var Alternatives = [];
               var i = 1;
@@ -68,6 +71,7 @@ export const AgentAPI = {
 
         xhttp.send(JSON.stringify(RequestPayload));
       });
+    
       return await Request;
     },
     GetRequestWithDomain: async function (
@@ -270,8 +274,8 @@ export const AgentAPI = {
     RemoveSessionValue: async function (Name: string) {
       return await removeUserSession(Name);
     },
-    GetSessionInt: function (Name: any) {
-      const s = this.GetSessionString(Name);
+    GetSessionInt: async function (Name: any) {
+      const s = await this.GetSessionString(Name);
       if (s) return parseInt(s);
       else return null;
     },
@@ -283,29 +287,32 @@ export const AgentAPI = {
       AgentAPI.Account.RemoveSessionValue('AgentAPI.RefreshTimerElapses');
       AgentAPI.Account.RemoveSessionValue('AgentAPI.RefreshTimerExpires');
 
-      const Seconds = AgentAPI.Account.GetSessionInt('AgentAPI.Seconds');
-      if (Seconds) AgentAPI.Account.Refresh(Seconds, true);
+      const Seconds = await AgentAPI.Account.GetSessionInt('AgentAPI.Seconds');
+      console.log('---RefreshToken---', Seconds)
+      if (Seconds) await AgentAPI.Account.Refresh(Seconds, true);
     },
-    RestartActiveSession: function () {
-      const Token = this.GetSessionString('AgentAPI.Token');
-      const Seconds = this.GetSessionInt('AgentAPI.Seconds');
+    RestartActiveSession: async function () {
+      const Token = await this.GetSessionString('AgentAPI.Token');
+      const Seconds = await this.GetSessionInt('AgentAPI.Seconds');
+      console.log(`RestartActiveSession Token=${Token} Seconds=${Seconds}`)
 
       if (Token && Seconds) {
         AgentAPI.IO.Log('Checking last session.');
         this.CheckSessionToken(Token, Seconds, false);
       } else AgentAPI.IO.Log('No session found.');
     },
-    CheckSessionToken: function (Token: any, Seconds: number, NewToken: any) {
-      const OldTimer = this.GetSessionInt('AgentAPI.RefreshTimer');
-      const Elapses = this.GetSessionInt('AgentAPI.RefreshTimerElapses');
-      const Expires = this.GetSessionInt('AgentAPI.RefreshTimerExpires');
+    CheckSessionToken: async function (Token: any, Seconds: number, NewToken: any) {
+      console.log('--CheckSessionToken--', ' Token = ', Token, ' Seconds = ', Seconds, ' NewToken = ', NewToken);
+      const OldTimer = await this.GetSessionInt('AgentAPI.RefreshTimer');
+      const Elapses = await this.GetSessionInt('AgentAPI.RefreshTimerElapses');
+      const Expires = await this.GetSessionInt('AgentAPI.RefreshTimerExpires');
       const Now = Math.round(Date.now() / 1000);
 
       if (!OldTimer || !Expires || !Elapses) {
         if (NewToken) AgentAPI.IO.Log('Saving new session token.');
         else AgentAPI.IO.Log('Resaving session token.');
 
-        this.SaveSessionToken(Token, Seconds, Math.round(Seconds / 2));
+        await this.SaveSessionToken(Token, Seconds, Math.round(Seconds / 2));
       } else if (Expires > Now) {
         if (Elapses <= Now) {
           if (NewToken) {
@@ -324,15 +331,25 @@ export const AgentAPI = {
             );
           else AgentAPI.IO.Log('Restarting previous session token.');
 
-          this.SaveSessionToken(Token, Seconds, Elapses - Now);
+          await this.SaveSessionToken(Token, Seconds, Elapses - Now);
         }
       } else if (NewToken) {
         AgentAPI.IO.Log('Saving new session token.');
-        this.SaveSessionToken(Token, Seconds, Math.round(Seconds / 2));
-      } else AgentAPI.IO.Log('Obsolete session token.');
+        await this.SaveSessionToken(Token, Seconds, Math.round(Seconds / 2));
+      } else {
+        AgentAPI.IO.Log('Obsolete session token.');
+        const username = await this.GetSessionString('AgentAPI.UserName');
+        const password = await this.GetSessionString('AgentAPI.Password');
+        try {
+          const response = await AgentAPI.Account.Login(username, password, Seconds);
+          AgentAPI.IO.Log(`Silent login Response: ${JSON.stringify(response)}`);
+        } catch (error) {
+          AgentAPI.IO.Log(`Error: ${JSON.stringify(error)}`);
+        }        
+      }
     },
-    SaveSessionToken: function (Token: any, Seconds: number, Next: number) {
-      const OldTimer = this.GetSessionInt('AgentAPI.RefreshTimer');
+    SaveSessionToken: async function (Token: any, Seconds: number, Next: number) {
+      const OldTimer = await this.GetSessionInt('AgentAPI.RefreshTimer');
       if (OldTimer) {
         AgentAPI.IO.Log('Stopping previous session timer.');
         clearTimeout(OldTimer);
@@ -399,6 +416,7 @@ export const AgentAPI = {
         seconds: Seconds,
       })
       this.SetSessionString('AgentAPI.UserName', UserName);
+      this.SetSessionString('AgentAPI.Password', Password);
       this.SaveSessionToken(Response?.jwt, Seconds, Math.round(Seconds / 2));
       return Response;
     },
@@ -425,14 +443,15 @@ export const AgentAPI = {
       return Result;
     },
     Login: async function (UserName: string, Password: any, Seconds: number) {
-      const Nonce = this.getRandomValues(32);
+      const Nonce = this.getRandomValues(32);  
       const s = UserName + ':' + Config.Host + ':' + Nonce;
       let raw = {
         userName: UserName,
         nonce: Nonce,
         signature: await this.Sign(Password, s),
-        seconds: 3500,
+        seconds: Seconds,
       };
+      console.log('Raw -- ', raw)
       const Response = await AgentAPI.IO.Request('/Agent/Account/Login', raw);
 
       this.SetSessionString('AgentAPI.UserName', UserName);
@@ -451,12 +470,13 @@ export const AgentAPI = {
         Internal
       );
 
+      console.log('Refresh call -- ', Response);
       this.SaveSessionToken(Response.jwt, Seconds, Math.round(Seconds / 2));
 
       return Response;
     },
     Logout: async function () {
-      const OldTimer = this.GetSessionInt('AgentAPI.RefreshTimer');
+      const OldTimer = await this.GetSessionInt('AgentAPI.RefreshTimer');
       if (OldTimer) {
         AgentAPI.IO.Log('Stopping session timer.');
         window.clearTimeout(OldTimer);
@@ -1593,5 +1613,3 @@ export const AgentAPI = {
     },
   },
 };
-
-AgentAPI.Account.RestartActiveSession();

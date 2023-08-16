@@ -32,7 +32,7 @@ import {
 } from '@Services/Redux/Actions/GetUserDetails';
 import { ThunkDispatch } from '@reduxjs/toolkit';
 import { setUserSliceError } from '@Services/Redux/Reducers/UserSlice';
-import { isEmpty } from '@Helpers/Utils';
+import { isEmpty } from '@Helpers/Utility/Utils';
 
 export const EnterEmail = ({
   navigation,
