@@ -46,6 +46,10 @@ const cryptoSlice = createSlice({
   reducers: {
     clearReadyForApproval: (state) => {
       state.readyForApprovalResponse = null;
+      state.algorithmDetails=[];
+    },
+    clearAttachment:(state)=>{
+
     },
     setCryptoSliceError: (state, action) => {
       state.error = action.payload;

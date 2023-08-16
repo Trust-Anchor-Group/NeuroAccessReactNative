@@ -180,7 +180,8 @@ export default {
     title: 'Peer review',
     detail:
       'To speed up the process, you can invite a trusted peer to review your application. Simply scan their Neuro-Access QR-code and they will be able to see and verify your information. Once enough peers have certified your information, your application will be automatically approved by our team.',
-  },
+      CouldYouPleaseReviewMyIdentityInformation:'Could you please review my identity information?',
+    },
   pendingReview: {
     title: 'Pending review!',
     detail:

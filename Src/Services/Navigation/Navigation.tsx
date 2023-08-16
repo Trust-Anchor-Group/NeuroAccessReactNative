@@ -157,7 +157,7 @@ export const AuthStack = ({ initialRoute }: Props) => {
 
 export const ApplicationStack = () => {
   return (
-    <Stack.Navigator initialRouteName={'AlmostThere'}>
+    <Stack.Navigator initialRouteName={'TellUsAboutYou'}>
       <Stack.Screen
         name="TellUsAboutYou"
         component={TellUsAboutYou}

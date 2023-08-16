@@ -9,6 +9,7 @@ import {
   ActionButtonWithIcon,
   ShowError,
 } from '@Controls/index';
+import { TextEncoder } from 'text-decoding';
 import { useTranslation } from 'react-i18next';
 import { ThemeContext } from '@Theme/Provider/ThemeContext';
 import { GlobalStyle as styles, AlmostThereStyle } from '@Pages/Styles';
@@ -19,10 +20,16 @@ import { readBase64FromFile } from '@Services/Storage';
 import {
   getPopMessageApi,
   PopMessagePayload,
-  getServiceProvidersForIdReviewApi
+  getIdentityApi,
+  getServiceProvidersForIdReviewApi,
 } from '@Services/Redux/Actions/GetStatusForIdentity';
-import { savePopMessageLast, setIdentitySliceError } from '@Services/Redux/Reducers/IdentitySlice';
+import {
+  AddIdAttachmentPayload,
+  addIdAttachmentApi,
+} from '@Services/Redux/Actions/GetAlgorithmList';
+import { savePopMessageLast, setIdentitySliceError, setPetitionPeerReviewMsg } from '@Services/Redux/Reducers/IdentitySlice';
 import { InformationOverlay } from '@Controls/InformationOverlay';
+import { Serialize, AddPeerReviewIDAttachment } from '@Helpers/Utils';
 export const AlmostThere = ({
   navigation,
 }: StackScreenProps<{ Profile: any }>) => {
@@ -42,13 +49,20 @@ export const AlmostThere = ({
   const { userDetails } = useSelector((state) => state.user);
   const {
     identityResponse,
+    identityResponseApi,
     attributeResponse,
     popMessageResponse,
     popMessageLastResponse,
     getServiceProvidersForIdReviewResponse,
+    petitionSignatureResponseMsg,
     loading,
     error,
   } = useSelector((state) => state.identity);
+  const {
+    attachmentResponse,
+    loading: attachmentLoading,
+    error: attachmentError,
+  } = useSelector((state) => state.crypto);
 
   useEffect(() => {
     if (error) {
@@ -72,11 +86,13 @@ export const AlmostThere = ({
   };
 
   useEffect(() => {
-   // userIdentity();
-    //getIdentityData();
+    //verifyPetitionId(petitionSignatureResponseMsg.Messages);
+   
+   userIdentity();
+    getAttributeData();
   }, []);
 
-  const getIdentityData = async () => {
+  const getAttributeData = async () => {
     await dispatch(getApplicationAttributeApi());
   };
   useEffect(() => {
@@ -84,6 +100,7 @@ export const AlmostThere = ({
     if (attributeHandler) {
       const val = attributeResponse?.nrReviewers;
       setNumberOfRemaining(val);
+      getIdentityCall();
     }
   }, [attributeResponse]);
 
@@ -94,21 +111,42 @@ export const AlmostThere = ({
     }
   }, [getServiceProvidersForIdReviewResponse]);
 
+  // const serializeCall = async (identityResponseApi:any)=>{
+  //   const Xml: any[] = [];
+  //   await Serialize(Xml,identityResponseApi,true, true, true, true, true, true, true);
+  //   const encoder = new TextEncoder();
+  //   const bytes: Uint8Array = encoder.encode(Xml.join(''));
+  // }
 
-  // React.useEffect(() => {
-  //   const unsubscribe = navigation.addListener('focus', () => {
-  //     const id = setInterval(popMessage, 2000);
-  //     setIntervalId(id);
-  //   });
-  //   return () => {
-  //     clearInterval(intervalId);
-  //     unsubscribe();
-  //   };
-  // }, [navigation]);
+  const getIdentityCall = async () => { 
+    await dispatch(getIdentityApi(userDetails?.legalId));
+  };
+
+  useEffect(() => {
+    if (identityResponseApi!==null) {
+      //   if(userDetails.petitionId!==undefined)
+      //   {
+      //     console.log('for id identityResponseApi in serialize..',identityResponseApi)
+      //     serializeCall(identityResponseApi)
+
+      //  }
+    }
+  }, [identityResponseApi]);
+
+  React.useEffect(() => {
+    const unsubscribe = navigation.addListener('focus', () => {
+      const id = setInterval(popMessage, 2000);
+      setIntervalId(id);
+    });
+    return () => {
+      clearInterval(intervalId);
+      unsubscribe();
+    };
+  }, [navigation]);
 
   const popMessage = async () => {
     const popMessagePayload: PopMessagePayload = {
-      MaxCount: 1,
+      MaxCount: 10,
     };
     await dispatch(getPopMessageApi(popMessagePayload));
   };
@@ -116,8 +154,11 @@ export const AlmostThere = ({
   useEffect(() => {
     const popMessageHandler = Object.entries(popMessageResponse).length !== 0;
     if (popMessageHandler) {
+      //console.log('popmessage response 1',popMessageResponse)
       if (popMessageResponse?.Messages.length > 0) {
-        savePopMessage(popMessageResponse?.Messages[0]);
+       // dispatch(setPetitionPeerReviewMsg(popMessageResponse))
+        verifyPetitionId(popMessageResponse.Messages)
+        //savePopMessage(popMessageResponse?.Messages[0]);
       } else {
         const popMessageLastHandler =
           Object.entries(popMessageLastResponse).length !== 0;
@@ -126,9 +167,14 @@ export const AlmostThere = ({
           if (val === 'Created') {
           } else if (val === 'Approved') {
             approveStatus.current = true;
-            stopInterval();
+           // stopInterval();
           }
         }
+
+        // if(petitionSignatureResponseMsg!==null)
+        // {
+        //   stopInterval();
+        // }
       }
     }
   }, [popMessageResponse]);
@@ -136,6 +182,95 @@ export const AlmostThere = ({
   const savePopMessage = async (message: any) => {
     dispatch(savePopMessageLast(message));
   };
+
+  const verifyPetitionId = async (popMessageArray:any)=>{
+    console.log('verified petiton id called',popMessageArray)
+          for (const popMessageIndex in popMessageArray) {
+            const identityObj = popMessageArray[popMessageIndex];
+            
+            if(identityObj?.Content!==undefined)
+            {
+              const content = identityObj?.Content;
+              const reviewerIdentity = content?.identity;
+              console.log('verified petiton id called if block ',identityObj)
+              console.log('verified petiton id called if block  1',userDetails.petitionId)
+              if(userDetails.petitionId!==undefined)
+              {
+                const pid = content?.pid;
+                console.log('verified petiton id called if block  2',pid)
+                const signature = content?.signature.value;
+                console.log('verified petiton id called if block  3',signature)
+               
+                console.log('verified petiton id called if block  4',reviewerIdentity?.status)
+                const legalStatus = reviewerIdentity?.status?.state;
+                console.log('verified petiton id called if block  5',legalStatus)
+                if(pid===userDetails?.petitionId && legalStatus==='Approved')
+                {
+                  //stopInterval();
+                  console.log('verified petiton id called if block  5',identityObj)
+                  dispatch(setPetitionPeerReviewMsg(identityObj))
+                  const response = await AddPeerReviewIDAttachment(identityResponseApi?.Identity,reviewerIdentity,signature)
+                  console.log('print final peerreview attachment response',response)
+                 uploadAttachment(response);
+                   
+                }else if(pid===userDetails?.petitionId && legalStatus==='Compromized')
+                {
+                  dispatch(setPetitionPeerReviewMsg(identityObj))
+                }
+                else if(pid===userDetails?.petitionId && legalStatus==='Obsoleted')
+                {
+                  dispatch(setPetitionPeerReviewMsg(identityObj))
+                }
+                else if(pid===userDetails?.petitionId && legalStatus==='Rejected')
+                {
+                  dispatch(setPetitionPeerReviewMsg(identityObj))
+                }
+                else if(pid===userDetails?.petitionId && legalStatus==='Ignore')
+                {
+                  dispatch(setPetitionPeerReviewMsg(identityObj))
+                }
+              }
+            }
+            else
+            {
+              console.log('verified petiton id else block',identityObj)
+              if(identityObj?.identity!==undefined)
+              {
+                const responseId = identityObj?.identity?.id;
+                const legalStatus = identityObj?.identity?.status?.state;
+                if(userDetails?.legalId===responseId && legalStatus==='Created')
+                {
+                  savePopMessage(identityObj);
+                }
+              }
+
+            }
+          }
+  }
+
+  useEffect(() => {
+    const attachmentHandler = Object.entries(attachmentResponse).length !== 0;
+    if (attachmentHandler) {
+     console.log('attachment uploaded successfully',attachmentResponse)
+    }
+  }, [attachmentResponse]);
+
+  const uploadAttachment = async (data : any) => {
+    const addIdAttachmentPayload: AddIdAttachmentPayload = {
+      userName: userDetails.userName,
+      LocalName: userDetails?.localName,
+      Namespace: userDetails?.nameSpace,
+      KeyId: userDetails?.keyId,
+      KeyPassword: userDetails?.keyPassword,
+      AccountPassword: userDetails?.password,
+      LegalId: userDetails?.legalId,
+      Attachment: data?.Data,
+      FileName: data?.FileName,
+      ContentType: data?.ContentType,
+    };
+    await dispatch(addIdAttachmentApi(addIdAttachmentPayload));
+  };
+
 
   const stopInterval = () => {
     if (intervalId) {

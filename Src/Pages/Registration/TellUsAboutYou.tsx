@@ -47,7 +47,7 @@ import { countryCodes } from '@Services/Data/index';
 import { getAlgorithmListApi } from '@Services/Redux/Actions/GetAlgorithmList';
 import { Algorithm, setCryptoSliceError } from '@Services/Redux/Reducers/CryptoSlice';
 import { AgentAPI } from '@Services/API/Agent';
-
+import { setNameSpace } from '@Services/Redux/Reducers/UserSlice';
 import {
   ApplyLegalPayload,
   applyLegalIdApi,
@@ -132,6 +132,8 @@ export const TellUsAboutYou = ({
   }, [readyForApprovalResponse]);
 
   useEffect(() => {
+    dispatch(clearIdentity());
+    dispatch(clearReadyForApproval());
     if (Platform.OS === 'ios') {
       requestMultiPermissionIos(
         PERMISSIONS.IOS.CAMERA,
@@ -210,7 +212,12 @@ export const TellUsAboutYou = ({
   }, [legalResponse]);
 
   const callUploadAttachment = async (legalId: string, legalResponse: any) => {
-    await dispatch(saveIdentity(legalResponse));
+    const nameSpaceProps ={
+      localName:algorithmVal?.current?.localName,
+      nameSpace:algorithmVal?.current?.namespace
+    }
+     dispatch(setNameSpace(nameSpaceProps))
+     dispatch(saveIdentity(legalResponse));
     await dispatch(saveLegalID(legalId));
     uploadAttachment(legalId);
   };
@@ -244,6 +251,7 @@ export const TellUsAboutYou = ({
 
   const navigateAlmost = async () => {
     await dispatch(clearState());
+    console.log('move almost there screen')
     navigation.navigate('AlmostThere');
   };
 
@@ -350,13 +358,13 @@ export const TellUsAboutYou = ({
       const s2 = Secret + ':' + randomString;
       const keyPassword = await AgentAPI.Account.Sign(ApiKey, s2);
       await dispatch(saveKeyIdPassword(keyPassword));
-      dispatch(clearIdentity());
-      dispatch(clearReadyForApproval());
       createKeyCall(keyPassword);
     } catch (error) {}
   };
 
   const createKeyCall = async (keyPassword: string) => {
+    
+
     const addIdAttachmentPayload: CreateKeyPayload = {
       userName: userDetails.userName,
       LocalName: algorithmVal?.current?.localName,

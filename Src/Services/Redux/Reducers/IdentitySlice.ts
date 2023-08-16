@@ -9,23 +9,17 @@ import {
   petitionPeerReviewApi
 } from '../Actions/GetStatusForIdentity';
 
-interface CryptoState {
-  identityResponse: {};
-  popMessageResponse: {};
-  popMessageLastResponse: {};
-  attributeResponse: {};
-  loading: boolean;
-  error: string;
-}
 
 const initialState = {
   identityResponse: {},
+  identityResponseApi: null,
   popMessageResponse: {},
   popMessageLastResponse: {},
   attributeResponse: {},
   selectReviewServiceResponse: null,
   authorizeAccessToIdResponse: null,
   petitionPeerReviewResponse: null,
+  petitionSignatureResponseMsg: null,
   getServiceProvidersForIdReviewResponse: {},
   loading: false,
   error: <any>undefined,
@@ -47,6 +41,12 @@ const identitySlice = createSlice({
     setIdentitySliceError: (state, action) => {
       state.error = action.payload;
     },
+    setPetitionPeerReviewMsg: (state, action) => {
+      state.petitionSignatureResponseMsg = action.payload;
+    },
+    clearPetitionPeerReview : (state) =>{
+      state.petitionPeerReviewResponse=null;
+    }
   },
   extraReducers: (builder) => {
     builder
@@ -56,7 +56,7 @@ const identitySlice = createSlice({
       })
       .addCase(getIdentityApi.fulfilled, (state, action) => {
         state.loading = false;
-        state.identityResponse = action.payload;
+        state.identityResponseApi = action.payload;
       })
       .addCase(getIdentityApi.rejected, (state, action) => {
         state.loading = false;
@@ -142,5 +142,7 @@ export const {
   setIdentitySliceError,
   saveIdentity,
   clearIdentity,
+  clearPetitionPeerReview,
+  setPetitionPeerReviewMsg,
 } = identitySlice.actions;
 export default identitySlice.reducer;

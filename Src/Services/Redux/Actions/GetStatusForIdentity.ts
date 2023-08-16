@@ -37,9 +37,9 @@ export type PetitionPeerReviewPayload = {
 
 export const getIdentityApi = createAsyncThunk(
   'identity/getIdentityApi',
-  async (payload: IdentityPayload, { fulfillWithValue, rejectWithValue }) => {
+  async (payload: string, { fulfillWithValue, rejectWithValue }) => {
     try {
-      const response = await AgentAPI.Legal.GetIdentity(payload.LegalId);
+      const response = await AgentAPI.Legal.GetIdentity(payload);
       return fulfillWithValue(response);
     } catch (error) {
       const message =

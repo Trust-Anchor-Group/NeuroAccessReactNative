@@ -34,10 +34,14 @@ import {
   PetitionPeerReviewPayload,
   petitionPeerReviewApi,
 } from '@Services/Redux/Actions/GetStatusForIdentity';
-import { setIdentitySliceError } from '@Services/Redux/Reducers/IdentitySlice';
+import { getAlgorithmListApi } from '@Services/Redux/Actions/GetAlgorithmList';
+import { setIdentitySliceError, clearPetitionPeerReview } from '@Services/Redux/Reducers/IdentitySlice';
 import { DefaultQrCode } from '@Assets/Svgs/DefaultQrCode';
 import { QRCodeScanner } from '@Services/Scanner/QRCodeScanner';
-
+import { Algorithm, setCryptoSliceError } from '@Services/Redux/Reducers/CryptoSlice';
+import { AgentAPI } from '@Services/API/Agent';
+import { setPetitionId } from '@Services/Redux/Reducers/UserSlice';
+import { setRemoteId } from '@Services/Redux/Reducers/UserSlice';
 interface ReviewItem {
   external: boolean;
   iconHeight: number;
@@ -68,13 +72,32 @@ export const ReviewRequest = ({
     error,
   } = useSelector((state) => state.identity);
 
+  const {
+    algorithmDetails,
+    loading:loadingAlgorithm,
+    error:errorAlgorithm,
+  } = useSelector((state) => state.crypto);
+
+  useEffect(() => {
+    if (errorAlgorithm) {
+      Alert.alert(t('Error.ErrorTitle'), JSON.stringify(errorAlgorithm), [
+        {
+          text: 'ok',
+          onPress: () => {
+            dispatch(setIdentitySliceError(''));
+          },
+        },
+      ]);
+    }
+  }, [errorAlgorithm]);
+
   useEffect(() => {
     if (error) {
       Alert.alert(t('Error.ErrorTitle'), JSON.stringify(error), [
         {
           text: 'ok',
           onPress: () => {
-            dispatch(setIdentitySliceError(''));
+            dispatch(setCryptoSliceError(''))
           },
         },
       ]);
@@ -90,7 +113,7 @@ export const ReviewRequest = ({
   };
 
   useEffect(() => {
-    // providerForIdReview();
+     providerForIdReview();
   }, []);
 
   const providerForIdReview = async () => {
@@ -140,6 +163,8 @@ export const ReviewRequest = ({
 
   useEffect(() => {
     if (petitionPeerReviewResponse !== null) {
+      dispatch(clearPetitionPeerReview());
+      navigation.goBack();
       console.log(
         'for petitionPeerReviewResponse review list',
         petitionPeerReviewResponse
@@ -161,8 +186,19 @@ export const ReviewRequest = ({
   };
 
   const handleQRCodeSelection = async (domainInfo: any) => {
-    console.log('print scanner result', domainInfo);
-    console.log('print scanner result', domainInfo[0].cornerPoints);
+    
+    console.log('print scanner result', domainInfo[0].rawValue);
+    if(domainInfo[0]?.rawValue)
+    {
+      const legalId = domainInfo[0].rawValue.split(':');
+
+      console.log('print scanner result', legalId[0]);
+      console.log('print scanner result', legalId[1]);
+      PRemoteId.current= legalId[1];
+      dispatch(setRemoteId(legalId[1]))
+      //dispatch(getAlgorithmListApi());
+      petitionPeerReviewCall();
+    }
   };
 
   const selectReviewServiceCall = async (
@@ -176,19 +212,50 @@ export const ReviewRequest = ({
     await dispatch(selectReviewServiceApi(payload));
   };
 
+  useEffect(() => {
+    if(algorithmDetails.length!==0)
+    {
+      filterAlgorithm(algorithmDetails.Algorithms);
+    }
+   
+  }, [algorithmDetails]);
+
+  const filterAlgorithm = async (algorithms: any) => {
+    let highestSecurityStrength = 0;
+    let resultFinal: Algorithm | undefined;
+
+    if (algorithms !== undefined) {
+      await algorithms.forEach((algorithm: Algorithm) => {
+        if (
+          algorithm.safe &&
+          algorithm.securityStrength > highestSecurityStrength
+        ) {
+          highestSecurityStrength = algorithm.securityStrength;
+          resultFinal = algorithm;
+        }
+      });
+    //  petitionPeerReviewCall(resultFinal)
+    }
+  };
+
   const petitionPeerReviewCall = async () => {
+    const petitionId  = AgentAPI.Account.getRandomValues(32);
+
+    dispatch(setPetitionId(petitionId));
     const payload: PetitionPeerReviewPayload = {
       UserName: userDetails?.userName,
-      LocalName: userDetails?.legalId,
-      Namespace: userDetails?.legalId,
+      LocalName: userDetails?.localName,
+      Namespace: userDetails?.nameSpace,
       KeyId: userDetails?.keyId,
       KeyPassword: userDetails?.keyPassword,
       AccountPassword: userDetails?.password,
       LegalId: userDetails?.legalId,
       RemoteId: PRemoteId.current,
-      PetitionId: '',
-      Purpose: ''
+      PetitionId: petitionId,
+      Purpose: t('peerReviewProcess.CouldYouPleaseReviewMyIdentityInformation')
     };
+
+    console.log('print petiton peerreview palylod',payload)
     await dispatch(petitionPeerReviewApi(payload));
   };
 
@@ -201,9 +268,14 @@ export const ReviewRequest = ({
           if (item?.type === 'default') {
             toggleScannerOverlay();
           } else {
-            if (!item?.external) {
+            if (item?.external) {
               PRemoteId.current = item?.type;
+              dispatch(setRemoteId(item?.type))
+            //  dispatch(getAlgorithmListApi());
              // selectReviewServiceCall(item?.id, item?.type);
+            }
+            else{
+
             }
             // console.log('print selected item value ', item);
           }

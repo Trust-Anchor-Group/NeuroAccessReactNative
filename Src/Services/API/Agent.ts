@@ -63,12 +63,11 @@ export const AgentAPI = {
           xhttp.setRequestHeader(
             'Authorization',
             'Bearer ' +
-              'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJqdGkiOiIrS2Q2WnBDZVhEandlN050c1FzdTdOSXdRSXdDb24yMkhXWG5JOHFGdjNrPSIsImlzcyI6ImxhYi50YWdyb290LmlvIiwic3ViIjoiYW5rdXNoQUBsYWIudGFncm9vdC5pbyIsImlhdCI6MTY5MDk2NjI1OSwiZXhwIjoxNjkwOTY5ODU5fQ.MHDEq5A4l0TBd8rrWp_hcLZZQHaW48yx550mMNDHwgo'
+            Token
           );
 
         xhttp.send(JSON.stringify(RequestPayload));
       });
-
       return await Request;
     },
     GetRequestWithDomain: async function (
@@ -928,6 +927,7 @@ export const AgentAPI = {
         attachmentContentType: ContentType,
       };
 
+     // console.log('request parameter',Request)
       const Response = await AgentAPI.IO.Request(
         '/Agent/Legal/AddIdAttachment',
         Request
@@ -1153,6 +1153,7 @@ export const AgentAPI = {
       return Response;
     },
     PetitionId: async function (
+      UserName: any,
       LocalName: any,
       Namespace: any,
       KeyId: any,
@@ -1163,7 +1164,7 @@ export const AgentAPI = {
       PetitionId: any,
       Purpose: any
     ) {
-      const UserName = AgentAPI.Account.GetSessionString('AgentAPI.UserName');
+      //const UserName = AgentAPI.Account.GetSessionString('AgentAPI.UserName');
       const s1 =
         UserName +
         ':' +
@@ -1206,6 +1207,7 @@ export const AgentAPI = {
       return Response;
     },
     PetitionSignature: async function (
+      UserName: any,
       LocalName: any,
       Namespace: any,
       KeyId: any,
@@ -1217,7 +1219,7 @@ export const AgentAPI = {
       Purpose: any,
       ContentBase64: any
     ) {
-      const UserName = AgentAPI.Account.GetSessionString('AgentAPI.UserName');
+     // const UserName = AgentAPI.Account.GetSessionString('AgentAPI.UserName');
       const s1 =
         UserName +
         ':' +

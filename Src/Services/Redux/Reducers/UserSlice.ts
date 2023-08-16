@@ -23,6 +23,10 @@ export type UserProfile = {
   password?: string;
   keyId?: string;
   legalId?: string;
+  nameSpace?: string;
+  localName?: string;
+  petitionId?: string;
+  remoteId?: string;
   keyPassword?: string;
   tokenData?: any;
   createAccountRespnose: {},
@@ -47,6 +51,16 @@ const userSlice = createSlice({
     clearSendVerificationCodeResponse: (state, action) => {
       state.sendVerificationCodeResponse = action.payload;
     },
+    setNameSpace:(state, action)=>{
+      state.userDetails = { ...state.userDetails, nameSpace: action.payload.nameSpace};
+      state.userDetails = { ...state.userDetails, localName: action.payload.localName};
+    },
+    setPetitionId:(state, action)=>{
+      state.userDetails = { ...state.userDetails, petitionId: action.payload};
+    },
+    setRemoteId:(state, action)=>{
+      state.userDetails = { ...state.userDetails, remoteId: action.payload};
+    }
   },
   extraReducers: (builder) => {
     builder
@@ -132,5 +146,5 @@ const userSlice = createSlice({
       })
   },
 });
-export const { setUserSliceError, clearSendVerificationCodeResponse } = userSlice.actions;
+export const { setNameSpace, setPetitionId, setRemoteId, setUserSliceError, clearSendVerificationCodeResponse } = userSlice.actions;
 export default userSlice.reducer;

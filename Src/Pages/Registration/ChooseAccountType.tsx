@@ -65,8 +65,8 @@ export const ChooseAccountType = ({
 
     setTimeout(() => {
       if (identityResponse?.Identity?.status) {
-        navigation.dispatch(StackActions.replace('AlmostThere'));
-      } else if (userDetails?.userName && userDetails?.email) {
+          navigation.dispatch(StackActions.replace('AlmostThere'));
+        } else if (userDetails?.userName && userDetails?.email) {
         navigation.dispatch(StackActions.replace('TellUsAboutYou'));
       } else if (userDetails?.userName && !userDetails?.email) {
         navigation.dispatch(StackActions.replace('EnterUserName'));

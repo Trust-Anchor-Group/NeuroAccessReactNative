@@ -21,9 +21,14 @@ import { NeuroTextInput } from '@Controls/NeuroTextInput';
 import { ThemeContext } from '@Theme/Provider/ThemeContext';
 import { GlobalStyle as styles, TellUsAboutYouStyle } from '@Pages/Styles';
 import { Formik } from 'formik';
-import { Constants, computePinHash, unlockAppValidationSchema } from '@Helpers/index';
+import {
+  Constants,
+  computePinHash,
+  unlockAppValidationSchema,
+} from '@Helpers/index';
 import { retrieveUserSession } from '@Services/Storage';
 import { StackActions } from '@react-navigation/native';
+import Space from '@Controls/Space';
 
 export const VerifyPin = ({
   navigation,
@@ -34,11 +39,13 @@ export const VerifyPin = ({
   const confirmPin = useRef<TextInput>(null);
 
   const hashPassword = async (password: string) => {
-    const objectId = await retrieveUserSession(Constants.Authentication.ObjectId);
+    const objectId = await retrieveUserSession(
+      Constants.Authentication.ObjectId
+    );
     const hashedPassword = computePinHash(
       password,
       objectId,
-      Config.Host ?? Constants.DefaultValues.Host,
+      Config.Host ?? Constants.DefaultValues.Host
     );
     return hashedPassword;
   };
@@ -181,7 +188,22 @@ export const VerifyPin = ({
                   </TextLabel>
                 )}
 
-                <View style={TellUsAboutYouStyle(themeColors).actionButtonContainer}>
+                <Space />
+
+                <ActionButton
+                  disabled={!isValid}
+                  textStyle={[TellUsAboutYouStyle(themeColors).sendText]}
+                  buttonStyle={[
+                    TellUsAboutYouStyle(themeColors).button,
+                    !isValid && {
+                      backgroundColor: themeColors.button.disableBg,
+                    },
+                  ]}
+                  title={t('buttonTitle.unlock')}
+                  onPress={handleSubmit}
+                />
+
+                {/* <View style={TellUsAboutYouStyle(themeColors).actionButtonContainer}>
                   <ActionButton
                     disabled={!isValid}
                     textStyle={[TellUsAboutYouStyle(themeColors).sendText]}
@@ -194,7 +216,7 @@ export const VerifyPin = ({
                     title={t('buttonTitle.unlock')}
                     onPress={handleSubmit}
                   />
-                </View>
+                </View> */}
               </View>
             )}
           </Formik>

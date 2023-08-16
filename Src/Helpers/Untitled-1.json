@@ -1,0 +1,246 @@
+{
+  "Messages": [
+    {
+      "id": "",
+      "from": "legal.lab.tagroot.io",
+      "to": "mohan@lab.tagroot.io",
+      "lang": "",
+      "type": "",
+      "timestamp": 1691669323,
+      "Content": {
+        "__name": "identity",
+        "__ns": "urn:ieee:iot:leg:id:1.0",
+        "id": "2c678fcb-9224-ea59-581d-af0b898afbf5@legal.lab.tagroot.io",
+        "xmlns": "urn:ieee:iot:leg:id:1.0",
+        "clientPublicKey": {
+          "__name": "clientPublicKey",
+          "__ns": "urn:ieee:iot:leg:id:1.0",
+          "ed448": {
+            "__name": "ed448",
+            "__ns": "urn:ieee:iot:e2e:1.0",
+            "pub": "n3MVdOSw3ENxc3VvsU0NwuFadUnUHKk81/4QefWBf7fUmfnPzu1z0jZgto2PQEIyaARFl8sTQHeA",
+            "xmlns": "urn:ieee:iot:e2e:1.0"
+          }
+        },
+        "property": [
+          {
+            "__name": "property",
+            "__ns": "urn:ieee:iot:leg:id:1.0",
+            "name": "FIRST",
+            "value": "ankush"
+          },
+          {
+            "__name": "property",
+            "__ns": "urn:ieee:iot:leg:id:1.0",
+            "name": "LAST",
+            "value": "mittal"
+          },
+          {
+            "__name": "property",
+            "__ns": "urn:ieee:iot:leg:id:1.0",
+            "name": "PNR",
+            "value": "9999 4105 7058"
+          },
+          {
+            "__name": "property",
+            "__ns": "urn:ieee:iot:leg:id:1.0",
+            "name": "ADDR",
+            "value": "noida"
+          },
+          {
+            "__name": "property",
+            "__ns": "urn:ieee:iot:leg:id:1.0",
+            "name": "ZIP",
+            "value": "201301"
+          },
+          {
+            "__name": "property",
+            "__ns": "urn:ieee:iot:leg:id:1.0",
+            "name": "CITY",
+            "value": "noidaw"
+          },
+          {
+            "__name": "property",
+            "__ns": "urn:ieee:iot:leg:id:1.0",
+            "name": "COUNTRY",
+            "value": "IN"
+          },
+          {
+            "__name": "property",
+            "__ns": "urn:ieee:iot:leg:id:1.0",
+            "name": "JID",
+            "value": "mohan@lab.tagroot.io"
+          },
+          {
+            "__name": "property",
+            "__ns": "urn:ieee:iot:leg:id:1.0",
+            "name": "AGENT",
+            "value": "lab.tagroot.io"
+          }
+        ],
+        "clientSignature": {
+          "__name": "clientSignature",
+          "__ns": "urn:ieee:iot:leg:id:1.0",
+          "value": "jK4qBSuQa9XF/thhR3kj2eKMGNxLOB8NXNQKeDZJLfgFm4VhT6ep5WPZhWJOVbsigSZRWS0/bZiAhEB3YsstKH1GlIqp1xMR3oC2Jt8oiEsGxZYZMVPMeuBrh7T8LFbOyXCXTpScADD3nWOrPp3/JhYA"
+        },
+        "status": {
+          "__name": "status",
+          "__ns": "urn:ieee:iot:leg:id:1.0",
+          "created": "2023-08-10T12:08:43.000",
+          "from": "2023-08-10T00:00:00.000",
+          "provider": "legal.lab.tagroot.io",
+          "state": "Created",
+          "to": "2025-08-10T00:00:00.000"
+        },
+        "serverSignature": {
+          "__name": "serverSignature",
+          "__ns": "urn:ieee:iot:leg:id:1.0",
+          "value": "Gqqw8pg1XBG07vwNA+FTv2GSqEkBkkS24wtZKlvdEep+CwXx9nCekHBscFuZduhjE3glayJJgSUAHjAKyHpA5RMd1eS6YAvwA1Jtvz0eGq7dPn0GrSpRxKjW1PnvQqVTDBkMZHDZWxn9HwmBSw3pVxUA"
+        }
+      }
+    }
+  ]
+}
+
+
+
+
+
+=============
+
+
+{
+  "Messages": [
+    {
+      "id": "",
+      "from": "legal.lab.tagroot.io",
+      "to": "mohan@lab.tagroot.io",
+      "lang": "",
+      "type": "",
+      "timestamp": 1691670620,
+      "Content": {
+        "__name": "petitionSignatureResponseMsg",
+        "__ns": "urn:ieee:iot:leg:id:1.0",
+        "pid": "qKf3HWOqApvLcEVW1CP7nsBdFyFcRUap",
+        "response": "true",
+        "clientEp": "61.0.48.218:58994",
+        "xmlns": "urn:ieee:iot:leg:id:1.0",
+        "signature": {
+          "__name": "signature",
+          "__ns": "urn:ieee:iot:leg:id:1.0",
+          "value": "dM5XplbdXcXcv1G7wTtdQsJL19YbNxxciKWYn5pImTT8CMM5UJsPSZQqkE/3oRJ5Kztn4NoI5IyASC2P8VQlzIqXYIHU9apA/7JdRes8zZBPDPDIT6yuMGXz44Ym+rmDYXMAnDbQ517+fvEgQ9U9QygA"
+        },
+        "identity": {
+          "__name": "identity",
+          "__ns": "urn:ieee:iot:leg:id:1.0",
+          "id": "2c5bc9d7-8739-41a0-c831-59a99bb1d5e7@legal.lab.tagroot.io",
+          "clientPublicKey": {
+            "__name": "clientPublicKey",
+            "__ns": "urn:ieee:iot:leg:id:1.0",
+            "ed448": {
+              "__name": "ed448",
+              "__ns": "urn:ieee:iot:e2e:1.0",
+              "pub": "8xTeF0lfWaL5okWt2cX7rwRl9HaQctvm1PZh2lVCG6fEt3/KWaWM/6fTkj0KkKAkEo+XEX0Rja6A",
+              "xmlns": "urn:ieee:iot:e2e:1.0"
+            }
+          },
+          "property": [
+            {
+              "__name": "property",
+              "__ns": "urn:ieee:iot:leg:id:1.0",
+              "name": "FIRST",
+              "value": "Ankush"
+            },
+            {
+              "__name": "property",
+              "__ns": "urn:ieee:iot:leg:id:1.0",
+              "name": "LAST",
+              "value": "Mittal"
+            },
+            {
+              "__name": "property",
+              "__ns": "urn:ieee:iot:leg:id:1.0",
+              "name": "PNR",
+              "value": "999971658847"
+            },
+            {
+              "__name": "property",
+              "__ns": "urn:ieee:iot:leg:id:1.0",
+              "name": "ADDR",
+              "value": "Noida"
+            },
+            {
+              "__name": "property",
+              "__ns": "urn:ieee:iot:leg:id:1.0",
+              "name": "ZIP",
+              "value": "201301"
+            },
+            {
+              "__name": "property",
+              "__ns": "urn:ieee:iot:leg:id:1.0",
+              "name": "CITY",
+              "value": "Noida"
+            },
+            {
+              "__name": "property",
+              "__ns": "urn:ieee:iot:leg:id:1.0",
+              "name": "COUNTRY",
+              "value": "IN"
+            },
+            {
+              "__name": "property",
+              "__ns": "urn:ieee:iot:leg:id:1.0",
+              "name": "PHONE",
+              "value": "+919991965528"
+            },
+            {
+              "__name": "property",
+              "__ns": "urn:ieee:iot:leg:id:1.0",
+              "name": "EMAIL",
+              "value": "ankush.m@sphinxworldbiz.co"
+            },
+            {
+              "__name": "property",
+              "__ns": "urn:ieee:iot:leg:id:1.0",
+              "name": "JID",
+              "value": "ankushmm2@lab.tagroot.io"
+            }
+          ],
+          "clientSignature": {
+            "__name": "clientSignature",
+            "__ns": "urn:ieee:iot:leg:id:1.0",
+            "value": "zdj6z8eziIL4cdgag/aGfFkH1Wyk7UQgXvdFF/4sou5jXTOyCS2zskn+d6/uQBPWQ9BFwz4lymmAzjbwh+RZQr8rLhAB6f4ozr9mVl/q3szGOZUlRpY4gV7YHByvOJUIeDzTX47EW2JYWzlqMAz79ToA"
+          },
+          "attachment": {
+            "__name": "attachment",
+            "__ns": "urn:ieee:iot:leg:id:1.0",
+            "contentType": "image/jpeg",
+            "fileName": "ProfilePhoto.jpg",
+            "id": "2c5bc9db-8739-41a4-c831-59a99be3736e@legal.lab.tagroot.io",
+            "s": "LLvATurI5cKuwItIHEUsHofSjsNRie1mcBmc8tPi6V2CKYFK0gd+BsbFCe69Gpra8MBNsSeYHYsA5gSHnsBHWOr1hb7r9JYCVgHoAzA1r6HH1BjkzTzGyMtSr5dza0BjsJjIHKqpX9tKH6Y1ytuOHAAA",
+            "timestamp": "2023-08-01T13:49:15.140"
+          },
+          "status": {
+            "__name": "status",
+            "__ns": "urn:ieee:iot:leg:id:1.0",
+            "created": "2023-08-01T13:49:11.000",
+            "from": "2023-08-01T00:00:00.000",
+            "provider": "legal.lab.tagroot.io",
+            "state": "Approved",
+            "to": "2025-08-01T00:00:00.000",
+            "updated": "2023-08-01T13:51:57.000"
+          },
+          "serverSignature": {
+            "__name": "serverSignature",
+            "__ns": "urn:ieee:iot:leg:id:1.0",
+            "value": "Lc6IgjnHUSEIEzAB0XoiQTdXn48YjtLY9sJ1G5/KavRsXLP63hZVO49lz4eoyLxEtHUaHwT4QTGAGVQ/19XoVKZ+H19Z6nLaaNd566SMLpohJMxKzP9vUw9nF9Iai8EDPXj18tc7bCsUkjkCVmoE0hsA"
+          },
+          "attachmentRef": {
+            "__name": "attachmentRef",
+            "__ns": "urn:ieee:iot:leg:id:1.0",
+            "attachmentId": "2c5bc9db-8739-41a4-c831-59a99be3736e@legal.lab.tagroot.io",
+            "url": "https://lab.tagroot.io/Attachments/2c5bc9db-8739-41a4-c831-59a99be3736e@legal.lab.tagroot.io"
+          }
+        }
+      }
+    }
