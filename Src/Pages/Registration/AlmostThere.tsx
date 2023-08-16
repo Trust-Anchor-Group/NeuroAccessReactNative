@@ -29,7 +29,7 @@ import {
 } from '@Services/Redux/Actions/GetAlgorithmList';
 import { savePopMessageLast, setIdentitySliceError, setPetitionPeerReviewMsg } from '@Services/Redux/Reducers/IdentitySlice';
 import { InformationOverlay } from '@Controls/InformationOverlay';
-import { Serialize, AddPeerReviewIDAttachment } from '@Helpers/Utils';
+import { AddPeerReviewIDAttachment } from '@Helpers/Utility/Utils';
 export const AlmostThere = ({
   navigation,
 }: StackScreenProps<{ Profile: any }>) => {
