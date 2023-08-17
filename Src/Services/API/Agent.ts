@@ -66,7 +66,7 @@ export const AgentAPI = {
           xhttp.setRequestHeader(
             'Authorization',
             'Bearer ' +
-            Token
+            'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJqdGkiOiJLYnhwSlg1WTJ0dysrVU5pWWY5WUx6MHQ3WG1rS0pFOWlycDF6TmIvbHhFPSIsImlzcyI6ImxhYi50YWdyb290LmlvIiwic3ViIjoibW9oYW5AbGFiLnRhZ3Jvb3QuaW8iLCJpYXQiOjE2OTIyNTA4MjAsImV4cCI6MTY5MjI1NDQyMH0.QZ4XPyJvAD4_B2vhNmxN7MOLqZXPS0v9B_BR7nAORL8'
           );
 
         xhttp.send(JSON.stringify(RequestPayload));
@@ -947,7 +947,7 @@ export const AgentAPI = {
         attachmentContentType: ContentType,
       };
 
-     // console.log('request parameter',Request)
+      console.log('request parameter',Request)
       const Response = await AgentAPI.IO.Request(
         '/Agent/Legal/AddIdAttachment',
         Request

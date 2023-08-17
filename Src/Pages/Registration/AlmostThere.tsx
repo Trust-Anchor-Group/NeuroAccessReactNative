@@ -86,10 +86,11 @@ export const AlmostThere = ({
   };
 
   useEffect(() => {
+   // console.log('print popmessage response',petitionSignatureResponseMsg.Messages)
     //verifyPetitionId(petitionSignatureResponseMsg.Messages);
    
    userIdentity();
-    getAttributeData();
+   getAttributeData();
   }, []);
 
   const getAttributeData = async () => {
@@ -156,7 +157,7 @@ export const AlmostThere = ({
     if (popMessageHandler) {
       //console.log('popmessage response 1',popMessageResponse)
       if (popMessageResponse?.Messages.length > 0) {
-       // dispatch(setPetitionPeerReviewMsg(popMessageResponse))
+        dispatch(setPetitionPeerReviewMsg(popMessageResponse))
         verifyPetitionId(popMessageResponse.Messages)
         //savePopMessage(popMessageResponse?.Messages[0]);
       } else {
@@ -192,6 +193,7 @@ export const AlmostThere = ({
             {
               const content = identityObj?.Content;
               const reviewerIdentity = content?.identity;
+              const xmlnsVal  = content?.xmlns;
               console.log('verified petiton id called if block ',identityObj)
               console.log('verified petiton id called if block  1',userDetails.petitionId)
               if(userDetails.petitionId!==undefined)
@@ -203,13 +205,13 @@ export const AlmostThere = ({
                
                 console.log('verified petiton id called if block  4',reviewerIdentity?.status)
                 const legalStatus = reviewerIdentity?.status?.state;
-                console.log('verified petiton id called if block  5',legalStatus)
+                console.log('verified petiton id called if block  555',legalStatus)
                 if(pid===userDetails?.petitionId && legalStatus==='Approved')
                 {
-                  //stopInterval();
+                 // stopInterval();
                   console.log('verified petiton id called if block  5',identityObj)
-                  dispatch(setPetitionPeerReviewMsg(identityObj))
-                  const response = await AddPeerReviewIDAttachment(identityResponseApi?.Identity,reviewerIdentity,signature)
+                 // dispatch(setPetitionPeerReviewMsg(identityObj))
+                  const response = await AddPeerReviewIDAttachment(identityResponseApi?.Identity,reviewerIdentity,signature,xmlnsVal)
                   console.log('print final peerreview attachment response',response)
                  uploadAttachment(response);
                    

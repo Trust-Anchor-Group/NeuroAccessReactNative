@@ -119,7 +119,8 @@ export const Serialize = async (
   IncludeAttachments: boolean,
   IncludeStatus: boolean,
   IncludeServerSignature: boolean,
-  IncludeAttachmentReferences: boolean
+  IncludeAttachmentReferences: boolean,
+  xmlns?: any
 ) => {
  // const identity = identityResponse.Identity;
 
@@ -132,9 +133,14 @@ export const Serialize = async (
     Xml.push('"');
   }
 
-  if (IncludeNamespace) {
+  if (IncludeNamespace && identity?.xmlns) {
     Xml.push(" xmlns=\"");
     Xml.push(identity?.xmlns);
+    Xml.push('"');
+  }
+  else{
+    Xml.push(" xmlns=\"");
+    Xml.push(xmlns);
     Xml.push('"');
   }
 
@@ -315,7 +321,7 @@ export const Serialize = async (
 // LegalIdentity Identity,
 //   LegalIdentity ReviewerLegalIdentity, byte[] PeerSignature
 export const AddPeerReviewIDAttachment = async (Identity: any,
-   ReviewerLegalIdentity: any, PeerSignature: any) =>
+   ReviewerLegalIdentity: any, PeerSignature: any, xmlnsVal :any) =>
 {
 
   console.log('print identity of user',Identity);
@@ -341,18 +347,20 @@ const currentUtcDateTimeString = currentUtcDate.toISOString();
   Xml.push("'><reviewed>");
   await Serialize(Xml,Identity, true, true, true, true, true, true, true);
   Xml.push("</reviewed><reviewer>");
-  await Serialize(Xml,ReviewerLegalIdentity, true, true, true, true, true, true, true);
+  await Serialize(Xml,ReviewerLegalIdentity, true, true, true, true, true, true, true,xmlnsVal);
   Xml.push("</reviewer></peerReview>");
 
   console.log('print final xml string',Xml.join(''))
   const encoder = new TextEncoder();
   //byte[] Data = Encoding.UTF8.GetBytes(Xml.join(''));
-  //const docArray: Uint8Array = encoder.encode(Xml.join(''));
+ // const docArray: Uint8Array = encoder.encode(Xml.join(''));
   const Data = ToBase64String(Xml.join(''));
  // console.log('after convert base64 data');
   //const Signature = AgentAPI.Account.Sign(Data, SignWith.CurrentKeys);
   const FileName = ReviewerLegalIdentity.id + ".xml";
-  const ContentType = "text/xml";
+  const ContentType = "text/xml; charset=utf-8";
+
+  //const Data: Uint8Array = new TextEncoder().encode(Xml.toString());
 
   const response ={
     Data,FileName,ContentType
