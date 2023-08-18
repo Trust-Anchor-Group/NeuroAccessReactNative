@@ -22,6 +22,7 @@ export const AgentAPI = {
         xhttp.onreadystatechange = function () {
           if (xhttp.readyState == 4) {
             let Response = xhttp.responseText;
+            console.log('Response -- ', Response)
             if (xhttp.status === 200) {
               Response = JSON.parse(Response);
               SetResult(Response);
@@ -65,9 +66,7 @@ export const AgentAPI = {
         if (Token)
           xhttp.setRequestHeader(
             'Authorization',
-            'Bearer ' +
-            'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJqdGkiOiJLYnhwSlg1WTJ0dysrVU5pWWY5WUx6MHQ3WG1rS0pFOWlycDF6TmIvbHhFPSIsImlzcyI6ImxhYi50YWdyb290LmlvIiwic3ViIjoibW9oYW5AbGFiLnRhZ3Jvb3QuaW8iLCJpYXQiOjE2OTIyNTA4MjAsImV4cCI6MTY5MjI1NDQyMH0.QZ4XPyJvAD4_B2vhNmxN7MOLqZXPS0v9B_BR7nAORL8'
-          );
+            'Bearer ' + Token );
 
         xhttp.send(JSON.stringify(RequestPayload));
       });

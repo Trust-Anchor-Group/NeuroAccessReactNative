@@ -86,11 +86,11 @@ export const AlmostThere = ({
   };
 
   useEffect(() => {
-   // console.log('print popmessage response',petitionSignatureResponseMsg.Messages)
-    //verifyPetitionId(petitionSignatureResponseMsg.Messages);
+   console.log('print popmessage response',petitionSignatureResponseMsg.Messages)
+    verifyPetitionId(petitionSignatureResponseMsg.Messages);
    
-   userIdentity();
-   getAttributeData();
+    // userIdentity();
+  //  getAttributeData();
   }, []);
 
   const getAttributeData = async () => {
@@ -101,7 +101,7 @@ export const AlmostThere = ({
     if (attributeHandler) {
       const val = attributeResponse?.nrReviewers;
       setNumberOfRemaining(val);
-      getIdentityCall();
+      // getIdentityCall();
     }
   }, [attributeResponse]);
 
@@ -134,16 +134,16 @@ export const AlmostThere = ({
     }
   }, [identityResponseApi]);
 
-  React.useEffect(() => {
-    const unsubscribe = navigation.addListener('focus', () => {
-      const id = setInterval(popMessage, 2000);
-      setIntervalId(id);
-    });
-    return () => {
-      clearInterval(intervalId);
-      unsubscribe();
-    };
-  }, [navigation]);
+  // React.useEffect(() => {
+  //   const unsubscribe = navigation.addListener('focus', () => {
+  //     const id = setInterval(popMessage, 2000);
+  //     setIntervalId(id);
+  //   });
+  //   return () => {
+  //     clearInterval(intervalId);
+  //     unsubscribe();
+  //   };
+  // }, [navigation]);
 
   const popMessage = async () => {
     const popMessagePayload: PopMessagePayload = {
@@ -157,8 +157,8 @@ export const AlmostThere = ({
     if (popMessageHandler) {
       //console.log('popmessage response 1',popMessageResponse)
       if (popMessageResponse?.Messages.length > 0) {
-        dispatch(setPetitionPeerReviewMsg(popMessageResponse))
-        verifyPetitionId(popMessageResponse.Messages)
+        // dispatch(setPetitionPeerReviewMsg(popMessageResponse))
+        // verifyPetitionId(popMessageResponse.Messages)
         //savePopMessage(popMessageResponse?.Messages[0]);
       } else {
         const popMessageLastHandler =

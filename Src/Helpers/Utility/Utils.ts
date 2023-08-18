@@ -351,22 +351,22 @@ const currentUtcDateTimeString = currentUtcDate.toISOString();
   Xml.push("</reviewer></peerReview>");
 
   console.log('print final xml string',Xml.join(''))
-  const encoder = new TextEncoder();
-  //byte[] Data = Encoding.UTF8.GetBytes(Xml.join(''));
- // const docArray: Uint8Array = encoder.encode(Xml.join(''));
-  const Data = ToBase64String(Xml.join(''));
- // console.log('after convert base64 data');
-  //const Signature = AgentAPI.Account.Sign(Data, SignWith.CurrentKeys);
+
+  let xmlString = ``;
+  for(let element of Xml) {
+    console.log(element);
+    xmlString = xmlString + `${element}`
+  }
+
+ console.log('xmlString -- ', xmlString)
+  const Data = ToBase64String(xmlString);
   const FileName = ReviewerLegalIdentity.id + ".xml";
   const ContentType = "text/xml; charset=utf-8";
-
-  //const Data: Uint8Array = new TextEncoder().encode(Xml.toString());
 
   const response ={
     Data,FileName,ContentType
   }
-  //await e2.PUT(Data, ContentType, 10000);
-
+  
   return response;
 }
 
