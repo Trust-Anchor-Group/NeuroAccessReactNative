@@ -163,7 +163,7 @@ export const Serialize = async (
 
           if (clientKeyName.startsWith('RSA')) {
             Xml.push("<rsa pub=\"");
-            Xml.push(ToBase64String(publicKey));
+            Xml.push(publicKey);
             Xml.push("\" size=\"");
             Xml.push(clientKeyName.substring(3));
             Xml.push("\" xmlns=\"");
@@ -172,7 +172,7 @@ export const Serialize = async (
             Xml.push('<');
             Xml.push(clientKeyName);
             Xml.push(" pub=\"");
-            Xml.push(ToBase64String(publicKey));
+            Xml.push(publicKey);
             Xml.push("\" xmlns=\"");
             Xml.push(IoTHarmonizationE2E);
           }
@@ -198,7 +198,7 @@ export const Serialize = async (
     Xml.push('<clientSignature>');
 
     if (identity?.clientSignature)
-      Xml.push(ToBase64String(identity?.clientSignature?.value));
+      Xml.push(identity?.clientSignature?.value);
 
     Xml.push('</clientSignature>');
   }
@@ -217,7 +217,7 @@ export const Serialize = async (
       Xml.push("\" id=\"");
       Xml.push(attachmentValue?.id.normalize());
       Xml.push("\" s=\"");
-      Xml.push(ToBase64String(attachmentValue?.s));
+      Xml.push(attachmentValue?.s);
       Xml.push("\" timestamp=\"");
       Xml.push(encode(attachmentValue?.timestamp));
       Xml.push("\"/>");
@@ -233,7 +233,7 @@ export const Serialize = async (
       Xml.push("\" id=\"");
       Xml.push(identity?.attachment?.id.normalize());
       Xml.push("\" s=\"");
-      Xml.push(ToBase64String(identity?.attachment?.s));
+      Xml.push(identity?.attachment?.s);
       Xml.push("\" timestamp=\"");
       Xml.push(encode(identity?.attachment?.timestamp));
       Xml.push("\"/>");
@@ -275,7 +275,7 @@ export const Serialize = async (
     Xml.push('<serverSignature>');
 
     if (identity?.serverSignature)
-      Xml.push(ToBase64String(identity?.serverSignature?.value));
+      Xml.push(identity?.serverSignature?.value);
 
     Xml.push('</serverSignature>');
   }
@@ -339,7 +339,7 @@ const currentUtcDateTimeString = currentUtcDate.toISOString();
   //console.log('after date ecoding data',ecodedval);
   //console.log('after date decode data',FromBase64String(ecodedval));
   Xml.push("<peerReview s='");
-  Xml.push(ToBase64String(PeerSignature));
+  Xml.push(PeerSignature);
   Xml.push("' tp='");
   Xml.push(encode(currentUtcDateTimeString));
   Xml.push("' xmlns='");
