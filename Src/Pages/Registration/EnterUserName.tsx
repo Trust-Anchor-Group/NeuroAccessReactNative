@@ -37,7 +37,7 @@ export const EnterUserName = ({
   const { userDetails, loading, error } = useSelector((state) => state.user);
   const { themeColors } = useContext(ThemeContext);
   const userNameInputRef = React.useRef<TextInputRef>(null);
-  const [userName, setUserName] = useState('');
+  const [userName, setUserName] = useState(userDetails?.userName);
   const [alternatives, setAlternatives] = useState();
   const dispatch = useDispatch<ThunkDispatch<any, any, any>>();
 
@@ -123,7 +123,7 @@ export const EnterUserName = ({
             <InputBox
               keyboardType="default"
               ref={userNameInputRef}
-              value={userName === '' ? userDetails?.userName : userName}
+              value={userName}
               onChangeText={(val) => {
                 setUserName(val);
               }}

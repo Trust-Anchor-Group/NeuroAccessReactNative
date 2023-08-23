@@ -840,7 +840,6 @@ export const TellUsAboutYou = ({
                   value={values.personalNumber}
                   onChangeText={handleChange('personalNumber')}
                   onBlur={() => {
-                    aadhaarLoading.current = true;
                     checkPersonalNumber(values.personalNumber);
                     handleBlur('personalNumber');
                     setFieldTouched('personalNumber', false);
