@@ -65,9 +65,11 @@ export const ChooseAccountType = ({
     setAppLoading(false);
 
     setTimeout(() => {
+      // navigation.dispatch(StackActions.replace('EnterUserName'));
+
       if (identityResponse?.Identity?.status) {
         navigation.dispatch(StackActions.replace('AlmostThere'));
-      } else if (userDetails?.userName && userDetails?.email) {
+      } else if (userDetails?.userName && userDetails?.emailVerified) {
         navigation.dispatch(StackActions.replace('TellUsAboutYou'));
       } else if (userDetails?.userName && !userDetails?.email) {
         navigation.dispatch(StackActions.replace('EnterUserName'));

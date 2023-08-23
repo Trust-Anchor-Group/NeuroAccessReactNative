@@ -27,7 +27,8 @@ export const createAccountUsingEmail = createAsyncThunk(
         typeof error?.message === 'string'
           ? error?.message
           : error?.message?.Message;
-      throw rejectWithValue(message);
+      const alternatives = error?.alternatives;
+      throw rejectWithValue({message, alternatives});
     }
   }
 );

@@ -6,6 +6,9 @@ import {
   Keyboard,
   ScrollView,
   AppState,
+  TouchableOpacity,
+  Text,
+  StyleSheet,
 } from 'react-native';
 import { GlobalStyle as styles, EnterMobileNumberStyle } from '@Pages/Styles';
 import { StackScreenProps } from '@react-navigation/stack';
@@ -23,6 +26,9 @@ import InputBox, { TextInputRef } from '@Controls/InputBox';
 import { addUserName } from '@Services/Redux/Actions/GetUserDetails';
 import { ThunkDispatch } from '@reduxjs/toolkit';
 import { useDispatch, useSelector } from 'react-redux';
+import { isEmpty } from '@Helpers/Utility/Utils';
+import { clearAlternatives } from '@Services/Redux/Reducers/UserSlice';
+import { AlternateUserNameList } from '@Controls/AlternateUserNameList';
 
 export const EnterUserName = ({
   navigation,
@@ -32,6 +38,7 @@ export const EnterUserName = ({
   const { themeColors } = useContext(ThemeContext);
   const userNameInputRef = React.useRef<TextInputRef>(null);
   const [userName, setUserName] = useState('');
+  const [alternatives, setAlternatives] = useState();
   const dispatch = useDispatch<ThunkDispatch<any, any, any>>();
 
   const appState = React.useRef(AppState.currentState);
@@ -42,6 +49,12 @@ export const EnterUserName = ({
       userName !== '' && dispatch(addUserName(userName));
     }
   }, [appStateVisible]);
+
+  useEffect(() => {
+    if (!isEmpty(userDetails?.alternatives)) {
+      setAlternatives(userDetails?.alternatives);
+    }
+  }, [userDetails?.alternatives]);
 
   React.useEffect(() => {
     const subscription = AppState.addEventListener('change', (nextAppState) => {
@@ -64,7 +77,8 @@ export const EnterUserName = ({
 
   const handleSubmit = async () => {
     try {
-      dispatch(addUserName(userName));
+      await dispatch(clearAlternatives(''));
+      await dispatch(addUserName(userName));
       navigation.navigate('EnterEmail');
     } catch (error) {}
   };
@@ -120,6 +134,16 @@ export const EnterUserName = ({
               autoCapitalize="none"
               onAction={handleSubmit}
             />
+            {alternatives && alternatives?.length ? (
+              <AlternateUserNameList
+                data={alternatives}
+                onPress={(selectedValue: string) => {
+                  setUserName(selectedValue);
+                }}
+              />
+            ) : (
+              <></>
+            )}
           </View>
 
           <View style={styles(themeColors).buttonContainer}>

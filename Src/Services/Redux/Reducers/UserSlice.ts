@@ -27,6 +27,8 @@ export type UserProfile = {
   tokenData?: any;
   createAccountRespnose: {},
   country: any;
+  alternatives: [],
+  emailVerified: boolean
 };
 
 const initialState = {
@@ -44,8 +46,14 @@ const userSlice = createSlice({
     setUserSliceError: (state, action) => {
       state.error = action.payload;
     },
+    setEmailVarified: (state, action) => {
+      state.userDetails = { ...state.userDetails, emailVerified: action.payload };
+    },
     clearSendVerificationCodeResponse: (state, action) => {
       state.sendVerificationCodeResponse = action.payload;
+    },
+    clearAlternatives: (state, action) => {
+      state.userDetails = { ...state.userDetails, alternatives: [] };
     },
   },
   extraReducers: (builder) => {
@@ -69,12 +77,12 @@ const userSlice = createSlice({
       })
       .addCase(createAccountUsingEmail.fulfilled, (state, action) => {
         state.loading = false;
-        state.userDetails = { ...state.userDetails, tokenData: action.payload };
+        state.userDetails = { ...state.userDetails, tokenData: action.payload, alternatives: [] };
       })
       .addCase(createAccountUsingEmail.rejected, (state, action) => {
         state.loading = false;
-        state.error = action.payload || '';
-        state.userDetails = { ...state.userDetails, tokenData: undefined };
+        state.error = action?.payload?.message || '';
+        state.userDetails = { ...state.userDetails, tokenData: undefined, alternatives: action?.payload?.alternatives };
       })
       .addCase(addUserName.fulfilled, (state, action) => {
         state.loading = false;
@@ -132,5 +140,5 @@ const userSlice = createSlice({
       })
   },
 });
-export const { setUserSliceError, clearSendVerificationCodeResponse } = userSlice.actions;
+export const { setUserSliceError, clearSendVerificationCodeResponse, clearAlternatives, setEmailVarified } = userSlice.actions;
 export default userSlice.reducer;

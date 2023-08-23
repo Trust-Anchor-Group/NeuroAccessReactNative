@@ -45,6 +45,7 @@ export default {
   enterUserNameScreen: {
     message: 'To get verified, you need to enter your user name',
     label: 'Enter user name',
+    alternateNameTitle: 'निम्नलिखित नाम अभी भी उपलब्ध हैं:'
   },
   settingScreen: {
     selectLanguage: ' भाषा चुने ',
