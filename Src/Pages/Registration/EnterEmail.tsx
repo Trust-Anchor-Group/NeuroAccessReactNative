@@ -57,6 +57,17 @@ export const EnterEmail = ({
   }, [error]);
 
   useEffect(() => {
+    if (!isEmpty(userDetails?.alternatives)) {
+      const nextPage = async () => {
+        await dispatch(saveEmail(email));
+        await dispatch(saveAccountPassword(accountPassword?.current));
+        navigation.navigate('EnterUserName');  
+      }
+      nextPage()
+    }
+  }, [userDetails?.alternatives]);
+
+  useEffect(() => {
     if (!isEmpty(userDetails?.tokenData)) {
       const nextPage = async () => {
         await dispatch(saveEmail(email));

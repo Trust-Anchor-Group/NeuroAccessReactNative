@@ -48,6 +48,7 @@ export default {
   enterUserNameScreen: {
     message: 'To get verified, you need to enter your user name',
     label: 'Enter user name',
+    alternateNameTitle: 'The following names are still available:'
   },
   settingScreen: {
     selectLanguage: ' Select Language ',

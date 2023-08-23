@@ -22,7 +22,7 @@ import {
   UserPayload,
   createAccountUsingEmail,
 } from '@Services/Redux/Actions/GetUserDetails';
-import { setUserSliceError } from '@Services/Redux/Reducers/UserSlice';
+import { setEmailVarified, setUserSliceError } from '@Services/Redux/Reducers/UserSlice';
 import { isEmpty } from '@Helpers/Utility/Utils';
 
 type Props = StackScreenProps<{}>;
@@ -85,8 +85,9 @@ export const EmailOTPVerify = ({ navigation, route }: Props) => {
         userDetails?.email,
         otpValue
       );
-      setIsLoading(false);
+      await setIsLoading(false);
       if (response?.eMail) {
+        await dispatch(setEmailVarified(true))
         navigation.navigate('TellUsAboutYou');
       }
     } catch (error) {

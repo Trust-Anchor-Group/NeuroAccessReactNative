@@ -18,6 +18,7 @@ export const Colors = {
     text: {
       primary: '#181F25',
       error: '#F2495C',
+      link: 'background: rgba(79, 126, 172, 1)'
     },
     icons: {
       back: '#181F25',
