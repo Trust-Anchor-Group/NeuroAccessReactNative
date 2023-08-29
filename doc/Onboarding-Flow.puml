@@ -39,6 +39,7 @@ Project starts 2023-06-01
 [Add peerReview Attachment and make changes in redux state-A] starts 2023-08-09 and ends 2023-08-09
 [integrate api validate signature and PetitionID flow-A] starts 2023-08-10 and ends 2023-08-11
 [Test the complete flow with peerReview and Petition ID-A] starts 2023-08-12 and ends 2023-08-14
+[Restore the user details on Apply Legal ID form and show the Alert on Id rejection-A] starts 2023-08-28 and ends 2023-08-29
 
 [Current Provider screen-A] is 100% complete
 [Tell Us About You Screen UI-A] is 100% complete
@@ -54,10 +55,10 @@ Project starts 2023-06-01
 [Integrate popMessage service and read the Identity status -A] is 100% complete
 [Error and bugs-A] is 100% complete
 [Invite peer show list of providers functionality-A] is 100% complete
-[Invite Reviewers to approve application or using QRCode-A] is 80% complete
-[create serialize function to make xml document-A] is 80% complete
-[Add peerReview Attachment and make changes in redux state-A] is 10% complete
-
+[Invite Reviewers to approve application or using QRCode-A] is 100% complete
+[create serialize function to make xml document-A] is 100% complete
+[Add peerReview Attachment and make changes in redux state-A] is 100% complete
+[Restore the user details on Apply Legal ID form and show the Alert on Id rejection-A] is 90% complete
 
 [Information popup functionality-P] starts 2023-06-29 and ends 2023-06-29
 [QRCode Scan manager-P] starts 2023-06-30 and ends 2023-07-03
